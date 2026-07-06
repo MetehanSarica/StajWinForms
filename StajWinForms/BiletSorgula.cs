@@ -19,6 +19,12 @@ namespace StajWinForms
 
         private void btnBiletSorgu_Click(object sender, EventArgs e)
         {
+            if (txtboxTC.Text.Length < 11)
+            {
+                MessageBox.Show("TC Kimlik numarası 11 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtboxTC.Clear();
+                return;
+            }
             string query = @"
                 SELECT s.SeferID, f.FirmaAdi,
                        k.SehirAdi AS KalkisSehir, v.SehirAdi AS VarisSehir,

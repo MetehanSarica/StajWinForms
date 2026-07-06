@@ -456,7 +456,9 @@
             Controls.Add(button2);
             Controls.Add(button1);
             Controls.Add(pictureBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "SecimEkrani";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Seç";
             Load += SecimEkrani_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();

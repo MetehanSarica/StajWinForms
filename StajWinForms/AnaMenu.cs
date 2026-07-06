@@ -67,5 +67,19 @@ namespace StajWinForms
             BiletSorgula biletSorgula = new BiletSorgula();
             biletSorgula.ShowDialog();
         }
+
+        private void btnSeferDetaylar_Click(object sender, EventArgs e)
+        {
+            if (dataGridVeriler.SelectedRows.Count > 0)
+            {
+                int seferID = Convert.ToInt32(dataGridVeriler.SelectedRows[0].Cells["SeferID"].Value);
+                SeferDetay seferDetay = new SeferDetay(seferID);
+                seferDetay.Show();
+            }
+            else
+            {
+                MessageBox.Show("Lütfen bir sefer seçin.");
+            }
+        }
     }
 }

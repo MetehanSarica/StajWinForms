@@ -31,7 +31,8 @@
             panel1 = new Panel();
             NOLUR = new Label();
             panel2 = new Panel();
-            btnSorgu = new Button();
+            btnSeferDetaylar = new Button();
+            btnBiletSorgula = new Button();
             btnSec = new Button();
             btnAra = new Button();
             txtboxAra = new TextBox();
@@ -62,7 +63,8 @@
             // 
             // panel2
             // 
-            panel2.Controls.Add(btnSorgu);
+            panel2.Controls.Add(btnSeferDetaylar);
+            panel2.Controls.Add(btnBiletSorgula);
             panel2.Controls.Add(btnSec);
             panel2.Controls.Add(btnAra);
             panel2.Controls.Add(txtboxAra);
@@ -71,15 +73,25 @@
             panel2.Size = new Size(200, 350);
             panel2.TabIndex = 1;
             // 
-            // btnSorgu
+            // btnSeferDetaylar
             // 
-            btnSorgu.Location = new Point(12, 307);
-            btnSorgu.Name = "btnSorgu";
-            btnSorgu.Size = new Size(177, 31);
-            btnSorgu.TabIndex = 2;
-            btnSorgu.Text = "Bilet Sorgula";
-            btnSorgu.UseVisualStyleBackColor = true;
-            btnSorgu.Click += btnSorgu_Click;
+            btnSeferDetaylar.Location = new Point(12, 270);
+            btnSeferDetaylar.Name = "btnSeferDetaylar";
+            btnSeferDetaylar.Size = new Size(177, 31);
+            btnSeferDetaylar.TabIndex = 3;
+            btnSeferDetaylar.Text = "Sefer Detayları";
+            btnSeferDetaylar.UseVisualStyleBackColor = true;
+            btnSeferDetaylar.Click += btnSeferDetaylar_Click;
+            // 
+            // btnBiletSorgula
+            // 
+            btnBiletSorgula.Location = new Point(12, 307);
+            btnBiletSorgula.Name = "btnBiletSorgula";
+            btnBiletSorgula.Size = new Size(177, 31);
+            btnBiletSorgula.TabIndex = 2;
+            btnBiletSorgula.Text = "Bilet Sorgula";
+            btnBiletSorgula.UseVisualStyleBackColor = true;
+            btnBiletSorgula.Click += btnSorgu_Click;
             // 
             // btnSec
             // 
@@ -114,6 +126,7 @@
             dataGridVeriler.AllowUserToDeleteRows = false;
             dataGridVeriler.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridVeriler.Location = new Point(206, 106);
+            dataGridVeriler.MultiSelect = false;
             dataGridVeriler.Name = "dataGridVeriler";
             dataGridVeriler.ReadOnly = true;
             dataGridVeriler.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -128,7 +141,9 @@
             Controls.Add(dataGridVeriler);
             Controls.Add(panel2);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "AnaMenu";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "Ana Menü";
             Load += Form1_Load;
             panel1.ResumeLayout(false);
@@ -147,7 +162,8 @@
         private TextBox txtboxAra;
         private DataGridView dataGridVeriler;
         private Button btnSec;
-        private Button btnSorgu;
+        private Button btnBiletSorgula;
         private Label NOLUR;
+        private Button btnSeferDetaylar;
     }
 }

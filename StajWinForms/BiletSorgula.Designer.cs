@@ -32,12 +32,14 @@
             lblTC = new Label();
             btnBiletSorgu = new Button();
             dataGridSorgu = new DataGridView();
+            groupBox1 = new GroupBox();
             ((System.ComponentModel.ISupportInitialize)dataGridSorgu).BeginInit();
+            groupBox1.SuspendLayout();
             SuspendLayout();
             // 
             // txtboxTC
             // 
-            txtboxTC.Location = new Point(56, 49);
+            txtboxTC.Location = new Point(44, 56);
             txtboxTC.Name = "txtboxTC";
             txtboxTC.Size = new Size(179, 23);
             txtboxTC.TabIndex = 0;
@@ -46,7 +48,7 @@
             // lblTC
             // 
             lblTC.AutoSize = true;
-            lblTC.Location = new Point(56, 31);
+            lblTC.Location = new Point(44, 38);
             lblTC.Name = "lblTC";
             lblTC.Size = new Size(79, 15);
             lblTC.TabIndex = 1;
@@ -54,36 +56,53 @@
             // 
             // btnBiletSorgu
             // 
-            btnBiletSorgu.Location = new Point(56, 97);
+            btnBiletSorgu.Location = new Point(44, 94);
             btnBiletSorgu.Name = "btnBiletSorgu";
             btnBiletSorgu.Size = new Size(179, 32);
             btnBiletSorgu.TabIndex = 2;
-            btnBiletSorgu.Text = "Bilet Sorgula";
+            btnBiletSorgu.Text = "Sorgula";
             btnBiletSorgu.UseVisualStyleBackColor = true;
             btnBiletSorgu.Click += btnBiletSorgu_Click;
             // 
             // dataGridSorgu
             // 
+            dataGridSorgu.AllowUserToAddRows = false;
+            dataGridSorgu.AllowUserToDeleteRows = false;
             dataGridSorgu.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridSorgu.Location = new Point(12, 172);
+            dataGridSorgu.Location = new Point(6, 154);
+            dataGridSorgu.MultiSelect = false;
             dataGridSorgu.Name = "dataGridSorgu";
-            dataGridSorgu.Size = new Size(279, 266);
+            dataGridSorgu.ReadOnly = true;
+            dataGridSorgu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
+            dataGridSorgu.Size = new Size(267, 266);
             dataGridSorgu.TabIndex = 3;
+            // 
+            // groupBox1
+            // 
+            groupBox1.Controls.Add(lblTC);
+            groupBox1.Controls.Add(btnBiletSorgu);
+            groupBox1.Controls.Add(txtboxTC);
+            groupBox1.Controls.Add(dataGridSorgu);
+            groupBox1.Location = new Point(12, 12);
+            groupBox1.Name = "groupBox1";
+            groupBox1.Size = new Size(279, 426);
+            groupBox1.TabIndex = 4;
+            groupBox1.TabStop = false;
+            groupBox1.Text = "Bilet Sorgulama";
             // 
             // BiletSorgula
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(303, 450);
-            Controls.Add(dataGridSorgu);
-            Controls.Add(btnBiletSorgu);
-            Controls.Add(lblTC);
-            Controls.Add(txtboxTC);
+            Controls.Add(groupBox1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "BiletSorgula";
-            Text = "BiletSorgula";
+            StartPosition = FormStartPosition.CenterParent;
             ((System.ComponentModel.ISupportInitialize)dataGridSorgu).EndInit();
+            groupBox1.ResumeLayout(false);
+            groupBox1.PerformLayout();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -92,5 +111,6 @@
         private Label lblTC;
         private Button btnBiletSorgu;
         private DataGridView dataGridSorgu;
+        private GroupBox groupBox1;
     }
 }

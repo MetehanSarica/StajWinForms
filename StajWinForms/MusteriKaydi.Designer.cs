@@ -199,7 +199,9 @@
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "MusteriKaydi";
+            StartPosition = FormStartPosition.CenterParent;
             Text = "MusteriKaydi";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
