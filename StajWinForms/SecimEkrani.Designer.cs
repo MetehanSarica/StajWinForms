@@ -65,6 +65,7 @@
             button34 = new Button();
             button35 = new Button();
             button36 = new Button();
+            btnKoltukSec = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -80,7 +81,7 @@
             // 
             // button1
             // 
-            button1.Location = new Point(221, 103);
+            button1.Location = new Point(222, 102);
             button1.Name = "button1";
             button1.Size = new Size(30, 29);
             button1.TabIndex = 1;
@@ -89,7 +90,7 @@
             // 
             // button2
             // 
-            button2.Location = new Point(221, 135);
+            button2.Location = new Point(222, 134);
             button2.Name = "button2";
             button2.Size = new Size(30, 29);
             button2.TabIndex = 2;
@@ -98,7 +99,7 @@
             // 
             // button3
             // 
-            button3.Location = new Point(270, 135);
+            button3.Location = new Point(270, 134);
             button3.Name = "button3";
             button3.Size = new Size(30, 29);
             button3.TabIndex = 4;
@@ -107,7 +108,7 @@
             // 
             // button4
             // 
-            button4.Location = new Point(270, 103);
+            button4.Location = new Point(270, 102);
             button4.Name = "button4";
             button4.Size = new Size(30, 29);
             button4.TabIndex = 3;
@@ -116,7 +117,7 @@
             // 
             // button5
             // 
-            button5.Location = new Point(318, 135);
+            button5.Location = new Point(318, 134);
             button5.Name = "button5";
             button5.Size = new Size(30, 29);
             button5.TabIndex = 6;
@@ -125,7 +126,7 @@
             // 
             // button6
             // 
-            button6.Location = new Point(318, 103);
+            button6.Location = new Point(318, 102);
             button6.Name = "button6";
             button6.Size = new Size(30, 29);
             button6.TabIndex = 5;
@@ -134,7 +135,7 @@
             // 
             // button7
             // 
-            button7.Location = new Point(463, 135);
+            button7.Location = new Point(462, 134);
             button7.Name = "button7";
             button7.Size = new Size(30, 29);
             button7.TabIndex = 12;
@@ -143,7 +144,7 @@
             // 
             // button8
             // 
-            button8.Location = new Point(463, 103);
+            button8.Location = new Point(462, 102);
             button8.Name = "button8";
             button8.Size = new Size(30, 29);
             button8.TabIndex = 11;
@@ -152,7 +153,7 @@
             // 
             // button9
             // 
-            button9.Location = new Point(415, 135);
+            button9.Location = new Point(415, 134);
             button9.Name = "button9";
             button9.Size = new Size(30, 29);
             button9.TabIndex = 10;
@@ -161,7 +162,7 @@
             // 
             // button10
             // 
-            button10.Location = new Point(415, 103);
+            button10.Location = new Point(415, 102);
             button10.Name = "button10";
             button10.Size = new Size(30, 29);
             button10.TabIndex = 9;
@@ -170,7 +171,7 @@
             // 
             // button11
             // 
-            button11.Location = new Point(366, 135);
+            button11.Location = new Point(367, 134);
             button11.Name = "button11";
             button11.Size = new Size(30, 29);
             button11.TabIndex = 8;
@@ -179,7 +180,7 @@
             // 
             // button12
             // 
-            button12.Location = new Point(366, 103);
+            button12.Location = new Point(367, 102);
             button12.Name = "button12";
             button12.Size = new Size(30, 29);
             button12.TabIndex = 7;
@@ -188,7 +189,7 @@
             // 
             // button13
             // 
-            button13.Location = new Point(609, 135);
+            button13.Location = new Point(608, 134);
             button13.Name = "button13";
             button13.Size = new Size(30, 29);
             button13.TabIndex = 18;
@@ -197,7 +198,7 @@
             // 
             // button14
             // 
-            button14.Location = new Point(609, 103);
+            button14.Location = new Point(608, 102);
             button14.Name = "button14";
             button14.Size = new Size(30, 29);
             button14.TabIndex = 17;
@@ -206,7 +207,7 @@
             // 
             // button15
             // 
-            button15.Location = new Point(561, 135);
+            button15.Location = new Point(560, 134);
             button15.Name = "button15";
             button15.Size = new Size(30, 29);
             button15.TabIndex = 16;
@@ -215,7 +216,7 @@
             // 
             // button16
             // 
-            button16.Location = new Point(561, 103);
+            button16.Location = new Point(560, 102);
             button16.Name = "button16";
             button16.Size = new Size(30, 29);
             button16.TabIndex = 15;
@@ -224,7 +225,7 @@
             // 
             // button17
             // 
-            button17.Location = new Point(512, 135);
+            button17.Location = new Point(511, 134);
             button17.Name = "button17";
             button17.Size = new Size(30, 29);
             button17.TabIndex = 14;
@@ -233,7 +234,7 @@
             // 
             // button18
             // 
-            button18.Location = new Point(512, 103);
+            button18.Location = new Point(511, 102);
             button18.Name = "button18";
             button18.Size = new Size(30, 29);
             button18.TabIndex = 13;
@@ -242,7 +243,7 @@
             // 
             // button19
             // 
-            button19.Location = new Point(609, 213);
+            button19.Location = new Point(608, 214);
             button19.Name = "button19";
             button19.Size = new Size(30, 29);
             button19.TabIndex = 36;
@@ -251,7 +252,7 @@
             // 
             // button20
             // 
-            button20.Location = new Point(609, 181);
+            button20.Location = new Point(608, 182);
             button20.Name = "button20";
             button20.Size = new Size(30, 29);
             button20.TabIndex = 35;
@@ -260,7 +261,7 @@
             // 
             // button21
             // 
-            button21.Location = new Point(561, 213);
+            button21.Location = new Point(560, 214);
             button21.Name = "button21";
             button21.Size = new Size(30, 29);
             button21.TabIndex = 34;
@@ -269,7 +270,7 @@
             // 
             // button22
             // 
-            button22.Location = new Point(561, 181);
+            button22.Location = new Point(560, 182);
             button22.Name = "button22";
             button22.Size = new Size(30, 29);
             button22.TabIndex = 33;
@@ -278,7 +279,7 @@
             // 
             // button23
             // 
-            button23.Location = new Point(512, 213);
+            button23.Location = new Point(512, 214);
             button23.Name = "button23";
             button23.Size = new Size(30, 29);
             button23.TabIndex = 32;
@@ -287,7 +288,7 @@
             // 
             // button24
             // 
-            button24.Location = new Point(512, 181);
+            button24.Location = new Point(512, 182);
             button24.Name = "button24";
             button24.Size = new Size(30, 29);
             button24.TabIndex = 31;
@@ -296,7 +297,7 @@
             // 
             // button25
             // 
-            button25.Location = new Point(463, 213);
+            button25.Location = new Point(463, 214);
             button25.Name = "button25";
             button25.Size = new Size(30, 29);
             button25.TabIndex = 30;
@@ -305,7 +306,7 @@
             // 
             // button26
             // 
-            button26.Location = new Point(463, 181);
+            button26.Location = new Point(463, 182);
             button26.Name = "button26";
             button26.Size = new Size(30, 29);
             button26.TabIndex = 29;
@@ -314,7 +315,7 @@
             // 
             // button27
             // 
-            button27.Location = new Point(415, 213);
+            button27.Location = new Point(415, 214);
             button27.Name = "button27";
             button27.Size = new Size(30, 29);
             button27.TabIndex = 28;
@@ -323,7 +324,7 @@
             // 
             // button28
             // 
-            button28.Location = new Point(415, 181);
+            button28.Location = new Point(415, 182);
             button28.Name = "button28";
             button28.Size = new Size(30, 29);
             button28.TabIndex = 27;
@@ -332,7 +333,7 @@
             // 
             // button29
             // 
-            button29.Location = new Point(366, 213);
+            button29.Location = new Point(367, 214);
             button29.Name = "button29";
             button29.Size = new Size(30, 29);
             button29.TabIndex = 26;
@@ -341,7 +342,7 @@
             // 
             // button30
             // 
-            button30.Location = new Point(366, 181);
+            button30.Location = new Point(367, 182);
             button30.Name = "button30";
             button30.Size = new Size(30, 29);
             button30.TabIndex = 25;
@@ -350,7 +351,7 @@
             // 
             // button31
             // 
-            button31.Location = new Point(318, 213);
+            button31.Location = new Point(318, 214);
             button31.Name = "button31";
             button31.Size = new Size(30, 29);
             button31.TabIndex = 24;
@@ -359,7 +360,7 @@
             // 
             // button32
             // 
-            button32.Location = new Point(318, 181);
+            button32.Location = new Point(318, 182);
             button32.Name = "button32";
             button32.Size = new Size(30, 29);
             button32.TabIndex = 23;
@@ -368,7 +369,7 @@
             // 
             // button33
             // 
-            button33.Location = new Point(270, 213);
+            button33.Location = new Point(270, 214);
             button33.Name = "button33";
             button33.Size = new Size(30, 29);
             button33.TabIndex = 22;
@@ -377,7 +378,7 @@
             // 
             // button34
             // 
-            button34.Location = new Point(270, 181);
+            button34.Location = new Point(270, 182);
             button34.Name = "button34";
             button34.Size = new Size(30, 29);
             button34.TabIndex = 21;
@@ -386,7 +387,7 @@
             // 
             // button35
             // 
-            button35.Location = new Point(221, 213);
+            button35.Location = new Point(222, 214);
             button35.Name = "button35";
             button35.Size = new Size(30, 29);
             button35.TabIndex = 20;
@@ -395,18 +396,29 @@
             // 
             // button36
             // 
-            button36.Location = new Point(221, 181);
+            button36.Location = new Point(222, 182);
             button36.Name = "button36";
             button36.Size = new Size(30, 29);
             button36.TabIndex = 19;
             button36.Text = "button36";
             button36.UseVisualStyleBackColor = true;
             // 
+            // btnKoltukSec
+            // 
+            btnKoltukSec.Location = new Point(12, 361);
+            btnKoltukSec.Name = "btnKoltukSec";
+            btnKoltukSec.Size = new Size(150, 59);
+            btnKoltukSec.TabIndex = 37;
+            btnKoltukSec.Text = "Koltuk Seç";
+            btnKoltukSec.UseVisualStyleBackColor = true;
+            btnKoltukSec.Click += btnKoltukSec_Click;
+            // 
             // SecimEkrani
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnKoltukSec);
             Controls.Add(button19);
             Controls.Add(button20);
             Controls.Add(button21);
@@ -490,5 +502,6 @@
         private Button button34;
         private Button button35;
         private Button button36;
+        private Button btnKoltukSec;
     }
 }

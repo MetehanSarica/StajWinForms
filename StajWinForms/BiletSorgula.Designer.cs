@@ -41,6 +41,7 @@
             txtboxTC.Name = "txtboxTC";
             txtboxTC.Size = new Size(179, 23);
             txtboxTC.TabIndex = 0;
+            txtboxTC.TextChanged += txtboxTC_TextChanged;
             // 
             // lblTC
             // 

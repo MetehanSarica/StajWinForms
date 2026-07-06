@@ -28,27 +28,37 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
             panel1 = new Panel();
+            NOLUR = new Label();
             panel2 = new Panel();
             btnSorgu = new Button();
             btnSec = new Button();
             btnAra = new Button();
             txtboxAra = new TextBox();
-            bindingSource1 = new BindingSource(components);
             dataGridVeriler = new DataGridView();
+            panel1.SuspendLayout();
             panel2.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).BeginInit();
             SuspendLayout();
             // 
             // panel1
             // 
+            panel1.Controls.Add(NOLUR);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
             panel1.Size = new Size(800, 100);
             panel1.TabIndex = 0;
+            // 
+            // NOLUR
+            // 
+            NOLUR.AutoSize = true;
+            NOLUR.Font = new Font("Franklin Gothic Heavy", 30F);
+            NOLUR.Location = new Point(23, 25);
+            NOLUR.Name = "NOLUR";
+            NOLUR.Size = new Size(535, 47);
+            NOLUR.TabIndex = 3;
+            NOLUR.Text = "NOLUR.COM OTOBUSCULUK";
             // 
             // panel2
             // 
@@ -102,9 +112,7 @@
             // 
             dataGridVeriler.AllowUserToAddRows = false;
             dataGridVeriler.AllowUserToDeleteRows = false;
-            dataGridVeriler.AutoGenerateColumns = false;
             dataGridVeriler.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridVeriler.DataSource = bindingSource1;
             dataGridVeriler.Location = new Point(206, 106);
             dataGridVeriler.Name = "dataGridVeriler";
             dataGridVeriler.ReadOnly = true;
@@ -123,9 +131,10 @@
             Name = "AnaMenu";
             Text = "Ana Menü";
             Load += Form1_Load;
+            panel1.ResumeLayout(false);
+            panel1.PerformLayout();
             panel2.ResumeLayout(false);
             panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)bindingSource1).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).EndInit();
             ResumeLayout(false);
         }
@@ -136,9 +145,9 @@
         private Panel panel2;
         private Button btnAra;
         private TextBox txtboxAra;
-        private BindingSource bindingSource1;
         private DataGridView dataGridVeriler;
         private Button btnSec;
         private Button btnSorgu;
+        private Label NOLUR;
     }
 }

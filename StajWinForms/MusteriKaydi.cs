@@ -1,0 +1,64 @@
+﻿using Microsoft.Data.SqlClient;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Text;
+using System.Windows.Forms;
+
+namespace StajWinForms
+{
+    public partial class MusteriKaydi : Form
+    {
+        public MusteriKaydi()
+        {
+            InitializeComponent();
+        }
+
+        private void btnKaydet_Click(object sender, EventArgs e)
+        {
+            string connStr = @"Server=(localdb)\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;";
+            using (SqlConnection conn = new SqlConnection(connStr))
+            {
+                string query = @"INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres)
+                               VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres)";
+
+                conn.Open();
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@TC", txtboxTC.Text);
+                cmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
+                cmd.Parameters.AddWithValue("@Soyad", txtboxSoyad.Text);
+                cmd.Parameters.AddWithValue("@Email", txtboxEmail.Text);
+                cmd.Parameters.AddWithValue("@Telefon", txtboxTelefon.Text);
+                cmd.Parameters.AddWithValue("@Sehir", txtboxSehir.Text);
+                cmd.Parameters.AddWithValue("@Adres", txtboxAdres.Text);
+                cmd.ExecuteNonQuery();
+
+                MessageBox.Show("Müşteri kaydı başarıyla eklendi.");
+            }
+        }
+
+        private void txtboxTC_TextChanged(object sender, EventArgs e)
+        {
+            txtboxTC.MaxLength = 11;
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTC.Text, "[^0-9]"))
+            {
+                txtboxTC.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTC.Text, "[^0-9]", "");
+
+                txtboxTC.SelectionStart = txtboxTC.Text.Length;
+            }
+        }
+
+        private void txtboxTelefon_TextChanged(object sender, EventArgs e)
+        {
+            txtboxTelefon.MaxLength = 11;
+            if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTelefon.Text, "[^0-9]"))
+            {
+                txtboxTelefon.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");
+
+                txtboxTelefon.SelectionStart = txtboxTelefon.Text.Length;
+            }
+        }
+    }
+}
