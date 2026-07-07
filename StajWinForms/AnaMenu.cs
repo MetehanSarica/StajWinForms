@@ -6,7 +6,7 @@ using Microsoft.VisualBasic;
 
 namespace StajWinForms
 {
-    public partial class AnaMenu : Form
+    public partial class AnaMenu : DevExpress.XtraEditors.XtraForm
     {
         public AnaMenu()
         {
@@ -51,19 +51,18 @@ namespace StajWinForms
                 SqlDataAdapter adaptor = new SqlDataAdapter(cmd);
                 DataTable tablo = new DataTable();
                 adaptor.Fill(tablo);
-                dataGridVeriler.AutoGenerateColumns = true;
                 dataGridVeriler.DataSource = tablo;
             }
         }
 
         private void btnSec_Click(object sender, EventArgs e)
         {
-            if (dataGridVeriler.SelectedRows.Count == 0)
+            if (gridView1.SelectedRowsCount == 0)
             {
                 MessageBox.Show("Lütfen önce bir sefer seçin.");
                 return;
             }
-            int seferID = Convert.ToInt32(dataGridVeriler.SelectedRows[0].Cells["SeferID"].Value);
+            int seferID = Convert.ToInt32(gridView1.GetFocusedRowCellValue("SeferID"));
             SecimEkrani secimEkrani = new SecimEkrani(seferID);
             secimEkrani.ShowDialog();
         }
@@ -76,9 +75,9 @@ namespace StajWinForms
 
         private void btnSeferDetaylar_Click(object sender, EventArgs e)
         {
-            if (dataGridVeriler.SelectedRows.Count > 0)
+            if (gridView1.SelectedRowsCount > 0)
             {
-                int seferID = Convert.ToInt32(dataGridVeriler.SelectedRows[0].Cells["SeferID"].Value);
+                int seferID = Convert.ToInt32(gridView1.GetFocusedRowCellValue("SeferID"));
                 SeferDetay seferDetay = new SeferDetay(seferID);
                 seferDetay.Show();
             }

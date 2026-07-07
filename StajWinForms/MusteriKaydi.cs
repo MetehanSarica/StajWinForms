@@ -1,4 +1,5 @@
-﻿using Microsoft.Data.SqlClient;
+using DevExpress.XtraEditors;
+using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,7 +10,7 @@ using System.Windows.Forms;
 
 namespace StajWinForms
 {
-    public partial class MusteriKaydi : Form
+    public partial class MusteriKaydi : XtraForm
     {
         public MusteriKaydi()
         {
@@ -50,23 +51,23 @@ namespace StajWinForms
 
         private void txtboxTC_TextChanged(object sender, EventArgs e)
         {
-            txtboxTC.MaxLength = 11;
+            txtboxTC.Properties.MaxLength = 11;
             if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTC.Text, "[^0-9]"))
             {
                 txtboxTC.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTC.Text, "[^0-9]", "");
-
-                txtboxTC.SelectionStart = txtboxTC.Text.Length;
+                if (txtboxTC.MaskBox != null)
+                    txtboxTC.MaskBox.SelectionStart = txtboxTC.Text.Length;
             }
         }
 
         private void txtboxTelefon_TextChanged(object sender, EventArgs e)
         {
-            txtboxTelefon.MaxLength = 11;
+            txtboxTelefon.Properties.MaxLength = 11;
             if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTelefon.Text, "[^0-9]"))
             {
                 txtboxTelefon.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");
-
-                txtboxTelefon.SelectionStart = txtboxTelefon.Text.Length;
+                if (txtboxTelefon.MaskBox != null)
+                    txtboxTelefon.MaskBox.SelectionStart = txtboxTelefon.Text.Length;
             }
         }
     }

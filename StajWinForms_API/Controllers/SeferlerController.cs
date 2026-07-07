@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
+using StajWinForms_API.Dtos;
 
 namespace StajWinForms_API.Controllers;
 
@@ -16,9 +17,20 @@ public class SeferlerController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Seferler>>> GetSeferler()
+    public async Task<ActionResult<IEnumerable<SeferlerDto>>> GetSeferler()
     {
-        var seferler = await _context.Seferlers.ToListAsync();
+        var seferler = await _context.Seferlers
+            .Select(s => new SeferlerDto
+            {
+            FirmaId = s.FirmaId,
+            KalkisSehirId = s.KalkisSehirId,
+            VarisSehirId = s.VarisSehirId,
+            SeferId = s.SeferId,
+            KalkisZamani = s.KalkisZamani,
+            Fiyat = s.Fiyat
+            })
+            .ToListAsync();
+
         return Ok(seferler);
     }
 }

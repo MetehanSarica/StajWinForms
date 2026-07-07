@@ -1,0 +1,17 @@
+﻿namespace StajWinForms_API.Dtos
+{
+    public class SeferlerDto
+    {
+        public required int FirmaId { get; set; }
+
+        public required int KalkisSehirId { get; set; }
+
+        public required int VarisSehirId { get; set; }
+
+        public required int SeferId { get; set; }
+
+        public required DateTime KalkisZamani { get; set; } 
+
+        public required decimal Fiyat { get; set; }
+    }
+}

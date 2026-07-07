@@ -9,6 +9,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DevExpress.Win.Design" Version="26.1.3" />
+    <PackageReference Include="DevExpress.Win.Grid" Version="26.1.3" />
+    <PackageReference Include="DevExpress.Win.Navigation" Version="26.1.3" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
   </ItemGroup>
 

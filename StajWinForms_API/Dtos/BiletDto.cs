@@ -2,13 +2,13 @@
 {
     public class BiletDto
     {
-        public int BiletId { get; set; }
-        public int KoltukNo { get; set; }
-        public string? MusteriAdSoyad { get; set; }
-        public string MusteriTc { get; set; } = null!;
-        public int SeferId { get; set; }
-        public string KalkisSehirAdi { get; set; } = null!;
-        public string VarisSehirAdi { get; set; } = null!;
-        public DateTime KalkisZamani { get; set; }
+        public required int BiletId { get; set; }
+        public required int KoltukNo { get; set; }
+        public required string MusteriAdSoyad { get; set; } = null!;
+        public required string MusteriTc { get; set; } = null!;
+        public required int SeferId { get; set; }
+        public required string KalkisSehirAdi { get; set; } = null!;
+        public required string VarisSehirAdi { get; set; } = null!;
+        public required DateTime KalkisZamani { get; set; }
     }
 }

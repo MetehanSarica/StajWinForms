@@ -10,7 +10,10 @@ namespace StajWinForms
         {
             // To customize application configuration such as set high DPI settings or default font,
             // see https://aka.ms/applicationconfiguration.
+            Application.SetHighDpiMode(HighDpiMode.SystemAware);
+            Application.EnableVisualStyles();
             ApplicationConfiguration.Initialize();
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Colorful");
             Application.Run(new AnaMenu());
         }
     }

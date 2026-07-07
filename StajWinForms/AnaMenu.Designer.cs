@@ -1,16 +1,13 @@
-﻿namespace StajWinForms
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
+
+namespace StajWinForms
 {
     partial class AnaMenu
     {
-        /// <summary>
-        ///  Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        ///  Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
@@ -22,148 +19,144 @@
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        ///  Required method for Designer support - do not modify
-        ///  the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            panel1 = new Panel();
-            NOLUR = new Label();
-            panel2 = new Panel();
-            btnSeferDetaylar = new Button();
-            btnBiletSorgula = new Button();
-            btnSec = new Button();
-            btnAra = new Button();
-            txtboxAra = new TextBox();
-            dataGridVeriler = new DataGridView();
+            panel1 = new PanelControl();
+            btnBiletSorgula = new SimpleButton();
+            btnSeferDetaylar = new SimpleButton();
+            btnSec = new SimpleButton();
+            btnAra = new SimpleButton();
+            dataGridVeriler = new GridControl();
+            gridView1 = new GridView();
+            txtboxAra = new TextEdit();
+            panelControl1 = new PanelControl();
+            ((System.ComponentModel.ISupportInitialize)panel1).BeginInit();
             panel1.SuspendLayout();
-            panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxAra.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)panelControl1).BeginInit();
+            panelControl1.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // panel1
-            // 
-            panel1.Controls.Add(NOLUR);
+            //
+            panel1.Controls.Add(btnBiletSorgula);
+            panel1.Controls.Add(btnSeferDetaylar);
+            panel1.Controls.Add(btnSec);
+            panel1.Controls.Add(btnAra);
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(800, 100);
+            panel1.Size = new Size(686, 87);
             panel1.TabIndex = 0;
-            // 
-            // NOLUR
-            // 
-            NOLUR.AutoSize = true;
-            NOLUR.Font = new Font("Franklin Gothic Heavy", 30F);
-            NOLUR.Location = new Point(23, 25);
-            NOLUR.Name = "NOLUR";
-            NOLUR.Size = new Size(535, 47);
-            NOLUR.TabIndex = 3;
-            NOLUR.Text = "NOLUR.COM OTOBUSCULUK";
-            // 
-            // panel2
-            // 
-            panel2.Controls.Add(btnSeferDetaylar);
-            panel2.Controls.Add(btnBiletSorgula);
-            panel2.Controls.Add(btnSec);
-            panel2.Controls.Add(btnAra);
-            panel2.Controls.Add(txtboxAra);
-            panel2.Location = new Point(0, 100);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(200, 350);
-            panel2.TabIndex = 1;
-            // 
-            // btnSeferDetaylar
-            // 
-            btnSeferDetaylar.Location = new Point(12, 270);
-            btnSeferDetaylar.Name = "btnSeferDetaylar";
-            btnSeferDetaylar.Size = new Size(177, 31);
-            btnSeferDetaylar.TabIndex = 3;
-            btnSeferDetaylar.Text = "Sefer Detayları";
-            btnSeferDetaylar.UseVisualStyleBackColor = true;
-            btnSeferDetaylar.Click += btnSeferDetaylar_Click;
-            // 
+            //
             // btnBiletSorgula
-            // 
-            btnBiletSorgula.Location = new Point(12, 307);
+            //
+            btnBiletSorgula.Location = new Point(300, 3);
             btnBiletSorgula.Name = "btnBiletSorgula";
-            btnBiletSorgula.Size = new Size(177, 31);
-            btnBiletSorgula.TabIndex = 2;
-            btnBiletSorgula.Text = "Bilet Sorgula";
-            btnBiletSorgula.UseVisualStyleBackColor = true;
+            btnBiletSorgula.Size = new Size(90, 78);
+            btnBiletSorgula.TabIndex = 7;
+            btnBiletSorgula.Text = "Bilet Sorgulama";
             btnBiletSorgula.Click += btnSorgu_Click;
-            // 
+            //
+            // btnSeferDetaylar
+            //
+            btnSeferDetaylar.Location = new Point(204, 3);
+            btnSeferDetaylar.Name = "btnSeferDetaylar";
+            btnSeferDetaylar.Size = new Size(90, 78);
+            btnSeferDetaylar.TabIndex = 6;
+            btnSeferDetaylar.Text = "Sefer Detayları";
+            btnSeferDetaylar.Click += btnSeferDetaylar_Click;
+            //
             // btnSec
-            // 
-            btnSec.Location = new Point(12, 89);
+            //
+            btnSec.Location = new Point(108, 3);
             btnSec.Name = "btnSec";
-            btnSec.Size = new Size(177, 31);
-            btnSec.TabIndex = 1;
+            btnSec.Size = new Size(90, 78);
+            btnSec.TabIndex = 5;
             btnSec.Text = "Seç";
-            btnSec.UseVisualStyleBackColor = true;
             btnSec.Click += btnSec_Click;
-            // 
+            //
             // btnAra
-            // 
-            btnAra.Location = new Point(12, 52);
+            //
+            btnAra.Location = new Point(12, 3);
             btnAra.Name = "btnAra";
-            btnAra.Size = new Size(177, 31);
-            btnAra.TabIndex = 0;
+            btnAra.Size = new Size(90, 78);
+            btnAra.TabIndex = 4;
             btnAra.Text = "Ara";
-            btnAra.UseVisualStyleBackColor = true;
             btnAra.Click += btnAra_Click;
-            // 
-            // txtboxAra
-            // 
-            txtboxAra.Location = new Point(12, 23);
-            txtboxAra.Name = "txtboxAra";
-            txtboxAra.Size = new Size(177, 23);
-            txtboxAra.TabIndex = 0;
-            // 
+            //
             // dataGridVeriler
-            // 
-            dataGridVeriler.AllowUserToAddRows = false;
-            dataGridVeriler.AllowUserToDeleteRows = false;
-            dataGridVeriler.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridVeriler.Location = new Point(206, 106);
-            dataGridVeriler.MultiSelect = false;
+            //
+            dataGridVeriler.Dock = DockStyle.Fill;
+            dataGridVeriler.Location = new Point(12, 155);
+            dataGridVeriler.MainView = gridView1;
             dataGridVeriler.Name = "dataGridVeriler";
-            dataGridVeriler.ReadOnly = true;
-            dataGridVeriler.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridVeriler.Size = new Size(582, 332);
+            dataGridVeriler.Size = new Size(664, 223);
             dataGridVeriler.TabIndex = 2;
-            // 
+            dataGridVeriler.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            //
+            // gridView1
+            //
+            gridView1.GridControl = dataGridVeriler;
+            gridView1.Name = "gridView1";
+            gridView1.OptionsBehavior.Editable = false;
+            gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            gridView1.OptionsSelection.MultiSelect = false;
+            gridView1.OptionsView.ShowGroupPanel = false;
+            //
+            // txtboxAra
+            //
+            txtboxAra.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            txtboxAra.Location = new Point(251, 18);
+            txtboxAra.Name = "txtboxAra";
+            txtboxAra.Size = new Size(149, 20);
+            txtboxAra.TabIndex = 1;
+            //
+            // panelControl1
+            //
+            panelControl1.Controls.Add(txtboxAra);
+            panelControl1.Dock = DockStyle.Top;
+            panelControl1.Location = new Point(12, 93);
+            panelControl1.Name = "panelControl1";
+            panelControl1.Size = new Size(662, 56);
+            panelControl1.TabIndex = 3;
+            //
             // AnaMenu
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            //
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
+            ClientSize = new Size(686, 390);
             Controls.Add(dataGridVeriler);
-            Controls.Add(panel2);
+            Controls.Add(panelControl1);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "AnaMenu";
-            StartPosition = FormStartPosition.CenterParent;
+            StartPosition = FormStartPosition.CenterScreen;
             Text = "Ana Menü";
+            WindowState = FormWindowState.Maximized;
             Load += Form1_Load;
+            ((System.ComponentModel.ISupportInitialize)panel1).EndInit();
             panel1.ResumeLayout(false);
-            panel1.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxAra.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)panelControl1).EndInit();
+            panelControl1.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
 
-        private Panel panel1;
-        private Panel panel2;
-        private Button btnAra;
-        private TextBox txtboxAra;
-        private DataGridView dataGridVeriler;
-        private Button btnSec;
-        private Button btnBiletSorgula;
-        private Label NOLUR;
-        private Button btnSeferDetaylar;
+        private PanelControl panel1;
+        private GridControl dataGridVeriler;
+        private GridView gridView1;
+        private SimpleButton btnBiletSorgula;
+        private SimpleButton btnSeferDetaylar;
+        private SimpleButton btnSec;
+        private SimpleButton btnAra;
+        private TextEdit txtboxAra;
+        private PanelControl panelControl1;
     }
 }

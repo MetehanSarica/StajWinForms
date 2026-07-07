@@ -5,9 +5,9 @@ namespace StajWinForms_API.Models;
 
 public partial class Firmalar
 {
-    public int FirmaId { get; set; }
+    public int FirmaId { get; set; } = 0;
 
-    public string FirmaAdi { get; set; } = null!;
+    public string FirmaAdi { get; set; } = "";
 
     public virtual ICollection<Seferler> Seferlers { get; set; } = new List<Seferler>();
 }

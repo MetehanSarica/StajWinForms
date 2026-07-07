@@ -1,3 +1,4 @@
+using DevExpress.XtraEditors;
 using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
@@ -8,25 +9,24 @@ using System.Windows.Forms;
 
 namespace StajWinForms
 {
-    public partial class SecimEkrani : Form
+    public partial class SecimEkrani : XtraForm
     {
         private const string ConnStr = "Server=(localdb)\\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;";
 
         private readonly int _seferID;
         private int? _secilenKoltukNo;
 
-        // Segment seçim kontrolleri (designer'a dokunmadan kod ile ekliyoruz)
-        private readonly Label lblBinis    = new Label();
-        private readonly Label lblInis     = new Label();
-        private readonly ComboBox cmbBinis = new ComboBox();
-        private readonly ComboBox cmbInis  = new ComboBox();
-        // btnFiltrele field'ı Designer.cs'de partial class tarafından tanımlanıyor
+        private readonly LabelControl lblBinis  = new LabelControl();
+        private readonly LabelControl lblInis   = new LabelControl();
+        private readonly LookUpEdit   cmbBinis  = new LookUpEdit();
+        private readonly LookUpEdit   cmbInis   = new LookUpEdit();
 
         public SecimEkrani(int seferID)
         {
             _seferID = seferID;
             InitializeComponent();
         }
+
         private void SecimEkrani_Load(object sender, EventArgs e)
         {
             try
@@ -41,9 +41,10 @@ namespace StajWinForms
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
+
         private void KoltuklariNumaralandir()
         {
-            var siraliButonlar = this.Controls.OfType<Button>()
+            var siraliButonlar = this.Controls.OfType<SimpleButton>()
                 .Where(btn => btn.Name != "btnKoltukSec" && btn.Name != "btnFiltrele")
                 .OrderBy(btn => btn.Location.X)
                 .ThenBy(btn => btn.Location.Y)
@@ -58,28 +59,28 @@ namespace StajWinForms
                 koltukNo++;
             }
         }
+
         private void EkKontrollerEkle()
         {
             this.ClientSize = new Size(800, 490);
 
             lblBinis.Text = "Biniş Durağı:";
             lblBinis.Location = new Point(12, 440);
-            lblBinis.AutoSize = true;
 
             cmbBinis.Location = new Point(110, 437);
             cmbBinis.Width = 170;
-            cmbBinis.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbBinis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 
             lblInis.Text = "İniş Durağı:";
             lblInis.Location = new Point(295, 440);
-            lblInis.AutoSize = true;
 
             cmbInis.Location = new Point(380, 437);
             cmbInis.Width = 170;
-            cmbInis.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbInis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
 
             this.Controls.AddRange(new Control[] { lblBinis, cmbBinis, lblInis, cmbInis });
         }
+
         private void DuraklariYukle()
         {
             string query = @"
@@ -97,23 +98,26 @@ namespace StajWinForms
                 new SqlDataAdapter(cmd).Fill(dt);
             }
 
-            cmbBinis.DataSource = dt.Copy();
-            cmbBinis.DisplayMember = "SehirAdi";
-            cmbBinis.ValueMember = "DurakSira";
+            var dtBinis = dt.Copy();
+            cmbBinis.Properties.DataSource = dtBinis;
+            cmbBinis.Properties.DisplayMember = "SehirAdi";
+            cmbBinis.Properties.ValueMember = "DurakSira";
 
-            cmbInis.DataSource = dt.Copy();
-            cmbInis.DisplayMember = "SehirAdi";
-            cmbInis.ValueMember = "DurakSira";
+            var dtInis = dt.Copy();
+            cmbInis.Properties.DataSource = dtInis;
+            cmbInis.Properties.DisplayMember = "SehirAdi";
+            cmbInis.Properties.ValueMember = "DurakSira";
 
-            if (cmbInis.Items.Count > 0)
-                cmbInis.SelectedIndex = cmbInis.Items.Count - 1;
+            if (dtInis.Rows.Count > 0)
+                cmbInis.EditValue = dtInis.Rows[dtInis.Rows.Count - 1]["DurakSira"];
         }
+
         private void BtnFiltrele_Click(object sender, EventArgs e)
         {
-            if (cmbBinis.SelectedValue == null || cmbInis.SelectedValue == null) return;
+            if (cmbBinis.EditValue == null || cmbInis.EditValue == null) return;
 
-            int binisSira = (int)cmbBinis.SelectedValue;
-            int inisSira  = (int)cmbInis.SelectedValue;
+            int binisSira = Convert.ToInt32(cmbBinis.EditValue);
+            int inisSira  = Convert.ToInt32(cmbInis.EditValue);
 
             if (binisSira >= inisSira)
             {
@@ -129,10 +133,12 @@ namespace StajWinForms
             {
                 int no = int.Parse(btn.Text);
                 bool dolu = doluKoltuklar.Contains(no);
-                btn.BackColor = dolu ? Color.IndianRed : Color.LightGreen;
-                btn.Enabled   = !dolu;
+                btn.Appearance.BackColor = dolu ? Color.IndianRed : Color.LightGreen;
+                btn.Appearance.Options.UseBackColor = true;
+                btn.Enabled = !dolu;
             }
         }
+
         private HashSet<int> DoluKoltuklariGetir(int binisSira, int inisSira)
         {
             string query = @"
@@ -146,7 +152,7 @@ namespace StajWinForms
             using (var conn = new SqlConnection(ConnStr))
             {
                 var cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@SeferID",  _seferID);
+                cmd.Parameters.AddWithValue("@SeferID",   _seferID);
                 cmd.Parameters.AddWithValue("@BinisSira", binisSira);
                 cmd.Parameters.AddWithValue("@InisSira",  inisSira);
                 conn.Open();
@@ -156,16 +162,17 @@ namespace StajWinForms
             }
             return dolu;
         }
+
         private void KoltukButonu_Click(object? sender, EventArgs e)
         {
-            if (sender is not Button btn) return;
+            if (sender is not SimpleButton btn) return;
 
             foreach (var b in KoltukButonlari())
-                if (b.BackColor == Color.Yellow)
-                    b.BackColor = Color.LightGreen;
+                if (b.Appearance.BackColor == Color.Yellow)
+                    b.Appearance.BackColor = Color.LightGreen;
 
             _secilenKoltukNo = int.Parse(btn.Text);
-            btn.BackColor = Color.Yellow;
+            btn.Appearance.BackColor = Color.Yellow;
         }
 
         private void btnKoltukSec_Click(object sender, EventArgs e)
@@ -180,7 +187,7 @@ namespace StajWinForms
             musteriKaydi.Show();
         }
 
-        private IEnumerable<Button> KoltukButonlari() =>
-            this.Controls.OfType<Button>().Where(b => b.Name.StartsWith("koltuk"));
+        private IEnumerable<SimpleButton> KoltukButonlari() =>
+            this.Controls.OfType<SimpleButton>().Where(b => b.Name.StartsWith("koltuk"));
     }
 }

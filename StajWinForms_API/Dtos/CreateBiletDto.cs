@@ -2,10 +2,10 @@
 {
     public class CreateBiletDto
     {
-        public int SeferId { get; set; }
-        public int KoltukNo { get; set; }
-        public string MusteriTc { get; set; } = null!;
-        public int BinisDurakSira { get; set; }
-        public int InisDurakSira { get; set; }
+        public required int SeferId { get; set; }
+        public required int KoltukNo { get; set; }
+        public required string MusteriTc { get; set; } = null!;
+        public required int BinisDurakSira { get; set; }
+        public required int InisDurakSira { get; set; }
     }
 }
