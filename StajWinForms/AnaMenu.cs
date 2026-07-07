@@ -58,7 +58,13 @@ namespace StajWinForms
 
         private void btnSec_Click(object sender, EventArgs e)
         {
-            SecimEkrani secimEkrani = new SecimEkrani();
+            if (dataGridVeriler.SelectedRows.Count == 0)
+            {
+                MessageBox.Show("Lütfen önce bir sefer seçin.");
+                return;
+            }
+            int seferID = Convert.ToInt32(dataGridVeriler.SelectedRows[0].Cells["SeferID"].Value);
+            SecimEkrani secimEkrani = new SecimEkrani(seferID);
             secimEkrani.ShowDialog();
         }
 
@@ -78,7 +84,7 @@ namespace StajWinForms
             }
             else
             {
-                MessageBox.Show("L�tfen bir sefer se�in.");
+                MessageBox.Show("Lütfen bir sefer seçin.");
             }
         }
     }

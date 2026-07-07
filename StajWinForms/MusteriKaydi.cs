@@ -18,6 +18,14 @@ namespace StajWinForms
 
         private void btnKaydet_Click(object sender, EventArgs e)
         {
+            string tc = txtboxTC.Text.Trim();
+            if (tc.Length != 11 || tc[0] == '0')
+            {
+                MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             string connStr = @"Server=(localdb)\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;";
             using (SqlConnection conn = new SqlConnection(connStr))
             {
@@ -26,7 +34,7 @@ namespace StajWinForms
 
                 conn.Open();
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@TC", txtboxTC.Text);
+                cmd.Parameters.AddWithValue("@TC", tc);
                 cmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
                 cmd.Parameters.AddWithValue("@Soyad", txtboxSoyad.Text);
                 cmd.Parameters.AddWithValue("@Email", txtboxEmail.Text);
@@ -36,6 +44,7 @@ namespace StajWinForms
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Müşteri kaydı başarıyla eklendi.");
+                this.Close();
             }
         }
 

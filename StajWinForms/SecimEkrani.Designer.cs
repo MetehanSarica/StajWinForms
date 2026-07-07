@@ -66,6 +66,7 @@
             button35 = new Button();
             button36 = new Button();
             btnKoltukSec = new Button();
+            btnFiltrele = new Button();
             ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
             SuspendLayout();
             // 
@@ -413,11 +414,21 @@
             btnKoltukSec.UseVisualStyleBackColor = true;
             btnKoltukSec.Click += btnKoltukSec_Click;
             // 
+            // btnFiltrele
+            // 
+            btnFiltrele.Location = new Point(188, 361);
+            btnFiltrele.Name = "btnFiltrele";
+            btnFiltrele.Size = new Size(150, 59);
+            btnFiltrele.TabIndex = 38;
+            btnFiltrele.Text = "Filtrele";
+            btnFiltrele.UseVisualStyleBackColor = true;
+            // 
             // SecimEkrani
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(800, 450);
+            Controls.Add(btnFiltrele);
             Controls.Add(btnKoltukSec);
             Controls.Add(button19);
             Controls.Add(button20);
@@ -505,5 +516,6 @@
         private Button button35;
         private Button button36;
         private Button btnKoltukSec;
+        private Button btnFiltrele;
     }
 }
