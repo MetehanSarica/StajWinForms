@@ -1,3 +1,4 @@
+using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
 using Microsoft.Data.SqlClient;
 using System;
@@ -16,11 +17,6 @@ namespace StajWinForms
         private readonly int _seferID;
         private int? _secilenKoltukNo;
 
-        private readonly LabelControl lblBinis  = new LabelControl();
-        private readonly LabelControl lblInis   = new LabelControl();
-        private readonly LookUpEdit   cmbBinis  = new LookUpEdit();
-        private readonly LookUpEdit   cmbInis   = new LookUpEdit();
-
         public SecimEkrani(int seferID)
         {
             _seferID = seferID;
@@ -32,10 +28,10 @@ namespace StajWinForms
             try
             {
                 KoltuklariNumaralandir();
-                EkKontrollerEkle();
                 DuraklariYukle();
+                KoltuklariRenklendir();
             }
-            catch (Microsoft.Data.SqlClient.SqlException ex)
+            catch (SqlException ex)
             {
                 MessageBox.Show("Veritabanı hatası:\n" + ex.Message, "Hata",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -45,7 +41,7 @@ namespace StajWinForms
         private void KoltuklariNumaralandir()
         {
             var siraliButonlar = this.Controls.OfType<SimpleButton>()
-                .Where(btn => btn.Name != "btnKoltukSec" && btn.Name != "btnFiltrele")
+                .Where(btn => btn.Name != "btnKoltukSec")
                 .OrderBy(btn => btn.Location.X)
                 .ThenBy(btn => btn.Location.Y)
                 .ToList();
@@ -60,25 +56,49 @@ namespace StajWinForms
             }
         }
 
-        private void EkKontrollerEkle()
+        private void cmbBinis_EditValueChanged(object sender, EventArgs e)
         {
-            this.ClientSize = new Size(800, 490);
+            if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
+            {
+                int binisSira = Convert.ToInt32(cmbBinis.EditValue);
+                int inisSira = Convert.ToInt32(cmbInis.EditValue);
+                if (binisSira >= inisSira)
+                {
+                    MessageBox.Show("İniş durağı, biniş durağından önce olamaz.", "Hata",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbInis.EditValue = null;
+                    return;
+                }
+                if (binisSira == inisSira)
+                {
+                    MessageBox.Show("Biniş ve iniş durakları aynı olamaz.", "Hata",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbInis.EditValue = null;
+                    return;
+                }
+            }
 
-            lblBinis.Text = "Biniş Durağı:";
-            lblBinis.Location = new Point(12, 440);
-
-            cmbBinis.Location = new Point(110, 437);
-            cmbBinis.Width = 170;
-            cmbBinis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-
-            lblInis.Text = "İniş Durağı:";
-            lblInis.Location = new Point(295, 440);
-
-            cmbInis.Location = new Point(380, 437);
-            cmbInis.Width = 170;
-            cmbInis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
-
-            this.Controls.AddRange(new Control[] { lblBinis, cmbBinis, lblInis, cmbInis });
+            KoltuklariRenklendir();
+        }
+        private void cmbInis_EditValueChanged(object sender, EventArgs e)
+        {
+            int binisSira = Convert.ToInt32(cmbBinis.EditValue);
+            int inisSira = Convert.ToInt32(cmbInis.EditValue);
+            if (binisSira >= inisSira)
+            {
+                MessageBox.Show("İniş durağı, biniş durağından önce olamaz.", "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbBinis.EditValue = null;
+                return;
+            }
+            if (binisSira == inisSira)
+            {
+                MessageBox.Show("Biniş ve iniş durakları aynı olamaz.", "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                cmbInis.EditValue = null;
+                return;
+            }
+            KoltuklariRenklendir();
         }
 
         private void DuraklariYukle()
@@ -108,35 +128,50 @@ namespace StajWinForms
             cmbInis.Properties.DisplayMember = "SehirAdi";
             cmbInis.Properties.ValueMember = "DurakSira";
 
+            if (dtBinis.Rows.Count > 0)
+                cmbBinis.EditValue = dtBinis.Rows[0]["DurakSira"];
+
             if (dtInis.Rows.Count > 0)
                 cmbInis.EditValue = dtInis.Rows[dtInis.Rows.Count - 1]["DurakSira"];
         }
 
-        private void BtnFiltrele_Click(object sender, EventArgs e)
+        private void KoltuklariRenklendir()
         {
-            if (cmbBinis.EditValue == null || cmbInis.EditValue == null) return;
+            HashSet<int> doluKoltuklar;
 
-            int binisSira = Convert.ToInt32(cmbBinis.EditValue);
-            int inisSira  = Convert.ToInt32(cmbInis.EditValue);
-
-            if (binisSira >= inisSira)
+            if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
-                MessageBox.Show("Biniş durağı iniş durağından önce olmalıdır.", "Hata",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                int binisSira = Convert.ToInt32(cmbBinis.EditValue);
+                int inisSira  = Convert.ToInt32(cmbInis.EditValue);
+                if (binisSira >= inisSira) return;
+                doluKoltuklar = DoluKoltuklariGetir(binisSira, inisSira);
+            }
+            else
+            {
+                doluKoltuklar = TumDoluKoltuklariGetir();
             }
 
-            var doluKoltuklar = DoluKoltuklariGetir(binisSira, inisSira);
             _secilenKoltukNo = null;
 
             foreach (var btn in KoltukButonlari())
             {
-                int no = int.Parse(btn.Text);
+                int no    = int.Parse(btn.Text);
                 bool dolu = doluKoltuklar.Contains(no);
-                btn.Appearance.BackColor = dolu ? Color.IndianRed : Color.LightGreen;
-                btn.Appearance.Options.UseBackColor = true;
-                btn.Enabled = !dolu;
+                KoltukRenkAyarla(btn, dolu ? Color.IndianRed : Color.LightGreen, dolu);
             }
+        }
+
+        private HashSet<int> TumDoluKoltuklariGetir()
+        {
+            var dolu = new HashSet<int>();
+            using var conn = new SqlConnection(ConnStr);
+            var cmd = new SqlCommand("SELECT KoltukNo FROM Biletler WHERE SeferID = @SeferID", conn);
+            cmd.Parameters.AddWithValue("@SeferID", _seferID);
+            conn.Open();
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+                dolu.Add((int)reader["KoltukNo"]);
+            return dolu;
         }
 
         private HashSet<int> DoluKoltuklariGetir(int binisSira, int inisSira)
@@ -169,10 +204,10 @@ namespace StajWinForms
 
             foreach (var b in KoltukButonlari())
                 if (b.Appearance.BackColor == Color.Yellow)
-                    b.Appearance.BackColor = Color.LightGreen;
+                    KoltukRenkAyarla(b, Color.LightGreen, false);
 
             _secilenKoltukNo = int.Parse(btn.Text);
-            btn.Appearance.BackColor = Color.Yellow;
+            KoltukRenkAyarla(btn, Color.Yellow, false);
         }
 
         private void btnKoltukSec_Click(object sender, EventArgs e)
@@ -183,8 +218,24 @@ namespace StajWinForms
                 return;
             }
 
-            MusteriKaydi musteriKaydi = new MusteriKaydi();
-            musteriKaydi.Show();
+            int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
+            int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
+            MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, _secilenKoltukNo.Value, binisSira, inisSira);
+            musteriKaydi.ShowDialog();
+            KoltuklariRenklendir();
+        }
+
+        private static void KoltukRenkAyarla(SimpleButton btn, Color renk, bool disabled)
+        {
+            btn.LookAndFeel.UseDefaultLookAndFeel = false;
+            btn.LookAndFeel.Style = LookAndFeelStyle.Flat;
+            btn.Appearance.BackColor  = renk;
+            btn.Appearance.BackColor2 = renk;
+            btn.Appearance.Options.UseBackColor = true;
+            btn.AppearanceDisabled.BackColor  = renk;
+            btn.AppearanceDisabled.BackColor2 = renk;
+            btn.AppearanceDisabled.Options.UseBackColor = true;
+            btn.Enabled = !disabled;
         }
 
         private IEnumerable<SimpleButton> KoltukButonlari() =>

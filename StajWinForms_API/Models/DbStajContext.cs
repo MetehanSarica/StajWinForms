@@ -21,9 +21,13 @@ public partial class DbStajContext : DbContext
 
     public virtual DbSet<Musteri> Musteris { get; set; }
 
+    public virtual DbSet<Otogarlar> Otogarlars { get; set; }
+
     public virtual DbSet<Personel> Personels { get; set; }
 
     public virtual DbSet<SeferDuraklar> SeferDuraklars { get; set; }
+
+    public virtual DbSet<SeferDurakOtogar> SeferDurakOtogars { get; set; }
 
     public virtual DbSet<Seferler> Seferlers { get; set; }
 
@@ -154,6 +158,46 @@ public partial class DbStajContext : DbContext
                 .HasForeignKey(d => d.VarisSehirId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Seferler__VarisS__71D1E811");
+        });
+
+        modelBuilder.Entity<Otogarlar>(entity =>
+        {
+            entity.HasKey(e => e.OtogarId).HasName("PK__Otogarlar__OtogarID");
+
+            entity.ToTable("Otogarlar");
+
+            entity.Property(e => e.OtogarId).HasColumnName("OtogarID");
+            entity.Property(e => e.SehirId).HasColumnName("SehirID");
+            entity.Property(e => e.OtogarAdi).HasMaxLength(100);
+            entity.Property(e => e.Adres).HasMaxLength(250);
+            entity.Property(e => e.Telefon).HasMaxLength(20);
+
+            entity.HasOne(d => d.Sehir).WithMany(p => p.Otogarlars)
+                .HasForeignKey(d => d.SehirId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__Otogarlar__Sehir");
+        });
+
+        modelBuilder.Entity<SeferDurakOtogar>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__SeferDurakOtogar__ID");
+
+            entity.ToTable("SeferDurakOtogar");
+
+            entity.Property(e => e.SeferId).HasColumnName("SeferID");
+            entity.Property(e => e.OtogarId).HasColumnName("OtogarID");
+            entity.Property(e => e.GelisSaati).HasColumnType("datetime");
+            entity.Property(e => e.GidisSaati).HasColumnType("datetime");
+
+            entity.HasOne(d => d.Sefer).WithMany(p => p.SeferDurakOtogars)
+                .HasForeignKey(d => d.SeferId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SeferDurakOtogar__Sefer");
+
+            entity.HasOne(d => d.Otogar).WithMany(p => p.SeferDurakOtogars)
+                .HasForeignKey(d => d.OtogarId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SeferDurakOtogar__Otogar");
         });
 
         modelBuilder.Entity<Sehirler>(entity =>

@@ -13,6 +13,8 @@ public partial class Sehirler
 
     public virtual ICollection<SeferDuraklar> SeferDuraklars { get; set; } = new List<SeferDuraklar>();
 
+    public virtual ICollection<Otogarlar> Otogarlars { get; set; } = new List<Otogarlar>();
+
     public virtual ICollection<Seferler> SeferlerKalkisSehirs { get; set; } = new List<Seferler>();
 
     public virtual ICollection<Seferler> SeferlerVarisSehirs { get; set; } = new List<Seferler>();

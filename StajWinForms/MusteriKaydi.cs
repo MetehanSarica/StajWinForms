@@ -12,8 +12,17 @@ namespace StajWinForms
 {
     public partial class MusteriKaydi : XtraForm
     {
-        public MusteriKaydi()
+        private readonly int _seferID;
+        private readonly int _koltukNo;
+        private readonly int _binisDurakSira;
+        private readonly int _inisDurakSira;
+
+        public MusteriKaydi(int seferID, int koltukNo, int binisDurakSira, int inisDurakSira)
         {
+            _seferID = seferID;
+            _koltukNo = koltukNo;
+            _binisDurakSira = binisDurakSira;
+            _inisDurakSira = inisDurakSira;
             InitializeComponent();
         }
 
@@ -51,6 +60,50 @@ namespace StajWinForms
                 cmd.ExecuteNonQuery();
 
                 MessageBox.Show("Müşteri kaydı başarıyla eklendi.");
+                this.Close();
+            }
+        }
+
+        private void btnBiletOlustur_Click(object sender, EventArgs e)
+        {
+            string tc = txtboxTC.Text.Trim();
+            if (tc.Length != 11 || tc[0] == '0')
+            {
+                MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
+            {
+                conn.Open();
+
+                string musteriQuery = @"
+                    IF NOT EXISTS (SELECT 1 FROM Musteri WHERE TC = @TC)
+                        INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres)
+                        VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres)";
+                SqlCommand musteriCmd = new SqlCommand(musteriQuery, conn);
+                musteriCmd.Parameters.AddWithValue("@TC", tc);
+                musteriCmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
+                musteriCmd.Parameters.AddWithValue("@Soyad", txtboxSoyad.Text);
+                musteriCmd.Parameters.AddWithValue("@Email", txtboxEmail.Text);
+                musteriCmd.Parameters.AddWithValue("@Telefon", txtboxTelefon.Text);
+                musteriCmd.Parameters.AddWithValue("@Sehir", txtboxSehir.Text);
+                musteriCmd.Parameters.AddWithValue("@Adres", txtboxAdres.Text);
+                musteriCmd.ExecuteNonQuery();
+
+                string biletQuery = @"
+                    INSERT INTO Biletler (SeferID, KoltukNo, MusteriTC, BinisDurakSira, InisDurakSira)
+                    VALUES (@SeferID, @KoltukNo, @MusteriTC, @BinisDurakSira, @InisDurakSira)";
+                SqlCommand biletCmd = new SqlCommand(biletQuery, conn);
+                biletCmd.Parameters.AddWithValue("@SeferID", _seferID);
+                biletCmd.Parameters.AddWithValue("@KoltukNo", _koltukNo);
+                biletCmd.Parameters.AddWithValue("@MusteriTC", tc);
+                biletCmd.Parameters.AddWithValue("@BinisDurakSira", _binisDurakSira);
+                biletCmd.Parameters.AddWithValue("@InisDurakSira", _inisDurakSira);
+                biletCmd.ExecuteNonQuery();
+
+                MessageBox.Show("Bilet başarıyla oluşturuldu.");
                 this.Close();
             }
         }

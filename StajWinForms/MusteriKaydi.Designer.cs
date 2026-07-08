@@ -32,6 +32,7 @@ namespace StajWinForms
             lblAdres = new LabelControl();
             txtboxAdres = new TextEdit();
             btnKaydet = new SimpleButton();
+            btnBiletOlustur = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).BeginInit();
@@ -166,10 +167,19 @@ namespace StajWinForms
             //
             btnKaydet.Location = new Point(120, 270);
             btnKaydet.Name = "btnKaydet";
-            btnKaydet.Size = new Size(270, 32);
+            btnKaydet.Size = new Size(125, 32);
             btnKaydet.TabIndex = 14;
             btnKaydet.Text = "Kaydet";
             btnKaydet.Click += btnKaydet_Click;
+            //
+            // btnBiletOlustur
+            //
+            btnBiletOlustur.Location = new Point(255, 270);
+            btnBiletOlustur.Name = "btnBiletOlustur";
+            btnBiletOlustur.Size = new Size(135, 32);
+            btnBiletOlustur.TabIndex = 15;
+            btnBiletOlustur.Text = "Bilet Oluştur";
+            btnBiletOlustur.Click += btnBiletOlustur_Click;
             //
             // MusteriKaydi
             //
@@ -190,6 +200,7 @@ namespace StajWinForms
             Controls.Add(txtboxSehir);
             Controls.Add(lblAdres);
             Controls.Add(txtboxAdres);
+            Controls.Add(btnBiletOlustur);
             Controls.Add(btnKaydet);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -225,5 +236,6 @@ namespace StajWinForms
         private LabelControl lblAdres;
         private TextEdit txtboxAdres;
         private SimpleButton btnKaydet;
+        private SimpleButton btnBiletOlustur;
     }
 }

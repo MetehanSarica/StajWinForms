@@ -57,8 +57,13 @@ namespace StajWinForms
             button35 = new SimpleButton();
             button36 = new SimpleButton();
             btnKoltukSec = new SimpleButton();
-            btnFiltrele = new SimpleButton();
+            lblBinis = new LabelControl();
+            cmbBinis = new LookUpEdit();
+            lblInis = new LabelControl();
+            cmbInis = new LookUpEdit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cmbBinis.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cmbInis.Properties).BeginInit();
             SuspendLayout();
             //
             // pictureBox1
@@ -368,21 +373,45 @@ namespace StajWinForms
             btnKoltukSec.Text = "Koltuk Seç";
             btnKoltukSec.Click += btnKoltukSec_Click;
             //
-            // btnFiltrele
+            // lblBinis
             //
-            btnFiltrele.Location = new Point(188, 361);
-            btnFiltrele.Name = "btnFiltrele";
-            btnFiltrele.Size = new Size(150, 59);
-            btnFiltrele.TabIndex = 38;
-            btnFiltrele.Text = "Filtrele";
-            btnFiltrele.Click += BtnFiltrele_Click;
+            lblBinis.Location = new Point(12, 440);
+            lblBinis.Name = "lblBinis";
+            lblBinis.Text = "Biniş Durağı:";
+            //
+            // cmbBinis
+            //
+            cmbBinis.Location = new Point(110, 437);
+            cmbBinis.Name = "cmbBinis";
+            cmbBinis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cmbBinis.Size = new Size(170, 20);
+            cmbBinis.TabIndex = 38;
+            cmbBinis.EditValueChanged += cmbBinis_EditValueChanged;
+            //
+            // lblInis
+            //
+            lblInis.Location = new Point(295, 440);
+            lblInis.Name = "lblInis";
+            lblInis.Text = "İniş Durağı:";
+            //
+            // cmbInis
+            //
+            cmbInis.Location = new Point(380, 437);
+            cmbInis.Name = "cmbInis";
+            cmbInis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cmbInis.Size = new Size(170, 20);
+            cmbInis.TabIndex = 39;
+            cmbInis.EditValueChanged += cmbInis_EditValueChanged;
             //
             // SecimEkrani
             //
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(btnFiltrele);
+            ClientSize = new Size(800, 490);
+            Controls.Add(cmbInis);
+            Controls.Add(lblInis);
+            Controls.Add(cmbBinis);
+            Controls.Add(lblBinis);
             Controls.Add(btnKoltukSec);
             Controls.Add(button19);
             Controls.Add(button20);
@@ -427,6 +456,8 @@ namespace StajWinForms
             Text = "Koltuk Seçimi";
             Load += SecimEkrani_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbBinis.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbInis.Properties).EndInit();
             ResumeLayout(false);
         }
 
@@ -470,6 +501,9 @@ namespace StajWinForms
         private SimpleButton button35;
         private SimpleButton button36;
         private SimpleButton btnKoltukSec;
-        private SimpleButton btnFiltrele;
+        private LabelControl lblBinis;
+        private LookUpEdit cmbBinis;
+        private LabelControl lblInis;
+        private LookUpEdit cmbInis;
     }
 }

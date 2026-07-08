@@ -49,6 +49,7 @@ namespace StajWinForms
                 txtZamanValue.Text = sefer.KalkisZamani.ToString("dd.MM.yyyy HH:mm");
                 txtFiyatValue.Text = sefer.Fiyat.ToString("C2");
                 txtKoltukValue.Text = sefer.BosKoltuk.ToString();
+                txtDuraklar.Text = string.Join(" → ", sefer.Duraklar);
                 Text = "Sefer Detayları";
             }
             catch (HttpRequestException ex)

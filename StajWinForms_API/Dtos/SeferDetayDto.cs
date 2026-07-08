@@ -9,5 +9,6 @@ namespace StajWinForms_API.Dtos
         public required DateTime KalkisZamani { get; set; }
         public required decimal Fiyat { get; set; }
         public required int BosKoltuk { get; set; }
+        public List<string> Duraklar { get; set; } = new();
     }
 }

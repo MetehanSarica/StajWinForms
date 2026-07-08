@@ -48,8 +48,13 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.BosKoltuk
+                BosKoltuk = s.BosKoltuk,
+                Duraklar = s.SeferDurakOtogars
+                    .OrderBy(d => d.DurakSira)
+                    .Select(d => d.Otogar.OtogarAdi)
+                    .ToList()
             })
+
             .FirstOrDefaultAsync();
 
         if (sefer == null) return NotFound();

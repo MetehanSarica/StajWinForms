@@ -32,7 +32,7 @@ namespace StajWinForms
             }
         }
 
-        private void btnAra_Click(object sender, EventArgs e)
+        private void txtboxAra_EditValueChanged(object sender, EventArgs e)
         {
             var filtre = txtboxAra.Text.Trim();
             if (string.IsNullOrEmpty(filtre))
@@ -85,6 +85,12 @@ namespace StajWinForms
             if (id <= 0) MessageBox.Show("Lütfen önce bir sefer seçin.");
             return id;
         }
+
+        private void btnBiletIptal_Click(object sender, EventArgs e)
+        {
+            BiletIptal biletIptal = new BiletIptal();
+            biletIptal.ShowDialog();
+        }
     }
 
     internal class SeferDetayModel
@@ -96,5 +102,6 @@ namespace StajWinForms
         public DateTime KalkisZamani { get; set; }
         public decimal Fiyat { get; set; }
         public int BosKoltuk { get; set; }
+        public List<string> Duraklar { get; set; } = new();
     }
 }
