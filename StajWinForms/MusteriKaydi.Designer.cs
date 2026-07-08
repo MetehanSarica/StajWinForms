@@ -17,6 +17,7 @@ namespace StajWinForms
 
         private void InitializeComponent()
         {
+            lblKoltukBilgi = new LabelControl();
             lblTC = new LabelControl();
             txtboxTC = new TextEdit();
             lblAd = new LabelControl();
@@ -42,11 +43,24 @@ namespace StajWinForms
             ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).BeginInit();
             SuspendLayout();
             //
+            // lblKoltukBilgi
+            //
+            lblKoltukBilgi.Appearance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
+            lblKoltukBilgi.Appearance.ForeColor = System.Drawing.Color.DarkBlue;
+            lblKoltukBilgi.Appearance.Options.UseFont = true;
+            lblKoltukBilgi.Appearance.Options.UseForeColor = true;
+            lblKoltukBilgi.AutoSizeMode = DevExpress.XtraEditors.LabelAutoSizeMode.None;
+            lblKoltukBilgi.Location = new Point(20, 12);
+            lblKoltukBilgi.Name = "lblKoltukBilgi";
+            lblKoltukBilgi.Size = new Size(380, 22);
+            lblKoltukBilgi.TabIndex = 16;
+            lblKoltukBilgi.Text = "Seçilen Koltuk: -";
+            //
             // lblTC
             //
             lblTC.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTC.Appearance.Options.UseFont = true;
-            lblTC.Location = new Point(20, 22);
+            lblTC.Location = new Point(20, 57);
             lblTC.Name = "lblTC";
             lblTC.Size = new Size(95, 17);
             lblTC.TabIndex = 0;
@@ -54,7 +68,7 @@ namespace StajWinForms
             //
             // txtboxTC
             //
-            txtboxTC.Location = new Point(120, 20);
+            txtboxTC.Location = new Point(120, 55);
             txtboxTC.Name = "txtboxTC";
             txtboxTC.Size = new Size(270, 20);
             txtboxTC.TabIndex = 1;
@@ -64,7 +78,7 @@ namespace StajWinForms
             //
             lblAd.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblAd.Appearance.Options.UseFont = true;
-            lblAd.Location = new Point(20, 57);
+            lblAd.Location = new Point(20, 92);
             lblAd.Name = "lblAd";
             lblAd.Size = new Size(95, 17);
             lblAd.TabIndex = 2;
@@ -72,7 +86,7 @@ namespace StajWinForms
             //
             // txtboxAd
             //
-            txtboxAd.Location = new Point(120, 55);
+            txtboxAd.Location = new Point(120, 90);
             txtboxAd.Name = "txtboxAd";
             txtboxAd.Size = new Size(270, 20);
             txtboxAd.TabIndex = 3;
@@ -81,7 +95,7 @@ namespace StajWinForms
             //
             lblSoyad.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblSoyad.Appearance.Options.UseFont = true;
-            lblSoyad.Location = new Point(20, 92);
+            lblSoyad.Location = new Point(20, 127);
             lblSoyad.Name = "lblSoyad";
             lblSoyad.Size = new Size(95, 17);
             lblSoyad.TabIndex = 4;
@@ -89,7 +103,7 @@ namespace StajWinForms
             //
             // txtboxSoyad
             //
-            txtboxSoyad.Location = new Point(120, 90);
+            txtboxSoyad.Location = new Point(120, 125);
             txtboxSoyad.Name = "txtboxSoyad";
             txtboxSoyad.Size = new Size(270, 20);
             txtboxSoyad.TabIndex = 5;
@@ -98,7 +112,7 @@ namespace StajWinForms
             //
             lblEmail.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblEmail.Appearance.Options.UseFont = true;
-            lblEmail.Location = new Point(20, 127);
+            lblEmail.Location = new Point(20, 162);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(95, 17);
             lblEmail.TabIndex = 6;
@@ -106,7 +120,7 @@ namespace StajWinForms
             //
             // txtboxEmail
             //
-            txtboxEmail.Location = new Point(120, 125);
+            txtboxEmail.Location = new Point(120, 160);
             txtboxEmail.Name = "txtboxEmail";
             txtboxEmail.Size = new Size(270, 20);
             txtboxEmail.TabIndex = 7;
@@ -115,7 +129,7 @@ namespace StajWinForms
             //
             lblTelefon.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTelefon.Appearance.Options.UseFont = true;
-            lblTelefon.Location = new Point(20, 162);
+            lblTelefon.Location = new Point(20, 197);
             lblTelefon.Name = "lblTelefon";
             lblTelefon.Size = new Size(95, 17);
             lblTelefon.TabIndex = 8;
@@ -123,7 +137,7 @@ namespace StajWinForms
             //
             // txtboxTelefon
             //
-            txtboxTelefon.Location = new Point(120, 160);
+            txtboxTelefon.Location = new Point(120, 195);
             txtboxTelefon.Name = "txtboxTelefon";
             txtboxTelefon.Size = new Size(270, 20);
             txtboxTelefon.TabIndex = 9;
@@ -133,7 +147,7 @@ namespace StajWinForms
             //
             lblSehir.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblSehir.Appearance.Options.UseFont = true;
-            lblSehir.Location = new Point(20, 197);
+            lblSehir.Location = new Point(20, 232);
             lblSehir.Name = "lblSehir";
             lblSehir.Size = new Size(95, 17);
             lblSehir.TabIndex = 10;
@@ -141,7 +155,7 @@ namespace StajWinForms
             //
             // txtboxSehir
             //
-            txtboxSehir.Location = new Point(120, 195);
+            txtboxSehir.Location = new Point(120, 230);
             txtboxSehir.Name = "txtboxSehir";
             txtboxSehir.Size = new Size(270, 20);
             txtboxSehir.TabIndex = 11;
@@ -150,7 +164,7 @@ namespace StajWinForms
             //
             lblAdres.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblAdres.Appearance.Options.UseFont = true;
-            lblAdres.Location = new Point(20, 232);
+            lblAdres.Location = new Point(20, 267);
             lblAdres.Name = "lblAdres";
             lblAdres.Size = new Size(95, 17);
             lblAdres.TabIndex = 12;
@@ -158,14 +172,14 @@ namespace StajWinForms
             //
             // txtboxAdres
             //
-            txtboxAdres.Location = new Point(120, 230);
+            txtboxAdres.Location = new Point(120, 265);
             txtboxAdres.Name = "txtboxAdres";
             txtboxAdres.Size = new Size(270, 20);
             txtboxAdres.TabIndex = 13;
             //
             // btnKaydet
             //
-            btnKaydet.Location = new Point(120, 270);
+            btnKaydet.Location = new Point(120, 305);
             btnKaydet.Name = "btnKaydet";
             btnKaydet.Size = new Size(125, 32);
             btnKaydet.TabIndex = 14;
@@ -174,7 +188,7 @@ namespace StajWinForms
             //
             // btnBiletOlustur
             //
-            btnBiletOlustur.Location = new Point(255, 270);
+            btnBiletOlustur.Location = new Point(255, 305);
             btnBiletOlustur.Name = "btnBiletOlustur";
             btnBiletOlustur.Size = new Size(135, 32);
             btnBiletOlustur.TabIndex = 15;
@@ -185,7 +199,8 @@ namespace StajWinForms
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(420, 322);
+            ClientSize = new Size(420, 357);
+            Controls.Add(lblKoltukBilgi);
             Controls.Add(lblTC);
             Controls.Add(txtboxTC);
             Controls.Add(lblAd);
@@ -221,6 +236,7 @@ namespace StajWinForms
 
         #endregion
 
+        private LabelControl lblKoltukBilgi;
         private LabelControl lblTC;
         private TextEdit txtboxTC;
         private LabelControl lblAd;

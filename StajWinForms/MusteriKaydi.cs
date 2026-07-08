@@ -24,6 +24,7 @@ namespace StajWinForms
             _binisDurakSira = binisDurakSira;
             _inisDurakSira = inisDurakSira;
             InitializeComponent();
+            lblKoltukBilgi.Text = $"Seçilen Koltuk: {_koltukNo}";
         }
 
         private bool Dogrula()
