@@ -62,33 +62,6 @@ namespace StajWinForms
             return true;
         }
 
-        private void btnKaydet_Click(object sender, EventArgs e)
-        {
-            if (!Dogrula()) return;
-
-            string tc = txtboxTC.Text.Trim();
-
-            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
-            {
-                string query = @"INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres)
-                               VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres)";
-
-                conn.Open();
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@TC", tc);
-                cmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
-                cmd.Parameters.AddWithValue("@Soyad", txtboxSoyad.Text);
-                cmd.Parameters.AddWithValue("@Email", txtboxEmail.Text);
-                cmd.Parameters.AddWithValue("@Telefon", txtboxTelefon.Text);
-                cmd.Parameters.AddWithValue("@Sehir", txtboxSehir.Text);
-                cmd.Parameters.AddWithValue("@Adres", txtboxAdres.Text);
-                cmd.ExecuteNonQuery();
-
-                MessageBox.Show("Müşteri kaydı başarıyla eklendi.");
-                this.Close();
-            }
-        }
-
         private void btnBiletOlustur_Click(object sender, EventArgs e)
         {
             if (!Dogrula()) return;
