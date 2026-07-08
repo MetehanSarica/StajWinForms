@@ -26,22 +26,46 @@ namespace StajWinForms
             InitializeComponent();
         }
 
-        private void btnKaydet_Click(object sender, EventArgs e)
+        private bool Dogrula()
         {
+            if (txtboxTC.Text.Trim().Length == 0 ||
+                txtboxAd.Text.Trim().Length == 0 ||
+                txtboxSoyad.Text.Trim().Length == 0 ||
+                txtboxEmail.Text.Trim().Length == 0 ||
+                txtboxTelefon.Text.Trim().Length == 0 ||
+                txtboxSehir.Text.Trim().Length == 0 ||
+                txtboxAdres.Text.Trim().Length == 0)
+            {
+                MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Eksik Bilgi",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
             string tc = txtboxTC.Text.Trim();
             if (tc.Length != 11 || tc[0] == '0')
             {
                 MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return false;
             }
+
             string telefon = txtboxTelefon.Text.Trim();
-            if (telefon.Length > 0 && telefon[0] == '0')
+            if (telefon[0] == '0')
             {
                 MessageBox.Show("Telefon numarası 0 ile başlamamalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtboxTelefon.Text = "";
+                return false;
             }
+
+            return true;
+        }
+
+        private void btnKaydet_Click(object sender, EventArgs e)
+        {
+            if (!Dogrula()) return;
+
+            string tc = txtboxTC.Text.Trim();
 
             using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
@@ -66,13 +90,9 @@ namespace StajWinForms
 
         private void btnBiletOlustur_Click(object sender, EventArgs e)
         {
+            if (!Dogrula()) return;
+
             string tc = txtboxTC.Text.Trim();
-            if (tc.Length != 11 || tc[0] == '0')
-            {
-                MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
 
             using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
