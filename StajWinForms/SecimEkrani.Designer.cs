@@ -375,6 +375,7 @@ namespace StajWinForms
             btnFiltrele.Size = new Size(150, 59);
             btnFiltrele.TabIndex = 38;
             btnFiltrele.Text = "Filtrele";
+            btnFiltrele.Click += BtnFiltrele_Click;
             //
             // SecimEkrani
             //
@@ -423,7 +424,7 @@ namespace StajWinForms
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "SecimEkrani";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "Seç";
+            Text = "Koltuk Seçimi";
             Load += SecimEkrani_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1.Properties).EndInit();
             ResumeLayout(false);

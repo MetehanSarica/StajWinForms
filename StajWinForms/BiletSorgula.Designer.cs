@@ -1,116 +1,116 @@
-﻿namespace StajWinForms
+using DevExpress.XtraEditors;
+using DevExpress.XtraGrid;
+using DevExpress.XtraGrid.Views.Grid;
+
+namespace StajWinForms
 {
     partial class BiletSorgula
     {
-        /// <summary>
-        /// Required designer variable.
-        /// </summary>
         private System.ComponentModel.IContainer components = null;
 
-        /// <summary>
-        /// Clean up any resources being used.
-        /// </summary>
-        /// <param name="disposing">true if managed resources should be disposed; otherwise, false.</param>
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
         #region Windows Form Designer generated code
 
-        /// <summary>
-        /// Required method for Designer support - do not modify
-        /// the contents of this method with the code editor.
-        /// </summary>
         private void InitializeComponent()
         {
-            txtboxTC = new TextBox();
-            lblTC = new Label();
-            btnBiletSorgu = new Button();
-            dataGridSorgu = new DataGridView();
-            groupBox1 = new GroupBox();
+            panelTop = new PanelControl();
+            lblTC = new LabelControl();
+            txtboxTC = new TextEdit();
+            btnBiletSorgu = new SimpleButton();
+            dataGridSorgu = new GridControl();
+            gridView1 = new GridView();
+            ((System.ComponentModel.ISupportInitialize)panelTop).BeginInit();
+            panelTop.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dataGridSorgu).BeginInit();
-            groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)gridView1).BeginInit();
             SuspendLayout();
-            // 
-            // txtboxTC
-            // 
-            txtboxTC.Location = new Point(44, 56);
-            txtboxTC.Name = "txtboxTC";
-            txtboxTC.Size = new Size(179, 23);
-            txtboxTC.TabIndex = 0;
-            txtboxTC.TextChanged += txtboxTC_TextChanged;
-            // 
+            //
+            // panelTop
+            //
+            panelTop.Controls.Add(lblTC);
+            panelTop.Controls.Add(txtboxTC);
+            panelTop.Controls.Add(btnBiletSorgu);
+            panelTop.Dock = DockStyle.Top;
+            panelTop.Name = "panelTop";
+            panelTop.Size = new Size(460, 80);
+            panelTop.TabIndex = 0;
+            //
             // lblTC
-            // 
-            lblTC.AutoSize = true;
-            lblTC.Location = new Point(44, 38);
+            //
+            lblTC.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTC.Appearance.Options.UseFont = true;
+            lblTC.Location = new Point(16, 12);
             lblTC.Name = "lblTC";
-            lblTC.Size = new Size(79, 15);
-            lblTC.TabIndex = 1;
+            lblTC.TabIndex = 0;
             lblTC.Text = "TC Kimlik No:";
-            // 
+            //
+            // txtboxTC
+            //
+            txtboxTC.Location = new Point(16, 32);
+            txtboxTC.Name = "txtboxTC";
+            txtboxTC.Size = new Size(220, 20);
+            txtboxTC.TabIndex = 1;
+            txtboxTC.EditValueChanged += txtboxTC_TextChanged;
+            //
             // btnBiletSorgu
-            // 
-            btnBiletSorgu.Location = new Point(44, 94);
+            //
+            btnBiletSorgu.Location = new Point(252, 30);
             btnBiletSorgu.Name = "btnBiletSorgu";
-            btnBiletSorgu.Size = new Size(179, 32);
+            btnBiletSorgu.Size = new Size(130, 26);
             btnBiletSorgu.TabIndex = 2;
             btnBiletSorgu.Text = "Sorgula";
-            btnBiletSorgu.UseVisualStyleBackColor = true;
             btnBiletSorgu.Click += btnBiletSorgu_Click;
-            // 
+            //
             // dataGridSorgu
-            // 
-            dataGridSorgu.AllowUserToAddRows = false;
-            dataGridSorgu.AllowUserToDeleteRows = false;
-            dataGridSorgu.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridSorgu.Location = new Point(6, 154);
-            dataGridSorgu.MultiSelect = false;
+            //
+            dataGridSorgu.Dock = DockStyle.Fill;
+            dataGridSorgu.MainView = gridView1;
             dataGridSorgu.Name = "dataGridSorgu";
-            dataGridSorgu.ReadOnly = true;
-            dataGridSorgu.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            dataGridSorgu.Size = new Size(267, 266);
-            dataGridSorgu.TabIndex = 3;
-            // 
-            // groupBox1
-            // 
-            groupBox1.Controls.Add(lblTC);
-            groupBox1.Controls.Add(btnBiletSorgu);
-            groupBox1.Controls.Add(txtboxTC);
-            groupBox1.Controls.Add(dataGridSorgu);
-            groupBox1.Location = new Point(12, 12);
-            groupBox1.Name = "groupBox1";
-            groupBox1.Size = new Size(279, 426);
-            groupBox1.TabIndex = 4;
-            groupBox1.TabStop = false;
-            groupBox1.Text = "Bilet Sorgulama";
-            // 
+            dataGridSorgu.TabIndex = 1;
+            dataGridSorgu.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView1 });
+            //
+            // gridView1
+            //
+            gridView1.GridControl = dataGridSorgu;
+            gridView1.Name = "gridView1";
+            gridView1.OptionsBehavior.Editable = false;
+            gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            gridView1.OptionsSelection.MultiSelect = false;
+            gridView1.OptionsView.ShowGroupPanel = false;
+            //
             // BiletSorgula
-            // 
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            //
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(303, 450);
-            Controls.Add(groupBox1);
+            ClientSize = new Size(460, 480);
+            Controls.Add(dataGridSorgu);
+            Controls.Add(panelTop);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "BiletSorgula";
             StartPosition = FormStartPosition.CenterParent;
+            Text = "Bilet Sorgulama";
+            ((System.ComponentModel.ISupportInitialize)panelTop).EndInit();
+            panelTop.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dataGridSorgu).EndInit();
-            groupBox1.ResumeLayout(false);
-            groupBox1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)gridView1).EndInit();
             ResumeLayout(false);
         }
 
         #endregion
 
-        private TextBox txtboxTC;
-        private Label lblTC;
-        private Button btnBiletSorgu;
-        private DataGridView dataGridSorgu;
-        private GroupBox groupBox1;
+        private PanelControl panelTop;
+        private LabelControl lblTC;
+        private TextEdit txtboxTC;
+        private SimpleButton btnBiletSorgu;
+        private GridControl dataGridSorgu;
+        private GridView gridView1;
     }
 }

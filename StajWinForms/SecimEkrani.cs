@@ -11,7 +11,7 @@ namespace StajWinForms
 {
     public partial class SecimEkrani : XtraForm
     {
-        private const string ConnStr = "Server=(localdb)\\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;";
+        private static string ConnStr => DbConfig.ConnectionString;
 
         private readonly int _seferID;
         private int? _secilenKoltukNo;

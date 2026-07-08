@@ -9,9 +9,7 @@ namespace StajWinForms
         protected override void Dispose(bool disposing)
         {
             if (disposing && (components != null))
-            {
                 components.Dispose();
-            }
             base.Dispose(disposing);
         }
 
@@ -19,203 +17,213 @@ namespace StajWinForms
 
         private void InitializeComponent()
         {
-            panel1 = new PanelControl();
-            btnKaydet = new SimpleButton();
             lblTC = new LabelControl();
-            lblAdres = new LabelControl();
-            lblSehir = new LabelControl();
-            lblTelefon = new LabelControl();
-            lblEmail = new LabelControl();
-            lblSoyad = new LabelControl();
-            lblAd = new LabelControl();
             txtboxTC = new TextEdit();
-            txtboxAdres = new TextEdit();
-            txtboxSehir = new TextEdit();
-            txtboxTelefon = new TextEdit();
-            txtboxEmail = new TextEdit();
-            txtboxSoyad = new TextEdit();
+            lblAd = new LabelControl();
             txtboxAd = new TextEdit();
-            ((System.ComponentModel.ISupportInitialize)panel1).BeginInit();
-            panel1.SuspendLayout();
+            lblSoyad = new LabelControl();
+            txtboxSoyad = new TextEdit();
+            lblEmail = new LabelControl();
+            txtboxEmail = new TextEdit();
+            lblTelefon = new LabelControl();
+            txtboxTelefon = new TextEdit();
+            lblSehir = new LabelControl();
+            txtboxSehir = new TextEdit();
+            lblAdres = new LabelControl();
+            txtboxAdres = new TextEdit();
+            btnKaydet = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).BeginInit();
             SuspendLayout();
-            //
-            // panel1
-            //
-            panel1.Controls.Add(btnKaydet);
-            panel1.Controls.Add(lblTC);
-            panel1.Controls.Add(lblAdres);
-            panel1.Controls.Add(lblSehir);
-            panel1.Controls.Add(lblTelefon);
-            panel1.Controls.Add(lblEmail);
-            panel1.Controls.Add(lblSoyad);
-            panel1.Controls.Add(lblAd);
-            panel1.Controls.Add(txtboxTC);
-            panel1.Controls.Add(txtboxAdres);
-            panel1.Controls.Add(txtboxSehir);
-            panel1.Controls.Add(txtboxTelefon);
-            panel1.Controls.Add(txtboxEmail);
-            panel1.Controls.Add(txtboxSoyad);
-            panel1.Controls.Add(txtboxAd);
-            panel1.Location = new Point(12, 12);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(776, 426);
-            panel1.TabIndex = 0;
-            //
-            // btnKaydet
-            //
-            btnKaydet.Location = new Point(215, 176);
-            btnKaydet.Name = "btnKaydet";
-            btnKaydet.Size = new Size(141, 32);
-            btnKaydet.TabIndex = 15;
-            btnKaydet.Text = "Kaydet";
-            btnKaydet.Click += btnKaydet_Click;
             //
             // lblTC
             //
-            lblTC.Location = new Point(34, 40);
+            lblTC.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTC.Appearance.Options.UseFont = true;
+            lblTC.Location = new Point(20, 22);
             lblTC.Name = "lblTC";
-            lblTC.TabIndex = 14;
-            lblTC.Text = "TC:";
-            //
-            // lblAdres
-            //
-            lblAdres.Location = new Point(215, 103);
-            lblAdres.Name = "lblAdres";
-            lblAdres.TabIndex = 13;
-            lblAdres.Text = "Adres:";
-            //
-            // lblSehir
-            //
-            lblSehir.Location = new Point(215, 40);
-            lblSehir.Name = "lblSehir";
-            lblSehir.TabIndex = 12;
-            lblSehir.Text = "Sehir:";
-            //
-            // lblTelefon
-            //
-            lblTelefon.Location = new Point(34, 295);
-            lblTelefon.Name = "lblTelefon";
-            lblTelefon.TabIndex = 11;
-            lblTelefon.Text = "Telefon:";
-            //
-            // lblEmail
-            //
-            lblEmail.Location = new Point(34, 232);
-            lblEmail.Name = "lblEmail";
-            lblEmail.TabIndex = 10;
-            lblEmail.Text = "Email:";
-            //
-            // lblSoyad
-            //
-            lblSoyad.Location = new Point(34, 167);
-            lblSoyad.Name = "lblSoyad";
-            lblSoyad.TabIndex = 9;
-            lblSoyad.Text = "Soyad:";
-            //
-            // lblAd
-            //
-            lblAd.Location = new Point(34, 103);
-            lblAd.Name = "lblAd";
-            lblAd.TabIndex = 8;
-            lblAd.Text = "Ad:";
+            lblTC.Size = new Size(95, 17);
+            lblTC.TabIndex = 0;
+            lblTC.Text = "TC Kimlik No:";
             //
             // txtboxTC
             //
-            txtboxTC.Location = new Point(34, 58);
+            txtboxTC.Location = new Point(120, 20);
             txtboxTC.Name = "txtboxTC";
-            txtboxTC.Size = new Size(141, 20);
-            txtboxTC.TabIndex = 7;
+            txtboxTC.Size = new Size(270, 20);
+            txtboxTC.TabIndex = 1;
             txtboxTC.EditValueChanged += txtboxTC_TextChanged;
             //
-            // txtboxAdres
+            // lblAd
             //
-            txtboxAdres.Location = new Point(215, 121);
-            txtboxAdres.Name = "txtboxAdres";
-            txtboxAdres.Size = new Size(141, 20);
-            txtboxAdres.TabIndex = 5;
-            //
-            // txtboxSehir
-            //
-            txtboxSehir.Location = new Point(215, 58);
-            txtboxSehir.Name = "txtboxSehir";
-            txtboxSehir.Size = new Size(141, 20);
-            txtboxSehir.TabIndex = 4;
-            //
-            // txtboxTelefon
-            //
-            txtboxTelefon.Location = new Point(34, 313);
-            txtboxTelefon.Name = "txtboxTelefon";
-            txtboxTelefon.Size = new Size(141, 20);
-            txtboxTelefon.TabIndex = 3;
-            txtboxTelefon.EditValueChanged += txtboxTelefon_TextChanged;
-            //
-            // txtboxEmail
-            //
-            txtboxEmail.Location = new Point(34, 250);
-            txtboxEmail.Name = "txtboxEmail";
-            txtboxEmail.Size = new Size(141, 20);
-            txtboxEmail.TabIndex = 2;
-            //
-            // txtboxSoyad
-            //
-            txtboxSoyad.Location = new Point(34, 185);
-            txtboxSoyad.Name = "txtboxSoyad";
-            txtboxSoyad.Size = new Size(141, 20);
-            txtboxSoyad.TabIndex = 1;
+            lblAd.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblAd.Appearance.Options.UseFont = true;
+            lblAd.Location = new Point(20, 57);
+            lblAd.Name = "lblAd";
+            lblAd.Size = new Size(95, 17);
+            lblAd.TabIndex = 2;
+            lblAd.Text = "Ad:";
             //
             // txtboxAd
             //
-            txtboxAd.Location = new Point(34, 121);
+            txtboxAd.Location = new Point(120, 55);
             txtboxAd.Name = "txtboxAd";
-            txtboxAd.Size = new Size(141, 20);
-            txtboxAd.TabIndex = 0;
+            txtboxAd.Size = new Size(270, 20);
+            txtboxAd.TabIndex = 3;
+            //
+            // lblSoyad
+            //
+            lblSoyad.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSoyad.Appearance.Options.UseFont = true;
+            lblSoyad.Location = new Point(20, 92);
+            lblSoyad.Name = "lblSoyad";
+            lblSoyad.Size = new Size(95, 17);
+            lblSoyad.TabIndex = 4;
+            lblSoyad.Text = "Soyad:";
+            //
+            // txtboxSoyad
+            //
+            txtboxSoyad.Location = new Point(120, 90);
+            txtboxSoyad.Name = "txtboxSoyad";
+            txtboxSoyad.Size = new Size(270, 20);
+            txtboxSoyad.TabIndex = 5;
+            //
+            // lblEmail
+            //
+            lblEmail.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblEmail.Appearance.Options.UseFont = true;
+            lblEmail.Location = new Point(20, 127);
+            lblEmail.Name = "lblEmail";
+            lblEmail.Size = new Size(95, 17);
+            lblEmail.TabIndex = 6;
+            lblEmail.Text = "Email:";
+            //
+            // txtboxEmail
+            //
+            txtboxEmail.Location = new Point(120, 125);
+            txtboxEmail.Name = "txtboxEmail";
+            txtboxEmail.Size = new Size(270, 20);
+            txtboxEmail.TabIndex = 7;
+            //
+            // lblTelefon
+            //
+            lblTelefon.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblTelefon.Appearance.Options.UseFont = true;
+            lblTelefon.Location = new Point(20, 162);
+            lblTelefon.Name = "lblTelefon";
+            lblTelefon.Size = new Size(95, 17);
+            lblTelefon.TabIndex = 8;
+            lblTelefon.Text = "Telefon:";
+            //
+            // txtboxTelefon
+            //
+            txtboxTelefon.Location = new Point(120, 160);
+            txtboxTelefon.Name = "txtboxTelefon";
+            txtboxTelefon.Size = new Size(270, 20);
+            txtboxTelefon.TabIndex = 9;
+            txtboxTelefon.EditValueChanged += txtboxTelefon_TextChanged;
+            //
+            // lblSehir
+            //
+            lblSehir.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblSehir.Appearance.Options.UseFont = true;
+            lblSehir.Location = new Point(20, 197);
+            lblSehir.Name = "lblSehir";
+            lblSehir.Size = new Size(95, 17);
+            lblSehir.TabIndex = 10;
+            lblSehir.Text = "Şehir:";
+            //
+            // txtboxSehir
+            //
+            txtboxSehir.Location = new Point(120, 195);
+            txtboxSehir.Name = "txtboxSehir";
+            txtboxSehir.Size = new Size(270, 20);
+            txtboxSehir.TabIndex = 11;
+            //
+            // lblAdres
+            //
+            lblAdres.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblAdres.Appearance.Options.UseFont = true;
+            lblAdres.Location = new Point(20, 232);
+            lblAdres.Name = "lblAdres";
+            lblAdres.Size = new Size(95, 17);
+            lblAdres.TabIndex = 12;
+            lblAdres.Text = "Adres:";
+            //
+            // txtboxAdres
+            //
+            txtboxAdres.Location = new Point(120, 230);
+            txtboxAdres.Name = "txtboxAdres";
+            txtboxAdres.Size = new Size(270, 20);
+            txtboxAdres.TabIndex = 13;
+            //
+            // btnKaydet
+            //
+            btnKaydet.Location = new Point(120, 270);
+            btnKaydet.Name = "btnKaydet";
+            btnKaydet.Size = new Size(270, 32);
+            btnKaydet.TabIndex = 14;
+            btnKaydet.Text = "Kaydet";
+            btnKaydet.Click += btnKaydet_Click;
             //
             // MusteriKaydi
             //
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(800, 450);
-            Controls.Add(panel1);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
+            ClientSize = new Size(420, 322);
+            Controls.Add(lblTC);
+            Controls.Add(txtboxTC);
+            Controls.Add(lblAd);
+            Controls.Add(txtboxAd);
+            Controls.Add(lblSoyad);
+            Controls.Add(txtboxSoyad);
+            Controls.Add(lblEmail);
+            Controls.Add(txtboxEmail);
+            Controls.Add(lblTelefon);
+            Controls.Add(txtboxTelefon);
+            Controls.Add(lblSehir);
+            Controls.Add(txtboxSehir);
+            Controls.Add(lblAdres);
+            Controls.Add(txtboxAdres);
+            Controls.Add(btnKaydet);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "MusteriKaydi";
             StartPosition = FormStartPosition.CenterParent;
-            Text = "MusteriKaydi";
-            ((System.ComponentModel.ISupportInitialize)panel1).EndInit();
-            panel1.ResumeLayout(false);
+            Text = "Müşteri Kaydı";
             ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
-        private PanelControl panel1;
-        private TextEdit txtboxTC;
-        private TextEdit txtboxAdres;
-        private TextEdit txtboxSehir;
-        private TextEdit txtboxTelefon;
-        private TextEdit txtboxEmail;
-        private TextEdit txtboxSoyad;
-        private TextEdit txtboxAd;
         private LabelControl lblTC;
-        private LabelControl lblAdres;
-        private LabelControl lblSehir;
-        private LabelControl lblTelefon;
-        private LabelControl lblEmail;
-        private LabelControl lblSoyad;
+        private TextEdit txtboxTC;
         private LabelControl lblAd;
+        private TextEdit txtboxAd;
+        private LabelControl lblSoyad;
+        private TextEdit txtboxSoyad;
+        private LabelControl lblEmail;
+        private TextEdit txtboxEmail;
+        private LabelControl lblTelefon;
+        private TextEdit txtboxTelefon;
+        private LabelControl lblSehir;
+        private TextEdit txtboxSehir;
+        private LabelControl lblAdres;
+        private TextEdit txtboxAdres;
         private SimpleButton btnKaydet;
     }
 }

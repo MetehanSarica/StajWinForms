@@ -26,9 +26,15 @@ namespace StajWinForms
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            string telefon = txtboxTelefon.Text.Trim();
+            if (telefon.Length > 0 && telefon[0] == '0')
+            {
+                MessageBox.Show("Telefon numarası 0 ile başlamamalıdır.", "Geçersiz Telefon",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                txtboxTelefon.Text = "";
+            }
 
-            string connStr = @"Server=(localdb)\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;";
-            using (SqlConnection conn = new SqlConnection(connStr))
+            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
             {
                 string query = @"INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres)
                                VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres)";
@@ -56,7 +62,7 @@ namespace StajWinForms
             {
                 txtboxTC.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTC.Text, "[^0-9]", "");
                 if (txtboxTC.MaskBox != null)
-                    txtboxTC.MaskBox.SelectionStart = txtboxTC.Text.Length;
+                    txtboxTC.MaskBox.MaskBoxSelectionStart = txtboxTC.Text.Length;
             }
         }
 
@@ -67,7 +73,7 @@ namespace StajWinForms
             {
                 txtboxTelefon.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");
                 if (txtboxTelefon.MaskBox != null)
-                    txtboxTelefon.MaskBox.SelectionStart = txtboxTelefon.Text.Length;
+                    txtboxTelefon.MaskBox.MaskBoxSelectionStart = txtboxTelefon.Text.Length;
             }
         }
     }

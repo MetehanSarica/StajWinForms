@@ -20,144 +20,150 @@ namespace StajWinForms
         private void InitializeComponent()
         {
             lblFirmaHeader = new LabelControl();
-            lblFirmaValue = new LabelControl();
+            txtFirmaValue = new TextBox();
             lblKalkisHeader = new LabelControl();
-            lblKalkisValue = new LabelControl();
+            txtKalkisValue = new TextBox();
             lblVarisHeader = new LabelControl();
-            lblVarisValue = new LabelControl();
+            txtVarisValue = new TextBox();
             lblZamanHeader = new LabelControl();
-            lblZamanValue = new LabelControl();
+            txtZamanValue = new TextBox();
             lblFiyatHeader = new LabelControl();
-            lblFiyatValue = new LabelControl();
+            txtFiyatValue = new TextBox();
             lblKoltukHeader = new LabelControl();
-            lblKoltukValue = new LabelControl();
+            txtKoltukValue = new TextBox();
             SuspendLayout();
-            //
+            // 
             // lblFirmaHeader
-            //
+            // 
             lblFirmaHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblFirmaHeader.Appearance.Options.UseFont = true;
             lblFirmaHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblFirmaHeader.Location = new Point(20, 20);
+            lblFirmaHeader.Location = new Point(17, 17);
             lblFirmaHeader.Name = "lblFirmaHeader";
-            lblFirmaHeader.Size = new Size(120, 20);
+            lblFirmaHeader.Size = new Size(103, 17);
+            lblFirmaHeader.TabIndex = 0;
             lblFirmaHeader.Text = "Firma Adı:";
-            //
-            // lblFirmaValue
-            //
-            lblFirmaValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblFirmaValue.Location = new Point(150, 20);
-            lblFirmaValue.Name = "lblFirmaValue";
-            lblFirmaValue.Size = new Size(220, 20);
-            lblFirmaValue.Text = "-";
-            //
+            // 
+            // txtFirmaValue
+            // 
+            txtFirmaValue.Location = new Point(129, 16);
+            txtFirmaValue.Name = "txtFirmaValue";
+            txtFirmaValue.ReadOnly = true;
+            txtFirmaValue.Size = new Size(189, 21);
+            txtFirmaValue.TabIndex = 1;
+            // 
             // lblKalkisHeader
-            //
+            // 
             lblKalkisHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblKalkisHeader.Appearance.Options.UseFont = true;
             lblKalkisHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblKalkisHeader.Location = new Point(20, 60);
+            lblKalkisHeader.Location = new Point(17, 52);
             lblKalkisHeader.Name = "lblKalkisHeader";
-            lblKalkisHeader.Size = new Size(120, 20);
+            lblKalkisHeader.Size = new Size(103, 17);
+            lblKalkisHeader.TabIndex = 2;
             lblKalkisHeader.Text = "Kalkış Şehri:";
-            //
-            // lblKalkisValue
-            //
-            lblKalkisValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblKalkisValue.Location = new Point(150, 60);
-            lblKalkisValue.Name = "lblKalkisValue";
-            lblKalkisValue.Size = new Size(220, 20);
-            lblKalkisValue.Text = "-";
-            //
+            // 
+            // txtKalkisValue
+            // 
+            txtKalkisValue.Location = new Point(129, 50);
+            txtKalkisValue.Name = "txtKalkisValue";
+            txtKalkisValue.ReadOnly = true;
+            txtKalkisValue.Size = new Size(189, 21);
+            txtKalkisValue.TabIndex = 3;
+            // 
             // lblVarisHeader
-            //
+            // 
             lblVarisHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblVarisHeader.Appearance.Options.UseFont = true;
             lblVarisHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblVarisHeader.Location = new Point(20, 100);
+            lblVarisHeader.Location = new Point(17, 87);
             lblVarisHeader.Name = "lblVarisHeader";
-            lblVarisHeader.Size = new Size(120, 20);
+            lblVarisHeader.Size = new Size(103, 17);
+            lblVarisHeader.TabIndex = 4;
             lblVarisHeader.Text = "Varış Şehri:";
-            //
-            // lblVarisValue
-            //
-            lblVarisValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblVarisValue.Location = new Point(150, 100);
-            lblVarisValue.Name = "lblVarisValue";
-            lblVarisValue.Size = new Size(220, 20);
-            lblVarisValue.Text = "-";
-            //
+            // 
+            // txtVarisValue
+            // 
+            txtVarisValue.Location = new Point(129, 85);
+            txtVarisValue.Name = "txtVarisValue";
+            txtVarisValue.ReadOnly = true;
+            txtVarisValue.Size = new Size(189, 21);
+            txtVarisValue.TabIndex = 5;
+            // 
             // lblZamanHeader
-            //
+            // 
             lblZamanHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblZamanHeader.Appearance.Options.UseFont = true;
             lblZamanHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblZamanHeader.Location = new Point(20, 140);
+            lblZamanHeader.Location = new Point(17, 121);
             lblZamanHeader.Name = "lblZamanHeader";
-            lblZamanHeader.Size = new Size(120, 20);
+            lblZamanHeader.Size = new Size(103, 17);
+            lblZamanHeader.TabIndex = 6;
             lblZamanHeader.Text = "Kalkış Zamanı:";
-            //
-            // lblZamanValue
-            //
-            lblZamanValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblZamanValue.Location = new Point(150, 140);
-            lblZamanValue.Name = "lblZamanValue";
-            lblZamanValue.Size = new Size(220, 20);
-            lblZamanValue.Text = "-";
-            //
+            // 
+            // txtZamanValue
+            // 
+            txtZamanValue.Location = new Point(129, 120);
+            txtZamanValue.Name = "txtZamanValue";
+            txtZamanValue.ReadOnly = true;
+            txtZamanValue.Size = new Size(189, 21);
+            txtZamanValue.TabIndex = 7;
+            // 
             // lblFiyatHeader
-            //
+            // 
             lblFiyatHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblFiyatHeader.Appearance.Options.UseFont = true;
             lblFiyatHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblFiyatHeader.Location = new Point(20, 180);
+            lblFiyatHeader.Location = new Point(17, 156);
             lblFiyatHeader.Name = "lblFiyatHeader";
-            lblFiyatHeader.Size = new Size(120, 20);
+            lblFiyatHeader.Size = new Size(103, 17);
+            lblFiyatHeader.TabIndex = 8;
             lblFiyatHeader.Text = "Fiyat:";
-            //
-            // lblFiyatValue
-            //
-            lblFiyatValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblFiyatValue.Location = new Point(150, 180);
-            lblFiyatValue.Name = "lblFiyatValue";
-            lblFiyatValue.Size = new Size(220, 20);
-            lblFiyatValue.Text = "-";
-            //
+            // 
+            // txtFiyatValue
+            // 
+            txtFiyatValue.Location = new Point(129, 154);
+            txtFiyatValue.Name = "txtFiyatValue";
+            txtFiyatValue.ReadOnly = true;
+            txtFiyatValue.Size = new Size(189, 21);
+            txtFiyatValue.TabIndex = 9;
+            // 
             // lblKoltukHeader
-            //
+            // 
             lblKoltukHeader.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblKoltukHeader.Appearance.Options.UseFont = true;
             lblKoltukHeader.AutoSizeMode = LabelAutoSizeMode.None;
-            lblKoltukHeader.Location = new Point(20, 220);
+            lblKoltukHeader.Location = new Point(17, 191);
             lblKoltukHeader.Name = "lblKoltukHeader";
-            lblKoltukHeader.Size = new Size(120, 20);
+            lblKoltukHeader.Size = new Size(103, 17);
+            lblKoltukHeader.TabIndex = 10;
             lblKoltukHeader.Text = "Boş Koltuk:";
-            //
-            // lblKoltukValue
-            //
-            lblKoltukValue.AutoSizeMode = LabelAutoSizeMode.None;
-            lblKoltukValue.Location = new Point(150, 220);
-            lblKoltukValue.Name = "lblKoltukValue";
-            lblKoltukValue.Size = new Size(220, 20);
-            lblKoltukValue.Text = "-";
-            //
+            // 
+            // txtKoltukValue
+            // 
+            txtKoltukValue.Location = new Point(129, 189);
+            txtKoltukValue.Name = "txtKoltukValue";
+            txtKoltukValue.ReadOnly = true;
+            txtKoltukValue.Size = new Size(189, 21);
+            txtKoltukValue.TabIndex = 11;
+            // 
             // SeferDetay
-            //
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            // 
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 270);
+            ClientSize = new Size(343, 234);
+            Controls.Add(txtKalkisValue);
+            Controls.Add(txtVarisValue);
+            Controls.Add(txtZamanValue);
+            Controls.Add(txtFiyatValue);
+            Controls.Add(txtKoltukValue);
+            Controls.Add(txtFirmaValue);
             Controls.Add(lblFirmaHeader);
-            Controls.Add(lblFirmaValue);
             Controls.Add(lblKalkisHeader);
-            Controls.Add(lblKalkisValue);
             Controls.Add(lblVarisHeader);
-            Controls.Add(lblVarisValue);
             Controls.Add(lblZamanHeader);
-            Controls.Add(lblZamanValue);
             Controls.Add(lblFiyatHeader);
-            Controls.Add(lblFiyatValue);
             Controls.Add(lblKoltukHeader);
-            Controls.Add(lblKoltukValue);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             MinimizeBox = false;
@@ -165,21 +171,22 @@ namespace StajWinForms
             StartPosition = FormStartPosition.CenterParent;
             Text = "Sefer Detayları";
             ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
 
         private LabelControl lblFirmaHeader;
-        private LabelControl lblFirmaValue;
+        private TextBox txtFirmaValue;
         private LabelControl lblKalkisHeader;
-        private LabelControl lblKalkisValue;
+        private TextBox txtKalkisValue;
         private LabelControl lblVarisHeader;
-        private LabelControl lblVarisValue;
+        private TextBox txtVarisValue;
         private LabelControl lblZamanHeader;
-        private LabelControl lblZamanValue;
+        private TextBox txtZamanValue;
         private LabelControl lblFiyatHeader;
-        private LabelControl lblFiyatValue;
+        private TextBox txtFiyatValue;
         private LabelControl lblKoltukHeader;
-        private LabelControl lblKoltukValue;
+        private TextBox txtKoltukValue;
     }
 }

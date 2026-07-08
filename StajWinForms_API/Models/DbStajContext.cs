@@ -28,7 +28,6 @@ public partial class DbStajContext : DbContext
     public virtual DbSet<Seferler> Seferlers { get; set; }
 
     public virtual DbSet<Sehirler> Sehirlers { get; set; }
-    public IEnumerable<SeferDetay> SeferDetays { get; internal set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

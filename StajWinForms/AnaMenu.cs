@@ -1,68 +1,60 @@
 using System;
-using System.Data;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows.Forms;
-using Microsoft.Data.SqlClient;
-using Microsoft.VisualBasic;
 
 namespace StajWinForms
 {
     public partial class AnaMenu : DevExpress.XtraEditors.XtraForm
     {
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
+        private List<SeferDetayModel> _tumSeferler = new();
+
         public AnaMenu()
         {
             InitializeComponent();
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private async void Form1_Load(object sender, EventArgs e)
         {
-            /*
             try
             {
-                LoadData();
+                var json = await _http.GetStringAsync("/api/seferdetay");
+                _tumSeferler = JsonSerializer.Deserialize<List<SeferDetayModel>>(json,
+                    new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
+                dataGridVeriler.DataSource = _tumSeferler;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.ToString());
+                MessageBox.Show("Seferler yüklenemedi: " + ex.Message);
             }
-            */
         }
-
-        /*
-        private void LoadData()
-        {}
-        */
 
         private void btnAra_Click(object sender, EventArgs e)
         {
-            string query = @"
-                SELECT s.SeferID, f.FirmaAdi,
-                       k.SehirAdi AS KalkisSehir, v.SehirAdi AS VarisSehir,
-                       s.KalkisZamani, s.Fiyat, s.BosKoltuk
-                FROM Seferler s
-                JOIN Firmalar f ON s.FirmaID = f.FirmaID
-                JOIN Sehirler k ON s.KalkisSehirID = k.SehirID
-                JOIN Sehirler v ON s.VarisSehirID = v.SehirID
-                WHERE k.SehirAdi LIKE @sehir OR v.SehirAdi LIKE @sehir";
-
-            using (SqlConnection conn = new SqlConnection("Server=(localdb)\\MSSQLLocalDB;Database=dbStaj;Trusted_Connection=True;"))
+            var filtre = txtboxAra.Text.Trim();
+            if (string.IsNullOrEmpty(filtre))
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@sehir", "%" + txtboxAra.Text + "%");
-                SqlDataAdapter adaptor = new SqlDataAdapter(cmd);
-                DataTable tablo = new DataTable();
-                adaptor.Fill(tablo);
-                dataGridVeriler.DataSource = tablo;
+                dataGridVeriler.DataSource = null;
+                dataGridVeriler.DataSource = _tumSeferler;
+                return;
             }
+
+            var sonuc = _tumSeferler.Where(s =>
+                s.FirmaAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase) ||
+                s.KalkisSehirAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase) ||
+                s.VarisSehirAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase)).ToList();
+
+            dataGridVeriler.DataSource = null;
+            dataGridVeriler.DataSource = sonuc;
         }
 
         private void btnSec_Click(object sender, EventArgs e)
         {
-            if (gridView1.SelectedRowsCount == 0)
-            {
-                MessageBox.Show("Lütfen önce bir sefer seçin.");
-                return;
-            }
-            int seferID = Convert.ToInt32(gridView1.GetFocusedRowCellValue("SeferID"));
+            int seferID = GetSeciliSeferID();
+            if (seferID <= 0) return;
             SecimEkrani secimEkrani = new SecimEkrani(seferID);
             secimEkrani.ShowDialog();
         }
@@ -75,16 +67,34 @@ namespace StajWinForms
 
         private void btnSeferDetaylar_Click(object sender, EventArgs e)
         {
-            if (gridView1.SelectedRowsCount > 0)
-            {
-                int seferID = Convert.ToInt32(gridView1.GetFocusedRowCellValue("SeferID"));
-                SeferDetay seferDetay = new SeferDetay(seferID);
-                seferDetay.Show();
-            }
-            else
-            {
-                MessageBox.Show("Lütfen bir sefer seçin.");
-            }
+            int seferID = GetSeciliSeferID();
+            if (seferID <= 0) return;
+            SeferDetay seferDetay = new SeferDetay(seferID);
+            seferDetay.ShowDialog(this);
         }
+
+        private int GetSeciliSeferID()
+        {
+            var val = gridView1.GetFocusedRowCellValue("SeferId");
+            if (val == null || val == DBNull.Value)
+            {
+                MessageBox.Show("Lütfen önce bir sefer seçin.");
+                return 0;
+            }
+            int id = Convert.ToInt32(val);
+            if (id <= 0) MessageBox.Show("Lütfen önce bir sefer seçin.");
+            return id;
+        }
+    }
+
+    internal class SeferDetayModel
+    {
+        public int SeferId { get; set; }
+        public string FirmaAdi { get; set; } = "";
+        public string KalkisSehirAdi { get; set; } = "";
+        public string VarisSehirAdi { get; set; } = "";
+        public DateTime KalkisZamani { get; set; }
+        public decimal Fiyat { get; set; }
+        public int BosKoltuk { get; set; }
     }
 }
