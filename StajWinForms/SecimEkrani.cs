@@ -16,6 +16,8 @@ namespace StajWinForms
 
         private readonly int _seferID;
         private int? _secilenKoltukNo;
+        private object? _oncekiBinisDuragi;
+        private object? _oncekiInisDuragi;
 
         public SecimEkrani(int seferID)
         {
@@ -61,43 +63,36 @@ namespace StajWinForms
             if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
                 int binisSira = Convert.ToInt32(cmbBinis.EditValue);
-                int inisSira = Convert.ToInt32(cmbInis.EditValue);
+                int inisSira  = Convert.ToInt32(cmbInis.EditValue);
                 if (binisSira >= inisSira)
                 {
-                    MessageBox.Show("İniş durağı, biniş durağından önce olamaz.", "Hata",
+                    MessageBox.Show("Biniş durağı iniş durağından önce olmalıdır.", "Hata",
                         MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cmbInis.EditValue = null;
-                    return;
-                }
-                if (binisSira == inisSira)
-                {
-                    MessageBox.Show("Biniş ve iniş durakları aynı olamaz.", "Hata",
-                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    cmbInis.EditValue = null;
+                    cmbBinis.EditValue = _oncekiBinisDuragi;
                     return;
                 }
             }
 
+            _oncekiBinisDuragi = cmbBinis.EditValue;
             KoltuklariRenklendir();
         }
+
         private void cmbInis_EditValueChanged(object sender, EventArgs e)
         {
-            int binisSira = Convert.ToInt32(cmbBinis.EditValue);
-            int inisSira = Convert.ToInt32(cmbInis.EditValue);
-            if (binisSira >= inisSira)
+            if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
-                MessageBox.Show("İniş durağı, biniş durağından önce olamaz.", "Hata",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbBinis.EditValue = null;
-                return;
+                int binisSira = Convert.ToInt32(cmbBinis.EditValue);
+                int inisSira  = Convert.ToInt32(cmbInis.EditValue);
+                if (binisSira >= inisSira)
+                {
+                    MessageBox.Show("İniş durağı biniş durağından sonra olmalıdır.", "Hata",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    cmbInis.EditValue = _oncekiInisDuragi;
+                    return;
+                }
             }
-            if (binisSira == inisSira)
-            {
-                MessageBox.Show("Biniş ve iniş durakları aynı olamaz.", "Hata",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                cmbInis.EditValue = null;
-                return;
-            }
+
+            _oncekiInisDuragi = cmbInis.EditValue;
             KoltuklariRenklendir();
         }
 
@@ -129,10 +124,16 @@ namespace StajWinForms
             cmbInis.Properties.ValueMember = "DurakSira";
 
             if (dtBinis.Rows.Count > 0)
+            {
                 cmbBinis.EditValue = dtBinis.Rows[0]["DurakSira"];
+                _oncekiBinisDuragi = cmbBinis.EditValue;
+            }
 
             if (dtInis.Rows.Count > 0)
+            {
                 cmbInis.EditValue = dtInis.Rows[dtInis.Rows.Count - 1]["DurakSira"];
+                _oncekiInisDuragi = cmbInis.EditValue;
+            }
         }
 
         private void KoltuklariRenklendir()
