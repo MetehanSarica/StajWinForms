@@ -15,7 +15,7 @@ namespace StajWinForms
         private static string ConnStr => DbConfig.ConnectionString;
 
         private readonly int _seferID;
-        private int? _secilenKoltukNo;
+        private List<int> _secilenKoltuklar = new List<int>();
         private object? _oncekiBinisDuragi;
         private object? _oncekiInisDuragi;
 
@@ -152,7 +152,7 @@ namespace StajWinForms
                 doluKoltuklar = TumDoluKoltuklariGetir();
             }
 
-            _secilenKoltukNo = null;
+            _secilenKoltuklar.Clear();
 
             foreach (var btn in KoltukButonlari())
             {
@@ -201,28 +201,38 @@ namespace StajWinForms
 
         private void KoltukButonu_Click(object? sender, EventArgs e)
         {
-            if (sender is not SimpleButton btn) return;
+            if (sender is not SimpleButton btn) 
+                return;
 
-            foreach (var b in KoltukButonlari())
-                if (b.Appearance.BackColor == Color.Yellow)
-                    KoltukRenkAyarla(b, Color.LightGreen, false);
-
-            _secilenKoltukNo = int.Parse(btn.Text);
-            KoltukRenkAyarla(btn, Color.Yellow, false);
+            int no = int.Parse(btn.Text);
+            if (_secilenKoltuklar.Contains(no))
+            {
+                _secilenKoltuklar.Remove(no);
+                KoltukRenkAyarla(btn, Color.LightGreen, false);
+            }
+            else
+            {
+                _secilenKoltuklar.Add(no);
+                KoltukRenkAyarla(btn, Color.Yellow, false);
+            }
         }
 
         private void btnKoltukSec_Click(object sender, EventArgs e)
         {
-            if (_secilenKoltukNo == null)
+            if (_secilenKoltuklar == null || !_secilenKoltuklar.Any())
             {
                 MessageBox.Show("Lütfen önce bir koltuk seçin.");
                 return;
             }
+            
+            foreach (var no in _secilenKoltuklar)
+            {
+                int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
+                int inisSira = cmbInis.EditValue != null ? Convert.ToInt32(cmbInis.EditValue) : 0;
+                MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
+                musteriKaydi.ShowDialog();
+            }
 
-            int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
-            int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
-            MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, _secilenKoltukNo.Value, binisSira, inisSira);
-            musteriKaydi.ShowDialog();
             KoltuklariRenklendir();
         }
 
