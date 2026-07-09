@@ -42,6 +42,11 @@ public partial class DbStajContext : DbContext
             entity.ToTable("Biletler");
 
             entity.Property(e => e.BiletId).HasColumnName("BiletID");
+            entity.Property(e => e.Cinsiyet)
+                .HasMaxLength(1)
+                .IsUnicode(false)
+                .IsFixedLength();
+
             entity.Property(e => e.MusteriTc)
                 .HasMaxLength(11)
                 .IsUnicode(false)

@@ -35,7 +35,8 @@ namespace StajWinForms
                 txtboxEmail.Text.Trim().Length == 0 ||
                 txtboxTelefon.Text.Trim().Length == 0 ||
                 txtboxSehir.Text.Trim().Length == 0 ||
-                txtboxAdres.Text.Trim().Length == 0)
+                txtboxAdres.Text.Trim().Length == 0 ||
+                cmbCinsiyet.SelectedIndex == -1)
             {
                 MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Eksik Bilgi",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -51,9 +52,9 @@ namespace StajWinForms
             }
 
             string telefon = txtboxTelefon.Text.Trim();
-            if (telefon[0] == '0')
+            if (telefon[0] != '0')
             {
-                MessageBox.Show("Telefon numarası 0 ile başlamamalıdır.", "Geçersiz Telefon",
+                MessageBox.Show("Telefon numarası 0 ile başlamalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 txtboxTelefon.Text = "";
                 return false;
@@ -74,8 +75,8 @@ namespace StajWinForms
 
                 string musteriQuery = @"
                     IF NOT EXISTS (SELECT 1 FROM Musteri WHERE TC = @TC)
-                        INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres)
-                        VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres)";
+                        INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres, Cinsiyet)
+                        VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres, @Cinsiyet)";
                 SqlCommand musteriCmd = new SqlCommand(musteriQuery, conn);
                 musteriCmd.Parameters.AddWithValue("@TC", tc);
                 musteriCmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
@@ -84,17 +85,19 @@ namespace StajWinForms
                 musteriCmd.Parameters.AddWithValue("@Telefon", txtboxTelefon.Text);
                 musteriCmd.Parameters.AddWithValue("@Sehir", txtboxSehir.Text);
                 musteriCmd.Parameters.AddWithValue("@Adres", txtboxAdres.Text);
+                musteriCmd.Parameters.AddWithValue("@Cinsiyet", cmbCinsiyet.SelectedItem.ToString().Substring(0, 1).ToUpper());
                 musteriCmd.ExecuteNonQuery();
 
                 string biletQuery = @"
-                    INSERT INTO Biletler (SeferID, KoltukNo, MusteriTC, BinisDurakSira, InisDurakSira)
-                    VALUES (@SeferID, @KoltukNo, @MusteriTC, @BinisDurakSira, @InisDurakSira)";
+                    INSERT INTO Biletler (SeferID, KoltukNo, MusteriTC, BinisDurakSira, InisDurakSira, Cinsiyet)
+                    VALUES (@SeferID, @KoltukNo, @MusteriTC, @BinisDurakSira, @InisDurakSira, @Cinsiyet)";
                 SqlCommand biletCmd = new SqlCommand(biletQuery, conn);
                 biletCmd.Parameters.AddWithValue("@SeferID", _seferID);
                 biletCmd.Parameters.AddWithValue("@KoltukNo", _koltukNo);
                 biletCmd.Parameters.AddWithValue("@MusteriTC", tc);
                 biletCmd.Parameters.AddWithValue("@BinisDurakSira", _binisDurakSira);
                 biletCmd.Parameters.AddWithValue("@InisDurakSira", _inisDurakSira);
+                biletCmd.Parameters.AddWithValue("@Cinsiyet", cmbCinsiyet.SelectedItem.ToString().Substring(0, 1).ToUpper());
                 biletCmd.ExecuteNonQuery();
 
                 MessageBox.Show("Bilet başarıyla oluşturuldu.");
@@ -122,6 +125,10 @@ namespace StajWinForms
                 if (txtboxTelefon.MaskBox != null)
                     txtboxTelefon.MaskBox.MaskBoxSelectionStart = txtboxTelefon.Text.Length;
             }
+        }
+
+        private void cmbCinsiyet_SelectedIndexChanged(object sender, EventArgs e)
+        {
         }
     }
 }

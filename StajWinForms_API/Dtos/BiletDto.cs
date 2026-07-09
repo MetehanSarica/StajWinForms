@@ -10,5 +10,6 @@
         public required string KalkisSehirAdi { get; set; } = null!;
         public required string VarisSehirAdi { get; set; } = null!;
         public required DateTime KalkisZamani { get; set; }
+        public string? Cinsiyet { get; set; }
     }
 }

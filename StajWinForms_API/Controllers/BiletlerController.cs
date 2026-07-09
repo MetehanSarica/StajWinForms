@@ -29,7 +29,8 @@ public class BiletlerController : ControllerBase
                 SeferId = b.SeferId,
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
                 VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
-                KalkisZamani = b.Sefer.KalkisZamani
+                KalkisZamani = b.Sefer.KalkisZamani,
+                Cinsiyet = b.Cinsiyet
             })
             .ToListAsync();
 
@@ -53,7 +54,8 @@ public class BiletlerController : ControllerBase
             KoltukNo = dto.KoltukNo,
             MusteriTc = dto.MusteriTc,
             BinisDurakSira = dto.BinisDurakSira,
-            InisDurakSira = dto.InisDurakSira
+            InisDurakSira = dto.InisDurakSira,
+            Cinsiyet = dto.Cinsiyet
         };
 
         _context.Biletlers.Add(yeniBilet);

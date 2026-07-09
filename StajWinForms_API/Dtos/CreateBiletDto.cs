@@ -7,5 +7,7 @@
         public required string MusteriTc { get; set; } = null!;
         public required int BinisDurakSira { get; set; }
         public required int InisDurakSira { get; set; }
+        public required string Cinsiyet { get; set; } = null!;
+
     }
 }

@@ -17,6 +17,8 @@ public partial class Biletler
 
     public int InisDurakSira { get; set; }
 
+    public string? Cinsiyet { get; set; }
+
     public virtual Musteri MusteriTcNavigation { get; set; } = null!;
 
     public virtual Seferler Sefer { get; set; } = null!;

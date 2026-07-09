@@ -22,6 +22,7 @@ namespace StajWinForms
         private void InitializeComponent()
         {
             panel1 = new PanelControl();
+            btnBiletIptal = new SimpleButton();
             btnBiletSorgula = new SimpleButton();
             btnSeferDetaylar = new SimpleButton();
             btnSec = new SimpleButton();
@@ -29,7 +30,6 @@ namespace StajWinForms
             gridView1 = new GridView();
             txtboxAra = new TextEdit();
             panelControl1 = new PanelControl();
-            btnBiletIptal = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)panel1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).BeginInit();
@@ -50,6 +50,15 @@ namespace StajWinForms
             panel1.Name = "panel1";
             panel1.Size = new Size(686, 87);
             panel1.TabIndex = 0;
+            // 
+            // btnBiletIptal
+            // 
+            btnBiletIptal.Location = new Point(294, 3);
+            btnBiletIptal.Name = "btnBiletIptal";
+            btnBiletIptal.Size = new Size(90, 78);
+            btnBiletIptal.TabIndex = 8;
+            btnBiletIptal.Text = "Bilet Iptal";
+            btnBiletIptal.Click += btnBiletIptal_Click;
             // 
             // btnBiletSorgula
             // 
@@ -114,15 +123,6 @@ namespace StajWinForms
             panelControl1.Size = new Size(686, 56);
             panelControl1.TabIndex = 3;
             // 
-            // btnBiletIptal
-            // 
-            btnBiletIptal.Location = new Point(294, 3);
-            btnBiletIptal.Name = "btnBiletIptal";
-            btnBiletIptal.Size = new Size(90, 78);
-            btnBiletIptal.TabIndex = 8;
-            btnBiletIptal.Text = "Bilet Iptal";
-            btnBiletIptal.Click += btnBiletIptal_Click;
-            // 
             // AnaMenu
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
@@ -135,7 +135,6 @@ namespace StajWinForms
             Name = "AnaMenu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Ana Menü";
-            WindowState = FormWindowState.Maximized;
             Load += Form1_Load;
             ((System.ComponentModel.ISupportInitialize)panel1).EndInit();
             panel1.ResumeLayout(false);

@@ -138,7 +138,7 @@ namespace StajWinForms
 
         private void KoltuklariRenklendir()
         {
-            HashSet<int> doluKoltuklar;
+            Dictionary<int, string> doluKoltuklar;
 
             if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
@@ -156,35 +156,50 @@ namespace StajWinForms
 
             foreach (var btn in KoltukButonlari())
             {
-                int no    = int.Parse(btn.Text);
-                bool dolu = doluKoltuklar.Contains(no);
-                KoltukRenkAyarla(btn, dolu ? Color.IndianRed : Color.LightGreen, dolu);
+                int no = int.Parse(btn.Text);
+                bool dolu = doluKoltuklar.TryGetValue(no, out var cinsiyet);
+                if (cinsiyet == "E")
+                {
+                    KoltukRenkAyarla(btn, Color.LightBlue, true);
+                }
+
+                else if (cinsiyet == "K")
+
+                {
+                    KoltukRenkAyarla(btn, Color.LightPink, true);
+
+                }
+                else
+                {
+
+                    KoltukRenkAyarla(btn, Color.LightGreen, false);
+                }
             }
         }
 
-        private HashSet<int> TumDoluKoltuklariGetir()
+        private Dictionary<int, string> TumDoluKoltuklariGetir()
         {
-            var dolu = new HashSet<int>();
+            var dolu = new Dictionary<int, string>();
             using var conn = new SqlConnection(ConnStr);
-            var cmd = new SqlCommand("SELECT KoltukNo FROM Biletler WHERE SeferID = @SeferID", conn);
+            var cmd = new SqlCommand("SELECT KoltukNo, Cinsiyet FROM Biletler WHERE SeferID = @SeferID", conn);
             cmd.Parameters.AddWithValue("@SeferID", _seferID);
             conn.Open();
             using var reader = cmd.ExecuteReader();
             while (reader.Read())
-                dolu.Add((int)reader["KoltukNo"]);
+                dolu.Add((int)reader["KoltukNo"], reader["Cinsiyet"].ToString());
             return dolu;
         }
 
-        private HashSet<int> DoluKoltuklariGetir(int binisSira, int inisSira)
+        private Dictionary<int, string> DoluKoltuklariGetir(int binisSira, int inisSira)
         {
             string query = @"
-                SELECT KoltukNo
+                SELECT KoltukNo, Cinsiyet
                 FROM Biletler
                 WHERE SeferID        = @SeferID
                   AND BinisDurakSira < @InisSira
                   AND InisDurakSira  > @BinisSira";
 
-            var dolu = new HashSet<int>();
+            var dolu = new Dictionary<int, string>();
             using (var conn = new SqlConnection(ConnStr))
             {
                 var cmd = new SqlCommand(query, conn);
@@ -194,7 +209,7 @@ namespace StajWinForms
                 conn.Open();
                 using var reader = cmd.ExecuteReader();
                 while (reader.Read())
-                    dolu.Add((int)reader["KoltukNo"]);
+                    dolu.Add((int)reader["KoltukNo"], reader["Cinsiyet"].ToString());
             }
             return dolu;
         }

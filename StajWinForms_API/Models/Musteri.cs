@@ -23,5 +23,7 @@ public partial class Musteri
 
     public string Tc { get; set; } = null!;
 
+    public string Cinsiyet { get; set; } = null!;
+
     public virtual ICollection<Biletler> Biletlers { get; set; } = new List<Biletler>();
 }
