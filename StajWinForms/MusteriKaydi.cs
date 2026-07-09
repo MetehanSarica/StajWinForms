@@ -4,9 +4,14 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
+using System.IO;
 using System.Text;
 using System.Windows.Forms;
+using QuestPDF.Fluent;
+using QuestPDF.Helpers;
+using QuestPDF.Infrastructure;
 
 namespace StajWinForms
 {
@@ -100,6 +105,8 @@ namespace StajWinForms
                 biletCmd.Parameters.AddWithValue("@Cinsiyet", cmbCinsiyet.SelectedItem.ToString().Substring(0, 1).ToUpper());
                 biletCmd.ExecuteNonQuery();
 
+                BiletPdfOlustur();
+                
                 MessageBox.Show("Bilet başarıyla oluşturuldu.");
                 this.Close();
             }
@@ -129,6 +136,74 @@ namespace StajWinForms
 
         private void cmbCinsiyet_SelectedIndexChanged(object sender, EventArgs e)
         {
+        }
+        private void BiletPdfOlustur()
+        {
+            string dosyaYolu = Path.GetTempPath() + $"Bilet_{txtboxTC.Text}_{_koltukNo}_{txtboxAd.Text}.pdf";
+            Document.Create(doc =>
+            {
+                doc.Page(page =>
+                {
+                    page.Size(PageSizes.A5.Landscape());
+                    page.Margin(30);
+                    page.Background().Background(Colors.Grey.Lighten3);
+
+                    page.Header().PaddingBottom(10).Column(col =>
+                    {
+                        col.Item().Background(Colors.Blue.Darken2).Padding(12).Row(row =>
+                        {
+                            row.RelativeItem().Text("OTOBÜS BİLETİ").FontSize(22).Bold().FontColor(Colors.White).AlignCenter();
+                        });
+                    });
+
+                    page.Content().PaddingTop(15).Column(col =>
+                    {
+                        col.Item().Background(Colors.White).Border(1).BorderColor(Colors.Grey.Lighten1).Padding(15).Column(inner =>
+                        {
+                            inner.Item().PaddingBottom(8).Row(row =>
+                            {
+                                row.RelativeItem().Text("Yolcu Bilgileri").FontSize(13).Bold().FontColor(Colors.Blue.Darken2);
+                                row.ConstantItem(150).Text($"Koltuk No: {_koltukNo}").FontSize(13).Bold().FontColor(Colors.Red.Darken1).AlignRight();
+                            });
+
+                            inner.Item().LineHorizontal(1).LineColor(Colors.Grey.Lighten1);
+                            inner.Item().PaddingTop(8).Table(table =>
+                            {
+                                table.ColumnsDefinition(c =>
+                                {
+                                    c.ConstantColumn(100);
+                                    c.RelativeColumn();
+                                    c.ConstantColumn(100);
+                                    c.RelativeColumn();
+                                });
+
+                                table.Cell().Text("Ad Soyad:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text($"{txtboxAd.Text} {txtboxSoyad.Text}");
+                                table.Cell().Text("TC No:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text(txtboxTC.Text);
+
+                                table.Cell().Text("Telefon:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text(txtboxTelefon.Text);
+                                table.Cell().Text("Email:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text(txtboxEmail.Text);
+
+                                table.Cell().Text("Şehir:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text(txtboxSehir.Text);
+                                table.Cell().Text("Cinsiyet:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().Text(cmbCinsiyet.SelectedItem.ToString());
+
+                                table.Cell().Text("Adres:").SemiBold().FontColor(Colors.Grey.Darken2);
+                                table.Cell().ColumnSpan(3).Text(txtboxAdres.Text);
+                            });
+                        });
+                    });
+
+                    page.Footer().AlignCenter().PaddingTop(10)
+                        .Text($"Sefer No: {_seferID}  |  Bilet Tarihi: {DateTime.Now:dd.MM.yyyy HH:mm}")
+                        .FontSize(9).FontColor(Colors.Grey.Darken1);
+                });
+            }).GeneratePdf(dosyaYolu);
+            Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true });
         }
     }
 }
