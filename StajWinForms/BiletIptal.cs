@@ -16,13 +16,25 @@ namespace StajWinForms
         private void btnSorgula_Click(object sender, EventArgs e)
         {
             string tc = txtboxTC.Text.Trim();
-            if (tc.Length == 0) return;
+            if (tc.Length == 0) 
+                return;
 
             string query = @"
-                SELECT b.BiletID, b.SeferID, b.KoltukNo,
+                SELECT b.BiletID, b.KoltukNo, f.FirmaAdi,
+                       k.SehirAdi AS KalkisSehir, v.SehirAdi AS VarisSehir,
+                       s.KalkisZamani, s.Fiyat
+                FROM Biletler b
+                JOIN Seferler s ON b.SeferID = s.SeferID
+                JOIN Firmalar f ON s.FirmaID = f.FirmaID
+                JOIN Sehirler k ON s.KalkisSehirID = k.SehirID
+                JOIN Sehirler v ON s.VarisSehirID = v.SehirID
+                WHERE b.MusteriTC = @TC";
+
+            /*string query = @"
+                SELECT b.BiletID, b.KoltukNo, b.SeferID, 
                        b.BinisDurakSira, b.InisDurakSira
                 FROM Biletler b
-                WHERE b.MusteriTC = @TC";
+                WHERE b.MusteriTC = @TC";*/
 
             DataTable dt = new DataTable();
             using (var conn = new SqlConnection(DbConfig.ConnectionString))
