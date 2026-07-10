@@ -102,6 +102,15 @@ public class BiletlerController : ControllerBase
         if (!seferVarMi)
             return BadRequest($"SeferId {dto.SeferId} bulunamadı.");
 
+        var koltukDolu = await _context.Biletlers.AnyAsync(b =>
+            b.SeferId == dto.SeferId &&
+            b.KoltukNo == dto.KoltukNo &&
+            b.BinisDurakSira < dto.InisDurakSira &&
+            b.InisDurakSira > dto.BinisDurakSira);
+
+        if (koltukDolu)
+            return Conflict($"Koltuk {dto.KoltukNo} seçilen güzergah için dolu.");
+
         var yeniBilet = new Biletler
         {
             SeferId = dto.SeferId,
@@ -120,9 +129,20 @@ public class BiletlerController : ControllerBase
     [HttpPost("satinal")]
     public async Task<ActionResult> SatinAlBilet(SatinAlDto satinAlDto)
     {
-        await using var transaction = await _context.Database.BeginTransactionAsync();
+        // Serializable: doluluk kontrolü ile insert arasına başka satışın girmesini engeller
+        await using var transaction = await _context.Database
+            .BeginTransactionAsync(System.Data.IsolationLevel.Serializable);
         try
         {
+            var koltukDolu = await _context.Biletlers.AnyAsync(b =>
+                b.SeferId == satinAlDto.SeferId &&
+                b.KoltukNo == satinAlDto.KoltukNo &&
+                b.BinisDurakSira < satinAlDto.InisDurakSira &&
+                b.InisDurakSira > satinAlDto.BinisDurakSira);
+
+            if (koltukDolu)
+                return Conflict($"Koltuk {satinAlDto.KoltukNo} seçilen güzergah için dolu.");
+
             var musteriVarMi = await _context.Musteris.AnyAsync(m => m.Tc == satinAlDto.MusteriTc);
             if (!musteriVarMi)
                 _context.Musteris.Add(new Musteri

@@ -12,7 +12,7 @@ namespace StajWinForms
 {
     public partial class SecimEkrani : XtraForm
     {
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         private readonly int _seferID;

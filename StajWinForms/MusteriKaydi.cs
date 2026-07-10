@@ -18,7 +18,7 @@ namespace StajWinForms
 {
     public partial class MusteriKaydi : XtraForm
     {
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private readonly int _seferID;
         private readonly int _koltukNo;
@@ -99,6 +99,12 @@ namespace StajWinForms
                 {
                     BiletPdfOlustur();
                     MessageBox.Show("Bilet başarıyla oluşturuldu.");
+                    this.Close();
+                }
+                else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+                {
+                    var mesaj = await response.Content.ReadAsStringAsync();
+                    MessageBox.Show(mesaj, "Koltuk Dolu", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     this.Close();
                 }
                 else

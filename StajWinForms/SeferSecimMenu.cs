@@ -10,7 +10,7 @@ namespace StajWinForms
     public partial class SeferSecimMenu : DevExpress.XtraEditors.XtraForm
     {
 
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         public SeferSecimMenu()
@@ -27,7 +27,7 @@ namespace StajWinForms
         {
             if (string.IsNullOrEmpty(cmbKalkis.Text) || string.IsNullOrEmpty(cmbVaris.Text))
             {
-                MessageBox.Show("Lütfen kalkýþ ve varýþ þehirlerini seçin.");
+                MessageBox.Show("Lï¿½tfen kalkï¿½ï¿½ ve varï¿½ï¿½ ï¿½ehirlerini seï¿½in.");
                 return;
             }
 

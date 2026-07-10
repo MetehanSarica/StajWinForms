@@ -10,7 +10,7 @@ namespace StajWinForms
 {
     public partial class AnaMenu : DevExpress.XtraEditors.XtraForm
     {
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
         private List<SeferDetayModel> _tumSeferler = new();
 
         private readonly string? _filtreKalkis;

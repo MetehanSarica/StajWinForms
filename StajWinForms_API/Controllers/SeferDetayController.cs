@@ -28,7 +28,7 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.BosKoltuk
+                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count()
             })
             .ToListAsync();
 
@@ -48,7 +48,7 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.BosKoltuk,
+                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count(),
                 Duraklar = s.SeferDurakOtogars
                     .OrderBy(d => d.DurakSira)
                     .Select(d => d.Otogar.OtogarAdi)

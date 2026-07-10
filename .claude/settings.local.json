@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(dotnet build *)",
+      "Bash(git rm *)",
+      "Bash(ASPNETCORE_URLS=http://localhost:8081 dotnet run --no-build --nologo)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8081/api/sehirler)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -H \"X-Api-Key: yanlis\" http://localhost:8081/api/sehirler)",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" -H \"X-Api-Key: staj-2026-gizli-anahtar\" http://localhost:8081/api/sehirler)",
+      "Bash(taskkill //F //IM dotnet.exe //FI \"WINDOWTITLE ne Claude*\")"
+    ]
+  }
+}
