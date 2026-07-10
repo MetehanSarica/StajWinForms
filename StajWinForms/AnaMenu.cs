@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
+using static System.Net.WebRequestMethods;
 using System.Windows.Forms;
 
 namespace StajWinForms
@@ -12,43 +13,55 @@ namespace StajWinForms
         private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
         private List<SeferDetayModel> _tumSeferler = new();
 
+        private readonly string? _filtreKalkis;
+        private readonly string? _filtreVaris;
+        private readonly DateTime? _filtreZaman;
+
         public AnaMenu()
         {
             InitializeComponent();
         }
 
-        private async void Form1_Load(object sender, EventArgs e)
+        public AnaMenu(string kalkisSehir, string varisSehir, DateTime? kalkisZamani)
+        {
+            InitializeComponent();
+            _filtreKalkis = kalkisSehir;
+            _filtreVaris = varisSehir;
+            _filtreZaman = kalkisZamani;
+        }
+
+        private async void AnaMenu_Load(object sender, EventArgs e)
         {
             try
             {
                 var json = await _http.GetStringAsync("/api/seferdetay");
                 _tumSeferler = JsonSerializer.Deserialize<List<SeferDetayModel>>(json,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
+
+                if (!string.IsNullOrEmpty(_filtreKalkis))
+                {
+                    _tumSeferler = _tumSeferler
+                        .Where(s =>
+                            s.KalkisSehirAdi.Equals(_filtreKalkis, StringComparison.OrdinalIgnoreCase) &&
+                            s.VarisSehirAdi.Equals(_filtreVaris, StringComparison.OrdinalIgnoreCase))
+                        .ToList();
+
+                    this.Text = $"Ana Menü — {_filtreKalkis} → {_filtreVaris}";
+                }
+
+                if (_filtreZaman.HasValue)
+                {
+                    _tumSeferler = _tumSeferler
+                        .Where(s => s.KalkisZamani >= _filtreZaman.Value)
+                        .ToList();
+                }
+
                 dataGridVeriler.DataSource = _tumSeferler;
             }
             catch (Exception ex)
             {
                 MessageBox.Show("Seferler yüklenemedi: " + ex.Message);
             }
-        }
-
-        private void txtboxAra_EditValueChanged(object sender, EventArgs e)
-        {
-            var filtre = txtboxAra.Text.Trim();
-            if (string.IsNullOrEmpty(filtre))
-            {
-                dataGridVeriler.DataSource = null;
-                dataGridVeriler.DataSource = _tumSeferler;
-                return;
-            }
-
-            var sonuc = _tumSeferler.Where(s =>
-                s.FirmaAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase) ||
-                s.KalkisSehirAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase) ||
-                s.VarisSehirAdi.Contains(filtre, StringComparison.OrdinalIgnoreCase)).ToList();
-
-            dataGridVeriler.DataSource = null;
-            dataGridVeriler.DataSource = sonuc;
         }
 
         private void btnSec_Click(object sender, EventArgs e)
@@ -91,6 +104,14 @@ namespace StajWinForms
             BiletIptal biletIptal = new BiletIptal();
             biletIptal.ShowDialog();
         }
+
+        private void dataGridVeriler_DoubleClick(object sender, EventArgs e)
+        {
+            int seferID = GetSeciliSeferID();
+            if (seferID <= 0) return;
+            SeferDetay seferDetay = new SeferDetay(seferID);
+            seferDetay.ShowDialog(this);
+        }
     }
 
     internal class SeferDetayModel
@@ -100,8 +121,10 @@ namespace StajWinForms
         public string KalkisSehirAdi { get; set; } = "";
         public string VarisSehirAdi { get; set; } = "";
         public DateTime KalkisZamani { get; set; }
+        public string KalkisSaati => KalkisZamani.ToString("HH:mm");
         public decimal Fiyat { get; set; }
         public int BosKoltuk { get; set; }
         public List<string> Duraklar { get; set; } = new();
+
     }
 }

@@ -1,21 +1,22 @@
 using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
-using Microsoft.Data.SqlClient;
 using System;
 using System.Collections.Generic;
-using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace StajWinForms
 {
     public partial class SecimEkrani : XtraForm
     {
-        private static string ConnStr => DbConfig.ConnectionString;
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
+        private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         private readonly int _seferID;
-        private List<int> _secilenKoltuklar = new List<int>();
+        private List<int> _secilenKoltuklar = new();
         private object? _oncekiBinisDuragi;
         private object? _oncekiInisDuragi;
 
@@ -25,17 +26,17 @@ namespace StajWinForms
             InitializeComponent();
         }
 
-        private void SecimEkrani_Load(object sender, EventArgs e)
+        private async void SecimEkrani_Load(object sender, EventArgs e)
         {
             try
             {
                 KoltuklariNumaralandir();
-                DuraklariYukle();
-                KoltuklariRenklendir();
+                await DuraklariYukle();
+                await KoltuklariRenklendir();
             }
-            catch (SqlException ex)
+            catch (Exception ex)
             {
-                MessageBox.Show("Veritabanı hatası:\n" + ex.Message, "Hata",
+                MessageBox.Show("Yükleme hatası:\n" + ex.Message, "Hata",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
@@ -58,7 +59,7 @@ namespace StajWinForms
             }
         }
 
-        private void cmbBinis_EditValueChanged(object sender, EventArgs e)
+        private async void cmbBinis_EditValueChanged(object sender, EventArgs e)
         {
             if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
@@ -74,10 +75,10 @@ namespace StajWinForms
             }
 
             _oncekiBinisDuragi = cmbBinis.EditValue;
-            KoltuklariRenklendir();
+            await KoltuklariRenklendir();
         }
 
-        private void cmbInis_EditValueChanged(object sender, EventArgs e)
+        private async void cmbInis_EditValueChanged(object sender, EventArgs e)
         {
             if (cmbBinis.EditValue != null && cmbInis.EditValue != null)
             {
@@ -93,50 +94,36 @@ namespace StajWinForms
             }
 
             _oncekiInisDuragi = cmbInis.EditValue;
-            KoltuklariRenklendir();
+            await KoltuklariRenklendir();
         }
 
-        private void DuraklariYukle()
+        private async System.Threading.Tasks.Task DuraklariYukle()
         {
-            string query = @"
-                SELECT sd.DurakSira, s.SehirAdi
-                FROM SeferDuraklar sd
-                JOIN Sehirler s ON sd.SehirID = s.SehirID
-                WHERE sd.SeferID = @SeferID
-                ORDER BY sd.DurakSira";
+            var json = await _http.GetStringAsync($"/api/seferduraklar/{_seferID}");
+            var duraklar = JsonSerializer.Deserialize<List<SeferDurakApiModel>>(json, _jsonOpts) ?? new();
 
-            DataTable dt = new DataTable();
-            using (var conn = new SqlConnection(ConnStr))
-            {
-                var cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@SeferID", _seferID);
-                new SqlDataAdapter(cmd).Fill(dt);
-            }
-
-            var dtBinis = dt.Copy();
-            cmbBinis.Properties.DataSource = dtBinis;
+            cmbBinis.Properties.DataSource = duraklar.Select(d => new { d.DurakSira, d.SehirAdi }).ToList();
             cmbBinis.Properties.DisplayMember = "SehirAdi";
             cmbBinis.Properties.ValueMember = "DurakSira";
 
-            var dtInis = dt.Copy();
-            cmbInis.Properties.DataSource = dtInis;
+            cmbInis.Properties.DataSource = duraklar.Select(d => new { d.DurakSira, d.SehirAdi }).ToList();
             cmbInis.Properties.DisplayMember = "SehirAdi";
             cmbInis.Properties.ValueMember = "DurakSira";
 
-            if (dtBinis.Rows.Count > 0)
+            if (duraklar.Count > 0)
             {
-                cmbBinis.EditValue = dtBinis.Rows[0]["DurakSira"];
+                cmbBinis.EditValue = duraklar.First().DurakSira;
                 _oncekiBinisDuragi = cmbBinis.EditValue;
             }
 
-            if (dtInis.Rows.Count > 0)
+            if (duraklar.Count > 0)
             {
-                cmbInis.EditValue = dtInis.Rows[dtInis.Rows.Count - 1]["DurakSira"];
+                cmbInis.EditValue = duraklar.Last().DurakSira;
                 _oncekiInisDuragi = cmbInis.EditValue;
             }
         }
 
-        private void KoltuklariRenklendir()
+        private async System.Threading.Tasks.Task KoltuklariRenklendir()
         {
             Dictionary<int, string> doluKoltuklar;
 
@@ -145,11 +132,11 @@ namespace StajWinForms
                 int binisSira = Convert.ToInt32(cmbBinis.EditValue);
                 int inisSira  = Convert.ToInt32(cmbInis.EditValue);
                 if (binisSira >= inisSira) return;
-                doluKoltuklar = DoluKoltuklariGetir(binisSira, inisSira);
+                doluKoltuklar = await DoluKoltuklariGetir(binisSira, inisSira);
             }
             else
             {
-                doluKoltuklar = TumDoluKoltuklariGetir();
+                doluKoltuklar = await TumDoluKoltuklariGetir();
             }
 
             _secilenKoltuklar.Clear();
@@ -157,66 +144,35 @@ namespace StajWinForms
             foreach (var btn in KoltukButonlari())
             {
                 int no = int.Parse(btn.Text);
-                bool dolu = doluKoltuklar.TryGetValue(no, out var cinsiyet);
+                doluKoltuklar.TryGetValue(no, out var cinsiyet);
                 if (cinsiyet == "E")
-                {
                     KoltukRenkAyarla(btn, Color.LightBlue, true);
-                }
-
                 else if (cinsiyet == "K")
-
-                {
                     KoltukRenkAyarla(btn, Color.LightPink, true);
-
-                }
                 else
-                {
-
                     KoltukRenkAyarla(btn, Color.LightGreen, false);
-                }
             }
         }
 
-        private Dictionary<int, string> TumDoluKoltuklariGetir()
+        private async System.Threading.Tasks.Task<Dictionary<int, string>> TumDoluKoltuklariGetir()
         {
-            var dolu = new Dictionary<int, string>();
-            using var conn = new SqlConnection(ConnStr);
-            var cmd = new SqlCommand("SELECT KoltukNo, Cinsiyet FROM Biletler WHERE SeferID = @SeferID", conn);
-            cmd.Parameters.AddWithValue("@SeferID", _seferID);
-            conn.Open();
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-                dolu.Add((int)reader["KoltukNo"], reader["Cinsiyet"].ToString());
-            return dolu;
+            var json = await _http.GetStringAsync($"/api/biletler/{_seferID}");
+            var biletler = JsonSerializer.Deserialize<List<BiletApiModel>>(json, _jsonOpts) ?? new();
+            return biletler.ToDictionary(b => b.KoltukNo, b => b.Cinsiyet ?? "");
         }
 
-        private Dictionary<int, string> DoluKoltuklariGetir(int binisSira, int inisSira)
+        private async System.Threading.Tasks.Task<Dictionary<int, string>> DoluKoltuklariGetir(int binisSira, int inisSira)
         {
-            string query = @"
-                SELECT KoltukNo, Cinsiyet
-                FROM Biletler
-                WHERE SeferID        = @SeferID
-                  AND BinisDurakSira < @InisSira
-                  AND InisDurakSira  > @BinisSira";
-
-            var dolu = new Dictionary<int, string>();
-            using (var conn = new SqlConnection(ConnStr))
-            {
-                var cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@SeferID",   _seferID);
-                cmd.Parameters.AddWithValue("@BinisSira", binisSira);
-                cmd.Parameters.AddWithValue("@InisSira",  inisSira);
-                conn.Open();
-                using var reader = cmd.ExecuteReader();
-                while (reader.Read())
-                    dolu.Add((int)reader["KoltukNo"], reader["Cinsiyet"].ToString());
-            }
-            return dolu;
+            var json = await _http.GetStringAsync($"/api/biletler/{_seferID}");
+            var biletler = JsonSerializer.Deserialize<List<BiletApiModel>>(json, _jsonOpts) ?? new();
+            return biletler
+                .Where(b => b.BinisDurakSira < inisSira && b.InisDurakSira > binisSira)
+                .ToDictionary(b => b.KoltukNo, b => b.Cinsiyet ?? "");
         }
 
         private void KoltukButonu_Click(object? sender, EventArgs e)
         {
-            if (sender is not SimpleButton btn) 
+            if (sender is not SimpleButton btn)
                 return;
 
             int no = int.Parse(btn.Text);
@@ -232,23 +188,23 @@ namespace StajWinForms
             }
         }
 
-        private void btnKoltukSec_Click(object sender, EventArgs e)
+        private async void btnKoltukSec_Click(object sender, EventArgs e)
         {
             if (_secilenKoltuklar == null || !_secilenKoltuklar.Any())
             {
                 MessageBox.Show("Lütfen önce bir koltuk seçin.");
                 return;
             }
-            
+
             foreach (var no in _secilenKoltuklar)
             {
                 int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
-                int inisSira = cmbInis.EditValue != null ? Convert.ToInt32(cmbInis.EditValue) : 0;
+                int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
                 MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
-                musteriKaydi.ShowDialog();
+                musteriKaydi.Show();
             }
 
-            KoltuklariRenklendir();
+            await KoltuklariRenklendir();
         }
 
         private static void KoltukRenkAyarla(SimpleButton btn, Color renk, bool disabled)
@@ -266,5 +222,19 @@ namespace StajWinForms
 
         private IEnumerable<SimpleButton> KoltukButonlari() =>
             this.Controls.OfType<SimpleButton>().Where(b => b.Name.StartsWith("koltuk"));
+    }
+
+    internal class SeferDurakApiModel
+    {
+        public int DurakSira { get; set; }
+        public string SehirAdi { get; set; } = "";
+    }
+
+    internal class BiletApiModel
+    {
+        public int KoltukNo { get; set; }
+        public string? Cinsiyet { get; set; }
+        public int BinisDurakSira { get; set; }
+        public int InisDurakSira { get; set; }
     }
 }

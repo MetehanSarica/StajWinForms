@@ -21,4 +21,15 @@ public class SeferDuraklarController : ControllerBase
         var seferDuraklar = await _context.SeferDuraklars.ToListAsync();
         return Ok(seferDuraklar);
     }
+
+    [HttpGet("{seferId}")]
+    public async Task<ActionResult> GetBySeferId(int seferId)
+    {
+        var duraklar = await _context.SeferDuraklars
+            .Where(sd => sd.SeferId == seferId)
+            .OrderBy(sd => sd.DurakSira)
+            .Select(sd => new { sd.DurakSira, sd.Sehir.SehirAdi })
+            .ToListAsync();
+        return Ok(duraklar);
+    }
 }

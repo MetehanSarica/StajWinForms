@@ -37,6 +37,29 @@ public class BiletlerController : ControllerBase
         return Ok(biletler);
     }
 
+    [HttpGet("{seferId}")]
+    public async Task<ActionResult<IEnumerable<BiletDto>>> GetBySeferId(int seferId)
+    {
+        var biletler = await _context.Biletlers
+            .Where(b => b.SeferId == seferId)
+            .Select(b => new BiletDto
+            {
+                BiletId = b.BiletId,
+                KoltukNo = b.KoltukNo,
+                MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+                MusteriTc = b.MusteriTc,
+                SeferId = b.SeferId,
+                KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
+                VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
+                KalkisZamani = b.Sefer.KalkisZamani,
+                Cinsiyet = b.Cinsiyet,
+                BinisDurakSira = b.BinisDurakSira,
+                InisDurakSira = b.InisDurakSira
+            })
+            .ToListAsync();
+        return Ok(biletler);
+    }
+
     [HttpPost]
     public async Task<ActionResult> CreateBilet(CreateBiletDto dto)
     {

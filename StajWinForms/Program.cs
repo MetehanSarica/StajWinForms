@@ -15,7 +15,7 @@ namespace StajWinForms
             Application.EnableVisualStyles();
             ApplicationConfiguration.Initialize();
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Colorful");
-            Application.Run(new AnaMenu());
+            Application.Run(new SeferSecimMenu());
         }
     }
 }

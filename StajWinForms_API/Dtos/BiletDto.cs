@@ -11,5 +11,7 @@
         public required string VarisSehirAdi { get; set; } = null!;
         public required DateTime KalkisZamani { get; set; }
         public string? Cinsiyet { get; set; }
+        public int BinisDurakSira { get; set; }
+        public int InisDurakSira { get; set; }
     }
 }
