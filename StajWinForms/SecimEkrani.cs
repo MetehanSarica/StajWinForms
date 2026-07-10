@@ -188,7 +188,7 @@ namespace StajWinForms
             }
         }
 
-        private async void btnKoltukSec_Click(object sender, EventArgs e)
+        private void btnKoltukSec_Click(object sender, EventArgs e)
         {
             if (_secilenKoltuklar == null || !_secilenKoltuklar.Any())
             {
@@ -196,15 +196,21 @@ namespace StajWinForms
                 return;
             }
 
-            foreach (var no in _secilenKoltuklar)
-            {
-                int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
-                int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
-                MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
-                musteriKaydi.Show();
-            }
+            int acikFormSayisi = _secilenKoltuklar.Count;
 
-            await KoltuklariRenklendir();
+            foreach (var no in _secilenKoltuklar)
+                {
+                    int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
+                    int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
+                    MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
+                    musteriKaydi.FormClosed += async (s, args) =>
+                    {
+                        if (--acikFormSayisi == 0)
+                            await KoltuklariRenklendir();
+                    };
+                    musteriKaydi.Show();
+                }
+
         }
 
         private static void KoltukRenkAyarla(SimpleButton btn, Color renk, bool disabled)

@@ -196,7 +196,7 @@ namespace StajWinForms
             cmbCinsiyet.Properties.Items.AddRange(new object[] { "Erkek", "Kadın" });
             cmbCinsiyet.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbCinsiyet.Size = new Size(270, 20);
-            cmbCinsiyet.TabIndex = 16;
+            cmbCinsiyet.TabIndex = 14;
             cmbCinsiyet.SelectedIndexChanged += cmbCinsiyet_SelectedIndexChanged;
             // 
             // btnBiletOlustur
@@ -204,7 +204,7 @@ namespace StajWinForms
             btnBiletOlustur.Location = new Point(142, 340);
             btnBiletOlustur.Name = "btnBiletOlustur";
             btnBiletOlustur.Size = new Size(135, 32);
-            btnBiletOlustur.TabIndex = 14;
+            btnBiletOlustur.TabIndex = 15;
             btnBiletOlustur.Text = "Bilet Oluştur";
             btnBiletOlustur.Click += btnBiletOlustur_Click;
             // 

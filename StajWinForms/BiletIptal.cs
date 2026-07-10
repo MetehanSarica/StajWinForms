@@ -61,7 +61,10 @@ namespace StajWinForms
             {
                 var response = await _http.DeleteAsync($"api/biletler/{biletID}");
                 if (response.IsSuccessStatusCode)
+                {
                     MessageBox.Show("Bilet başarıyla iptal edildi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    btnSorgula_Click(sender, e);
+                }
                 else
                     MessageBox.Show("Bilet iptal edilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
