@@ -15,6 +15,8 @@ namespace StajWinForms
         public SeferSecimMenu()
         {
             InitializeComponent();
+            dateKalkis.DateTime = DateTime.Today;
+            dateKalkis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
         }
 
         private async void SeferSecimMenu_Load(object sender, EventArgs e)
@@ -38,9 +40,12 @@ namespace StajWinForms
                 return;
             }
 
+            DateTime? kalkisTarihi = dateKalkis.EditValue != null ? dateKalkis.DateTime.Date : null;
+
             AnaMenu anaMenu = new AnaMenu(
                 cmbKalkis.Text,
-                cmbVaris.Text
+                cmbVaris.Text,
+                kalkisTarihi
                 );
             anaMenu.ShowDialog();
             }

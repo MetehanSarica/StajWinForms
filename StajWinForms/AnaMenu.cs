@@ -14,17 +14,19 @@ namespace StajWinForms
 
         private readonly string? _filtreKalkis;
         private readonly string? _filtreVaris;
+        private readonly DateTime? _filtreTarih;
 
         public AnaMenu()
         {
             InitializeComponent();
         }
 
-        public AnaMenu(string kalkisSehir, string varisSehir)
+        public AnaMenu(string kalkisSehir, string varisSehir, DateTime? kalkisTarihi = null)
         {
             InitializeComponent();
             _filtreKalkis = kalkisSehir;
             _filtreVaris = varisSehir;
+            _filtreTarih = kalkisTarihi;
         }
 
         private async void AnaMenu_Load(object sender, EventArgs e)
@@ -44,6 +46,15 @@ namespace StajWinForms
                         .ToList();
 
                     this.Text = $"Ana Menü — {_filtreKalkis} → {_filtreVaris}";
+                }
+
+                if (_filtreTarih.HasValue)
+                {
+                    _tumSeferler = _tumSeferler
+                        .Where(s => s.KalkisZamani.Date == _filtreTarih.Value.Date)
+                        .ToList();
+
+                    this.Text += $" — {_filtreTarih.Value:dd.MM.yyyy}";
                 }
 
                 dataGridVeriler.DataSource = _tumSeferler;
