@@ -9,7 +9,7 @@ namespace StajWinForms
 {
     public partial class BiletSorgula : XtraForm
     {
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         public BiletSorgula()
         {

@@ -12,7 +12,7 @@ namespace StajWinForms
 {
     public partial class SecimEkrani : XtraForm
     {
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         private readonly int _seferID;
@@ -75,7 +75,15 @@ namespace StajWinForms
             }
 
             _oncekiBinisDuragi = cmbBinis.EditValue;
-            await KoltuklariRenklendir();
+            try
+            {
+                await KoltuklariRenklendir();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private async void cmbInis_EditValueChanged(object sender, EventArgs e)
@@ -94,7 +102,15 @@ namespace StajWinForms
             }
 
             _oncekiInisDuragi = cmbInis.EditValue;
-            await KoltuklariRenklendir();
+            try
+            {
+                await KoltuklariRenklendir();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private async System.Threading.Tasks.Task DuraklariYukle()
@@ -205,8 +221,16 @@ namespace StajWinForms
                     MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
                     musteriKaydi.FormClosed += async (s, args) =>
                     {
-                        if (--acikFormSayisi == 0)
-                            await KoltuklariRenklendir();
+                        try
+                        {
+                            if (--acikFormSayisi == 0)
+                                await KoltuklariRenklendir();
+                        }
+                        catch (Exception ex)
+                        {
+                            MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
+                                MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     };
                     musteriKaydi.Show();
                 }

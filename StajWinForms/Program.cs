@@ -29,7 +29,7 @@ namespace StajWinForms
         public static string ApiBaseUrl { get; set; } = "";
         public static string ApiKey { get; set; } = "";
 
-        public static HttpClient CreateHttpClient()
+        private static readonly Lazy<HttpClient> _http = new(() =>
         {
             var client = new HttpClient
             {
@@ -38,6 +38,8 @@ namespace StajWinForms
             };
             client.DefaultRequestHeaders.Add("X-Api-Key", ApiKey);
             return client;
-        }
+        });
+
+        public static HttpClient Http => _http.Value;
     }
 }

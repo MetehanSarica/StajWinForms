@@ -3,19 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 using System.Windows.Forms;
 
 namespace StajWinForms
 {
     public partial class AnaMenu : DevExpress.XtraEditors.XtraForm
     {
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private List<SeferDetayModel> _tumSeferler = new();
 
         private readonly string? _filtreKalkis;
         private readonly string? _filtreVaris;
-        private readonly DateTime? _filtreZaman;
 
         public AnaMenu()
         {
@@ -46,13 +44,6 @@ namespace StajWinForms
                         .ToList();
 
                     this.Text = $"Ana Menü — {_filtreKalkis} → {_filtreVaris}";
-                }
-
-                if (_filtreZaman.HasValue)
-                {
-                    _tumSeferler = _tumSeferler
-                        .Where(s => s.KalkisZamani >= _filtreZaman.Value)
-                        .ToList();
                 }
 
                 dataGridVeriler.DataSource = _tumSeferler;

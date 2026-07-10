@@ -47,6 +47,29 @@
 
 ---
 
+### BiletSorgula ✅
+- `Form` → `XtraForm`
+- `TextBox` → `TextEdit`, `Button` → `SimpleButton`
+- `DataGridView` → `GridControl` + `GridView`
+
+### BiletIptal ✅
+- `XtraForm` + `TextEdit` + `SimpleButton` + `GridControl`
+
+### SeferSecimMenu ✅
+- `XtraForm` + `ComboBoxEdit` + `SimpleButton`
+
+---
+
 ## Bekleyenler
 
-- [ ] BiletSorgula
+- (yok — DevExpress geçişi tamamlandı)
+
+---
+
+## Son Kontrol Düzeltmeleri (2026-07-10)
+
+- AnaMenu: kullanılmayan `_filtreZaman` alanı ve ölü filtre kodu kaldırıldı
+- SeferSecimMenu: bozuk Türkçe karakterler düzeltildi, `.editorconfig` ile UTF-8 BOM zorunlu kılındı
+- BiletlerController: `FirmaAdi` null koruması tutarlı hale getirildi (`?? ""`)
+- Async event handler'lara eksik try/catch eklendi (API kapalıyken çökme önlendi)
+- HttpClient tekilleştirildi: tüm formlar `AppConfig.Http` paylaşılan instance'ını kullanıyor

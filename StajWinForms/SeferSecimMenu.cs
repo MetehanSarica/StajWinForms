@@ -1,16 +1,15 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
 using System.Text.Json;
-using static System.Net.WebRequestMethods;
 
 namespace StajWinForms
 {
     public partial class SeferSecimMenu : DevExpress.XtraEditors.XtraForm
     {
 
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         public SeferSecimMenu()
@@ -20,14 +19,22 @@ namespace StajWinForms
 
         private async void SeferSecimMenu_Load(object sender, EventArgs e)
         {
-            await SehirleriYukle();
+            try
+            {
+                await SehirleriYukle();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Şehirler yüklenemedi: " + ex.Message, "Hata",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void btnAra_Click(object sender, EventArgs e)
         {
             if (string.IsNullOrEmpty(cmbKalkis.Text) || string.IsNullOrEmpty(cmbVaris.Text))
             {
-                MessageBox.Show("L�tfen kalk�� ve var�� �ehirlerini se�in.");
+                MessageBox.Show("Lütfen kalkış ve varış şehirlerini seçin.");
                 return;
             }
 

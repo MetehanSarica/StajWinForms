@@ -18,7 +18,7 @@ namespace StajWinForms
 {
     public partial class MusteriKaydi : XtraForm
     {
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private readonly int _seferID;
         private readonly int _koltukNo;
@@ -115,6 +115,10 @@ namespace StajWinForms
             catch (HttpRequestException)
             {
                 MessageBox.Show("Sunucuya ulaşılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("Beklenmeyen hata: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 

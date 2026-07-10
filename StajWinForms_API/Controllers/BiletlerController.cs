@@ -56,7 +56,7 @@ public class BiletlerController : ControllerBase
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
                 VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
                 KalkisZamani = b.Sefer.KalkisZamani,
-                FirmaAdi = b.Sefer.Firma.FirmaAdi,
+                FirmaAdi = b.Sefer.Firma.FirmaAdi ?? "",
                 Cinsiyet = b.Cinsiyet,
                 BinisDurakSira = b.BinisDurakSira,
                 InisDurakSira = b.InisDurakSira,
@@ -84,7 +84,7 @@ public class BiletlerController : ControllerBase
                 Cinsiyet = b.Cinsiyet,
                 BinisDurakSira = b.BinisDurakSira,
                 InisDurakSira = b.InisDurakSira,
-                FirmaAdi = b.Sefer.Firma.FirmaAdi,
+                FirmaAdi = b.Sefer.Firma.FirmaAdi ?? "",
                 Fiyat = b.Sefer.Fiyat
             })
             .ToListAsync();

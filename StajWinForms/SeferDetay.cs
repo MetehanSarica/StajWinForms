@@ -8,7 +8,7 @@ namespace StajWinForms
 {
     public partial class SeferDetay : XtraForm
     {
-        private static readonly HttpClient _http = AppConfig.CreateHttpClient();
+        private static readonly HttpClient _http = AppConfig.Http;
         private readonly int _seferID;
 
         public SeferDetay(int seferID)
