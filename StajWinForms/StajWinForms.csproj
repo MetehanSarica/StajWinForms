@@ -14,6 +14,7 @@
     <PackageReference Include="DevExpress.Win.Navigation" Version="26.1.3" />
     <PackageReference Include="DevExpress.Win.Reporting" Version="26.1.3" />
     <PackageReference Include="Microsoft.Data.SqlClient" Version="7.0.2" />
+    <PackageReference Include="Microsoft.Extensions.Configuration" Version="10.0.9" />
     <PackageReference Include="QuestPDF" Version="2026.7.0" />
   </ItemGroup>
 

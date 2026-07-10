@@ -21,20 +21,15 @@ namespace StajWinForms
             lblVaris = new LabelControl();
             cmbKalkis = new ComboBoxEdit();
             cmbVaris = new ComboBoxEdit();
-            chkTarih = new CheckEdit();
             lblTarih = new LabelControl();
             dateKalkis = new DateEdit();
-            lblSaat = new LabelControl();
-            timeKalkis = new TimeEdit();
             btnAra = new SimpleButton();
             btnTumSeferler = new SimpleButton();
             lblBaslik = new LabelControl();
             ((System.ComponentModel.ISupportInitialize)cmbKalkis.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cmbVaris.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)chkTarih.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dateKalkis.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dateKalkis.Properties.CalendarTimeProperties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)timeKalkis.Properties).BeginInit();
             SuspendLayout();
             // 
             // lblKalkis
@@ -72,48 +67,25 @@ namespace StajWinForms
             cmbVaris.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbVaris.Size = new Size(240, 20);
             cmbVaris.TabIndex = 4;
-            // 
-            // chkTarih
-            // 
-            chkTarih.Location = new Point(30, 155);
-            chkTarih.Name = "chkTarih";
-            chkTarih.Properties.Caption = "Tarih / Saat filtresi uygula";
-            chkTarih.Size = new Size(200, 20);
-            chkTarih.TabIndex = 5;
-            // 
+            //
             // lblTarih
-            // 
-            lblTarih.Location = new Point(30, 192);
+            //
+            lblTarih.Appearance.Font = new Font("Tahoma", 10F);
+            lblTarih.Appearance.Options.UseFont = true;
+            lblTarih.Location = new Point(30, 155);
             lblTarih.Name = "lblTarih";
-            lblTarih.Size = new Size(28, 13);
+            lblTarih.Size = new Size(34, 16);
             lblTarih.TabIndex = 6;
             lblTarih.Text = "Tarih:";
-            // 
+            //
             // dateKalkis
-            // 
+            //
             dateKalkis.EditValue = new DateTime(2026, 7, 10, 8, 52, 14, 344);
-            dateKalkis.Location = new Point(85, 189);
+            dateKalkis.Location = new Point(155, 152);
             dateKalkis.Name = "dateKalkis";
             dateKalkis.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
-            dateKalkis.Size = new Size(130, 20);
+            dateKalkis.Size = new Size(240, 20);
             dateKalkis.TabIndex = 7;
-            // 
-            // lblSaat
-            // 
-            lblSaat.Location = new Point(230, 192);
-            lblSaat.Name = "lblSaat";
-            lblSaat.Size = new Size(26, 13);
-            lblSaat.TabIndex = 8;
-            lblSaat.Text = "Saat:";
-            // 
-            // timeKalkis
-            // 
-            timeKalkis.EditValue = new DateTime(2026, 7, 10, 8, 52, 14, 374);
-            timeKalkis.Location = new Point(275, 189);
-            timeKalkis.Name = "timeKalkis";
-            timeKalkis.Properties.Mask.EditMask = "t";
-            timeKalkis.Size = new Size(120, 20);
-            timeKalkis.TabIndex = 9;
             // 
             // btnAra
             // 
@@ -153,11 +125,8 @@ namespace StajWinForms
             Controls.Add(cmbKalkis);
             Controls.Add(lblVaris);
             Controls.Add(cmbVaris);
-            Controls.Add(chkTarih);
             Controls.Add(lblTarih);
             Controls.Add(dateKalkis);
-            Controls.Add(lblSaat);
-            Controls.Add(timeKalkis);
             Controls.Add(btnAra);
             Controls.Add(btnTumSeferler);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -168,27 +137,21 @@ namespace StajWinForms
             Load += SeferSecimMenu_Load;
             ((System.ComponentModel.ISupportInitialize)cmbKalkis.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cmbVaris.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)chkTarih.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dateKalkis.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dateKalkis.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)timeKalkis.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
-
-        private LabelControl lblBaslik;
         private LabelControl lblKalkis;
         private LabelControl lblVaris;
         private ComboBoxEdit cmbKalkis;
         private ComboBoxEdit cmbVaris;
-        private CheckEdit chkTarih;
         private LabelControl lblTarih;
         private DateEdit dateKalkis;
-        private LabelControl lblSaat;
-        private TimeEdit timeKalkis;
         private SimpleButton btnAra;
         private SimpleButton btnTumSeferler;
+        private LabelControl lblBaslik;
     }
 }

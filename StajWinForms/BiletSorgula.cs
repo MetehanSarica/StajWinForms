@@ -1,19 +1,22 @@
 using DevExpress.XtraEditors;
-using Microsoft.Data.SqlClient;
 using System;
-using System.Data;
+using System.Net.Http;
+using System.Text.Json;
 using System.Windows.Forms;
+using System.Net.Http.Json;
 
 namespace StajWinForms
 {
     public partial class BiletSorgula : XtraForm
     {
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         public BiletSorgula()
         {
             InitializeComponent();
         }
 
-        private void btnBiletSorgu_Click(object sender, EventArgs e)
+        private async void btnBiletSorgu_Click(object sender, EventArgs e)
         {
             if (txtboxTC.Text.Length < 11)
             {
@@ -21,29 +24,21 @@ namespace StajWinForms
                 txtboxTC.EditValue = null;
                 return;
             }
+            try { 
+            var response = await _http.GetAsync($"api/biletler/musteri/{txtboxTC.Text}");
+            var biletler = await response.Content.ReadFromJsonAsync<IEnumerable<BiletSorgulaModel>>(_jsonOpts);
 
-            string query = @"
-                SELECT b.BiletID, b.KoltukNo, f.FirmaAdi,
-                       k.SehirAdi AS KalkisSehir, v.SehirAdi AS VarisSehir,
-                       s.KalkisZamani, s.Fiyat
-                FROM Biletler b
-                JOIN Seferler s ON b.SeferID = s.SeferID
-                JOIN Firmalar f ON s.FirmaID = f.FirmaID
-                JOIN Sehirler k ON s.KalkisSehirID = k.SehirID
-                JOIN Sehirler v ON s.VarisSehirID = v.SehirID
-                WHERE b.MusteriTC = @TC";
-
-            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
+            dataGridSorgu.DataSource = biletler?.ToList() ?? new List<BiletSorgulaModel>();
+            }
+            catch (HttpRequestException)
             {
-                SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@TC", txtboxTC.Text.Trim());
-                SqlDataAdapter adaptor = new SqlDataAdapter(cmd);
-                DataTable tablo = new DataTable();
-                adaptor.Fill(tablo);
-                dataGridSorgu.DataSource = tablo;
+                MessageBox.Show("Bilet sorgulanırken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Bilet verileri işlenirken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
         private void txtboxTC_TextChanged(object sender, EventArgs e)
         {
             txtboxTC.Properties.MaxLength = 11;
@@ -54,5 +49,16 @@ namespace StajWinForms
                     txtboxTC.MaskBox.MaskBoxSelectionStart = txtboxTC.Text.Length;
             }
         }
+    
+    }
+    public class BiletSorgulaModel
+    {
+        public int BiletID { get; set; }
+        public int KoltukNo { get; set; }
+        public string FirmaAdi { get; set; } = string.Empty;
+        public string KalkisSehirAdi { get; set; } = string.Empty;
+        public string VarisSehirAdi { get; set; } = string.Empty;
+        public DateTime KalkisZamani { get; set; }
+        public decimal Fiyat { get; set; }
     }
 }

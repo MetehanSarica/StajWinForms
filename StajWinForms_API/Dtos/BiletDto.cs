@@ -10,6 +10,8 @@
         public required string KalkisSehirAdi { get; set; } = null!;
         public required string VarisSehirAdi { get; set; } = null!;
         public required DateTime KalkisZamani { get; set; }
+        public required string FirmaAdi { get; set; } = null!;
+        public required decimal Fiyat { get; set; }
         public string? Cinsiyet { get; set; }
         public int BinisDurakSira { get; set; }
         public int InisDurakSira { get; set; }

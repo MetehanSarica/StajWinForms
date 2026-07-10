@@ -1,15 +1,18 @@
+using Microsoft.Extensions.Configuration;
+
 namespace StajWinForms
 {
     internal static class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
         [STAThread]
         static void Main()
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json")
+                .Build();
+
+            AppConfig.ApiBaseUrl = config["ApiBaseUrl"]!;
+
             QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
@@ -17,5 +20,10 @@ namespace StajWinForms
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Colorful");
             Application.Run(new SeferSecimMenu());
         }
+    }
+
+    public static class AppConfig
+    {
+        public static string ApiBaseUrl { get; set; } = "";
     }
 }

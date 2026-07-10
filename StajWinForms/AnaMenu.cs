@@ -10,7 +10,7 @@ namespace StajWinForms
 {
     public partial class AnaMenu : DevExpress.XtraEditors.XtraForm
     {
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
         private List<SeferDetayModel> _tumSeferler = new();
 
         private readonly string? _filtreKalkis;
@@ -22,12 +22,11 @@ namespace StajWinForms
             InitializeComponent();
         }
 
-        public AnaMenu(string kalkisSehir, string varisSehir, DateTime? kalkisZamani)
+        public AnaMenu(string kalkisSehir, string varisSehir)
         {
             InitializeComponent();
             _filtreKalkis = kalkisSehir;
             _filtreVaris = varisSehir;
-            _filtreZaman = kalkisZamani;
         }
 
         private async void AnaMenu_Load(object sender, EventArgs e)

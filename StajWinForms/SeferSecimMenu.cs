@@ -10,7 +10,7 @@ namespace StajWinForms
     public partial class SeferSecimMenu : DevExpress.XtraEditors.XtraForm
     {
 
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
 
         public SeferSecimMenu()
@@ -33,8 +33,7 @@ namespace StajWinForms
 
             AnaMenu anaMenu = new AnaMenu(
                 cmbKalkis.Text,
-                cmbVaris.Text,
-                chkTarih.Checked ? dateKalkis.DateTime.Date + timeKalkis.Time.TimeOfDay : null
+                cmbVaris.Text
                 );
             anaMenu.ShowDialog();
             }

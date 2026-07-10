@@ -1,53 +1,47 @@
 using DevExpress.XtraEditors;
-using Microsoft.Data.SqlClient;
 using System;
-using System.Data;
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Text.Json;
 using System.Windows.Forms;
 
 namespace StajWinForms
 {
     public partial class BiletIptal : XtraForm
     {
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         public BiletIptal()
         {
             InitializeComponent();
         }
 
-        private void btnSorgula_Click(object sender, EventArgs e)
+        private async void btnSorgula_Click(object sender, EventArgs e)
         {
-            string tc = txtboxTC.Text.Trim();
-            if (tc.Length == 0) 
-                return;
-
-            string query = @"
-                SELECT b.BiletID, b.KoltukNo, f.FirmaAdi,
-                       k.SehirAdi AS KalkisSehir, v.SehirAdi AS VarisSehir,
-                       s.KalkisZamani, s.Fiyat
-                FROM Biletler b
-                JOIN Seferler s ON b.SeferID = s.SeferID
-                JOIN Firmalar f ON s.FirmaID = f.FirmaID
-                JOIN Sehirler k ON s.KalkisSehirID = k.SehirID
-                JOIN Sehirler v ON s.VarisSehirID = v.SehirID
-                WHERE b.MusteriTC = @TC";
-
-            /*string query = @"
-                SELECT b.BiletID, b.KoltukNo, b.SeferID, 
-                       b.BinisDurakSira, b.InisDurakSira
-                FROM Biletler b
-                WHERE b.MusteriTC = @TC";*/
-
-            DataTable dt = new DataTable();
-            using (var conn = new SqlConnection(DbConfig.ConnectionString))
+            if (txtboxTC.Text.Length < 11)
             {
-                var cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@TC", tc);
-                new SqlDataAdapter(cmd).Fill(dt);
+                MessageBox.Show("TC Kimlik numarası 11 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                txtboxTC.EditValue = null;
+                return;
             }
+            try
+            {
+                var response = await _http.GetAsync($"api/biletler/musteri/{txtboxTC.Text}");
+                var biletler = await response.Content.ReadFromJsonAsync<IEnumerable<BiletSorgulaModel>>(_jsonOpts);
 
-            gridBiletler.DataSource = dt;
+                gridBiletler.DataSource = biletler?.ToList() ?? new List<BiletSorgulaModel>();
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("Bilet sorgulanırken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (JsonException)
+            {
+                MessageBox.Show("Bilet verileri işlenirken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
-        private void btnIptalEt_Click(object sender, EventArgs e)
+        private async void btnIptalEt_Click(object sender, EventArgs e)
         {
             if (gridView.FocusedRowHandle < 0)
             {
@@ -62,16 +56,19 @@ namespace StajWinForms
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             if (onay != DialogResult.Yes) return;
 
-            using (var conn = new SqlConnection(DbConfig.ConnectionString))
-            {
-                var cmd = new SqlCommand("DELETE FROM Biletler WHERE BiletID = @BiletID", conn);
-                cmd.Parameters.AddWithValue("@BiletID", biletID);
-                conn.Open();
-                cmd.ExecuteNonQuery();
-            }
 
-            MessageBox.Show("Bilet başarıyla iptal edildi.");
-            btnSorgula_Click(sender, e);
+            try
+            {
+                var response = await _http.DeleteAsync($"api/biletler/{biletID}");
+                if (response.IsSuccessStatusCode)
+                    MessageBox.Show("Bilet başarıyla iptal edildi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    MessageBox.Show("Bilet iptal edilemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("Sunucuya ulaşılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void txtboxTC_TextChanged(object sender, EventArgs e)

@@ -30,7 +30,11 @@ public class BiletlerController : ControllerBase
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
                 VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
                 KalkisZamani = b.Sefer.KalkisZamani,
-                Cinsiyet = b.Cinsiyet
+                Fiyat = b.Sefer.Fiyat,
+                Cinsiyet = b.Cinsiyet,
+                BinisDurakSira = b.BinisDurakSira,
+                InisDurakSira = b.InisDurakSira,
+                FirmaAdi = b.Sefer.Firma.FirmaAdi ?? ""
             })
             .ToListAsync();
 
@@ -52,9 +56,36 @@ public class BiletlerController : ControllerBase
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
                 VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
                 KalkisZamani = b.Sefer.KalkisZamani,
+                FirmaAdi = b.Sefer.Firma.FirmaAdi,
                 Cinsiyet = b.Cinsiyet,
                 BinisDurakSira = b.BinisDurakSira,
-                InisDurakSira = b.InisDurakSira
+                InisDurakSira = b.InisDurakSira,
+                Fiyat = b.Sefer.Fiyat
+
+            })
+            .ToListAsync();
+        return Ok(biletler);
+    }
+    [HttpGet("musteri/{musteriTc}")]
+    public async Task<ActionResult<IEnumerable<BiletDto>>> GetByMusteriTc(string musteriTc)
+    {
+        var biletler = await _context.Biletlers
+            .Where(b => b.MusteriTc == musteriTc)
+            .Select(b => new BiletDto
+            {
+                BiletId = b.BiletId,
+                KoltukNo = b.KoltukNo,
+                MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+                MusteriTc = b.MusteriTc,
+                SeferId = b.SeferId,
+                KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
+                VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
+                KalkisZamani = b.Sefer.KalkisZamani,
+                Cinsiyet = b.Cinsiyet,
+                BinisDurakSira = b.BinisDurakSira,
+                InisDurakSira = b.InisDurakSira,
+                FirmaAdi = b.Sefer.Firma.FirmaAdi,
+                Fiyat = b.Sefer.Fiyat
             })
             .ToListAsync();
         return Ok(biletler);
@@ -85,6 +116,61 @@ public class BiletlerController : ControllerBase
         await _context.SaveChangesAsync();
 
         return Ok(new { mesaj = "Bilet oluşturuldu", biletId = yeniBilet.BiletId });
+    }
+    [HttpPost("satinal")]
+    public async Task<ActionResult> SatinAlBilet(SatinAlDto satinAlDto)
+    {
+        await using var transaction = await _context.Database.BeginTransactionAsync();
+        try
+        {
+            var musteriVarMi = await _context.Musteris.AnyAsync(m => m.Tc == satinAlDto.MusteriTc);
+            if (!musteriVarMi)
+                _context.Musteris.Add(new Musteri
+                {
+                    Tc = satinAlDto.MusteriTc,
+                    Ad = satinAlDto.MusteriAd,
+                    Soyad = satinAlDto.MusteriSoyad,
+                    Email = Convert.ToString(satinAlDto.MusteriMail),
+                    Telefon = satinAlDto.MusteriTelefon,
+                    Sehir = satinAlDto.MusteriSehir,
+                    Adres = satinAlDto.MusteriAdres,
+                    Cinsiyet = satinAlDto.MusteriCinsiyet
+                });
+
+            var seferVarMi = await _context.Seferlers.AnyAsync(s => s.SeferId == satinAlDto.SeferId);
+            if (!seferVarMi)
+                return BadRequest($"SeferId {satinAlDto.SeferId} bulunamadı.");
+
+            var yeniBilet = new Biletler
+            {
+                SeferId = satinAlDto.SeferId,
+                KoltukNo = satinAlDto.KoltukNo,
+                MusteriTc = satinAlDto.MusteriTc,
+                BinisDurakSira = satinAlDto.BinisDurakSira,
+                InisDurakSira = satinAlDto.InisDurakSira,
+                Cinsiyet = satinAlDto.MusteriCinsiyet
+            };
+            _context.Biletlers.Add(yeniBilet);
+            await _context.SaveChangesAsync();
+            await transaction.CommitAsync();
+            return Ok(new { mesaj = "Bilet satın alındı", biletId = yeniBilet.BiletId });
+        }
+        catch
+        {
+            await transaction.RollbackAsync();
+            return StatusCode(500, "İşlem sırasında hata oluştu.");
+        }
+    }
+
+    [HttpDelete("{biletId}")]
+    public async Task<ActionResult> DeleteBilet(int biletId)
+    {
+        var bilet = await _context.Biletlers.FindAsync(biletId);
+        if (bilet == null)
+            return NotFound($"BiletId {biletId} bulunamadı.");
+        _context.Biletlers.Remove(bilet);
+        await _context.SaveChangesAsync();
+        return Ok(new { mesaj = "Bilet silindi", biletId = biletId });
     }
 
 }

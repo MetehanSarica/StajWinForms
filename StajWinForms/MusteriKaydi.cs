@@ -1,22 +1,25 @@
 using DevExpress.XtraEditors;
-using Microsoft.Data.SqlClient;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing;
-using System.IO;
-using System.Text;
-using System.Windows.Forms;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Drawing;
+using System.IO;
+using System.Net.Http;
+using System.Text;
+using System.Text.Json;
+using System.Windows.Forms;
+using System.Net.Http.Json;
 
 namespace StajWinForms
 {
     public partial class MusteriKaydi : XtraForm
     {
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
+        private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private readonly int _seferID;
         private readonly int _koltukNo;
         private readonly int _binisDurakSira;
@@ -68,47 +71,44 @@ namespace StajWinForms
             return true;
         }
 
-        private void btnBiletOlustur_Click(object sender, EventArgs e)
+        private async void btnBiletOlustur_Click(object sender, EventArgs e)
         {
             if (!Dogrula()) return;
 
-            string tc = txtboxTC.Text.Trim();
-
-            using (SqlConnection conn = new SqlConnection(DbConfig.ConnectionString))
+            var model = new SatinAlModel
             {
-                conn.Open();
+                MusteriTc = txtboxTC.Text.Trim(),
+                MusteriAd = txtboxAd.Text.Trim(),
+                MusteriSoyad = txtboxSoyad.Text.Trim(),
+                MusteriMail = txtboxEmail.Text.Trim(),
+                MusteriTelefon = txtboxTelefon.Text.Trim(),
+                MusteriSehir = txtboxSehir.Text.Trim(),
+                MusteriAdres = txtboxAdres.Text.Trim(),
+                MusteriCinsiyet = cmbCinsiyet.SelectedItem.ToString()!.Substring(0, 1).ToUpper(),
+                SeferId = _seferID,
+                KoltukNo = _koltukNo,
+                BinisDurakSira = _binisDurakSira,
+                InisDurakSira = _inisDurakSira
+            };
 
-                string musteriQuery = @"
-                    IF NOT EXISTS (SELECT 1 FROM Musteri WHERE TC = @TC)
-                        INSERT INTO Musteri (TC, Ad, Soyad, Email, Telefon, Sehir, Adres, Cinsiyet)
-                        VALUES (@TC, @Ad, @Soyad, @Email, @Telefon, @Sehir, @Adres, @Cinsiyet)";
-                SqlCommand musteriCmd = new SqlCommand(musteriQuery, conn);
-                musteriCmd.Parameters.AddWithValue("@TC", tc);
-                musteriCmd.Parameters.AddWithValue("@Ad", txtboxAd.Text);
-                musteriCmd.Parameters.AddWithValue("@Soyad", txtboxSoyad.Text);
-                musteriCmd.Parameters.AddWithValue("@Email", txtboxEmail.Text);
-                musteriCmd.Parameters.AddWithValue("@Telefon", txtboxTelefon.Text);
-                musteriCmd.Parameters.AddWithValue("@Sehir", txtboxSehir.Text);
-                musteriCmd.Parameters.AddWithValue("@Adres", txtboxAdres.Text);
-                musteriCmd.Parameters.AddWithValue("@Cinsiyet", cmbCinsiyet.SelectedItem.ToString().Substring(0, 1).ToUpper());
-                musteriCmd.ExecuteNonQuery();
+            try
+            {
+                var response = await _http.PostAsJsonAsync("api/biletler/satinal", model);
 
-                string biletQuery = @"
-                    INSERT INTO Biletler (SeferID, KoltukNo, MusteriTC, BinisDurakSira, InisDurakSira, Cinsiyet)
-                    VALUES (@SeferID, @KoltukNo, @MusteriTC, @BinisDurakSira, @InisDurakSira, @Cinsiyet)";
-                SqlCommand biletCmd = new SqlCommand(biletQuery, conn);
-                biletCmd.Parameters.AddWithValue("@SeferID", _seferID);
-                biletCmd.Parameters.AddWithValue("@KoltukNo", _koltukNo);
-                biletCmd.Parameters.AddWithValue("@MusteriTC", tc);
-                biletCmd.Parameters.AddWithValue("@BinisDurakSira", _binisDurakSira);
-                biletCmd.Parameters.AddWithValue("@InisDurakSira", _inisDurakSira);
-                biletCmd.Parameters.AddWithValue("@Cinsiyet", cmbCinsiyet.SelectedItem.ToString().Substring(0, 1).ToUpper());
-                biletCmd.ExecuteNonQuery();
-
-                BiletPdfOlustur();
-                
-                MessageBox.Show("Bilet başarıyla oluşturuldu.");
-                this.Close();
+                if (response.IsSuccessStatusCode)
+                {
+                    BiletPdfOlustur();
+                    MessageBox.Show("Bilet başarıyla oluşturuldu.");
+                    this.Close();
+                }
+                else
+                {
+                    MessageBox.Show("Bilet oluşturulamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
+            }
+            catch (HttpRequestException)
+            {
+                MessageBox.Show("Sunucuya ulaşılamadı.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -205,5 +205,18 @@ namespace StajWinForms
             }).GeneratePdf(dosyaYolu);
             Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true });
         }
+    }
+    internal class SatinAlModel
+    {
+        public string MusteriTc { get; set; } = "";
+        public string MusteriAd { get; set; } = ""; public string MusteriSoyad { get; set; } = "";
+        public string MusteriMail { get; set; } = ""; public string MusteriTelefon { get; set; } = "";
+        public string MusteriSehir { get; set; } = "";
+        public string MusteriAdres { get; set; } = "";
+        public string MusteriCinsiyet { get; set; } = "";
+        public int SeferId { get; set; }
+        public int KoltukNo { get; set; }
+        public int BinisDurakSira { get; set; }
+        public int InisDurakSira { get; set; }
     }
 }

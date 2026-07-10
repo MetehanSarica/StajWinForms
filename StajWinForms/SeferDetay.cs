@@ -8,7 +8,7 @@ namespace StajWinForms
 {
     public partial class SeferDetay : XtraForm
     {
-        private static readonly HttpClient _http = new() { BaseAddress = new Uri("http://localhost:8081") };
+        private static readonly HttpClient _http = new() { BaseAddress = new Uri(AppConfig.ApiBaseUrl) };
         private readonly int _seferID;
 
         public SeferDetay(int seferID)
