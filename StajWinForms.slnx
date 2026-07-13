@@ -1,5 +1,6 @@
 <Solution>
   <Folder Name="/Çözüm Öğeleri/" />
+  <Project Path="StajWeb/StajWeb.csproj" />
   <Project Path="StajWinForms/StajWinForms.csproj" />
   <Project Path="StajWinForms_API/StajWinForms_API.csproj" Id="352be5ef-ebe1-4186-918c-aaf5c995c096" />
 </Solution>

@@ -1,0 +1,21 @@
+@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Bilet Ara";
+
+}
+
+<form method="get" action="/Seferler">
+
+    <select name="kalkisId" asp-items="Model.SehirListesi">
+        <option value="">Kalkış Şehri</option>
+    </select>
+
+    <select name="varisId" asp-items="Model.SehirListesi">
+        <option value="">Varış Şehri</option>
+    </select>
+    <input type="date" name="tarih" />
+    <button type="submit">Sefer Ara</button>
+
+
+</form>

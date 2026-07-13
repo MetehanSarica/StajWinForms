@@ -1,0 +1,47 @@
+@page
+@model StajWeb.Pages.SatinAlModel
+@{
+    ViewData["Title"] = "Satın Al";
+}
+
+<h2>Bilet Satın Al</h2>
+<p>Sefer: @Model.SeferId | Koltuk: @Model.KoltukNo</p>
+
+<form method="post">
+    <input type="hidden" asp-for="SeferId" />
+    <input type="hidden" asp-for="KoltukNo" />
+
+    <input asp-for="MusteriTc" placeholder="TC Kimlik No" maxlength="11" />
+    <span asp-validation-for="MusteriTc" class="text-danger"></span><br />
+
+    <input asp-for="MusteriAd" placeholder="Ad" />
+    <span asp-validation-for="MusteriAd" class="text-danger"></span><br />
+
+    <input asp-for="MusteriSoyad" placeholder="Soyad" />
+    <span asp-validation-for="MusteriSoyad" class="text-danger"></span><br />
+
+    <input asp-for="MusteriMail" placeholder="E-posta" type="email" />
+    <span asp-validation-for="MusteriMail" class="text-danger"></span><br />
+
+    <input asp-for="MusteriTelefon" placeholder="Telefon" maxlength="11" />
+    <span asp-validation-for="MusteriTelefon" class="text-danger"></span><br />
+
+    <input asp-for="MusteriSehir" placeholder="Şehir" />
+    <span asp-validation-for="MusteriSehir" class="text-danger"></span><br />
+
+    <input asp-for="MusteriAdres" placeholder="Adres" />
+    <span asp-validation-for="MusteriAdres" class="text-danger"></span><br />
+
+    <select asp-for="MusteriCinsiyet">
+        <option value="">Cinsiyet</option>
+        <option value="E">Erkek</option>
+        <option value="K">Kadın</option>
+    </select>
+    <span asp-validation-for="MusteriCinsiyet" class="text-danger"></span><br />
+
+    <button type="submit">Satın Al</button>
+</form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

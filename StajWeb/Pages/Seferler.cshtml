@@ -1,0 +1,41 @@
+@page
+@model StajWeb.Pages.SeferlerModel
+@{
+    ViewData["Title"] = "Seferler";
+}
+
+<h2>Uygun Seferler</h2>
+
+@if (Model.Seferler != null && Model.Seferler.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Kalkış Şehri</th>
+                <th>Varış Şehri</th>
+                <th>Tarih</th>
+                <th>Fiyat</th>
+                <th>Firma</th>
+                <th>Boş Koltuk</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var sefer in Model.Seferler)
+            {
+                <tr>
+                    <td>@sefer.KalkisSehirAdi</td>
+                    <td>@sefer.VarisSehirAdi</td>
+                    <td>@sefer.KalkisZamani.ToString("dd/MM/yyyy")</td>
+                    <td>@sefer.Fiyat.ToString("C")</td>
+                    <td>@sefer.FirmaAdi</td>
+                    <td>@sefer.BosKoltuk</td>
+                    <td><a href="/SeferDetay/@sefer.SeferId" class="btn btn-primary btn-sm">Seç</a></td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Uygun sefer bulunamadı.</p>
+}

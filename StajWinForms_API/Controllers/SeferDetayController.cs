@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
 using StajWinForms_API.Dtos;
@@ -28,7 +28,9 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count()
+                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count(),
+                KalkisSehirId = s.KalkisSehirId,
+                VarisSehirId = s.VarisSehirId,
             })
             .ToListAsync();
 
@@ -49,6 +51,8 @@ public class SeferDetayController : ControllerBase
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
                 BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count(),
+                KalkisSehirId = s.KalkisSehirId,
+                VarisSehirId = s.VarisSehirId,
                 Duraklar = s.SeferDurakOtogars
                     .OrderBy(d => d.DurakSira)
                     .Select(d => d.Otogar.OtogarAdi)

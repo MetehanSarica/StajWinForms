@@ -13,5 +13,7 @@
         public decimal Fiyat { get; set; }
 
         public int BosKoltuk { get; set; }
+
+
     }
 }

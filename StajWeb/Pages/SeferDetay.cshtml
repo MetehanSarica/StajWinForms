@@ -1,0 +1,76 @@
+@page "{id:int}"
+@model StajWeb.Pages.SeferDetayModel
+@{
+    ViewData["Title"] = "Sefer Detayları";
+    var toplamKoltuk = 36;
+    var alinmisKoltuklar = Model.Biletler.ToDictionary(b => b.KoltukNo, b => b.Cinsiyet);
+}
+
+<h2>@Model.Sefer.FirmaAdi</h2>
+<p>@Model.Sefer.KalkisSehirAdi - @Model.Sefer.VarisSehirAdi</p>
+<p>@Model.Sefer.KalkisZamani.ToString("dd/MM/yyyy HH:mm") | @Model.Sefer.Fiyat ₺</p>
+
+<style>
+    .bus-h { display: flex; flex-direction: row; border: 3px solid #666; border-radius: 20px; padding: 12px; background: #f5f5f5; width: fit-content; }
+    .driver-col { display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin-right: 12px; border-right: 2px dashed #aaa; padding-right: 12px; gap: 6px; }
+    .driver-seat { width: 42px; height: 42px; background: #ffc107; border-radius: 6px; }
+    .steering-wheel { width: 36px; height: 36px; border: 4px solid #555; border-radius: 50%; background: #ccc; }
+    .seats-area { display: flex; flex-direction: column; gap: 0; }
+    .seat-row { display: flex; flex-direction: row; gap: 4px; margin: 2px 0; }
+    .aisle-h { height: 16px; }
+    .seat { width: 42px; height: 42px; border-radius: 6px; font-weight: bold; font-size: 12px; border: none; cursor: pointer; }
+    .seat.available { background: #28a745; color: white; text-decoration: none; display: inline-flex; align-items: center; justify-content: center; }
+    .seat.available:hover { background: #218838; color: white; }
+    .seat.male { background: #007bff; color: white; cursor: not-allowed; }
+    .seat.female { background: #e83e8c; color: white; cursor: not-allowed; }
+</style>
+
+@{
+    int numCols = 9;
+}
+
+<div class="bus-h">
+    <div class="driver-col">
+        <div class="driver-seat"></div>
+        <div class="steering-wheel"></div>
+        <div class="driver-seat"></div>
+    </div>
+    <div class="seats-area">
+        @for (int r = 0; r < 2; r++)
+        {
+            <div class="seat-row">
+                @for (int c = 0; c < numCols; c++)
+                {
+                    int koltukNo = c * 4 + r + 1;
+                    if (koltukNo <= toplamKoltuk)
+                    {
+                        var cinsiyet = alinmisKoltuklar.ContainsKey(koltukNo) ? alinmisKoltuklar[koltukNo] : null;
+                        if (cinsiyet == "E") { <button class="seat male" disabled>@koltukNo</button> }
+                        else if (cinsiyet == "K") { <button class="seat female" disabled>@koltukNo</button> }
+                        else { <a href="/Satinal?seferId=@Model.Id&koltukNo=@koltukNo" class="seat available">@koltukNo</a> }
+                    }
+                }
+            </div>
+        }
+        <div class="aisle-h"></div>
+        @for (int r = 2; r < 4; r++)
+        {
+            <div class="seat-row">
+                @for (int c = 0; c < numCols; c++)
+                {
+                    int koltukNo = c * 4 + r + 1;
+                    if (koltukNo <= toplamKoltuk)
+                    {
+                        var cinsiyet = alinmisKoltuklar.ContainsKey(koltukNo) ? alinmisKoltuklar[koltukNo] : null;
+                        if (cinsiyet == "E") { <button class="seat male" disabled>@koltukNo</button> }
+                        else if (cinsiyet == "K") { <button class="seat female" disabled>@koltukNo</button> }
+                        else { <a href="/Satinal?seferId=@Model.Id&koltukNo=@koltukNo" class="seat available">@koltukNo</a> }
+                    }
+                }
+            </div>
+        }
+    </div>
+</div>
+
+
+

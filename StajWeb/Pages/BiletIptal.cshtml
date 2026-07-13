@@ -1,0 +1,14 @@
+@page
+@model StajWeb.Pages.BiletIptalModel
+@{
+}
+
+<h2>Bilet İptal</h2>
+
+<p>@Model.BiletId numaralı bilet iptal edilecektir. Onaylıyor musunuz?</p>
+
+<form method="post">
+    <input type="hidden" asp-for="BiletId" />
+    <button type="submit" class="btn btn-danger">Evet</button>
+    <a href="/BiletSorgula" class="btn btn-secondary">Hayır</a>
+</form>

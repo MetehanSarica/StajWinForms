@@ -212,29 +212,20 @@ namespace StajWinForms
                 return;
             }
 
-            int acikFormSayisi = _secilenKoltuklar.Count;
+            int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
+            int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
 
-            foreach (var no in _secilenKoltuklar)
+            var form = new CokluMusteriKaydi(_secilenKoltuklar, _seferID, binisSira, inisSira);
+            form.FormClosed += async (s, args) =>
+            {
+                try { await KoltuklariRenklendir(); }
+                catch (Exception ex)
                 {
-                    int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
-                    int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
-                    MusteriKaydi musteriKaydi = new MusteriKaydi(_seferID, no, binisSira, inisSira);
-                    musteriKaydi.FormClosed += async (s, args) =>
-                    {
-                        try
-                        {
-                            if (--acikFormSayisi == 0)
-                                await KoltuklariRenklendir();
-                        }
-                        catch (Exception ex)
-                        {
-                            MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
-                                MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
-                    };
-                    musteriKaydi.Show();
+                    MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
+                        MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
-
+            };
+            form.Show();
         }
 
         private static void KoltukRenkAyarla(SimpleButton btn, Color renk, bool disabled)

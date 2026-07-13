@@ -1,4 +1,4 @@
-namespace StajWinForms_API.Dtos
+﻿namespace StajWinForms_API.Dtos
 {
     public class SeferDetayDto
     {
@@ -10,5 +10,7 @@ namespace StajWinForms_API.Dtos
         public required decimal Fiyat { get; set; }
         public required int BosKoltuk { get; set; }
         public List<string> Duraklar { get; set; } = new();
+        public required int KalkisSehirId { get; set; }
+        public required int VarisSehirId { get; set; }
     }
 }
