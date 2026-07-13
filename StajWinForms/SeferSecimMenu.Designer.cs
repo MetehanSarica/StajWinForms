@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -59,6 +59,7 @@ namespace StajWinForms
             cmbKalkis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbKalkis.Size = new Size(240, 20);
             cmbKalkis.TabIndex = 2;
+            cmbKalkis.SelectedIndexChanged += cmbKalkis_SelectedIndexChanged;
             // 
             // cmbVaris
             // 
@@ -67,19 +68,20 @@ namespace StajWinForms
             cmbVaris.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbVaris.Size = new Size(240, 20);
             cmbVaris.TabIndex = 4;
-            //
+            cmbVaris.SelectedIndexChanged += cmbVaris_SelectedIndexChanged;
+            // 
             // lblTarih
-            //
+            // 
             lblTarih.Appearance.Font = new Font("Tahoma", 10F);
             lblTarih.Appearance.Options.UseFont = true;
             lblTarih.Location = new Point(30, 155);
             lblTarih.Name = "lblTarih";
-            lblTarih.Size = new Size(34, 16);
+            lblTarih.Size = new Size(35, 16);
             lblTarih.TabIndex = 6;
             lblTarih.Text = "Tarih:";
-            //
+            // 
             // dateKalkis
-            //
+            // 
             dateKalkis.EditValue = new DateTime(2026, 7, 10, 8, 52, 14, 344);
             dateKalkis.Location = new Point(155, 152);
             dateKalkis.Name = "dateKalkis";

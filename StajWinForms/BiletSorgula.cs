@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System;
 using System.Net.Http;
 using System.Text.Json;
@@ -14,21 +14,24 @@ namespace StajWinForms
         public BiletSorgula()
         {
             InitializeComponent();
+            spTC.EditValue = null;
         }
 
         private async void btnBiletSorgu_Click(object sender, EventArgs e)
         {
-            if (txtboxTC.Text.Length < 11)
+            string tc = System.Text.RegularExpressions.Regex.Replace(spTC.Text, "[^0-9]", "");
+            if (tc.Length < 11)
             {
                 MessageBox.Show("TC Kimlik numarası 11 haneli olmalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                txtboxTC.EditValue = null;
+                spTC.EditValue = null;
                 return;
             }
-            try { 
-            var response = await _http.GetAsync($"api/biletler/musteri/{txtboxTC.Text}");
-            var biletler = await response.Content.ReadFromJsonAsync<IEnumerable<BiletSorgulaModel>>(_jsonOpts);
+            try
+            {
+                var response = await _http.GetAsync($"api/biletler/musteri/{tc}");
+                var biletler = await response.Content.ReadFromJsonAsync<IEnumerable<BiletSorgulaModel>>(_jsonOpts);
 
-            dataGridSorgu.DataSource = biletler?.ToList() ?? new List<BiletSorgulaModel>();
+                dataGridSorgu.DataSource = biletler?.ToList() ?? new List<BiletSorgulaModel>();
             }
             catch (HttpRequestException)
             {
@@ -39,17 +42,16 @@ namespace StajWinForms
                 MessageBox.Show("Bilet verileri işlenirken bir hata oluştu.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-        private void txtboxTC_TextChanged(object sender, EventArgs e)
+        private void spTC_EditValueChanged(object sender, EventArgs e)
         {
-            txtboxTC.Properties.MaxLength = 11;
-            if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTC.Text, "[^0-9]"))
+            spTC.Properties.MaxLength = 11;
+            if (System.Text.RegularExpressions.Regex.IsMatch(spTC.Text, "[^0-9]"))
             {
-                txtboxTC.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTC.Text, "[^0-9]", "");
-                if (txtboxTC.MaskBox != null)
-                    txtboxTC.MaskBox.MaskBoxSelectionStart = txtboxTC.Text.Length;
+                spTC.Text = System.Text.RegularExpressions.Regex.Replace(spTC.Text, "[^0-9]", "");
+                if (spTC.MaskBox != null)
+                    spTC.MaskBox.MaskBoxSelectionStart = spTC.Text.Length;
             }
         }
-    
     }
     public class BiletSorgulaModel
     {

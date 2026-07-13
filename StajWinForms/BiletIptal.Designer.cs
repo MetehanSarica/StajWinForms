@@ -21,7 +21,7 @@ namespace StajWinForms
         {
             pnlTop = new PanelControl();
             lblTC = new LabelControl();
-            txtboxTC = new TextEdit();
+            spTC = new SpinEdit();
             btnSorgula = new SimpleButton();
             gridBiletler = new GridControl();
             gridView = new GridView();
@@ -29,7 +29,7 @@ namespace StajWinForms
             btnIptalEt = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)pnlTop).BeginInit();
             pnlTop.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spTC.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridBiletler).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
             ((System.ComponentModel.ISupportInitialize)pnlBottom).BeginInit();
@@ -39,7 +39,7 @@ namespace StajWinForms
             // pnlTop
             //
             pnlTop.Controls.Add(lblTC);
-            pnlTop.Controls.Add(txtboxTC);
+            pnlTop.Controls.Add(spTC);
             pnlTop.Controls.Add(btnSorgula);
             pnlTop.Dock = DockStyle.Top;
             pnlTop.Name = "pnlTop";
@@ -55,13 +55,17 @@ namespace StajWinForms
             lblTC.TabIndex = 0;
             lblTC.Text = "TC Kimlik No:";
             //
-            // txtboxTC
+            // spTC
             //
-            txtboxTC.Location = new Point(16, 32);
-            txtboxTC.Name = "txtboxTC";
-            txtboxTC.Size = new Size(220, 20);
-            txtboxTC.TabIndex = 1;
-            txtboxTC.EditValueChanged += txtboxTC_TextChanged;
+            spTC.Location = new Point(16, 32);
+            spTC.Name = "spTC";
+            spTC.Properties.AllowMouseWheel = false;
+            spTC.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            spTC.Properties.MaskSettings.Set("mask", "d");
+            spTC.Properties.MaxLength = 11;
+            spTC.Size = new Size(220, 20);
+            spTC.TabIndex = 1;
+            spTC.EditValueChanged += spTC_EditValueChanged;
             //
             // btnSorgula
             //
@@ -120,7 +124,7 @@ namespace StajWinForms
             Text = "Bilet İptal";
             ((System.ComponentModel.ISupportInitialize)pnlTop).EndInit();
             pnlTop.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spTC.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridBiletler).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
             ((System.ComponentModel.ISupportInitialize)pnlBottom).EndInit();
@@ -132,7 +136,7 @@ namespace StajWinForms
 
         private PanelControl pnlTop;
         private LabelControl lblTC;
-        private TextEdit txtboxTC;
+        private SpinEdit spTC;
         private SimpleButton btnSorgula;
         private GridControl gridBiletler;
         private GridView gridView;

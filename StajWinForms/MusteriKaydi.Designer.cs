@@ -19,7 +19,7 @@ namespace StajWinForms
         {
             lblKoltukBilgi = new LabelControl();
             lblTC = new LabelControl();
-            txtboxTC = new TextEdit();
+            spTC = new SpinEdit();
             lblAd = new LabelControl();
             txtboxAd = new TextEdit();
             lblSoyad = new LabelControl();
@@ -29,19 +29,19 @@ namespace StajWinForms
             lblTelefon = new LabelControl();
             txtboxTelefon = new TextEdit();
             lblSehir = new LabelControl();
-            txtboxSehir = new TextEdit();
+            cmbSehir = new ComboBoxEdit();
             lblAdres = new LabelControl();
-            txtboxAdres = new TextEdit();
+            memoAdres = new MemoEdit();
             lblCinsiyet = new LabelControl();
             cmbCinsiyet = new ComboBoxEdit();
             btnBiletOlustur = new SimpleButton();
-            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)spTC.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)cmbSehir.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)memoAdres.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cmbCinsiyet.Properties).BeginInit();
             SuspendLayout();
             // 
@@ -68,13 +68,17 @@ namespace StajWinForms
             lblTC.TabIndex = 0;
             lblTC.Text = "TC Kimlik No:";
             // 
-            // txtboxTC
-            // 
-            txtboxTC.Location = new Point(120, 55);
-            txtboxTC.Name = "txtboxTC";
-            txtboxTC.Size = new Size(270, 20);
-            txtboxTC.TabIndex = 1;
-            txtboxTC.EditValueChanged += txtboxTC_TextChanged;
+            // spTC
+            //
+            spTC.Location = new Point(120, 55);
+            spTC.Name = "spTC";
+            spTC.Properties.AllowMouseWheel = false;
+            spTC.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            spTC.Properties.MaskSettings.Set("mask", "d");
+            spTC.Properties.MaxLength = 11;
+            spTC.Size = new Size(270, 20);
+            spTC.TabIndex = 1;
+            spTC.EditValueChanged += spTC_EditValueChanged;
             // 
             // lblAd
             // 
@@ -90,6 +94,8 @@ namespace StajWinForms
             // 
             txtboxAd.Location = new Point(120, 90);
             txtboxAd.Name = "txtboxAd";
+            txtboxAd.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            txtboxAd.Properties.Mask.EditMask = "[a-zA-ZçÇğĞıİöÖşŞüÜ ]+";
             txtboxAd.Size = new Size(270, 20);
             txtboxAd.TabIndex = 3;
             // 
@@ -107,6 +113,8 @@ namespace StajWinForms
             // 
             txtboxSoyad.Location = new Point(120, 125);
             txtboxSoyad.Name = "txtboxSoyad";
+            txtboxSoyad.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            txtboxSoyad.Properties.Mask.EditMask = "[a-zA-ZçÇğĞıİöÖşŞüÜ ]+";
             txtboxSoyad.Size = new Size(270, 20);
             txtboxSoyad.TabIndex = 5;
             // 
@@ -124,6 +132,8 @@ namespace StajWinForms
             // 
             txtboxEmail.Location = new Point(120, 160);
             txtboxEmail.Name = "txtboxEmail";
+            txtboxEmail.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            txtboxEmail.Properties.Mask.EditMask = "[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}";
             txtboxEmail.Size = new Size(270, 20);
             txtboxEmail.TabIndex = 7;
             // 
@@ -141,9 +151,11 @@ namespace StajWinForms
             // 
             txtboxTelefon.Location = new Point(120, 195);
             txtboxTelefon.Name = "txtboxTelefon";
+            txtboxTelefon.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+            txtboxTelefon.Properties.Mask.EditMask = "(000) 000 00 00";
+            txtboxTelefon.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtboxTelefon.Size = new Size(270, 20);
             txtboxTelefon.TabIndex = 9;
-            txtboxTelefon.EditValueChanged += txtboxTelefon_TextChanged;
             // 
             // lblSehir
             // 
@@ -155,12 +167,13 @@ namespace StajWinForms
             lblSehir.TabIndex = 10;
             lblSehir.Text = "Şehir:";
             // 
-            // txtboxSehir
-            // 
-            txtboxSehir.Location = new Point(120, 230);
-            txtboxSehir.Name = "txtboxSehir";
-            txtboxSehir.Size = new Size(270, 20);
-            txtboxSehir.TabIndex = 11;
+            // cmbSehir
+            //
+            cmbSehir.Location = new Point(120, 230);
+            cmbSehir.Name = "cmbSehir";
+            cmbSehir.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cmbSehir.Size = new Size(270, 20);
+            cmbSehir.TabIndex = 11;
             // 
             // lblAdres
             // 
@@ -172,18 +185,18 @@ namespace StajWinForms
             lblAdres.TabIndex = 12;
             lblAdres.Text = "Adres:";
             // 
-            // txtboxAdres
-            // 
-            txtboxAdres.Location = new Point(120, 265);
-            txtboxAdres.Name = "txtboxAdres";
-            txtboxAdres.Size = new Size(270, 20);
-            txtboxAdres.TabIndex = 13;
+            // memoAdres
+            //
+            memoAdres.Location = new Point(120, 265);
+            memoAdres.Name = "memoAdres";
+            memoAdres.Size = new Size(270, 60);
+            memoAdres.TabIndex = 13;
             // 
             // lblCinsiyet
             // 
             lblCinsiyet.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblCinsiyet.Appearance.Options.UseFont = true;
-            lblCinsiyet.Location = new Point(20, 302);
+            lblCinsiyet.Location = new Point(20, 342);
             lblCinsiyet.Name = "lblCinsiyet";
             lblCinsiyet.Size = new Size(46, 15);
             lblCinsiyet.TabIndex = 15;
@@ -191,7 +204,7 @@ namespace StajWinForms
             // 
             // cmbCinsiyet
             // 
-            cmbCinsiyet.Location = new Point(120, 300);
+            cmbCinsiyet.Location = new Point(120, 340);
             cmbCinsiyet.Name = "cmbCinsiyet";
             cmbCinsiyet.Properties.Items.AddRange(new object[] { "Erkek", "Kadın" });
             cmbCinsiyet.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
@@ -201,7 +214,7 @@ namespace StajWinForms
             // 
             // btnBiletOlustur
             // 
-            btnBiletOlustur.Location = new Point(142, 340);
+            btnBiletOlustur.Location = new Point(142, 380);
             btnBiletOlustur.Name = "btnBiletOlustur";
             btnBiletOlustur.Size = new Size(135, 32);
             btnBiletOlustur.TabIndex = 15;
@@ -212,10 +225,10 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(420, 392);
+            ClientSize = new Size(420, 432);
             Controls.Add(lblKoltukBilgi);
             Controls.Add(lblTC);
-            Controls.Add(txtboxTC);
+            Controls.Add(spTC);
             Controls.Add(lblAd);
             Controls.Add(txtboxAd);
             Controls.Add(lblSoyad);
@@ -225,9 +238,9 @@ namespace StajWinForms
             Controls.Add(lblTelefon);
             Controls.Add(txtboxTelefon);
             Controls.Add(lblSehir);
-            Controls.Add(txtboxSehir);
+            Controls.Add(cmbSehir);
             Controls.Add(lblAdres);
-            Controls.Add(txtboxAdres);
+            Controls.Add(memoAdres);
             Controls.Add(lblCinsiyet);
             Controls.Add(cmbCinsiyet);
             Controls.Add(btnBiletOlustur);
@@ -237,13 +250,13 @@ namespace StajWinForms
             Name = "MusteriKaydi";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Müşteri Kaydı";
-            ((System.ComponentModel.ISupportInitialize)txtboxTC.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)spTC.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxEmail.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxTelefon.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxSehir.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)txtboxAdres.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)cmbSehir.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)memoAdres.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cmbCinsiyet.Properties).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -253,7 +266,7 @@ namespace StajWinForms
 
         private LabelControl lblKoltukBilgi;
         private LabelControl lblTC;
-        private TextEdit txtboxTC;
+        private SpinEdit spTC;
         private LabelControl lblAd;
         private TextEdit txtboxAd;
         private LabelControl lblSoyad;
@@ -263,9 +276,9 @@ namespace StajWinForms
         private LabelControl lblTelefon;
         private TextEdit txtboxTelefon;
         private LabelControl lblSehir;
-        private TextEdit txtboxSehir;
+        private ComboBoxEdit cmbSehir;
         private LabelControl lblAdres;
-        private TextEdit txtboxAdres;
+        private MemoEdit memoAdres;
         private LabelControl lblCinsiyet;
         private ComboBoxEdit cmbCinsiyet;
         private SimpleButton btnBiletOlustur;

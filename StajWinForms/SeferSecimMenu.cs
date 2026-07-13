@@ -48,7 +48,7 @@ namespace StajWinForms
                 kalkisTarihi
                 );
             anaMenu.ShowDialog();
-            }
+        }
 
         private void btnTumSeferler_Click(object sender, EventArgs e)
         {
@@ -68,6 +68,25 @@ namespace StajWinForms
             cmbVaris.Properties.Items.AddRange(duraklar.Select(d => d.SehirAdi).ToArray());
 
         }
+        private void cmbKalkis_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cmbKalkis.Text) && cmbKalkis.Text == cmbVaris.Text)
+            {
+                MessageBox.Show("Kalkış yeri ve varış yeri aynı olamaz.");
+                cmbKalkis.SelectedIndex = -1;
+            }
+        }
+
+        private void cmbVaris_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!string.IsNullOrEmpty(cmbVaris.Text) && cmbVaris.Text == cmbKalkis.Text)
+            {
+                MessageBox.Show("Kalkış yeri ve varış yeri aynı olamaz.");
+                cmbVaris.SelectedIndex = -1;
+            }
+        }
+
+        
     }
     internal class SehirlerModel
     {

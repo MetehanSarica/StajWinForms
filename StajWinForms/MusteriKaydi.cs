@@ -32,18 +32,34 @@ namespace StajWinForms
             _binisDurakSira = binisDurakSira;
             _inisDurakSira = inisDurakSira;
             InitializeComponent();
+            spTC.EditValue = null;
             lblKoltukBilgi.Text = $"Seçilen Koltuk: {_koltukNo}";
+            _ = SehirleriYukle();
+        }
+
+        private async Task SehirleriYukle()
+        {
+            try
+            {
+                var sehirler = await _http.GetFromJsonAsync<List<SehirlerModel>>("api/sehirler", _jsonOpts) ?? new();
+                cmbSehir.Properties.Items.AddRange(sehirler.Select(s => s.SehirAdi).ToArray());
+            }
+            catch
+            {
+                MessageBox.Show("Şehirler yüklenemedi.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private bool Dogrula()
         {
-            if (txtboxTC.Text.Trim().Length == 0 ||
+            string telefon = TelefonRakamlari();
+            if (spTC.Text.Trim().Length == 0 ||
                 txtboxAd.Text.Trim().Length == 0 ||
                 txtboxSoyad.Text.Trim().Length == 0 ||
                 txtboxEmail.Text.Trim().Length == 0 ||
-                txtboxTelefon.Text.Trim().Length == 0 ||
-                txtboxSehir.Text.Trim().Length == 0 ||
-                txtboxAdres.Text.Trim().Length == 0 ||
+                telefon.Length == 0 ||
+                cmbSehir.SelectedIndex == -1 ||
+                memoAdres.Text.Trim().Length == 0 ||
                 cmbCinsiyet.SelectedIndex == -1)
             {
                 MessageBox.Show("Lütfen tüm alanları doldurunuz.", "Eksik Bilgi",
@@ -51,7 +67,7 @@ namespace StajWinForms
                 return false;
             }
 
-            string tc = txtboxTC.Text.Trim();
+            string tc = spTC.Text.Trim();
             if (tc.Length != 11 || tc[0] == '0')
             {
                 MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
@@ -59,17 +75,18 @@ namespace StajWinForms
                 return false;
             }
 
-            string telefon = txtboxTelefon.Text.Trim();
-            if (telefon[0] != '0')
+            if (telefon.Length != 11 || telefon[0] != '0')
             {
-                MessageBox.Show("Telefon numarası 0 ile başlamalıdır.", "Geçersiz Telefon",
+                MessageBox.Show("Telefon numarası 11 haneli olmalı ve 0 ile başlamalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                txtboxTelefon.Text = "";
                 return false;
             }
 
             return true;
         }
+
+        private string TelefonRakamlari() =>
+            System.Text.RegularExpressions.Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");
 
         private async void btnBiletOlustur_Click(object sender, EventArgs e)
         {
@@ -77,13 +94,13 @@ namespace StajWinForms
 
             var model = new SatinAlModel
             {
-                MusteriTc = txtboxTC.Text.Trim(),
+                MusteriTc = spTC.Text.Trim(),
                 MusteriAd = txtboxAd.Text.Trim(),
                 MusteriSoyad = txtboxSoyad.Text.Trim(),
                 MusteriMail = txtboxEmail.Text.Trim(),
-                MusteriTelefon = txtboxTelefon.Text.Trim(),
-                MusteriSehir = txtboxSehir.Text.Trim(),
-                MusteriAdres = txtboxAdres.Text.Trim(),
+                MusteriTelefon = TelefonRakamlari(),
+                MusteriSehir = cmbSehir.Text.Trim(),
+                MusteriAdres = memoAdres.Text.Trim(),
                 MusteriCinsiyet = cmbCinsiyet.SelectedItem.ToString()!.Substring(0, 1).ToUpper(),
                 SeferId = _seferID,
                 KoltukNo = _koltukNo,
@@ -122,25 +139,14 @@ namespace StajWinForms
             }
         }
 
-        private void txtboxTC_TextChanged(object sender, EventArgs e)
+        private void spTC_EditValueChanged(object sender, EventArgs e)
         {
-            txtboxTC.Properties.MaxLength = 11;
-            if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTC.Text, "[^0-9]"))
+            spTC.Properties.MaxLength = 11;
+            if (System.Text.RegularExpressions.Regex.IsMatch(spTC.Text, "[^0-9]"))
             {
-                txtboxTC.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTC.Text, "[^0-9]", "");
-                if (txtboxTC.MaskBox != null)
-                    txtboxTC.MaskBox.MaskBoxSelectionStart = txtboxTC.Text.Length;
-            }
-        }
-
-        private void txtboxTelefon_TextChanged(object sender, EventArgs e)
-        {
-            txtboxTelefon.Properties.MaxLength = 11;
-            if (System.Text.RegularExpressions.Regex.IsMatch(txtboxTelefon.Text, "[^0-9]"))
-            {
-                txtboxTelefon.Text = System.Text.RegularExpressions.Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");
-                if (txtboxTelefon.MaskBox != null)
-                    txtboxTelefon.MaskBox.MaskBoxSelectionStart = txtboxTelefon.Text.Length;
+                spTC.Text = System.Text.RegularExpressions.Regex.Replace(spTC.Text, "[^0-9]", "");
+                if (spTC.MaskBox != null)
+                    spTC.MaskBox.MaskBoxSelectionStart = spTC.Text.Length;
             }
         }
 
@@ -149,7 +155,7 @@ namespace StajWinForms
         }
         private void BiletPdfOlustur()
         {
-            string dosyaYolu = Path.GetTempPath() + $"Bilet_{txtboxTC.Text}_{_koltukNo}_{txtboxAd.Text}.pdf";
+            string dosyaYolu = Path.GetTempPath() + $"Bilet_{spTC.Text}_{_koltukNo}_{txtboxAd.Text}.pdf";
             Document.Create(doc =>
             {
                 doc.Page(page =>
@@ -190,7 +196,7 @@ namespace StajWinForms
                                 table.Cell().Text("Ad Soyad:").SemiBold().FontColor(Colors.Grey.Darken2);
                                 table.Cell().Text($"{txtboxAd.Text} {txtboxSoyad.Text}");
                                 table.Cell().Text("TC No:").SemiBold().FontColor(Colors.Grey.Darken2);
-                                table.Cell().Text(txtboxTC.Text);
+                                table.Cell().Text(spTC.Text);
 
                                 table.Cell().Text("Telefon:").SemiBold().FontColor(Colors.Grey.Darken2);
                                 table.Cell().Text(txtboxTelefon.Text);
@@ -198,12 +204,12 @@ namespace StajWinForms
                                 table.Cell().Text(txtboxEmail.Text);
 
                                 table.Cell().Text("Şehir:").SemiBold().FontColor(Colors.Grey.Darken2);
-                                table.Cell().Text(txtboxSehir.Text);
+                                table.Cell().Text(cmbSehir.Text);
                                 table.Cell().Text("Cinsiyet:").SemiBold().FontColor(Colors.Grey.Darken2);
                                 table.Cell().Text(cmbCinsiyet.SelectedItem.ToString());
 
                                 table.Cell().Text("Adres:").SemiBold().FontColor(Colors.Grey.Darken2);
-                                table.Cell().ColumnSpan(3).Text(txtboxAdres.Text);
+                                table.Cell().ColumnSpan(3).Text(memoAdres.Text);
                             });
                         });
                     });
