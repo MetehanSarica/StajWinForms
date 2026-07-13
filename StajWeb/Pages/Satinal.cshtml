@@ -4,8 +4,8 @@
     ViewData["Title"] = "Satın Al";
 }
 
-<h2>Bilet Satın Al</h2>
-<p>Seçilen Koltuklar: @string.Join(", ", Model.KoltukList)</p>
+<h4 class="mb-4">Yolcu Bilgileri</h4>
+<p class="text-muted">Seçilen Koltuklar: <strong>@string.Join(", ", Model.KoltukList)</strong></p>
 
 <form method="post">
     <input type="hidden" asp-for="SeferId" />
@@ -13,23 +13,42 @@
 
     @for (int i = 0; i < Model.KoltukList.Count; i++)
     {
-        <fieldset style="border:1px solid #ccc; padding:12px; margin-bottom:16px; border-radius:6px;">
-            <legend>Koltuk @Model.KoltukList[i]</legend>
-
-            <input name="Yolcular[@i].MusteriTc" placeholder="TC Kimlik No" maxlength="11" required /><br />
-            <input name="Yolcular[@i].MusteriAd" placeholder="Ad" required /><br />
-            <input name="Yolcular[@i].MusteriSoyad" placeholder="Soyad" required /><br />
-            <input name="Yolcular[@i].MusteriMail" placeholder="E-posta" type="email" required /><br />
-            <input name="Yolcular[@i].MusteriTelefon" placeholder="Telefon (0 ile başlamalı)" maxlength="11" required /><br />
-            <input name="Yolcular[@i].MusteriSehir" placeholder="Şehir" required /><br />
-            <input name="Yolcular[@i].MusteriAdres" placeholder="Adres" required /><br />
-            <select name="Yolcular[@i].MusteriCinsiyet" required>
-                <option value="">Cinsiyet Seçin</option>
-                <option value="E">Erkek</option>
-                <option value="K">Kadın</option>
-            </select>
-        </fieldset>
+        <div class="card mb-4 shadow-sm">
+            <div class="card-header fw-bold">Koltuk @Model.KoltukList[i]</div>
+            <div class="card-body">
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriTc" class="form-control" placeholder="TC Kimlik No" maxlength="11" required />
+                    </div>
+                    <div class="col-md-6">
+                        <select name="Yolcular[@i].MusteriCinsiyet" class="form-select" required>
+                            <option value="">Cinsiyet Seçin</option>
+                            <option value="E">Erkek</option>
+                            <option value="K">Kadın</option>
+                        </select>
+                    </div>
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriAd" class="form-control" placeholder="Ad" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriSoyad" class="form-control" placeholder="Soyad" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriMail" class="form-control" placeholder="E-posta" type="email" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriTelefon" class="form-control" placeholder="Telefon (0 ile başlamalı)" maxlength="11" required />
+                    </div>
+                    <div class="col-md-6">
+                        <input name="Yolcular[@i].MusteriSehir" class="form-control" placeholder="Şehir" required />
+                    </div>
+                    <div class="col-12">
+                        <input name="Yolcular[@i].MusteriAdres" class="form-control" placeholder="Adres" required />
+                    </div>
+                </div>
+            </div>
+        </div>
     }
 
-    <button type="submit">Satın Al</button>
+    <button type="submit" class="btn btn-primary px-4">Satın Al</button>
 </form>

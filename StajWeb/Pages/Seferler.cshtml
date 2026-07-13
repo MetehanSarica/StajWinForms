@@ -4,38 +4,31 @@
     ViewData["Title"] = "Seferler";
 }
 
-<h2>Uygun Seferler</h2>
+<h4 class="mb-4">Uygun Seferler</h4>
 
 @if (Model.Seferler != null && Model.Seferler.Any())
 {
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Kalkış Şehri</th>
-                <th>Varış Şehri</th>
-                <th>Tarih</th>
-                <th>Fiyat</th>
-                <th>Firma</th>
-                <th>Boş Koltuk</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var sefer in Model.Seferler)
-            {
-                <tr>
-                    <td>@sefer.KalkisSehirAdi</td>
-                    <td>@sefer.VarisSehirAdi</td>
-                    <td>@sefer.KalkisZamani.ToString("dd/MM/yyyy")</td>
-                    <td>@sefer.Fiyat.ToString("C")</td>
-                    <td>@sefer.FirmaAdi</td>
-                    <td>@sefer.BosKoltuk</td>
-                    <td><a href="/SeferDetay/@sefer.SeferId" class="btn btn-primary btn-sm">Seç</a></td>
-                </tr>
-            }
-        </tbody>
-    </table>
+    @foreach (var sefer in Model.Seferler)
+    {
+        <div class="card mb-3 shadow-sm">
+            <div class="card-body d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">@sefer.KalkisSehirAdi → @sefer.VarisSehirAdi</h5>
+                    <small class="text-muted">@sefer.FirmaAdi</small>
+                </div>
+                <div class="text-center">
+                    <div>@sefer.KalkisZamani.ToString("dd/MM/yyyy HH:mm")</div>
+                    <small class="text-muted">@sefer.BosKoltuk boş koltuk</small>
+                </div>
+                <div class="text-end">
+                    <div class="fw-bold fs-5 text-primary mb-2">@sefer.Fiyat ₺</div>
+                    <a href="/SeferDetay/@sefer.SeferId" class="btn btn-primary btn-sm">Seç</a>
+                </div>
+            </div>
+        </div>
+    }
 }
 else
 {
-    <p>Uygun sefer bulunamadı.</p>
+    <div class="alert alert-warning">Uygun sefer bulunamadı.</div>
 }

@@ -1,14 +1,23 @@
 @page
 @model StajWeb.Pages.BiletIptalModel
 @{
+    ViewData["Title"] = "Bilet İptal";
 }
 
-<h2>Bilet İptal</h2>
-
-<p>@Model.BiletId numaralı bilet iptal edilecektir. Onaylıyor musunuz?</p>
-
-<form method="post">
-    <input type="hidden" asp-for="BiletId" />
-    <button type="submit" class="btn btn-danger">Evet</button>
-    <a href="/BiletSorgula" class="btn btn-secondary">Hayır</a>
-</form>
+<div class="card shadow-sm mx-auto mt-5" style="max-width:450px;">
+    <div class="card-body text-center p-5">
+        <div class="mb-3" style="font-size:3rem;">⚠️</div>
+        <h5 class="card-title mb-3">Bilet İptali</h5>
+        <p class="text-muted mb-4">
+            <strong>@Model.BiletId</strong> numaralı bilet iptal edilecektir.<br />
+            Bu işlem geri alınamaz. Onaylıyor musunuz?
+        </p>
+        <form method="post">
+            <input type="hidden" asp-for="BiletId" />
+            <div class="d-flex justify-content-center gap-3">
+                <button type="submit" class="btn btn-danger px-4">Evet, İptal Et</button>
+                <a href="/BiletSorgula" class="btn btn-secondary px-4">Vazgeç</a>
+            </div>
+        </form>
+    </div>
+</div>
