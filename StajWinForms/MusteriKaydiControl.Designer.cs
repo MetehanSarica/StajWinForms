@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -41,7 +41,9 @@ namespace StajWinForms
             ((System.ComponentModel.ISupportInitialize)memoAdres.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cmbCinsiyet.Properties).BeginInit();
             SuspendLayout();
-
+            // 
+            // lblKoltukBilgi
+            // 
             lblKoltukBilgi.Appearance.Font = new Font("Segoe UI", 11F, FontStyle.Bold);
             lblKoltukBilgi.Appearance.ForeColor = Color.DarkBlue;
             lblKoltukBilgi.Appearance.Options.UseFont = true;
@@ -50,124 +52,166 @@ namespace StajWinForms
             lblKoltukBilgi.Location = new Point(20, 12);
             lblKoltukBilgi.Name = "lblKoltukBilgi";
             lblKoltukBilgi.Size = new Size(380, 22);
+            lblKoltukBilgi.TabIndex = 0;
             lblKoltukBilgi.Text = "Seçilen Koltuk: -";
-
+            // 
+            // lblTC
+            // 
             lblTC.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTC.Appearance.Options.UseFont = true;
             lblTC.Location = new Point(20, 57);
             lblTC.Name = "lblTC";
             lblTC.Size = new Size(74, 15);
+            lblTC.TabIndex = 1;
             lblTC.Text = "TC Kimlik No:";
-
+            // 
+            // spTC
+            // 
+            spTC.EditValue = new decimal(new int[] { 0, 0, 0, 0 });
             spTC.Location = new Point(120, 55);
             spTC.Name = "spTC";
             spTC.Properties.AllowMouseWheel = false;
             spTC.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
             spTC.Properties.MaskSettings.Set("mask", "d");
             spTC.Properties.MaxLength = 11;
+            spTC.RightToLeft = RightToLeft.Yes;
             spTC.Size = new Size(270, 20);
             spTC.TabIndex = 1;
             spTC.EditValueChanged += spTC_EditValueChanged;
-
+            // 
+            // lblAd
+            // 
             lblAd.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblAd.Appearance.Options.UseFont = true;
             lblAd.Location = new Point(20, 92);
             lblAd.Name = "lblAd";
             lblAd.Size = new Size(18, 15);
+            lblAd.TabIndex = 2;
             lblAd.Text = "Ad:";
-
+            // 
+            // txtboxAd
+            // 
             txtboxAd.Location = new Point(120, 90);
             txtboxAd.Name = "txtboxAd";
-            txtboxAd.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtboxAd.Properties.Mask.EditMask = "[a-zA-ZçÇğĞıİöÖşŞüÜ ]+";
+            txtboxAd.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtboxAd.Size = new Size(270, 20);
             txtboxAd.TabIndex = 3;
-
+            // 
+            // lblSoyad
+            // 
             lblSoyad.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblSoyad.Appearance.Options.UseFont = true;
             lblSoyad.Location = new Point(20, 127);
             lblSoyad.Name = "lblSoyad";
             lblSoyad.Size = new Size(36, 15);
+            lblSoyad.TabIndex = 4;
             lblSoyad.Text = "Soyad:";
-
+            // 
+            // txtboxSoyad
+            // 
             txtboxSoyad.Location = new Point(120, 125);
             txtboxSoyad.Name = "txtboxSoyad";
-            txtboxSoyad.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtboxSoyad.Properties.Mask.EditMask = "[a-zA-ZçÇğĞıİöÖşŞüÜ ]+";
+            txtboxSoyad.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtboxSoyad.Size = new Size(270, 20);
             txtboxSoyad.TabIndex = 5;
-
+            // 
+            // lblEmail
+            // 
             lblEmail.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblEmail.Appearance.Options.UseFont = true;
             lblEmail.Location = new Point(20, 162);
             lblEmail.Name = "lblEmail";
             lblEmail.Size = new Size(32, 15);
+            lblEmail.TabIndex = 6;
             lblEmail.Text = "Email:";
-
+            // 
+            // txtboxEmail
+            // 
             txtboxEmail.Location = new Point(120, 160);
             txtboxEmail.Name = "txtboxEmail";
-            txtboxEmail.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
-            txtboxEmail.Properties.Mask.EditMask = "[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}";
             txtboxEmail.Size = new Size(270, 20);
             txtboxEmail.TabIndex = 7;
-
+            // 
+            // lblTelefon
+            // 
             lblTelefon.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblTelefon.Appearance.Options.UseFont = true;
             lblTelefon.Location = new Point(20, 197);
             lblTelefon.Name = "lblTelefon";
             lblTelefon.Size = new Size(46, 15);
+            lblTelefon.TabIndex = 8;
             lblTelefon.Text = "Telefon:";
-
+            // 
+            // txtboxTelefon
+            // 
             txtboxTelefon.Location = new Point(120, 195);
             txtboxTelefon.Name = "txtboxTelefon";
-            txtboxTelefon.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
             txtboxTelefon.Properties.Mask.EditMask = "(000) 000 00 00";
+            txtboxTelefon.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
             txtboxTelefon.Properties.Mask.UseMaskAsDisplayFormat = true;
             txtboxTelefon.Size = new Size(270, 20);
             txtboxTelefon.TabIndex = 9;
-
+            // 
+            // lblSehir
+            // 
             lblSehir.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblSehir.Appearance.Options.UseFont = true;
             lblSehir.Location = new Point(20, 232);
             lblSehir.Name = "lblSehir";
             lblSehir.Size = new Size(32, 15);
+            lblSehir.TabIndex = 10;
             lblSehir.Text = "Şehir:";
-
+            // 
+            // cmbSehir
+            // 
             cmbSehir.Location = new Point(120, 230);
             cmbSehir.Name = "cmbSehir";
             cmbSehir.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbSehir.Size = new Size(270, 20);
             cmbSehir.TabIndex = 11;
-
+            // 
+            // lblAdres
+            // 
             lblAdres.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblAdres.Appearance.Options.UseFont = true;
             lblAdres.Location = new Point(20, 267);
             lblAdres.Name = "lblAdres";
             lblAdres.Size = new Size(35, 15);
+            lblAdres.TabIndex = 12;
             lblAdres.Text = "Adres:";
-
+            // 
+            // memoAdres
+            // 
             memoAdres.Location = new Point(120, 265);
             memoAdres.Name = "memoAdres";
             memoAdres.Size = new Size(270, 60);
             memoAdres.TabIndex = 13;
-
+            // 
+            // lblCinsiyet
+            // 
             lblCinsiyet.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
             lblCinsiyet.Appearance.Options.UseFont = true;
             lblCinsiyet.Location = new Point(20, 342);
             lblCinsiyet.Name = "lblCinsiyet";
             lblCinsiyet.Size = new Size(46, 15);
+            lblCinsiyet.TabIndex = 14;
             lblCinsiyet.Text = "Cinsiyet:";
-
+            // 
+            // cmbCinsiyet
+            // 
             cmbCinsiyet.Location = new Point(120, 340);
             cmbCinsiyet.Name = "cmbCinsiyet";
             cmbCinsiyet.Properties.Items.AddRange(new object[] { "Erkek", "Kadın" });
             cmbCinsiyet.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
             cmbCinsiyet.Size = new Size(270, 20);
             cmbCinsiyet.TabIndex = 14;
-
+            // 
+            // MusteriKaydiControl
+            // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            Size = new Size(420, 380);
             Controls.Add(lblKoltukBilgi);
             Controls.Add(lblTC);
             Controls.Add(spTC);
@@ -185,6 +229,8 @@ namespace StajWinForms
             Controls.Add(memoAdres);
             Controls.Add(lblCinsiyet);
             Controls.Add(cmbCinsiyet);
+            Name = "MusteriKaydiControl";
+            Size = new Size(420, 380);
             ((System.ComponentModel.ISupportInitialize)spTC.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxAd.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtboxSoyad.Properties).EndInit();
@@ -194,6 +240,7 @@ namespace StajWinForms
             ((System.ComponentModel.ISupportInitialize)memoAdres.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cmbCinsiyet.Properties).EndInit();
             ResumeLayout(false);
+            PerformLayout();
         }
 
         private LabelControl lblKoltukBilgi;

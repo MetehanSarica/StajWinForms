@@ -63,9 +63,9 @@ namespace StajWinForms
                 return false;
             }
 
-            if (telefon.Length != 11 || telefon[0] != '0')
+            if (telefon.Length != 11)
             {
-                MessageBox.Show($"Koltuk {_koltukNo}: Telefon numarası 11 haneli olmalı ve 0 ile başlamalıdır.", "Geçersiz Telefon",
+                MessageBox.Show($"Koltuk {_koltukNo}: Telefon numarası 11 haneli olmalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }

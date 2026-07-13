@@ -30,11 +30,22 @@ namespace StajWinForms
             int yOffset = 10;
             foreach (var koltukNo in koltuklar)
             {
-                var control = new MusteriKaydiControl(seferId, koltukNo, binisSira, inisSira);
-                control.Location = new Point(10, yOffset);
-                panel.Controls.Add(control);
-                _controls.Add(control);
-                yOffset += control.Height + 10;
+                try
+                {
+                    var control = new MusteriKaydiControl(seferId, koltukNo, binisSira, inisSira);
+                    control.Location = new Point(10, yOffset);
+                    panel.Controls.Add(control); 
+
+                    if (_controls == null) _controls = new List<MusteriKaydiControl>();
+                    _controls.Add(control);
+
+                    yOffset += control.Height + 10;
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Koltuk {koltukNo} için ekran oluşturulurken bir hata oluştu:\n\n{ex.Message}\n\nStack Trace:\n{ex.StackTrace}",
+                        "UserControl Hatası Yakalandı", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
 
             var btnBiletOlustur = new SimpleButton

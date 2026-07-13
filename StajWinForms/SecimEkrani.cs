@@ -1,4 +1,4 @@
-using DevExpress.LookAndFeel;
+﻿using DevExpress.LookAndFeel;
 using DevExpress.XtraEditors;
 using System;
 using System.Collections.Generic;
@@ -206,26 +206,40 @@ namespace StajWinForms
 
         private void btnKoltukSec_Click(object sender, EventArgs e)
         {
-            if (_secilenKoltuklar == null || !_secilenKoltuklar.Any())
+            try
             {
-                MessageBox.Show("Lütfen önce bir koltuk seçin.");
-                return;
-            }
-
-            int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
-            int inisSira  = cmbInis.EditValue  != null ? Convert.ToInt32(cmbInis.EditValue)  : 0;
-
-            var form = new CokluMusteriKaydi(_secilenKoltuklar, _seferID, binisSira, inisSira);
-            form.FormClosed += async (s, args) =>
-            {
-                try { await KoltuklariRenklendir(); }
-                catch (Exception ex)
+                if (_secilenKoltuklar == null || !_secilenKoltuklar.Any())
                 {
-                    MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
-                        MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    MessageBox.Show("Lütfen önce bir koltuk seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
                 }
-            };
-            form.Show();
+
+                int binisSira = cmbBinis.EditValue != null ? Convert.ToInt32(cmbBinis.EditValue) : 0;
+                int inisSira = cmbInis.EditValue != null ? Convert.ToInt32(cmbInis.EditValue) : 0;
+
+                var form = new CokluMusteriKaydi(_secilenKoltuklar, _seferID, binisSira, inisSira);
+                form.FormClosed += async (s, args) =>
+                {
+                    try
+                    {
+                        await KoltuklariRenklendir();
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                };
+
+                form.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"İşlem sırasında bir hata oluştu:\n\nHata Mesajı: {ex.Message}\n\nDetay:\n{ex.StackTrace}",
+                    "Kritik Hata Yakalandı",
+                    MessageBoxButtons.OK,
+                    MessageBoxIcon.Error);
+            }
         }
 
         private static void KoltukRenkAyarla(SimpleButton btn, Color renk, bool disabled)
