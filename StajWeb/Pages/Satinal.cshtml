@@ -5,43 +5,31 @@
 }
 
 <h2>Bilet Satın Al</h2>
-<p>Sefer: @Model.SeferId | Koltuk: @Model.KoltukNo</p>
+<p>Seçilen Koltuklar: @string.Join(", ", Model.KoltukList)</p>
 
 <form method="post">
     <input type="hidden" asp-for="SeferId" />
-    <input type="hidden" asp-for="KoltukNo" />
+    <input type="hidden" asp-for="Koltuklar" />
 
-    <input asp-for="MusteriTc" placeholder="TC Kimlik No" maxlength="11" />
-    <span asp-validation-for="MusteriTc" class="text-danger"></span><br />
+    @for (int i = 0; i < Model.KoltukList.Count; i++)
+    {
+        <fieldset style="border:1px solid #ccc; padding:12px; margin-bottom:16px; border-radius:6px;">
+            <legend>Koltuk @Model.KoltukList[i]</legend>
 
-    <input asp-for="MusteriAd" placeholder="Ad" />
-    <span asp-validation-for="MusteriAd" class="text-danger"></span><br />
-
-    <input asp-for="MusteriSoyad" placeholder="Soyad" />
-    <span asp-validation-for="MusteriSoyad" class="text-danger"></span><br />
-
-    <input asp-for="MusteriMail" placeholder="E-posta" type="email" />
-    <span asp-validation-for="MusteriMail" class="text-danger"></span><br />
-
-    <input asp-for="MusteriTelefon" placeholder="Telefon" maxlength="11" />
-    <span asp-validation-for="MusteriTelefon" class="text-danger"></span><br />
-
-    <input asp-for="MusteriSehir" placeholder="Şehir" />
-    <span asp-validation-for="MusteriSehir" class="text-danger"></span><br />
-
-    <input asp-for="MusteriAdres" placeholder="Adres" />
-    <span asp-validation-for="MusteriAdres" class="text-danger"></span><br />
-
-    <select asp-for="MusteriCinsiyet">
-        <option value="">Cinsiyet</option>
-        <option value="E">Erkek</option>
-        <option value="K">Kadın</option>
-    </select>
-    <span asp-validation-for="MusteriCinsiyet" class="text-danger"></span><br />
+            <input name="Yolcular[@i].MusteriTc" placeholder="TC Kimlik No" maxlength="11" required /><br />
+            <input name="Yolcular[@i].MusteriAd" placeholder="Ad" required /><br />
+            <input name="Yolcular[@i].MusteriSoyad" placeholder="Soyad" required /><br />
+            <input name="Yolcular[@i].MusteriMail" placeholder="E-posta" type="email" required /><br />
+            <input name="Yolcular[@i].MusteriTelefon" placeholder="Telefon (0 ile başlamalı)" maxlength="11" required /><br />
+            <input name="Yolcular[@i].MusteriSehir" placeholder="Şehir" required /><br />
+            <input name="Yolcular[@i].MusteriAdres" placeholder="Adres" required /><br />
+            <select name="Yolcular[@i].MusteriCinsiyet" required>
+                <option value="">Cinsiyet Seçin</option>
+                <option value="E">Erkek</option>
+                <option value="K">Kadın</option>
+            </select>
+        </fieldset>
+    }
 
     <button type="submit">Satın Al</button>
 </form>
-
-@section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
-}

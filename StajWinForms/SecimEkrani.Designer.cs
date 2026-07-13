@@ -72,6 +72,7 @@ namespace StajWinForms
             pictureBox1.Location = new Point(12, 12);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
+            pictureBox1.Properties.ShowMenu = false;
             pictureBox1.Size = new Size(776, 321);
             pictureBox1.TabIndex = 0;
             pictureBox1.TabStop = false;

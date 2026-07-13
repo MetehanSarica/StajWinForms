@@ -10,6 +10,33 @@
 <p>@Model.Sefer.KalkisSehirAdi - @Model.Sefer.VarisSehirAdi</p>
 <p>@Model.Sefer.KalkisZamani.ToString("dd/MM/yyyy HH:mm") | @Model.Sefer.Fiyat ₺</p>
 
+<script>
+
+    const secilenKoltuklar = [];
+
+    function devamEt() {
+        if (secilenKoltuklar.length === 0) {
+            alert("Lütfen en az bir koltuk seçin.");
+            return;
+        }
+
+        window.location = '/Satinal?seferId=@Model.Id&koltuklar=' + secilenKoltuklar.join(',');
+    }
+
+    function koltukSec(btn, koltukNo) {
+
+        const idx = secilenKoltuklar.indexOf(koltukNo);
+        if (idx == -1) {
+            secilenKoltuklar.push(koltukNo);
+            btn.style.background = '#ffc107';
+        } else {
+            secilenKoltuklar.splice(idx, 1);
+            btn.style.background = '#28a745';
+        }
+    }
+
+</script>
+
 <style>
     .bus-h { display: flex; flex-direction: row; border: 3px solid #666; border-radius: 20px; padding: 12px; background: #f5f5f5; width: fit-content; }
     .driver-col { display: flex; flex-direction: column; align-items: center; justify-content: space-between; margin-right: 12px; border-right: 2px dashed #aaa; padding-right: 12px; gap: 6px; }
@@ -47,7 +74,7 @@
                         var cinsiyet = alinmisKoltuklar.ContainsKey(koltukNo) ? alinmisKoltuklar[koltukNo] : null;
                         if (cinsiyet == "E") { <button class="seat male" disabled>@koltukNo</button> }
                         else if (cinsiyet == "K") { <button class="seat female" disabled>@koltukNo</button> }
-                        else { <a href="/Satinal?seferId=@Model.Id&koltukNo=@koltukNo" class="seat available">@koltukNo</a> }
+                        else { <button class="seat available" onclick="koltukSec(this, @koltukNo)">@koltukNo</button> }
                     }
                 }
             </div>
@@ -64,7 +91,8 @@
                         var cinsiyet = alinmisKoltuklar.ContainsKey(koltukNo) ? alinmisKoltuklar[koltukNo] : null;
                         if (cinsiyet == "E") { <button class="seat male" disabled>@koltukNo</button> }
                         else if (cinsiyet == "K") { <button class="seat female" disabled>@koltukNo</button> }
-                        else { <a href="/Satinal?seferId=@Model.Id&koltukNo=@koltukNo" class="seat available">@koltukNo</a> }
+                        else
+                        { <button class="seat available" onclick="koltukSec(this, @koltukNo)">@koltukNo</button> }
                     }
                 }
             </div>
@@ -72,5 +100,4 @@
     </div>
 </div>
 
-
-
+<button onclick="devamEt()">Devam Et</button>

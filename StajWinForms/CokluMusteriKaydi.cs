@@ -1,8 +1,7 @@
 ﻿using DevExpress.XtraEditors;
-using System.Net.Http.Json;
-using System.Windows.Forms;
 using System.Net.Http;
 using System.Net.Http.Json;
+using System.Windows.Forms;
 
 namespace StajWinForms
 {
@@ -47,7 +46,8 @@ namespace StajWinForms
             btnBiletOlustur.Click += BtnBiletOlustur_Click;
             panel.Controls.Add(btnBiletOlustur);
 
-            int formHeight = Math.Min(yOffset + 80, Screen.PrimaryScreen.WorkingArea.Height - 100);
+            int screenHeight = Screen.PrimaryScreen?.WorkingArea.Height ?? 800;
+            int formHeight = Math.Min(yOffset + 80, screenHeight - 100);
             ClientSize = new Size(450, formHeight);
             Controls.Add(panel);
         }
