@@ -133,6 +133,7 @@ namespace StajWinForms
             Controls.Add(btnTumSeferler);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
+            MinimizeBox = false;
             Name = "SeferSecimMenu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Sefer Arama";
