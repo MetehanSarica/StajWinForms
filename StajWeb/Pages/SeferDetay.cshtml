@@ -3,7 +3,10 @@
 @{
     ViewData["Title"] = "Sefer Detayları";
     var toplamKoltuk = 36;
-    var alinmisKoltuklar = Model.Biletler.ToDictionary(b => b.KoltukNo, b => b.Cinsiyet);
+    var alinmisKoltuklar = Model.Biletler
+        .Where(b => b.BinisDurakSira < Model.Inis && b.InisDurakSira > Model.Binis)
+        .GroupBy(b => b.KoltukNo)
+        .ToDictionary(g => g.Key, g => g.First().Cinsiyet);
 }
 
 <div class="card shadow-sm mb-4" style="max-width:500px;">
@@ -18,6 +21,27 @@
     </div>
 </div>
 
+<form method="get" class="d-flex gap-3 mb-3">
+    <div>
+        <label class="form-label">Biniş Durağı</label>
+        <select name="binis" class="form-select" onchange="this.form.submit()">
+            @foreach (var d in Model.Duraklar)
+            {
+                <option value="@d.DurakSira" selected="@(d.DurakSira == Model.Binis)">@d.SehirAdi</option>
+            }
+        </select>
+    </div>
+    <div>
+        <label class="form-label">İniş Durağı</label>
+        <select name="inis" class="form-select" onchange="this.form.submit()">
+            @foreach (var d in Model.Duraklar)
+            {
+                <option value="@d.DurakSira" selected="@(d.DurakSira == Model.Inis)">@d.SehirAdi</option>
+            }
+        </select>
+    </div>
+</form>
+
 <script>
 
     const secilenKoltuklar = [];
@@ -28,7 +52,8 @@
             return;
         }
 
-        window.location = '/Satinal?seferId=@Model.Id&koltuklar=' + secilenKoltuklar.join(',');
+        window.location = '/Satinal?seferId=@Model.Id&koltuklar=' + secilenKoltuklar.join(',')
+            + '&binis=@Model.Binis&inis=@Model.Inis';
     }
 
     function koltukSec(btn, koltukNo) {

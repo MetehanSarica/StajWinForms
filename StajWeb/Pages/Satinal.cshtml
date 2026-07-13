@@ -10,6 +10,8 @@
 <form method="post">
     <input type="hidden" asp-for="SeferId" />
     <input type="hidden" asp-for="Koltuklar" />
+    <input type="hidden" asp-for="Binis" />
+    <input type="hidden" asp-for="Inis" />
 
     @for (int i = 0; i < Model.KoltukList.Count; i++)
     {

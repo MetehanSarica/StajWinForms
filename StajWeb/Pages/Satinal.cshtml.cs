@@ -5,6 +5,7 @@ using StajWeb.Models;
 using System.Net.Http.Json;
 using System.ComponentModel.DataAnnotations;
 using StajWeb.Dtos;
+using Microsoft.Extensions.Configuration.Ini;
 
 namespace StajWeb.Pages
 {
@@ -13,6 +14,8 @@ namespace StajWeb.Pages
         [BindProperty] public List<YolcuDto> Yolcular { get; set; } = new();
         [BindProperty(SupportsGet = true)] public int SeferId { get; set; }
         [BindProperty(SupportsGet = true)] public string Koltuklar {  get; set; }
+        [BindProperty(SupportsGet = true)] public int Binis {  get; set; }
+        [BindProperty(SupportsGet = true)] public int Inis { get; set; }
         public List<int> KoltukList { get; set; } = new List<int>();
         private readonly IHttpClientFactory _clientFactory;
 
@@ -52,8 +55,8 @@ namespace StajWeb.Pages
                             yolcu.MusteriSehir,
                             yolcu.MusteriAdres,
                             yolcu.MusteriCinsiyet,
-                            BinisDurakSira = 1,
-                            InisDurakSira = 1
+                            BinisDurakSira = Binis,
+                            InisDurakSira = Inis,
                         });
                         if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
                             return Page();
