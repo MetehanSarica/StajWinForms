@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
 using Scalar.AspNetCore;
+using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +30,11 @@ app.Use(async (context, next) =>
 {
     if (context.Request.Path.StartsWithSegments("/api"))
     {
-        if (!context.Request.Headers.TryGetValue("X-Api-Key", out var gelenKey) || gelenKey != apiKey)
+        var apiKeyBytes = System.Text.Encoding.UTF8.GetBytes(apiKey);
+        if (!context.Request.Headers.TryGetValue("X-Api-Key", out var gelenKey) ||
+            !CryptographicOperations.FixedTimeEquals(
+                apiKeyBytes,
+                System.Text.Encoding.UTF8.GetBytes(gelenKey.ToString())))
         {
             context.Response.StatusCode = StatusCodes.Status401Unauthorized;
             await context.Response.WriteAsync("Geçersiz veya eksik API anahtarı.");

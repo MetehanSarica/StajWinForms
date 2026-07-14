@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -132,7 +132,7 @@ namespace StajWinForms
             // 
             txtboxEmail.Location = new Point(120, 160);
             txtboxEmail.Name = "txtboxEmail";
-            txtboxEmail.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
+            //txtboxEmail.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.RegEx;
             txtboxEmail.Properties.Mask.EditMask = "[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,}";
             txtboxEmail.Size = new Size(270, 20);
             txtboxEmail.TabIndex = 7;

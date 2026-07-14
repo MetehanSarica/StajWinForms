@@ -58,6 +58,8 @@ public class SeferDetayController : ControllerBase
                     .Select(d => d.Otogar.OtogarAdi)
                     .ToList(),
                 Personeller = s.SeferPersonels
+                    .OrderByDescending(sp => sp.Rol)
+                    .ThenBy(sp => sp.Id)
                     .Select(sp => (sp.Rol != null ? sp.Rol + ": " : "") + sp.Personel.Ad + " " + sp.Personel.Soyad)
                     .ToList()
             })

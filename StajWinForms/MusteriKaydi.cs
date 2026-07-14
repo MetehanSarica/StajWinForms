@@ -32,6 +32,7 @@ namespace StajWinForms
             _binisDurakSira = binisDurakSira;
             _inisDurakSira = inisDurakSira;
             InitializeComponent();
+            txtboxTelefon.Properties.Mask.EditMask = @"\0(000) 000 00 00";
             spTC.EditValue = null;
             lblKoltukBilgi.Text = $"Seçilen Koltuk: {_koltukNo}";
             _ = SehirleriYukle();
@@ -68,14 +69,14 @@ namespace StajWinForms
             }
 
             string tc = spTC.Text.Trim();
-            if (tc.Length != 11 || tc[0] == '0')
+            if (!Dogrulama.TcGecerliMi(tc))
             {
                 MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            if (telefon.Length != 11 || telefon[0] != '0')
+            if (!Dogrulama.TelefonGecerliMi(telefon))
             {
                 MessageBox.Show("Telefon numarası 11 haneli olmalı ve 0 ile başlamalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
