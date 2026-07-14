@@ -50,6 +50,9 @@ namespace StajWinForms
                 txtFiyatValue.Text = sefer.Fiyat.ToString("C2");
                 txtKoltukValue.Text = sefer.BosKoltuk.ToString();
                 txtDuraklar.Text = string.Join(" → ", sefer.Duraklar);
+                txtPersoneller.Text = sefer.Personeller.Count > 0
+                    ? string.Join(", ", sefer.Personeller)
+                    : "Atanmış personel yok";
                 Text = "Sefer Detayları";
             }
             catch (HttpRequestException ex)

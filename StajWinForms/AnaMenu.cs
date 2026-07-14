@@ -126,6 +126,6 @@ namespace StajWinForms
         public decimal Fiyat { get; set; }
         public int BosKoltuk { get; set; }
         public List<string> Duraklar { get; set; } = new();
-
+        public List<string> Personeller { get; set; } = new();
     }
 }

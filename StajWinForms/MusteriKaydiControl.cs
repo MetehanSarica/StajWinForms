@@ -63,7 +63,7 @@ namespace StajWinForms
                 return false;
             }
 
-            if (telefon.Length != 11)
+            if (telefon.Length != 10)
             {
                 MessageBox.Show($"Koltuk {_koltukNo}: Telefon numarası 11 haneli olmalıdır.", "Geçersiz Telefon",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);

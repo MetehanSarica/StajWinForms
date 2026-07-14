@@ -33,5 +33,7 @@ public partial class Seferler
 
     public virtual ICollection<SeferDurakOtogar> SeferDurakOtogars { get; set; } = new List<SeferDurakOtogar>();
 
+    public virtual ICollection<SeferPersonel> SeferPersonels { get; set; } = new List<SeferPersonel>();
+
     public virtual Sehirler VarisSehir { get; set; } = null!;
 }

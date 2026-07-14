@@ -111,7 +111,7 @@ namespace StajWinForms
             // 
             lblBaslik.Appearance.Font = new Font("Tahoma", 14F, FontStyle.Bold);
             lblBaslik.Appearance.Options.UseFont = true;
-            lblBaslik.Location = new Point(120, 20);
+            lblBaslik.Location = new Point(158, 20);
             lblBaslik.Name = "lblBaslik";
             lblBaslik.Size = new Size(116, 23);
             lblBaslik.TabIndex = 0;

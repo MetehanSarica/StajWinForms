@@ -56,6 +56,9 @@ public class SeferDetayController : ControllerBase
                 Duraklar = s.SeferDurakOtogars
                     .OrderBy(d => d.DurakSira)
                     .Select(d => d.Otogar.OtogarAdi)
+                    .ToList(),
+                Personeller = s.SeferPersonels
+                    .Select(sp => (sp.Rol != null ? sp.Rol + ": " : "") + sp.Personel.Ad + " " + sp.Personel.Soyad)
                     .ToList()
             })
 

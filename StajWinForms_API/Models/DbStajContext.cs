@@ -29,6 +29,8 @@ public partial class DbStajContext : DbContext
 
     public virtual DbSet<SeferDurakOtogar> SeferDurakOtogars { get; set; }
 
+    public virtual DbSet<SeferPersonel> SeferPersonels { get; set; }
+
     public virtual DbSet<Seferler> Seferlers { get; set; }
 
     public virtual DbSet<Sehirler> Sehirlers { get; set; }
@@ -134,6 +136,27 @@ public partial class DbStajContext : DbContext
                 .HasForeignKey(d => d.SehirId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__SeferDura__Sehir__17F790F9");
+        });
+
+        modelBuilder.Entity<SeferPersonel>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__SeferPersonel__ID");
+
+            entity.ToTable("SeferPersonel");
+
+            entity.Property(e => e.SeferId).HasColumnName("SeferID");
+            entity.Property(e => e.PersonelId).HasColumnName("PersonelID");
+            entity.Property(e => e.Rol).HasMaxLength(50);
+
+            entity.HasOne(d => d.Sefer).WithMany(p => p.SeferPersonels)
+                .HasForeignKey(d => d.SeferId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SeferPersonel__Sefer");
+
+            entity.HasOne(d => d.Personel).WithMany(p => p.SeferPersonels)
+                .HasForeignKey(d => d.PersonelId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__SeferPersonel__Personel");
         });
 
         modelBuilder.Entity<Seferler>(entity =>

@@ -33,6 +33,8 @@ namespace StajWinForms
             txtKoltukValue = new TextBox();
             lblDuraklar = new LabelControl();
             txtDuraklar = new TextBox();
+            lblPersoneller = new LabelControl();
+            txtPersoneller = new TextBox();
             SuspendLayout();
             // 
             // lblFirmaHeader
@@ -168,11 +170,30 @@ namespace StajWinForms
             txtDuraklar.Size = new Size(319, 21);
             txtDuraklar.TabIndex = 13;
             //
+            // lblPersoneller
+            //
+            lblPersoneller.Appearance.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
+            lblPersoneller.Appearance.Options.UseFont = true;
+            lblPersoneller.AutoSizeMode = LabelAutoSizeMode.None;
+            lblPersoneller.Location = new Point(17, 261);
+            lblPersoneller.Name = "lblPersoneller";
+            lblPersoneller.Size = new Size(103, 17);
+            lblPersoneller.TabIndex = 14;
+            lblPersoneller.Text = "Personel:";
+            //
+            // txtPersoneller
+            //
+            txtPersoneller.Location = new Point(129, 259);
+            txtPersoneller.Name = "txtPersoneller";
+            txtPersoneller.ReadOnly = true;
+            txtPersoneller.Size = new Size(319, 21);
+            txtPersoneller.TabIndex = 15;
+            //
             // SeferDetay
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(465, 270);
+            ClientSize = new Size(465, 305);
             Controls.Add(txtKalkisValue);
             Controls.Add(txtVarisValue);
             Controls.Add(txtZamanValue);
@@ -186,6 +207,8 @@ namespace StajWinForms
             Controls.Add(lblFiyatHeader);
             Controls.Add(txtDuraklar);
             Controls.Add(lblDuraklar);
+            Controls.Add(txtPersoneller);
+            Controls.Add(lblPersoneller);
             Controls.Add(lblKoltukHeader);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
@@ -213,5 +236,7 @@ namespace StajWinForms
         private TextBox txtKoltukValue;
         private LabelControl lblDuraklar;
         private TextBox txtDuraklar;
+        private LabelControl lblPersoneller;
+        private TextBox txtPersoneller;
     }
 }

@@ -122,6 +122,8 @@ namespace StajWinForms
             Controls.Add(dataGridVeriler);
             Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.FixedSingle;
+            MaximizeBox = false;
+            MinimizeBox = false;
             Name = "AnaMenu";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Ana Menü";
