@@ -33,6 +33,11 @@ namespace StajWinForms
             _inisDurakSira = inisDurakSira;
             InitializeComponent();
             txtboxTelefon.Properties.Mask.EditMask = @"\0(000) 000 00 00";
+            txtboxTelefon.MouseUp += (s, e) =>
+            {
+                int firstEmpty = txtboxTelefon.Text.IndexOf('_');
+                txtboxTelefon.SelectionStart = firstEmpty >= 0 ? firstEmpty : txtboxTelefon.Text.Length;
+            };
             spTC.EditValue = null;
             lblKoltukBilgi.Text = $"Seçilen Koltuk: {_koltukNo}";
             _ = SehirleriYukle();
