@@ -25,10 +25,15 @@ public class SeferDuraklarController : ControllerBase
     [HttpGet("{seferId}")]
     public async Task<ActionResult> GetBySeferId(int seferId)
     {
-        var duraklar = await _context.SeferDuraklars
+        var duraklar = await _context.SeferDurakOtogars
             .Where(sd => sd.SeferId == seferId)
             .OrderBy(sd => sd.DurakSira)
-            .Select(sd => new { sd.DurakSira, sd.Sehir.SehirAdi })
+            .Select(sd => new
+            {
+                sd.DurakSira,
+                sd.Otogar.Sehir.SehirAdi,
+                sd.Otogar.OtogarAdi
+            })
             .ToListAsync();
         return Ok(duraklar);
     }

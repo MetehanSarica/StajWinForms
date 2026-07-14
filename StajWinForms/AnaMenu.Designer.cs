@@ -29,6 +29,14 @@ namespace StajWinForms
             btnSec = new SimpleButton();
             dataGridVeriler = new GridControl();
             gridView1 = new GridView();
+            gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn8 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)panel1).BeginInit();
             panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)dataGridVeriler).BeginInit();
@@ -108,6 +116,11 @@ namespace StajWinForms
             // 
             // gridView1
             // 
+            gridView1.Appearance.HeaderPanel.Options.UseTextOptions = true;
+            gridView1.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Appearance.Row.Options.UseTextOptions = true;
+            gridView1.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView1.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn2, gridColumn3, gridColumn4, gridColumn5, gridColumn6, gridColumn7, gridColumn8 });
             gridView1.GridControl = dataGridVeriler;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
@@ -116,6 +129,72 @@ namespace StajWinForms
             gridView1.OptionsView.ShowDetailButtons = false;
             gridView1.OptionsView.ShowGroupPanel = false;
             gridView1.OptionsView.ShowIndicator = false;
+            // 
+            // gridColumn1
+            // 
+            gridColumn1.Caption = "Sefer Kodu";
+            gridColumn1.FieldName = "PnrKodu";
+            gridColumn1.Name = "gridColumn1";
+            gridColumn1.Visible = true;
+            gridColumn1.VisibleIndex = 0;
+            // 
+            // gridColumn2
+            // 
+            gridColumn2.Caption = "Firma Adı";
+            gridColumn2.FieldName = "FirmaAdi";
+            gridColumn2.Name = "gridColumn2";
+            gridColumn2.Visible = true;
+            gridColumn2.VisibleIndex = 1;
+            // 
+            // gridColumn3
+            // 
+            gridColumn3.Caption = "Kalkış Şehri";
+            gridColumn3.FieldName = "KalkisSehirAdi";
+            gridColumn3.Name = "gridColumn3";
+            gridColumn3.Visible = true;
+            gridColumn3.VisibleIndex = 2;
+            // 
+            // gridColumn4
+            // 
+            gridColumn4.Caption = "Varış Şehri";
+            gridColumn4.FieldName = "VarisSehirAdi";
+            gridColumn4.Name = "gridColumn4";
+            gridColumn4.Visible = true;
+            gridColumn4.VisibleIndex = 3;
+            // 
+            // gridColumn5
+            // 
+            gridColumn5.Caption = "Kalkış Tarihi";
+            gridColumn5.FieldName = "KalkisZamani";
+            gridColumn5.Name = "gridColumn5";
+            gridColumn5.Visible = true;
+            gridColumn5.VisibleIndex = 4;
+            // 
+            // gridColumn6
+            // 
+            gridColumn6.Caption = "Kalkış Saati";
+            gridColumn6.FieldName = "KalkisSaati";
+            gridColumn6.Name = "gridColumn6";
+            gridColumn6.Visible = true;
+            gridColumn6.VisibleIndex = 5;
+            // 
+            // gridColumn7
+            // 
+            gridColumn7.Caption = "Fiyat";
+            gridColumn7.DisplayFormat.FormatString = "₺{0:N2}";
+            gridColumn7.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn7.FieldName = "Fiyat";
+            gridColumn7.Name = "gridColumn7";
+            gridColumn7.Visible = true;
+            gridColumn7.VisibleIndex = 6;
+            // 
+            // gridColumn8
+            // 
+            gridColumn8.Caption = "Boş Koltuk";
+            gridColumn8.FieldName = "BosKoltuk";
+            gridColumn8.Name = "gridColumn8";
+            gridColumn8.Visible = true;
+            gridColumn8.VisibleIndex = 7;
             // 
             // AnaMenu
             // 
@@ -147,5 +226,13 @@ namespace StajWinForms
         private SimpleButton btnSeferDetaylar;
         private SimpleButton btnSec;
         private SimpleButton btnBiletIptal;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn8;
     }
 }

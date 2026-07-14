@@ -57,28 +57,25 @@ namespace StajWinForms
             button35 = new SimpleButton();
             button36 = new SimpleButton();
             btnKoltukSec = new SimpleButton();
-            lblBinis = new LabelControl();
-            cmbBinis = new LookUpEdit();
-            lblInis = new LabelControl();
-            cmbInis = new LookUpEdit();
+            lblDuraklar = new MemoEdit();
             ((System.ComponentModel.ISupportInitialize)pictureBox1.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cmbBinis.Properties).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)cmbInis.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)lblDuraklar.Properties).BeginInit();
             SuspendLayout();
             // 
             // pictureBox1
             // 
+            pictureBox1.Dock = DockStyle.Top;
             pictureBox1.EditValue = Properties.Resources.otobus;
-            pictureBox1.Location = new Point(10, 10);
+            pictureBox1.Location = new Point(0, 0);
             pictureBox1.Name = "pictureBox1";
             pictureBox1.Properties.ShowMenu = false;
             pictureBox1.Properties.SizeMode = DevExpress.XtraEditors.Controls.PictureSizeMode.Zoom;
-            pictureBox1.Size = new Size(665, 278);
+            pictureBox1.Size = new Size(686, 278);
             pictureBox1.TabIndex = 0;
             // 
             // button1
             // 
-            button1.Location = new Point(190, 88);
+            button1.Location = new Point(190, 78);
             button1.Name = "button1";
             button1.Size = new Size(26, 25);
             button1.TabIndex = 1;
@@ -86,7 +83,7 @@ namespace StajWinForms
             // 
             // button2
             // 
-            button2.Location = new Point(190, 116);
+            button2.Location = new Point(190, 106);
             button2.Name = "button2";
             button2.Size = new Size(26, 25);
             button2.TabIndex = 2;
@@ -94,7 +91,7 @@ namespace StajWinForms
             // 
             // button3
             // 
-            button3.Location = new Point(231, 116);
+            button3.Location = new Point(231, 106);
             button3.Name = "button3";
             button3.Size = new Size(26, 25);
             button3.TabIndex = 4;
@@ -102,7 +99,7 @@ namespace StajWinForms
             // 
             // button4
             // 
-            button4.Location = new Point(231, 88);
+            button4.Location = new Point(231, 78);
             button4.Name = "button4";
             button4.Size = new Size(26, 25);
             button4.TabIndex = 3;
@@ -110,7 +107,7 @@ namespace StajWinForms
             // 
             // button5
             // 
-            button5.Location = new Point(273, 116);
+            button5.Location = new Point(273, 106);
             button5.Name = "button5";
             button5.Size = new Size(26, 25);
             button5.TabIndex = 6;
@@ -118,7 +115,7 @@ namespace StajWinForms
             // 
             // button6
             // 
-            button6.Location = new Point(273, 88);
+            button6.Location = new Point(273, 78);
             button6.Name = "button6";
             button6.Size = new Size(26, 25);
             button6.TabIndex = 5;
@@ -126,7 +123,7 @@ namespace StajWinForms
             // 
             // button7
             // 
-            button7.Location = new Point(396, 116);
+            button7.Location = new Point(396, 106);
             button7.Name = "button7";
             button7.Size = new Size(26, 25);
             button7.TabIndex = 12;
@@ -134,7 +131,7 @@ namespace StajWinForms
             // 
             // button8
             // 
-            button8.Location = new Point(396, 88);
+            button8.Location = new Point(396, 78);
             button8.Name = "button8";
             button8.Size = new Size(26, 25);
             button8.TabIndex = 11;
@@ -142,7 +139,7 @@ namespace StajWinForms
             // 
             // button9
             // 
-            button9.Location = new Point(356, 116);
+            button9.Location = new Point(356, 106);
             button9.Name = "button9";
             button9.Size = new Size(26, 25);
             button9.TabIndex = 10;
@@ -150,7 +147,7 @@ namespace StajWinForms
             // 
             // button10
             // 
-            button10.Location = new Point(356, 88);
+            button10.Location = new Point(356, 78);
             button10.Name = "button10";
             button10.Size = new Size(26, 25);
             button10.TabIndex = 9;
@@ -158,7 +155,7 @@ namespace StajWinForms
             // 
             // button11
             // 
-            button11.Location = new Point(315, 116);
+            button11.Location = new Point(315, 106);
             button11.Name = "button11";
             button11.Size = new Size(26, 25);
             button11.TabIndex = 8;
@@ -166,7 +163,7 @@ namespace StajWinForms
             // 
             // button12
             // 
-            button12.Location = new Point(315, 88);
+            button12.Location = new Point(315, 78);
             button12.Name = "button12";
             button12.Size = new Size(26, 25);
             button12.TabIndex = 7;
@@ -174,7 +171,7 @@ namespace StajWinForms
             // 
             // button13
             // 
-            button13.Location = new Point(521, 116);
+            button13.Location = new Point(521, 106);
             button13.Name = "button13";
             button13.Size = new Size(26, 25);
             button13.TabIndex = 18;
@@ -182,7 +179,7 @@ namespace StajWinForms
             // 
             // button14
             // 
-            button14.Location = new Point(521, 88);
+            button14.Location = new Point(521, 78);
             button14.Name = "button14";
             button14.Size = new Size(26, 25);
             button14.TabIndex = 17;
@@ -190,7 +187,7 @@ namespace StajWinForms
             // 
             // button15
             // 
-            button15.Location = new Point(480, 116);
+            button15.Location = new Point(480, 106);
             button15.Name = "button15";
             button15.Size = new Size(26, 25);
             button15.TabIndex = 16;
@@ -198,7 +195,7 @@ namespace StajWinForms
             // 
             // button16
             // 
-            button16.Location = new Point(480, 88);
+            button16.Location = new Point(480, 78);
             button16.Name = "button16";
             button16.Size = new Size(26, 25);
             button16.TabIndex = 15;
@@ -206,7 +203,7 @@ namespace StajWinForms
             // 
             // button17
             // 
-            button17.Location = new Point(438, 116);
+            button17.Location = new Point(438, 106);
             button17.Name = "button17";
             button17.Size = new Size(26, 25);
             button17.TabIndex = 14;
@@ -214,7 +211,7 @@ namespace StajWinForms
             // 
             // button18
             // 
-            button18.Location = new Point(438, 88);
+            button18.Location = new Point(438, 78);
             button18.Name = "button18";
             button18.Size = new Size(26, 25);
             button18.TabIndex = 13;
@@ -222,7 +219,7 @@ namespace StajWinForms
             // 
             // button19
             // 
-            button19.Location = new Point(521, 185);
+            button19.Location = new Point(521, 174);
             button19.Name = "button19";
             button19.Size = new Size(26, 25);
             button19.TabIndex = 36;
@@ -230,7 +227,7 @@ namespace StajWinForms
             // 
             // button20
             // 
-            button20.Location = new Point(521, 158);
+            button20.Location = new Point(521, 147);
             button20.Name = "button20";
             button20.Size = new Size(26, 25);
             button20.TabIndex = 35;
@@ -238,7 +235,7 @@ namespace StajWinForms
             // 
             // button21
             // 
-            button21.Location = new Point(480, 185);
+            button21.Location = new Point(480, 174);
             button21.Name = "button21";
             button21.Size = new Size(26, 25);
             button21.TabIndex = 34;
@@ -246,7 +243,7 @@ namespace StajWinForms
             // 
             // button22
             // 
-            button22.Location = new Point(480, 158);
+            button22.Location = new Point(480, 147);
             button22.Name = "button22";
             button22.Size = new Size(26, 25);
             button22.TabIndex = 33;
@@ -254,7 +251,7 @@ namespace StajWinForms
             // 
             // button23
             // 
-            button23.Location = new Point(439, 185);
+            button23.Location = new Point(439, 174);
             button23.Name = "button23";
             button23.Size = new Size(26, 25);
             button23.TabIndex = 32;
@@ -262,7 +259,7 @@ namespace StajWinForms
             // 
             // button24
             // 
-            button24.Location = new Point(439, 158);
+            button24.Location = new Point(439, 147);
             button24.Name = "button24";
             button24.Size = new Size(26, 25);
             button24.TabIndex = 31;
@@ -270,7 +267,7 @@ namespace StajWinForms
             // 
             // button25
             // 
-            button25.Location = new Point(397, 185);
+            button25.Location = new Point(397, 174);
             button25.Name = "button25";
             button25.Size = new Size(26, 25);
             button25.TabIndex = 30;
@@ -278,7 +275,7 @@ namespace StajWinForms
             // 
             // button26
             // 
-            button26.Location = new Point(397, 158);
+            button26.Location = new Point(397, 147);
             button26.Name = "button26";
             button26.Size = new Size(26, 25);
             button26.TabIndex = 29;
@@ -286,7 +283,7 @@ namespace StajWinForms
             // 
             // button27
             // 
-            button27.Location = new Point(356, 185);
+            button27.Location = new Point(356, 174);
             button27.Name = "button27";
             button27.Size = new Size(26, 25);
             button27.TabIndex = 28;
@@ -294,7 +291,7 @@ namespace StajWinForms
             // 
             // button28
             // 
-            button28.Location = new Point(356, 158);
+            button28.Location = new Point(356, 147);
             button28.Name = "button28";
             button28.Size = new Size(26, 25);
             button28.TabIndex = 27;
@@ -302,7 +299,7 @@ namespace StajWinForms
             // 
             // button29
             // 
-            button29.Location = new Point(315, 185);
+            button29.Location = new Point(315, 174);
             button29.Name = "button29";
             button29.Size = new Size(26, 25);
             button29.TabIndex = 26;
@@ -310,7 +307,7 @@ namespace StajWinForms
             // 
             // button30
             // 
-            button30.Location = new Point(315, 158);
+            button30.Location = new Point(315, 147);
             button30.Name = "button30";
             button30.Size = new Size(26, 25);
             button30.TabIndex = 25;
@@ -318,7 +315,7 @@ namespace StajWinForms
             // 
             // button31
             // 
-            button31.Location = new Point(273, 185);
+            button31.Location = new Point(273, 174);
             button31.Name = "button31";
             button31.Size = new Size(26, 25);
             button31.TabIndex = 24;
@@ -326,7 +323,7 @@ namespace StajWinForms
             // 
             // button32
             // 
-            button32.Location = new Point(273, 158);
+            button32.Location = new Point(273, 147);
             button32.Name = "button32";
             button32.Size = new Size(26, 25);
             button32.TabIndex = 23;
@@ -334,7 +331,7 @@ namespace StajWinForms
             // 
             // button33
             // 
-            button33.Location = new Point(231, 185);
+            button33.Location = new Point(231, 174);
             button33.Name = "button33";
             button33.Size = new Size(26, 25);
             button33.TabIndex = 22;
@@ -342,7 +339,7 @@ namespace StajWinForms
             // 
             // button34
             // 
-            button34.Location = new Point(231, 158);
+            button34.Location = new Point(231, 147);
             button34.Name = "button34";
             button34.Size = new Size(26, 25);
             button34.TabIndex = 21;
@@ -350,7 +347,7 @@ namespace StajWinForms
             // 
             // button35
             // 
-            button35.Location = new Point(190, 185);
+            button35.Location = new Point(190, 174);
             button35.Name = "button35";
             button35.Size = new Size(26, 25);
             button35.TabIndex = 20;
@@ -358,7 +355,7 @@ namespace StajWinForms
             // 
             // button36
             // 
-            button36.Location = new Point(190, 158);
+            button36.Location = new Point(190, 147);
             button36.Name = "button36";
             button36.Size = new Size(26, 25);
             button36.TabIndex = 19;
@@ -366,54 +363,31 @@ namespace StajWinForms
             // 
             // btnKoltukSec
             // 
-            btnKoltukSec.Location = new Point(10, 313);
+            btnKoltukSec.Dock = DockStyle.Right;
+            btnKoltukSec.Location = new Point(557, 278);
             btnKoltukSec.Name = "btnKoltukSec";
-            btnKoltukSec.Size = new Size(129, 51);
+            btnKoltukSec.Size = new Size(129, 67);
             btnKoltukSec.TabIndex = 37;
             btnKoltukSec.Text = "Koltuk Seç";
             btnKoltukSec.Click += btnKoltukSec_Click;
             // 
-            // lblBinis
+            // lblDuraklar
             // 
-            lblBinis.Location = new Point(10, 381);
-            lblBinis.Name = "lblBinis";
-            lblBinis.Size = new Size(59, 13);
-            lblBinis.TabIndex = 41;
-            lblBinis.Text = "Biniş Durağı:";
-            // 
-            // cmbBinis
-            // 
-            cmbBinis.Location = new Point(94, 379);
-            cmbBinis.Name = "cmbBinis";
-            cmbBinis.Size = new Size(146, 20);
-            cmbBinis.TabIndex = 38;
-            cmbBinis.EditValueChanged += cmbBinis_EditValueChanged;
-            // 
-            // lblInis
-            // 
-            lblInis.Location = new Point(253, 381);
-            lblInis.Name = "lblInis";
-            lblInis.Size = new Size(55, 13);
-            lblInis.TabIndex = 40;
-            lblInis.Text = "İniş Durağı:";
-            // 
-            // cmbInis
-            // 
-            cmbInis.Location = new Point(326, 379);
-            cmbInis.Name = "cmbInis";
-            cmbInis.Size = new Size(146, 20);
-            cmbInis.TabIndex = 39;
-            cmbInis.EditValueChanged += cmbInis_EditValueChanged;
+            lblDuraklar.Dock = DockStyle.Fill;
+            lblDuraklar.Location = new Point(0, 278);
+            lblDuraklar.Name = "lblDuraklar";
+            lblDuraklar.Properties.AllowFocused = false;
+            lblDuraklar.Properties.ReadOnly = true;
+            lblDuraklar.Properties.ScrollBars = ScrollBars.None;
+            lblDuraklar.Size = new Size(557, 67);
+            lblDuraklar.TabIndex = 39;
             // 
             // SecimEkrani
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(686, 425);
-            Controls.Add(cmbInis);
-            Controls.Add(lblInis);
-            Controls.Add(cmbBinis);
-            Controls.Add(lblBinis);
+            ClientSize = new Size(686, 345);
+            Controls.Add(lblDuraklar);
             Controls.Add(btnKoltukSec);
             Controls.Add(button19);
             Controls.Add(button20);
@@ -460,10 +434,8 @@ namespace StajWinForms
             Text = "Koltuk Seçimi";
             Load += SecimEkrani_Load;
             ((System.ComponentModel.ISupportInitialize)pictureBox1.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cmbBinis.Properties).EndInit();
-            ((System.ComponentModel.ISupportInitialize)cmbInis.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)lblDuraklar.Properties).EndInit();
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
@@ -506,9 +478,6 @@ namespace StajWinForms
         private SimpleButton button35;
         private SimpleButton button36;
         private SimpleButton btnKoltukSec;
-        private LabelControl lblBinis;
-        private LookUpEdit cmbBinis;
-        private LabelControl lblInis;
-        private LookUpEdit cmbInis;
+        private MemoEdit lblDuraklar;
     }
 }

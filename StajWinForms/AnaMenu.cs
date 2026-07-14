@@ -19,11 +19,15 @@ namespace StajWinForms
         public AnaMenu()
         {
             InitializeComponent();
+            WindowState = FormWindowState.Normal;
+            Bounds = Screen.GetWorkingArea(this);
         }
 
         public AnaMenu(string kalkisSehir, string varisSehir, DateTime? kalkisTarihi = null)
         {
             InitializeComponent();
+            WindowState = FormWindowState.Normal;
+            Bounds = Screen.GetWorkingArea(this);
             _filtreKalkis = kalkisSehir;
             _filtreVaris = varisSehir;
             _filtreTarih = kalkisTarihi;
@@ -54,8 +58,8 @@ namespace StajWinForms
                         .ToList();
 
                 _tumSeferler = tumSeferler;
-                dataGridVeriler.DataSource = null;
                 dataGridVeriler.DataSource = _tumSeferler;
+                gridView1.RefreshData();
             }
             catch (Exception ex)
             {
@@ -70,20 +74,29 @@ namespace StajWinForms
             SecimEkrani secimEkrani = new SecimEkrani(seferID);
             secimEkrani.ShowDialog();
             await SeferleriYenile();
+            int rowHandle = gridView1.LocateByValue("SeferId", seferID);
+            if (rowHandle >= 0)
+                gridView1.FocusedRowHandle = rowHandle;
         }
 
         private void btnSorgu_Click(object sender, EventArgs e)
         {
+            int savedRowHandle = gridView1.FocusedRowHandle;
             BiletSorgula biletSorgula = new BiletSorgula();
             biletSorgula.ShowDialog();
+            if (savedRowHandle >= 0)
+                gridView1.FocusedRowHandle = savedRowHandle;
         }
 
         private void btnSeferDetaylar_Click(object sender, EventArgs e)
         {
+            int savedRowHandle = gridView1.FocusedRowHandle;
             int seferID = GetSeciliSeferID();
             if (seferID <= 0) return;
             SeferDetay seferDetay = new SeferDetay(seferID);
             seferDetay.ShowDialog(this);
+            if (savedRowHandle >= 0)
+                gridView1.FocusedRowHandle = savedRowHandle;
         }
 
         private int GetSeciliSeferID()
@@ -101,17 +114,36 @@ namespace StajWinForms
 
         private async void btnBiletIptal_Click(object sender, EventArgs e)
         {
+            int seferID = GetSeciliSeferID();
             BiletIptal biletIptal = new BiletIptal();
             biletIptal.ShowDialog();
             await SeferleriYenile();
+            if (seferID > 0)
+            {
+                int rowHandle = gridView1.LocateByValue("SeferId", seferID);
+                if (rowHandle >= 0)
+                    gridView1.FocusedRowHandle = rowHandle;
+            }
         }
 
-        private void dataGridVeriler_DoubleClick(object sender, EventArgs e)
+        private async void dataGridVeriler_DoubleClick(object sender, EventArgs e)
         {
             int seferID = GetSeciliSeferID();
             if (seferID <= 0) return;
-            SeferDetay seferDetay = new SeferDetay(seferID);
-            seferDetay.ShowDialog(this);
+            SecimEkrani secimEkrani = new SecimEkrani(seferID);
+            secimEkrani.ShowDialog(this);
+            await SeferleriYenile();
+            int rowHandle = gridView1.LocateByValue("SeferId", seferID);
+            if (rowHandle >= 0)
+                gridView1.FocusedRowHandle = rowHandle;
+        }
+        protected override void WndProc(ref Message m)
+        {
+            const int WM_SYSCOMMAND = 0x0112;
+            const int SC_MOVE = 0xF010;
+            if (m.Msg == WM_SYSCOMMAND && (m.WParam.ToInt32() & 0xFFF0) == SC_MOVE)
+                return;
+            base.WndProc(ref m);
         }
     }
 
@@ -127,5 +159,6 @@ namespace StajWinForms
         public int BosKoltuk { get; set; }
         public List<string> Duraklar { get; set; } = new();
         public List<string> Personeller { get; set; } = new();
+        public string PnrKodu => $"TR{SeferId:D6}";
     }
 }
