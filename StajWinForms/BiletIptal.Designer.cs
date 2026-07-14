@@ -95,8 +95,11 @@ namespace StajWinForms
             gridView.GridControl = gridBiletler;
             gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
+            gridView.OptionsDetail.EnableMasterViewMode = false;
             gridView.OptionsSelection.EnableAppearanceFocusedCell = false;
+            gridView.OptionsView.ShowDetailButtons = false;
             gridView.OptionsView.ShowGroupPanel = false;
+            gridView.OptionsView.ShowIndicator = false;
             // 
             // pnlBottom
             // 

@@ -28,7 +28,7 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count(),
+                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Select(b => b.KoltukNo).Distinct().Count(),
                 KalkisSehirId = s.KalkisSehirId,
                 VarisSehirId = s.VarisSehirId,
             })
@@ -50,7 +50,7 @@ public class SeferDetayController : ControllerBase
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
-                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Count(),
+                BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Select(b => b.KoltukNo).Distinct().Count(),
                 KalkisSehirId = s.KalkisSehirId,
                 VarisSehirId = s.VarisSehirId,
                 Duraklar = s.SeferDurakOtogars

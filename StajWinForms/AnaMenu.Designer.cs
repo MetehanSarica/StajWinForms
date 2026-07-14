@@ -111,8 +111,11 @@ namespace StajWinForms
             gridView1.GridControl = dataGridVeriler;
             gridView1.Name = "gridView1";
             gridView1.OptionsBehavior.Editable = false;
+            gridView1.OptionsDetail.EnableMasterViewMode = false;
             gridView1.OptionsSelection.EnableAppearanceFocusedCell = false;
+            gridView1.OptionsView.ShowDetailButtons = false;
             gridView1.OptionsView.ShowGroupPanel = false;
+            gridView1.OptionsView.ShowIndicator = false;
             // 
             // AnaMenu
             // 

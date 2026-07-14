@@ -29,34 +29,32 @@ namespace StajWinForms
             _filtreTarih = kalkisTarihi;
         }
 
-        private async void AnaMenu_Load(object sender, EventArgs e)
+        private async void AnaMenu_Load(object sender, EventArgs e) => await SeferleriYenile();
+
+        private async Task SeferleriYenile()
         {
             try
             {
                 var json = await _http.GetStringAsync("/api/seferdetay");
-                _tumSeferler = JsonSerializer.Deserialize<List<SeferDetayModel>>(json,
+                var tumSeferler = JsonSerializer.Deserialize<List<SeferDetayModel>>(json,
                     new JsonSerializerOptions { PropertyNameCaseInsensitive = true }) ?? new();
 
                 if (!string.IsNullOrEmpty(_filtreKalkis))
                 {
-                    _tumSeferler = _tumSeferler
+                    tumSeferler = tumSeferler
                         .Where(s =>
                             s.KalkisSehirAdi.Equals(_filtreKalkis, StringComparison.OrdinalIgnoreCase) &&
                             s.VarisSehirAdi.Equals(_filtreVaris, StringComparison.OrdinalIgnoreCase))
                         .ToList();
-
-                    this.Text = $"Ana Menü — {_filtreKalkis} → {_filtreVaris}";
                 }
 
                 if (_filtreTarih.HasValue)
-                {
-                    _tumSeferler = _tumSeferler
+                    tumSeferler = tumSeferler
                         .Where(s => s.KalkisZamani.Date == _filtreTarih.Value.Date)
                         .ToList();
 
-                    this.Text += $" — {_filtreTarih.Value:dd.MM.yyyy}";
-                }
-
+                _tumSeferler = tumSeferler;
+                dataGridVeriler.DataSource = null;
                 dataGridVeriler.DataSource = _tumSeferler;
             }
             catch (Exception ex)
@@ -65,12 +63,13 @@ namespace StajWinForms
             }
         }
 
-        private void btnSec_Click(object sender, EventArgs e)
+        private async void btnSec_Click(object sender, EventArgs e)
         {
             int seferID = GetSeciliSeferID();
             if (seferID <= 0) return;
             SecimEkrani secimEkrani = new SecimEkrani(seferID);
             secimEkrani.ShowDialog();
+            await SeferleriYenile();
         }
 
         private void btnSorgu_Click(object sender, EventArgs e)
@@ -100,10 +99,11 @@ namespace StajWinForms
             return id;
         }
 
-        private void btnBiletIptal_Click(object sender, EventArgs e)
+        private async void btnBiletIptal_Click(object sender, EventArgs e)
         {
             BiletIptal biletIptal = new BiletIptal();
             biletIptal.ShowDialog();
+            await SeferleriYenile();
         }
 
         private void dataGridVeriler_DoubleClick(object sender, EventArgs e)

@@ -169,8 +169,9 @@ public partial class DbStajContext : DbContext
             entity.Property(e => e.FirmaId).HasColumnName("FirmaID");
             entity.Property(e => e.Fiyat).HasColumnType("decimal(8, 2)");
             entity.Property(e => e.KalkisSehirId).HasColumnName("KalkisSehirID");
-            entity.Property(e => e.KoltukKapasitesi).HasDefaultValue(45);
+            entity.Property(e => e.KoltukKapasitesi).HasDefaultValue(36);
             entity.Property(e => e.VarisSehirId).HasColumnName("VarisSehirID");
+            entity.Ignore(e => e.BosKoltuk);
 
             entity.HasOne(d => d.Firma).WithMany(p => p.Seferlers)
                 .HasForeignKey(d => d.FirmaId)
