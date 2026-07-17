@@ -19,9 +19,17 @@ public partial class DbStajContext : DbContext
 
     public virtual DbSet<Firmalar> Firmalars { get; set; }
 
+    public virtual DbSet<Kullanicilar> Kullanicilars { get; set; }
+
+    public virtual DbSet<KullaniciYetkileri> KullaniciYetkileri { get; set; }
+
     public virtual DbSet<Musteri> Musteris { get; set; }
 
     public virtual DbSet<Otogarlar> Otogarlars { get; set; }
+
+    public virtual DbSet<OtobusKaptan> OtobusKaptanlar { get; set; }
+
+    public virtual DbSet<Otobusler> Otobuslers { get; set; }
 
     public virtual DbSet<Personel> Personels { get; set; }
 
@@ -34,6 +42,8 @@ public partial class DbStajContext : DbContext
     public virtual DbSet<Seferler> Seferlers { get; set; }
 
     public virtual DbSet<Sehirler> Sehirlers { get; set; }
+
+    public virtual DbSet<Yetkiler> Yetkilers { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -239,6 +249,84 @@ public partial class DbStajContext : DbContext
 
             entity.Property(e => e.SehirId).HasColumnName("SehirID");
             entity.Property(e => e.SehirAdi).HasMaxLength(50);
+        });
+
+        modelBuilder.Entity<Kullanicilar>(entity =>
+        {
+            entity.HasKey(e => e.KullaniciId).HasName("PK__Kullanicilar");
+            entity.ToTable("Kullanicilar");
+            entity.Property(e => e.KullaniciId).HasColumnName("KullaniciID");
+            entity.Property(e => e.KullaniciAdi).HasMaxLength(50);
+            entity.Property(e => e.SifreMd5).HasMaxLength(32).IsUnicode(false).IsFixedLength().HasColumnName("SifreMd5");
+            entity.Property(e => e.AdSoyad).HasMaxLength(100);
+            entity.Property(e => e.OlusturmaTarihi).HasDefaultValueSql("(getdate())");
+            entity.HasIndex(e => e.KullaniciAdi, "UQ_Kullanicilar_KullaniciAdi").IsUnique();
+        });
+
+        modelBuilder.Entity<Yetkiler>(entity =>
+        {
+            entity.HasKey(e => e.YetkiId).HasName("PK__Yetkiler");
+            entity.ToTable("Yetkiler");
+            entity.Property(e => e.YetkiId).HasColumnName("YetkiID");
+            entity.Property(e => e.YetkiKodu).HasMaxLength(50);
+            entity.Property(e => e.YetkiAdi).HasMaxLength(100);
+            entity.HasIndex(e => e.YetkiKodu, "UQ_Yetkiler_YetkiKodu").IsUnique();
+        });
+
+        modelBuilder.Entity<KullaniciYetkileri>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__KullaniciYetkileri");
+            entity.ToTable("KullaniciYetkileri");
+            entity.Property(e => e.KullaniciId).HasColumnName("KullaniciID");
+            entity.Property(e => e.YetkiId).HasColumnName("YetkiID");
+            entity.HasIndex(e => new { e.KullaniciId, e.YetkiId }, "UQ_KullaniciYetkileri").IsUnique();
+
+            entity.HasOne(d => d.Kullanici).WithMany(p => p.KullaniciYetkileri)
+                .HasForeignKey(d => d.KullaniciId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_KullaniciYetkileri_Kullanici");
+
+            entity.HasOne(d => d.Yetki).WithMany(p => p.KullaniciYetkileri)
+                .HasForeignKey(d => d.YetkiId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_KullaniciYetkileri_Yetki");
+        });
+
+        modelBuilder.Entity<Otobusler>(entity =>
+        {
+            entity.HasKey(e => e.OtobusId).HasName("PK__Otobusler");
+            entity.ToTable("Otobusler");
+            entity.Property(e => e.OtobusId).HasColumnName("OtobusID");
+            entity.Property(e => e.FirmaId).HasColumnName("FirmaID");
+            entity.Property(e => e.Plaka).HasMaxLength(15);
+            entity.Property(e => e.Marka).HasMaxLength(50);
+            entity.Property(e => e.Model).HasMaxLength(50);
+            entity.Property(e => e.KoltukKapasitesi).HasDefaultValue(36);
+            entity.HasIndex(e => e.Plaka, "UQ_Otobusler_Plaka").IsUnique();
+
+            entity.HasOne(d => d.Firma).WithMany(p => p.Otobuslers)
+                .HasForeignKey(d => d.FirmaId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Otobusler_Firmalar");
+        });
+
+        modelBuilder.Entity<OtobusKaptan>(entity =>
+        {
+            entity.HasKey(e => e.Id).HasName("PK__OtobusKaptan");
+            entity.ToTable("OtobusKaptan");
+            entity.Property(e => e.OtobusId).HasColumnName("OtobusID");
+            entity.Property(e => e.PersonelId).HasColumnName("PersonelID");
+            entity.HasIndex(e => new { e.OtobusId, e.PersonelId }, "UQ_OtobusKaptan").IsUnique();
+
+            entity.HasOne(d => d.Otobus).WithMany(p => p.OtobusKaptanlar)
+                .HasForeignKey(d => d.OtobusId)
+                .OnDelete(DeleteBehavior.Cascade)
+                .HasConstraintName("FK_OtobusKaptan_Otobus");
+
+            entity.HasOne(d => d.Personel).WithMany(p => p.OtobusKaptanlar)
+                .HasForeignKey(d => d.PersonelId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK_OtobusKaptan_Personel");
         });
 
         OnModelCreatingPartial(modelBuilder);

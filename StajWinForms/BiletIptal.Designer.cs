@@ -27,6 +27,13 @@ namespace StajWinForms
             gridView = new GridView();
             pnlBottom = new PanelControl();
             btnIptalEt = new SimpleButton();
+            gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn7 = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)pnlTop).BeginInit();
             pnlTop.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)spTC.Properties).BeginInit();
@@ -92,6 +99,7 @@ namespace StajWinForms
             // 
             // gridView
             // 
+            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn2, gridColumn3, gridColumn4, gridColumn5, gridColumn6, gridColumn7 });
             gridView.GridControl = gridBiletler;
             gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
@@ -118,6 +126,92 @@ namespace StajWinForms
             btnIptalEt.TabIndex = 0;
             btnIptalEt.Text = "Bilet İptal Et";
             btnIptalEt.Click += btnIptalEt_Click;
+            // 
+            // gridColumn1
+            // 
+            gridColumn1.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn1.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn1.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn1.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn1.Caption = "Bilet No";
+            gridColumn1.FieldName = "BiletID";
+            gridColumn1.Name = "gridColumn1";
+            gridColumn1.Visible = true;
+            gridColumn1.VisibleIndex = 0;
+            // 
+            // gridColumn2
+            // 
+            gridColumn2.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn2.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn2.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn2.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn2.Caption = "Koltuk No";
+            gridColumn2.FieldName = "KoltukNo";
+            gridColumn2.Name = "gridColumn2";
+            gridColumn2.Visible = true;
+            gridColumn2.VisibleIndex = 1;
+            // 
+            // gridColumn3
+            // 
+            gridColumn3.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn3.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn3.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn3.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn3.Caption = "Firma Adı";
+            gridColumn3.FieldName = "FirmaAdi";
+            gridColumn3.Name = "gridColumn3";
+            gridColumn3.Visible = true;
+            gridColumn3.VisibleIndex = 2;
+            // 
+            // gridColumn4
+            // 
+            gridColumn4.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn4.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn4.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn4.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn4.Caption = "Kalkış Şehri";
+            gridColumn4.FieldName = "KalkisSehirAdi";
+            gridColumn4.Name = "gridColumn4";
+            gridColumn4.Visible = true;
+            gridColumn4.VisibleIndex = 3;
+            // 
+            // gridColumn5
+            // 
+            gridColumn5.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn5.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn5.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn5.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn5.Caption = "Varış Şehri";
+            gridColumn5.FieldName = "VarisSehirAdi";
+            gridColumn5.Name = "gridColumn5";
+            gridColumn5.Visible = true;
+            gridColumn5.VisibleIndex = 4;
+            // 
+            // gridColumn6
+            // 
+            gridColumn6.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn6.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn6.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn6.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn6.Caption = "Kalkış Tarihi";
+            gridColumn6.FieldName = "KalkisZamani";
+            gridColumn6.Name = "gridColumn6";
+            gridColumn6.Visible = true;
+            gridColumn6.VisibleIndex = 5;
+            // 
+            // gridColumn7
+            // 
+            gridColumn7.AppearanceCell.Options.UseTextOptions = true;
+            gridColumn7.AppearanceCell.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn7.AppearanceHeader.Options.UseTextOptions = true;
+            gridColumn7.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridColumn7.Caption = "Fiyat";
+            gridColumn7.DisplayFormat.FormatString = "₺{0:N2}";
+            gridColumn7.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn7.FieldName = "Fiyat";
+            gridColumn7.Name = "gridColumn7";
+            gridColumn7.Visible = true;
+            gridColumn7.VisibleIndex = 6;
             // 
             // BiletIptal
             // 
@@ -154,5 +248,12 @@ namespace StajWinForms
         private GridView gridView;
         private PanelControl pnlBottom;
         private SimpleButton btnIptalEt;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn7;
     }
 }

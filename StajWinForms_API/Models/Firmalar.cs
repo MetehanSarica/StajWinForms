@@ -10,4 +10,7 @@ public partial class Firmalar
     public string FirmaAdi { get; set; } = "";
 
     public virtual ICollection<Seferler> Seferlers { get; set; } = new List<Seferler>();
+
+    [System.Text.Json.Serialization.JsonIgnore]
+    public virtual ICollection<Otobusler> Otobuslers { get; set; } = new List<Otobusler>();
 }

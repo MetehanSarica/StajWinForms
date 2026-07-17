@@ -20,4 +20,7 @@ public partial class Personel
 
     [JsonIgnore]
     public virtual ICollection<SeferPersonel> SeferPersonels { get; set; } = new List<SeferPersonel>();
+
+    [JsonIgnore]
+    public virtual ICollection<OtobusKaptan> OtobusKaptanlar { get; set; } = new List<OtobusKaptan>();
 }

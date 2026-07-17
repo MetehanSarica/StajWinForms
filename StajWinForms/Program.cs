@@ -6,7 +6,7 @@ namespace StajWinForms
     internal static class Program
     {
         [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
             var config = new ConfigurationBuilder()
                 .AddJsonFile("appsettings.json")
@@ -20,7 +20,19 @@ namespace StajWinForms
             Application.EnableVisualStyles();
             ApplicationConfiguration.Initialize();
             DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Colorful");
-            Application.Run(new SeferSecimMenu());
+
+            bool adminMod = args.Length > 0 && args[0].Equals("adminp", StringComparison.OrdinalIgnoreCase);
+
+            if (adminMod)
+            {
+                var loginForm = new LoginForm();
+                if (loginForm.ShowDialog() == DialogResult.OK)
+                    Application.Run(new AdminPanelForm());
+            }
+            else
+            {
+                Application.Run(new SeferSecimMenu());
+            }
         }
     }
 
