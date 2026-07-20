@@ -25,9 +25,14 @@ namespace StajWinForms
 
             if (adminMod)
             {
-                var loginForm = new LoginForm();
-                if (loginForm.ShowDialog() == DialogResult.OK)
-                    Application.Run(new AdminPanelForm());
+                while (true)
+                {
+                    var loginForm = new LoginForm();
+                    if (loginForm.ShowDialog() != DialogResult.OK) break;
+                    var panel = new AdminPanelForm();
+                    Application.Run(panel);
+                    if (!panel.CikisYapildi) break;
+                }
             }
             else
             {

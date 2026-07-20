@@ -27,6 +27,7 @@ namespace StajWinForms
             btnSeferOtobusEsle = new SimpleButton();
             btnKullaniciYonetim = new SimpleButton();
             btnYetkiAtama = new SimpleButton();
+            btnCikis = new SimpleButton();
             SuspendLayout();
 
             // lblBaslik
@@ -108,10 +109,22 @@ namespace StajWinForms
             btnYetkiAtama.Text = "Yetki Atama";
             btnYetkiAtama.Click += btnYetkiAtama_Click;
 
+            // btnCikis
+            btnCikis.Location = new System.Drawing.Point(20, 545);
+            btnCikis.Name = "btnCikis";
+            btnCikis.Size = new System.Drawing.Size(300, 35);
+            btnCikis.TabIndex = 10;
+            btnCikis.Text = "Çıkış Yap";
+            btnCikis.Appearance.BackColor = System.Drawing.Color.FromArgb(220, 53, 69);
+            btnCikis.Appearance.ForeColor = System.Drawing.Color.White;
+            btnCikis.Appearance.Options.UseBackColor = true;
+            btnCikis.Appearance.Options.UseForeColor = true;
+            btnCikis.Click += btnCikis_Click;
+
             // AdminPanelForm
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(360, 560);
+            ClientSize = new System.Drawing.Size(360, 600);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(btnFirmaBrowser);
@@ -122,6 +135,7 @@ namespace StajWinForms
             Controls.Add(btnSeferOtobusEsle);
             Controls.Add(btnKullaniciYonetim);
             Controls.Add(btnYetkiAtama);
+            Controls.Add(btnCikis);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "AdminPanelForm";
@@ -143,5 +157,6 @@ namespace StajWinForms
         private SimpleButton btnSeferOtobusEsle;
         private SimpleButton btnKullaniciYonetim;
         private SimpleButton btnYetkiAtama;
+        private SimpleButton btnCikis;
     }
 }

@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -61,6 +61,18 @@ namespace StajWinForms
         private void btnYetkiAtama_Click(object sender, EventArgs e)
         {
             new YetkiAtamaForm().ShowDialog();
+        }
+
+        public bool CikisYapildi { get; private set; } = false;
+
+        private void btnCikis_Click(object sender, EventArgs e)
+        {
+            CikisYapildi = true;
+            Oturum.KullaniciId = 0;
+            Oturum.KullaniciAdi = "";
+            Oturum.AdSoyad = "";
+            Oturum.YetkiKodlari = new();
+            Close();
         }
     }
 }
