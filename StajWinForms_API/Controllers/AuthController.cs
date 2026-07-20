@@ -51,7 +51,6 @@ public class AuthController : ControllerBase
                 })
                 .ToList()
         };
-
         return Ok(sonuc);
     }
 }

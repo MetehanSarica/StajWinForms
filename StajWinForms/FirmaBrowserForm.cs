@@ -98,7 +98,7 @@ namespace StajWinForms
                     if (!resp.IsSuccessStatusCode)
                     {
                         var hata = resp.Content.ReadAsStringAsync().GetAwaiter().GetResult();
-                        throw new Exception(hata);
+                        Invoke(() => XtraMessageBox.Show(hata, "İşlem Başarısız", MessageBoxButtons.OK, MessageBoxIcon.Warning));
                     }
                     break;
                 }
@@ -108,7 +108,12 @@ namespace StajWinForms
         private void BgwIslem_RunWorkerCompleted(object? sender, RunWorkerCompletedEventArgs e)
         {
             if (e.Error != null)
-                XtraMessageBox.Show("İşlem başarısız: " + e.Error.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            {
+                XtraMessageBox.Show(e.Error.Message, "İşlem Başarısız", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                SetButonlar(true);
+                lblDurum.Text = "Hazır.";
+                return;
+            }
             VeriYukle();
         }
 
