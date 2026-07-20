@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -22,79 +22,93 @@ namespace StajWinForms
             lstFirmaOtobusler = new ListBoxControl();
             lblDigerOtobusler = new LabelControl();
             lstDigerOtobusler = new ListBoxControl();
-            btnAta = new SimpleButton();
             btnKaldir = new SimpleButton();
+            btnAta = new SimpleButton();
+            flpButonlar = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)lstFirmaOtobusler).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lstDigerOtobusler).BeginInit();
+            flpButonlar.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // lblFirma
-            // 
+            //
             lblFirma.Location = new Point(12, 15);
             lblFirma.Name = "lblFirma";
             lblFirma.Size = new Size(30, 13);
             lblFirma.TabIndex = 0;
             lblFirma.Text = "Firma:";
-            // 
+            //
             // cmbFirma
-            // 
+            //
             cmbFirma.DropDownStyle = ComboBoxStyle.DropDownList;
             cmbFirma.Location = new Point(60, 12);
             cmbFirma.Name = "cmbFirma";
             cmbFirma.Size = new Size(300, 21);
             cmbFirma.TabIndex = 1;
             cmbFirma.SelectedIndexChanged += cmbFirma_SelectedIndexChanged;
-            // 
+            //
             // lblFirmaOtobusler
-            // 
+            //
             lblFirmaOtobusler.Location = new Point(12, 50);
             lblFirmaOtobusler.Name = "lblFirmaOtobusler";
             lblFirmaOtobusler.Size = new Size(129, 13);
             lblFirmaOtobusler.TabIndex = 2;
             lblFirmaOtobusler.Text = "Firmaya Atanmış Otobüsler";
-            // 
+            //
             // lstFirmaOtobusler
-            // 
+            //
             lstFirmaOtobusler.Location = new Point(12, 70);
             lstFirmaOtobusler.Name = "lstFirmaOtobusler";
             lstFirmaOtobusler.Size = new Size(200, 300);
             lstFirmaOtobusler.TabIndex = 3;
-            // 
+            //
             // lblDigerOtobusler
-            // 
+            //
             lblDigerOtobusler.Location = new Point(340, 50);
             lblDigerOtobusler.Name = "lblDigerOtobusler";
             lblDigerOtobusler.Size = new Size(102, 13);
             lblDigerOtobusler.TabIndex = 4;
             lblDigerOtobusler.Text = "Atanmamış Otobüsler";
-            // 
+            //
             // lstDigerOtobusler
-            // 
+            //
             lstDigerOtobusler.Location = new Point(340, 70);
             lstDigerOtobusler.Name = "lstDigerOtobusler";
             lstDigerOtobusler.Size = new Size(200, 300);
             lstDigerOtobusler.TabIndex = 5;
-            // 
-            // btnAta
-            // 
-            btnAta.Location = new Point(225, 200);
-            btnAta.Name = "btnAta";
-            btnAta.Size = new Size(100, 35);
-            btnAta.TabIndex = 7;
-            btnAta.Text = "◄ Ata";
-            btnAta.Click += btnAta_Click;
-            // 
+            //
             // btnKaldir
-            // 
-            btnKaldir.Location = new Point(225, 160);
+            //
+            btnKaldir.Location = new Point(3, 3);
             btnKaldir.Name = "btnKaldir";
             btnKaldir.Size = new Size(100, 35);
             btnKaldir.TabIndex = 6;
             btnKaldir.Text = "Kaldır ►";
             btnKaldir.Click += btnKaldir_Click;
-            // 
+            //
+            // btnAta
+            //
+            btnAta.Location = new Point(3, 46);
+            btnAta.Name = "btnAta";
+            btnAta.Size = new Size(100, 35);
+            btnAta.TabIndex = 7;
+            btnAta.Text = "◄ Ata";
+            btnAta.Click += btnAta_Click;
+            //
+            // flpButonlar
+            //
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnKaldir);
+            flpButonlar.Controls.Add(btnAta);
+            flpButonlar.FlowDirection = FlowDirection.TopDown;
+            flpButonlar.Location = new Point(225, 160);
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.WrapContents = false;
+            flpButonlar.TabIndex = 8;
+            //
             // FirmaOtobusEslemeForm
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(560, 400);
@@ -104,8 +118,7 @@ namespace StajWinForms
             Controls.Add(lstFirmaOtobusler);
             Controls.Add(lblDigerOtobusler);
             Controls.Add(lstDigerOtobusler);
-            Controls.Add(btnKaldir);
-            Controls.Add(btnAta);
+            Controls.Add(flpButonlar);
             MaximizeBox = false;
             Name = "FirmaOtobusEslemeForm";
             StartPosition = FormStartPosition.CenterParent;
@@ -113,6 +126,7 @@ namespace StajWinForms
             Load += FirmaOtobusEslemeForm_Load;
             ((System.ComponentModel.ISupportInitialize)lstFirmaOtobusler).EndInit();
             ((System.ComponentModel.ISupportInitialize)lstDigerOtobusler).EndInit();
+            flpButonlar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -123,5 +137,6 @@ namespace StajWinForms
         private System.Windows.Forms.ComboBox cmbFirma;
         private ListBoxControl lstFirmaOtobusler, lstDigerOtobusler;
         private SimpleButton btnAta, btnKaldir;
+        private FlowLayoutPanel flpButonlar;
     }
 }

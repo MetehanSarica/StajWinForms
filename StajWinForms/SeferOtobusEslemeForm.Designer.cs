@@ -24,6 +24,8 @@ namespace StajWinForms
             cmbOtobus = new System.Windows.Forms.ComboBox();
             btnAta = new SimpleButton();
             btnKaldir = new SimpleButton();
+            flpButonlar = new FlowLayoutPanel();
+            flpButonlar.SuspendLayout();
             SuspendLayout();
 
             lblSefer.Location = new Point(12, 18);
@@ -57,19 +59,38 @@ namespace StajWinForms
             cmbOtobus.Size = new Size(280, 21);
             cmbOtobus.TabIndex = 1;
 
-            btnAta.Location = new Point(12, 135);
+            //
+            // btnAta
+            //
+            btnAta.Location = new Point(3, 3);
             btnAta.Name = "btnAta";
             btnAta.Size = new Size(120, 35);
             btnAta.TabIndex = 2;
             btnAta.Text = "Ata";
             btnAta.Click += btnAta_Click;
 
-            btnKaldir.Location = new Point(145, 135);
+            //
+            // btnKaldir
+            //
+            btnKaldir.Location = new Point(129, 3);
             btnKaldir.Name = "btnKaldir";
             btnKaldir.Size = new Size(120, 35);
             btnKaldir.TabIndex = 3;
             btnKaldir.Text = "Kaldır";
             btnKaldir.Click += btnKaldir_Click;
+
+            //
+            // flpButonlar
+            //
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnAta);
+            flpButonlar.Controls.Add(btnKaldir);
+            flpButonlar.FlowDirection = FlowDirection.LeftToRight;
+            flpButonlar.Location = new Point(12, 135);
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.WrapContents = false;
+            flpButonlar.TabIndex = 4;
 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
@@ -80,14 +101,14 @@ namespace StajWinForms
             Controls.Add(lblMevcut);
             Controls.Add(lblOtobus);
             Controls.Add(cmbOtobus);
-            Controls.Add(btnAta);
-            Controls.Add(btnKaldir);
+            Controls.Add(flpButonlar);
             FormBorderStyle = FormBorderStyle.FixedDialog;
             MaximizeBox = false;
             Name = "SeferOtobusEslemeForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Sefer – Otobüs Eşleme";
             Load += SeferOtobusEslemeForm_Load;
+            flpButonlar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -97,5 +118,6 @@ namespace StajWinForms
         private LabelControl lblSefer, lblMevcutBaslik, lblMevcut, lblOtobus;
         private System.Windows.Forms.ComboBox cmbSefer, cmbOtobus;
         private SimpleButton btnAta, btnKaldir;
+        private FlowLayoutPanel flpButonlar;
     }
 }

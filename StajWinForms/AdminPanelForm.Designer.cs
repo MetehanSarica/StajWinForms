@@ -19,6 +19,7 @@ namespace StajWinForms
         {
             lblBaslik = new LabelControl();
             lblHosgeldin = new LabelControl();
+            flpButonlar = new FlowLayoutPanel();
             btnFirmaBrowser = new SimpleButton();
             btnOtobusBrowser = new SimpleButton();
             btnFirmaOtobusEsle = new SimpleButton();
@@ -28,6 +29,7 @@ namespace StajWinForms
             btnKullaniciYonetim = new SimpleButton();
             btnYetkiAtama = new SimpleButton();
             btnCikis = new SimpleButton();
+            flpButonlar.SuspendLayout();
             SuspendLayout();
             // 
             // lblBaslik
@@ -42,80 +44,100 @@ namespace StajWinForms
             // 
             // lblHosgeldin
             // 
-            lblHosgeldin.Location = new Point(20, 65);
+            lblHosgeldin.Location = new Point(20, 60);
             lblHosgeldin.Name = "lblHosgeldin";
             lblHosgeldin.Size = new Size(0, 13);
             lblHosgeldin.TabIndex = 1;
             // 
+            // flpButonlar
+            // 
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnFirmaBrowser);
+            flpButonlar.Controls.Add(btnOtobusBrowser);
+            flpButonlar.Controls.Add(btnFirmaOtobusEsle);
+            flpButonlar.Controls.Add(btnKaptanBrowser);
+            flpButonlar.Controls.Add(btnKaptanEsle);
+            flpButonlar.Controls.Add(btnSeferOtobusEsle);
+            flpButonlar.Controls.Add(btnKullaniciYonetim);
+            flpButonlar.Controls.Add(btnYetkiAtama);
+            flpButonlar.Controls.Add(btnCikis);
+            flpButonlar.FlowDirection = FlowDirection.TopDown;
+            flpButonlar.Location = new Point(20, 85);
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.Size = new Size(306, 409);
+            flpButonlar.TabIndex = 2;
+            flpButonlar.WrapContents = false;
+            // 
             // btnFirmaBrowser
             // 
-            btnFirmaBrowser.Location = new Point(20, 100);
+            btnFirmaBrowser.Location = new Point(3, 3);
             btnFirmaBrowser.Name = "btnFirmaBrowser";
-            btnFirmaBrowser.Size = new Size(300, 45);
-            btnFirmaBrowser.TabIndex = 2;
+            btnFirmaBrowser.Size = new Size(300, 40);
+            btnFirmaBrowser.TabIndex = 0;
             btnFirmaBrowser.Text = "Firma Yönetimi";
             btnFirmaBrowser.Click += btnFirmaBrowser_Click;
             // 
             // btnOtobusBrowser
             // 
-            btnOtobusBrowser.Location = new Point(20, 155);
+            btnOtobusBrowser.Location = new Point(3, 49);
             btnOtobusBrowser.Name = "btnOtobusBrowser";
-            btnOtobusBrowser.Size = new Size(300, 45);
-            btnOtobusBrowser.TabIndex = 3;
+            btnOtobusBrowser.Size = new Size(300, 40);
+            btnOtobusBrowser.TabIndex = 1;
             btnOtobusBrowser.Text = "Otobüs Yönetimi";
             btnOtobusBrowser.Click += btnOtobusBrowser_Click;
             // 
             // btnFirmaOtobusEsle
             // 
-            btnFirmaOtobusEsle.Location = new Point(20, 210);
+            btnFirmaOtobusEsle.Location = new Point(3, 95);
             btnFirmaOtobusEsle.Name = "btnFirmaOtobusEsle";
-            btnFirmaOtobusEsle.Size = new Size(300, 45);
-            btnFirmaOtobusEsle.TabIndex = 4;
+            btnFirmaOtobusEsle.Size = new Size(300, 40);
+            btnFirmaOtobusEsle.TabIndex = 2;
             btnFirmaOtobusEsle.Text = "Firma – Otobüs Eşleme";
             btnFirmaOtobusEsle.Click += btnFirmaOtobusEsle_Click;
             // 
             // btnKaptanBrowser
             // 
-            btnKaptanBrowser.Location = new Point(20, 265);
+            btnKaptanBrowser.Location = new Point(3, 141);
             btnKaptanBrowser.Name = "btnKaptanBrowser";
-            btnKaptanBrowser.Size = new Size(300, 45);
-            btnKaptanBrowser.TabIndex = 5;
+            btnKaptanBrowser.Size = new Size(300, 40);
+            btnKaptanBrowser.TabIndex = 3;
             btnKaptanBrowser.Text = "Kaptan Yönetimi";
             btnKaptanBrowser.Click += btnKaptanBrowser_Click;
             // 
             // btnKaptanEsle
             // 
-            btnKaptanEsle.Location = new Point(20, 320);
+            btnKaptanEsle.Location = new Point(3, 187);
             btnKaptanEsle.Name = "btnKaptanEsle";
-            btnKaptanEsle.Size = new Size(300, 45);
-            btnKaptanEsle.TabIndex = 6;
+            btnKaptanEsle.Size = new Size(300, 40);
+            btnKaptanEsle.TabIndex = 4;
             btnKaptanEsle.Text = "Otobüs – Kaptan Eşleme";
             btnKaptanEsle.Click += btnKaptanEsle_Click;
             // 
             // btnSeferOtobusEsle
             // 
-            btnSeferOtobusEsle.Location = new Point(20, 375);
+            btnSeferOtobusEsle.Location = new Point(3, 233);
             btnSeferOtobusEsle.Name = "btnSeferOtobusEsle";
-            btnSeferOtobusEsle.Size = new Size(300, 45);
-            btnSeferOtobusEsle.TabIndex = 7;
+            btnSeferOtobusEsle.Size = new Size(300, 40);
+            btnSeferOtobusEsle.TabIndex = 5;
             btnSeferOtobusEsle.Text = "Sefer – Otobüs Eşleme";
             btnSeferOtobusEsle.Click += btnSeferOtobusEsle_Click;
             // 
             // btnKullaniciYonetim
             // 
-            btnKullaniciYonetim.Location = new Point(20, 430);
+            btnKullaniciYonetim.Location = new Point(3, 279);
             btnKullaniciYonetim.Name = "btnKullaniciYonetim";
-            btnKullaniciYonetim.Size = new Size(300, 45);
-            btnKullaniciYonetim.TabIndex = 8;
+            btnKullaniciYonetim.Size = new Size(300, 40);
+            btnKullaniciYonetim.TabIndex = 6;
             btnKullaniciYonetim.Text = "Kullanıcı Yönetimi";
             btnKullaniciYonetim.Click += btnKullaniciYonetim_Click;
             // 
             // btnYetkiAtama
             // 
-            btnYetkiAtama.Location = new Point(20, 485);
+            btnYetkiAtama.Location = new Point(3, 325);
             btnYetkiAtama.Name = "btnYetkiAtama";
-            btnYetkiAtama.Size = new Size(300, 45);
-            btnYetkiAtama.TabIndex = 9;
+            btnYetkiAtama.Size = new Size(300, 40);
+            btnYetkiAtama.TabIndex = 7;
             btnYetkiAtama.Text = "Yetki Atama";
             btnYetkiAtama.Click += btnYetkiAtama_Click;
             // 
@@ -125,10 +147,10 @@ namespace StajWinForms
             btnCikis.Appearance.ForeColor = Color.White;
             btnCikis.Appearance.Options.UseBackColor = true;
             btnCikis.Appearance.Options.UseForeColor = true;
-            btnCikis.Location = new Point(20, 545);
+            btnCikis.Location = new Point(3, 371);
             btnCikis.Name = "btnCikis";
             btnCikis.Size = new Size(300, 35);
-            btnCikis.TabIndex = 10;
+            btnCikis.TabIndex = 8;
             btnCikis.Text = "Çıkış Yap";
             btnCikis.Click += btnCikis_Click;
             // 
@@ -136,24 +158,17 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(360, 600);
+            ClientSize = new Size(352, 509);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
-            Controls.Add(btnFirmaBrowser);
-            Controls.Add(btnOtobusBrowser);
-            Controls.Add(btnFirmaOtobusEsle);
-            Controls.Add(btnKaptanBrowser);
-            Controls.Add(btnKaptanEsle);
-            Controls.Add(btnSeferOtobusEsle);
-            Controls.Add(btnKullaniciYonetim);
-            Controls.Add(btnYetkiAtama);
-            Controls.Add(btnCikis);
+            Controls.Add(flpButonlar);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
             Name = "AdminPanelForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Admin Paneli";
             Load += AdminPanelForm_Load;
+            flpButonlar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -162,6 +177,7 @@ namespace StajWinForms
 
         private LabelControl lblBaslik;
         private LabelControl lblHosgeldin;
+        private FlowLayoutPanel flpButonlar;
         private SimpleButton btnFirmaBrowser;
         private SimpleButton btnOtobusBrowser;
         private SimpleButton btnFirmaOtobusEsle;

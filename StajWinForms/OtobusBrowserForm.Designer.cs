@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -33,21 +33,23 @@ namespace StajWinForms
             btnIncele = new SimpleButton();
             btnYenile = new SimpleButton();
             lblDurum = new LabelControl();
+            flpButonlar = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)gridOtobusler).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
+            flpButonlar.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // gridOtobusler
-            // 
+            //
             gridOtobusler.Location = new Point(12, 12);
             gridOtobusler.MainView = gridView;
             gridOtobusler.Name = "gridOtobusler";
             gridOtobusler.Size = new Size(700, 380);
             gridOtobusler.TabIndex = 0;
             gridOtobusler.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
-            // 
+            //
             // gridView
-            // 
+            //
             gridView.GridControl = gridOtobusler;
             gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
@@ -113,68 +115,79 @@ namespace StajWinForms
             gridColumn6.Width = 150;
             //
             // btnEkle
-            // 
-            btnEkle.Location = new Point(725, 12);
+            //
+            btnEkle.Location = new Point(3, 3);
             btnEkle.Name = "btnEkle";
             btnEkle.Size = new Size(130, 35);
             btnEkle.TabIndex = 1;
             btnEkle.Text = "Ekle";
             btnEkle.Click += btnEkle_Click;
-            // 
+            //
             // btnDegistir
-            // 
-            btnDegistir.Location = new Point(725, 57);
+            //
+            btnDegistir.Location = new Point(3, 46);
             btnDegistir.Name = "btnDegistir";
             btnDegistir.Size = new Size(130, 35);
             btnDegistir.TabIndex = 2;
             btnDegistir.Text = "Değiştir";
             btnDegistir.Click += btnDegistir_Click;
-            // 
+            //
             // btnSil
-            // 
-            btnSil.Location = new Point(725, 102);
+            //
+            btnSil.Location = new Point(3, 89);
             btnSil.Name = "btnSil";
             btnSil.Size = new Size(130, 35);
             btnSil.TabIndex = 3;
             btnSil.Text = "Sil";
             btnSil.Click += btnSil_Click;
-            // 
+            //
             // btnIncele
-            // 
-            btnIncele.Location = new Point(725, 147);
+            //
+            btnIncele.Location = new Point(3, 132);
             btnIncele.Name = "btnIncele";
             btnIncele.Size = new Size(130, 35);
             btnIncele.TabIndex = 4;
             btnIncele.Text = "İncele";
             btnIncele.Click += btnIncele_Click;
-            // 
+            //
             // btnYenile
-            // 
-            btnYenile.Location = new Point(725, 192);
+            //
+            btnYenile.Location = new Point(3, 175);
             btnYenile.Name = "btnYenile";
             btnYenile.Size = new Size(130, 35);
             btnYenile.TabIndex = 5;
             btnYenile.Text = "Yenile";
             btnYenile.Click += btnYenile_Click;
-            // 
+            //
             // lblDurum
-            // 
+            //
             lblDurum.Location = new Point(12, 400);
             lblDurum.Name = "lblDurum";
             lblDurum.Size = new Size(0, 13);
             lblDurum.TabIndex = 6;
-            // 
+            //
+            // flpButonlar
+            //
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnEkle);
+            flpButonlar.Controls.Add(btnDegistir);
+            flpButonlar.Controls.Add(btnSil);
+            flpButonlar.Controls.Add(btnIncele);
+            flpButonlar.Controls.Add(btnYenile);
+            flpButonlar.FlowDirection = FlowDirection.TopDown;
+            flpButonlar.Location = new Point(725, 12);
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.WrapContents = false;
+            flpButonlar.TabIndex = 7;
+            //
             // OtobusBrowserForm
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(870, 430);
             Controls.Add(gridOtobusler);
-            Controls.Add(btnEkle);
-            Controls.Add(btnDegistir);
-            Controls.Add(btnSil);
-            Controls.Add(btnIncele);
-            Controls.Add(btnYenile);
+            Controls.Add(flpButonlar);
             Controls.Add(lblDurum);
             MaximizeBox = false;
             Name = "OtobusBrowserForm";
@@ -183,6 +196,7 @@ namespace StajWinForms
             Load += OtobusBrowserForm_Load;
             ((System.ComponentModel.ISupportInitialize)gridOtobusler).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
+            flpButonlar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -193,6 +207,7 @@ namespace StajWinForms
         private GridView gridView;
         private SimpleButton btnEkle, btnDegistir, btnSil, btnIncele, btnYenile;
         private LabelControl lblDurum;
+        private FlowLayoutPanel flpButonlar;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;

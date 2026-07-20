@@ -1,4 +1,4 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -27,32 +27,34 @@ namespace StajWinForms
             btnDegistir = new SimpleButton();
             btnSil = new SimpleButton();
             btnIncele = new SimpleButton();
-            btnYenile = new SimpleButton();
             lblDurum = new LabelControl();
+            flpButonlar = new FlowLayoutPanel();
+            btnYenile = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)gridFirmalar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
+            flpButonlar.SuspendLayout();
             SuspendLayout();
-            // 
+            //
             // gridFirmalar
-            // 
+            //
             gridFirmalar.Location = new Point(12, 12);
             gridFirmalar.MainView = gridView;
             gridFirmalar.Name = "gridFirmalar";
             gridFirmalar.Size = new Size(600, 380);
             gridFirmalar.TabIndex = 0;
             gridFirmalar.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
-            // 
+            //
             // gridView
-            // 
-            gridView.GridControl = gridFirmalar;
-            gridView.Name = "gridView";
-            gridView.OptionsBehavior.Editable = false;
-            gridView.OptionsView.ShowGroupPanel = false;
+            //
             gridView.Appearance.HeaderPanel.Options.UseTextOptions = true;
             gridView.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridView.Appearance.Row.Options.UseTextOptions = true;
             gridView.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn2 });
+            gridView.GridControl = gridFirmalar;
+            gridView.Name = "gridView";
+            gridView.OptionsBehavior.Editable = false;
+            gridView.OptionsView.ShowGroupPanel = false;
             //
             // gridColumn1
             //
@@ -73,69 +75,80 @@ namespace StajWinForms
             gridColumn2.Width = 300;
             //
             // btnEkle
-            // 
-            btnEkle.Location = new Point(630, 12);
+            //
+            btnEkle.Location = new Point(3, 3);
             btnEkle.Name = "btnEkle";
-            btnEkle.Size = new Size(130, 35);
+            btnEkle.Size = new Size(124, 35);
             btnEkle.TabIndex = 1;
             btnEkle.Text = "Ekle";
             btnEkle.Click += btnEkle_Click;
-            // 
+            //
             // btnDegistir
-            // 
-            btnDegistir.Location = new Point(630, 57);
+            //
+            btnDegistir.Location = new Point(3, 46);
             btnDegistir.Name = "btnDegistir";
-            btnDegistir.Size = new Size(130, 35);
+            btnDegistir.Size = new Size(124, 35);
             btnDegistir.TabIndex = 2;
             btnDegistir.Text = "Değiştir";
             btnDegistir.Click += btnDegistir_Click;
-            // 
+            //
             // btnSil
-            // 
-            btnSil.Location = new Point(630, 102);
+            //
+            btnSil.Location = new Point(3, 89);
             btnSil.Name = "btnSil";
-            btnSil.Size = new Size(130, 35);
+            btnSil.Size = new Size(124, 35);
             btnSil.TabIndex = 3;
             btnSil.Text = "Sil";
             btnSil.Click += btnSil_Click;
-            // 
+            //
             // btnIncele
-            // 
-            btnIncele.Location = new Point(630, 147);
+            //
+            btnIncele.Location = new Point(3, 132);
             btnIncele.Name = "btnIncele";
-            btnIncele.Size = new Size(130, 35);
+            btnIncele.Size = new Size(124, 35);
             btnIncele.TabIndex = 4;
             btnIncele.Text = "İncele";
             btnIncele.Click += btnIncele_Click;
-            // 
-            // btnYenile
-            // 
-            btnYenile.Location = new Point(630, 192);
-            btnYenile.Name = "btnYenile";
-            btnYenile.Size = new Size(130, 35);
-            btnYenile.TabIndex = 5;
-            btnYenile.Text = "Yenile";
-            btnYenile.Click += btnYenile_Click;
-            // 
+            //
             // lblDurum
-            // 
+            //
             lblDurum.Location = new Point(12, 400);
             lblDurum.Name = "lblDurum";
             lblDurum.Size = new Size(0, 13);
             lblDurum.TabIndex = 6;
-            // 
+            //
+            // flpButonlar
+            //
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnEkle);
+            flpButonlar.Controls.Add(btnDegistir);
+            flpButonlar.Controls.Add(btnSil);
+            flpButonlar.Controls.Add(btnIncele);
+            flpButonlar.Controls.Add(btnYenile);
+            flpButonlar.FlowDirection = FlowDirection.TopDown;
+            flpButonlar.Location = new Point(630, 12);
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.WrapContents = false;
+            flpButonlar.TabIndex = 7;
+            //
+            // btnYenile
+            //
+            btnYenile.Location = new Point(3, 175);
+            btnYenile.Name = "btnYenile";
+            btnYenile.Size = new Size(124, 35);
+            btnYenile.TabIndex = 5;
+            btnYenile.Text = "Yenile";
+            btnYenile.Click += btnYenile_Click;
+            //
             // FirmaBrowserForm
-            // 
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(780, 430);
             Controls.Add(gridFirmalar);
-            Controls.Add(btnEkle);
-            Controls.Add(btnDegistir);
-            Controls.Add(btnSil);
-            Controls.Add(btnIncele);
-            Controls.Add(btnYenile);
             Controls.Add(lblDurum);
+            Controls.Add(flpButonlar);
             MaximizeBox = false;
             Name = "FirmaBrowserForm";
             StartPosition = FormStartPosition.CenterParent;
@@ -143,6 +156,7 @@ namespace StajWinForms
             Load += FirmaBrowserForm_Load;
             ((System.ComponentModel.ISupportInitialize)gridFirmalar).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
+            flpButonlar.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -157,7 +171,8 @@ namespace StajWinForms
         private SimpleButton btnDegistir;
         private SimpleButton btnSil;
         private SimpleButton btnIncele;
-        private SimpleButton btnYenile;
         private LabelControl lblDurum;
+        private FlowLayoutPanel flpButonlar;
+        private SimpleButton btnYenile;
     }
 }

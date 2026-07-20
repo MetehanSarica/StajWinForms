@@ -66,7 +66,7 @@ namespace StajWinForms
 
         private void AdminPanelForm_Load(object sender, EventArgs e)
         {
-            foreach (Control cntrl in this.Controls)
+            foreach (Control cntrl in flpButonlar.Controls)
             {
                 if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
                 {
