@@ -118,10 +118,24 @@ public class KullanicilarController : ControllerBase
 
         if (kullanici == null) return NotFound();
 
-        if (kullanici.KullaniciAdi == "metehansarica")
-            return BadRequest("Bu kullanıcının yetkileri değiştirilemez.");
-
         var tumYetkiler = await _context.Yetkilers.ToListAsync();
+
+        if (kullanici.KullaniciAdi == "metehansarica")
+        {
+            var mevcutYetkiIdler = kullanici.KullaniciYetkileri.Select(ky => ky.YetkiId).ToHashSet();
+            var eklenecekler = tumYetkiler.Where(y => yetkiKodlari.Contains(y.YetkiKodu) && !mevcutYetkiIdler.Contains(y.YetkiId));
+            foreach (var yetki in eklenecekler)
+            {
+                _context.KullaniciYetkileri.Add(new KullaniciYetkileri
+                {
+                    KullaniciId = id,
+                    YetkiId = yetki.YetkiId
+                });
+            }
+            await _context.SaveChangesAsync();
+            return NoContent();
+        }
+
         var hedefYetkiler = tumYetkiler.Where(y => yetkiKodlari.Contains(y.YetkiKodu)).ToList();
 
         _context.KullaniciYetkileri.RemoveRange(kullanici.KullaniciYetkileri);

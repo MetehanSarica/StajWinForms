@@ -18,6 +18,7 @@ namespace StajWinForms
             btnFirmaOtobusEsle.Visible  = Oturum.HasYetki("FIRMA_OTOBUS");
             btnKaptanBrowser.Visible    = Oturum.HasYetki("KAPTAN");
             btnKaptanEsle.Visible       = Oturum.HasYetki("KAPTAN");
+            btnSeferOtobusEsle.Visible  = Oturum.HasYetki("SEFER_OTOBUS");
             btnKullaniciYonetim.Visible = Oturum.HasYetki("KULLANICI");
             btnYetkiAtama.Visible       = Oturum.HasYetki("YETKI");
         }
@@ -45,6 +46,11 @@ namespace StajWinForms
         private void btnKaptanEsle_Click(object sender, EventArgs e)
         {
             new KaptanEslemeForm().ShowDialog();
+        }
+
+        private void btnSeferOtobusEsle_Click(object sender, EventArgs e)
+        {
+            new SeferOtobusEslemeForm().ShowDialog();
         }
 
         private void btnKullaniciYonetim_Click(object sender, EventArgs e)

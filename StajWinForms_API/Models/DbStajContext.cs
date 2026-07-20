@@ -181,6 +181,7 @@ public partial class DbStajContext : DbContext
             entity.Property(e => e.KalkisSehirId).HasColumnName("KalkisSehirID");
             entity.Property(e => e.KoltukKapasitesi).HasDefaultValue(36);
             entity.Property(e => e.VarisSehirId).HasColumnName("VarisSehirID");
+            entity.Property(e => e.OtobusId).HasColumnName("OtobusID");
             entity.Ignore(e => e.BosKoltuk);
 
             entity.HasOne(d => d.Firma).WithMany(p => p.Seferlers)
@@ -197,6 +198,11 @@ public partial class DbStajContext : DbContext
                 .HasForeignKey(d => d.VarisSehirId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__Seferler__VarisS__71D1E811");
+
+            entity.HasOne(d => d.Otobus).WithMany(p => p.Seferlers)
+                .HasForeignKey(d => d.OtobusId)
+                .OnDelete(DeleteBehavior.SetNull)
+                .HasConstraintName("FK_Seferler_Otobusler");
         });
 
         modelBuilder.Entity<Otogarlar>(entity =>

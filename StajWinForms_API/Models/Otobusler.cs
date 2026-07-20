@@ -15,4 +15,7 @@ public partial class Otobusler
 
     [JsonIgnore]
     public virtual ICollection<OtobusKaptan> OtobusKaptanlar { get; set; } = new List<OtobusKaptan>();
+
+    [JsonIgnore]
+    public virtual ICollection<Seferler> Seferlers { get; set; } = new List<Seferler>();
 }

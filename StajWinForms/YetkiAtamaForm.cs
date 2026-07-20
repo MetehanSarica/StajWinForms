@@ -44,6 +44,7 @@ namespace StajWinForms
                     new("OTOBUS",       "Otobüs Yönetimi"),
                     new("FIRMA_OTOBUS", "Firma-Otobüs Eşleme"),
                     new("KAPTAN",       "Kaptan Yönetimi"),
+                    new("SEFER_OTOBUS", "Sefer-Otobüs Eşleme"),
                     new("KULLANICI",    "Kullanıcı Yönetimi"),
                     new("YETKI",        "Yetki Yönetimi")
                 };

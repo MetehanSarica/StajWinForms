@@ -42,11 +42,7 @@ namespace StajWinForms
                 XtraMessageBox.Show("Plaka boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (txtPlaka.SelectionLength > 8)
-            {
-                XtraMessageBox.Show("Geçersiz plaka.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+
             var firma = cmbFirma.SelectedItem as FirmaComboItem;
             Sonuc = new
             {

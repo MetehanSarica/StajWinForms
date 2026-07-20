@@ -24,6 +24,7 @@ namespace StajWinForms
             btnFirmaOtobusEsle = new SimpleButton();
             btnKaptanBrowser = new SimpleButton();
             btnKaptanEsle = new SimpleButton();
+            btnSeferOtobusEsle = new SimpleButton();
             btnKullaniciYonetim = new SimpleButton();
             btnYetkiAtama = new SimpleButton();
             SuspendLayout();
@@ -83,26 +84,34 @@ namespace StajWinForms
             btnKaptanEsle.Text = "Otobüs – Kaptan Eşleme";
             btnKaptanEsle.Click += btnKaptanEsle_Click;
 
+            // btnSeferOtobusEsle
+            btnSeferOtobusEsle.Location = new System.Drawing.Point(20, 375);
+            btnSeferOtobusEsle.Name = "btnSeferOtobusEsle";
+            btnSeferOtobusEsle.Size = new System.Drawing.Size(300, 45);
+            btnSeferOtobusEsle.TabIndex = 7;
+            btnSeferOtobusEsle.Text = "Sefer – Otobüs Eşleme";
+            btnSeferOtobusEsle.Click += btnSeferOtobusEsle_Click;
+
             // btnKullaniciYonetim
-            btnKullaniciYonetim.Location = new System.Drawing.Point(20, 375);
+            btnKullaniciYonetim.Location = new System.Drawing.Point(20, 430);
             btnKullaniciYonetim.Name = "btnKullaniciYonetim";
             btnKullaniciYonetim.Size = new System.Drawing.Size(300, 45);
-            btnKullaniciYonetim.TabIndex = 7;
+            btnKullaniciYonetim.TabIndex = 8;
             btnKullaniciYonetim.Text = "Kullanıcı Yönetimi";
             btnKullaniciYonetim.Click += btnKullaniciYonetim_Click;
 
             // btnYetkiAtama
-            btnYetkiAtama.Location = new System.Drawing.Point(20, 430);
+            btnYetkiAtama.Location = new System.Drawing.Point(20, 485);
             btnYetkiAtama.Name = "btnYetkiAtama";
             btnYetkiAtama.Size = new System.Drawing.Size(300, 45);
-            btnYetkiAtama.TabIndex = 8;
+            btnYetkiAtama.TabIndex = 9;
             btnYetkiAtama.Text = "Yetki Atama";
             btnYetkiAtama.Click += btnYetkiAtama_Click;
 
             // AdminPanelForm
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(360, 505);
+            ClientSize = new System.Drawing.Size(360, 560);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(btnFirmaBrowser);
@@ -110,6 +119,7 @@ namespace StajWinForms
             Controls.Add(btnFirmaOtobusEsle);
             Controls.Add(btnKaptanBrowser);
             Controls.Add(btnKaptanEsle);
+            Controls.Add(btnSeferOtobusEsle);
             Controls.Add(btnKullaniciYonetim);
             Controls.Add(btnYetkiAtama);
             FormBorderStyle = FormBorderStyle.FixedSingle;
@@ -130,6 +140,7 @@ namespace StajWinForms
         private SimpleButton btnFirmaOtobusEsle;
         private SimpleButton btnKaptanBrowser;
         private SimpleButton btnKaptanEsle;
+        private SimpleButton btnSeferOtobusEsle;
         private SimpleButton btnKullaniciYonetim;
         private SimpleButton btnYetkiAtama;
     }

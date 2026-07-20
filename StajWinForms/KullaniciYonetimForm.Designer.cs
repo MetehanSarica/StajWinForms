@@ -25,6 +25,7 @@ namespace StajWinForms
             gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
             gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            riChkAktif = new DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit();
             btnEkle = new SimpleButton();
             btnDegistir = new SimpleButton();
             btnSil = new SimpleButton();
@@ -33,6 +34,7 @@ namespace StajWinForms
             lblDurum = new LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridKullanicilar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)riChkAktif).BeginInit();
             SuspendLayout();
             // 
             // gridKullanicilar
@@ -43,6 +45,7 @@ namespace StajWinForms
             gridKullanicilar.Size = new Size(620, 380);
             gridKullanicilar.TabIndex = 0;
             gridKullanicilar.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
+            gridKullanicilar.RepositoryItems.Add(riChkAktif);
             // 
             // gridView
             // 
@@ -88,6 +91,7 @@ namespace StajWinForms
             gridColumn4.Caption = "Aktif";
             gridColumn4.FieldName = "Aktif";
             gridColumn4.Name = "gridColumn4";
+            gridColumn4.ColumnEdit = riChkAktif;
             gridColumn4.Visible = true;
             gridColumn4.VisibleIndex = 3;
             gridColumn4.Width = 60;
@@ -172,6 +176,7 @@ namespace StajWinForms
             StartPosition = FormStartPosition.CenterParent;
             Text = "Kullanıcı Yönetimi";
             Load += KullaniciYonetimForm_Load;
+            ((System.ComponentModel.ISupportInitialize)riChkAktif).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridKullanicilar).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
             ResumeLayout(false);
@@ -188,6 +193,7 @@ namespace StajWinForms
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraEditors.Repository.RepositoryItemCheckEdit riChkAktif;
         private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
     }
 }

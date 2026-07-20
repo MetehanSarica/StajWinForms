@@ -23,9 +23,13 @@ public partial class Seferler
 
     public int BosKoltuk { get; set; }
 
+    public int? OtobusId { get; set; }
+
     public virtual ICollection<Biletler> Biletlers { get; set; } = new List<Biletler>();
 
     public virtual Firmalar Firma { get; set; } = null!;
+
+    public virtual Otobusler? Otobus { get; set; }
 
     public virtual Sehirler KalkisSehir { get; set; } = null!;
 
