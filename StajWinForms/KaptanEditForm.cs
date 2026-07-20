@@ -7,9 +7,12 @@ namespace StajWinForms
     {
         public object Sonuc { get; private set; } = null!;
 
-        public KaptanEditForm(PersonelModel? mevcut)
+        private readonly bool _incele;
+
+        public KaptanEditForm(PersonelModel? mevcut, bool incele = false)
         {
             InitializeComponent();
+            _incele = incele;
             if (mevcut != null)
             {
                 txtAd.Text = mevcut.Ad;
@@ -44,6 +47,20 @@ namespace StajWinForms
             };
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void KaptanEditForm_Shown(object sender, EventArgs e)
+        {
+            if (_incele)
+            {
+                txtAd.ReadOnly = true;
+                txtSoyad.ReadOnly = true;
+                txtEmail.ReadOnly = true;
+                spnMaas.ReadOnly = true;
+                dtpIseGiris.ReadOnly = true;
+                btnKaydet.Visible = false;
+                btnIptal.Text = "Kapat";
+            }
         }
 
         private void btnIptal_Click(object sender, EventArgs e)

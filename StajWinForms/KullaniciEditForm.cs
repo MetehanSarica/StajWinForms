@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using static StajWinForms.KullaniciYonetimForm;
 
 namespace StajWinForms
@@ -8,10 +8,13 @@ namespace StajWinForms
         public object Sonuc { get; private set; } = null!;
         private readonly bool _yeniKayit;
 
-        public KullaniciEditForm(KullaniciModel? mevcut)
+        private readonly bool _incele;
+
+        public KullaniciEditForm(KullaniciModel? mevcut, bool incele = false)
         {
             InitializeComponent();
             _yeniKayit = mevcut == null;
+            _incele = incele;
             if (mevcut != null)
             {
                 txtKullaniciAdi.Text = mevcut.KullaniciAdi;
@@ -33,6 +36,11 @@ namespace StajWinForms
             if (string.IsNullOrWhiteSpace(txtKullaniciAdi.Text))
             {
                 XtraMessageBox.Show("Kullanıcı adı boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtAdSoyad.Text))
+            {
+                XtraMessageBox.Show("İsim ve soyisim boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (_yeniKayit && string.IsNullOrWhiteSpace(txtSifre.Text))
@@ -64,6 +72,19 @@ namespace StajWinForms
 
             DialogResult = DialogResult.OK;
             Close();
+        }
+
+        private void KullaniciEditForm_Shown(object sender, EventArgs e)
+        {
+            if (_incele)
+            {
+                txtKullaniciAdi.ReadOnly = true;
+                txtAdSoyad.ReadOnly = true;
+                txtSifre.ReadOnly = true;
+                chkAktif.Enabled = false;
+                btnKaydet.Visible = false;
+                btnIptal.Text = "Kapat";
+            }
         }
 
         private void btnIptal_Click(object sender, EventArgs e)

@@ -30,36 +30,47 @@ namespace StajWinForms
             ((System.ComponentModel.ISupportInitialize)dtpIseGiris.Properties).BeginInit();
             SuspendLayout();
 
-            int lx = 20, tx = 130, tw = 220, th = 20, gap = 12, y = 20;
+            lblAd.Location = new System.Drawing.Point(20, 23);
+            lblAd.Text = "Ad:";
+            txtAd.Location = new System.Drawing.Point(130, 20);
+            txtAd.Size = new System.Drawing.Size(220, 20);
 
-            lblAd.Location = new System.Drawing.Point(lx, y + 3); lblAd.Text = "Ad:";
-            txtAd.Location = new System.Drawing.Point(tx, y); txtAd.Size = new System.Drawing.Size(tw, th); y += th + gap;
+            lblSoyad.Location = new System.Drawing.Point(20, 55);
+            lblSoyad.Text = "Soyad:";
+            txtSoyad.Location = new System.Drawing.Point(130, 52);
+            txtSoyad.Size = new System.Drawing.Size(220, 20);
 
-            lblSoyad.Location = new System.Drawing.Point(lx, y + 3); lblSoyad.Text = "Soyad:";
-            txtSoyad.Location = new System.Drawing.Point(tx, y); txtSoyad.Size = new System.Drawing.Size(tw, th); y += th + gap;
+            lblEmail.Location = new System.Drawing.Point(20, 87);
+            lblEmail.Text = "E-posta:";
+            txtEmail.Location = new System.Drawing.Point(130, 84);
+            txtEmail.Size = new System.Drawing.Size(220, 20);
 
-            lblEmail.Location = new System.Drawing.Point(lx, y + 3); lblEmail.Text = "E-posta:";
-            txtEmail.Location = new System.Drawing.Point(tx, y); txtEmail.Size = new System.Drawing.Size(tw, th); y += th + gap;
+            lblMaas.Location = new System.Drawing.Point(20, 119);
+            lblMaas.Text = "Maaş (₺):";
+            spnMaas.Location = new System.Drawing.Point(130, 116);
+            spnMaas.Size = new System.Drawing.Size(220, 20);
+            spnMaas.Properties.MinValue = 0;
+            spnMaas.Properties.MaxValue = 999999;
+            spnMaas.Properties.Appearance.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Near;
 
-            lblMaas.Location = new System.Drawing.Point(lx, y + 3); lblMaas.Text = "Maaş (₺):";
-            spnMaas.Location = new System.Drawing.Point(tx, y); spnMaas.Size = new System.Drawing.Size(tw, th);
-            spnMaas.Properties.MinValue = 0; spnMaas.Properties.MaxValue = 999999;
-            y += th + gap;
+            lblIseGiris.Location = new System.Drawing.Point(20, 151);
+            lblIseGiris.Text = "İşe Giriş:";
+            dtpIseGiris.Location = new System.Drawing.Point(130, 148);
+            dtpIseGiris.Size = new System.Drawing.Size(220, 20);
 
-            lblIseGiris.Location = new System.Drawing.Point(lx, y + 3); lblIseGiris.Text = "İşe Giriş:";
-            dtpIseGiris.Location = new System.Drawing.Point(tx, y); dtpIseGiris.Size = new System.Drawing.Size(tw, th);
-            y += th + gap + 10;
+            btnKaydet.Location = new System.Drawing.Point(130, 190);
+            btnKaydet.Size = new System.Drawing.Size(100, 35);
+            btnKaydet.Text = "Kaydet";
+            btnKaydet.Click += btnKaydet_Click;
 
-            btnKaydet.Location = new System.Drawing.Point(tx, y); btnKaydet.Size = new System.Drawing.Size(100, 35);
-            btnKaydet.Text = "Kaydet"; btnKaydet.Click += btnKaydet_Click;
-
-            btnIptal.Location = new System.Drawing.Point(tx + 110, y); btnIptal.Size = new System.Drawing.Size(100, 35);
-            btnIptal.Text = "İptal"; btnIptal.Click += btnIptal_Click;
-            y += 35 + 20;
+            btnIptal.Location = new System.Drawing.Point(240, 190);
+            btnIptal.Size = new System.Drawing.Size(100, 35);
+            btnIptal.Text = "İptal";
+            btnIptal.Click += btnIptal_Click;
 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(380, y);
+            ClientSize = new System.Drawing.Size(380, 245);
             Controls.Add(lblAd); Controls.Add(txtAd);
             Controls.Add(lblSoyad); Controls.Add(txtSoyad);
             Controls.Add(lblEmail); Controls.Add(txtEmail);
@@ -70,6 +81,7 @@ namespace StajWinForms
             MaximizeBox = false; MinimizeBox = false;
             StartPosition = FormStartPosition.CenterParent;
             Name = "KaptanEditForm";
+            Shown += KaptanEditForm_Shown;
 
             ((System.ComponentModel.ISupportInitialize)txtAd.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtSoyad.Properties).EndInit();

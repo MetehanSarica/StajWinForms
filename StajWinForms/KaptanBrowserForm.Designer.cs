@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -20,41 +20,174 @@ namespace StajWinForms
         {
             gridPersonel = new GridControl();
             gridView = new GridView();
-            btnEkle = new SimpleButton(); btnDegistir = new SimpleButton();
-            btnSil = new SimpleButton(); btnIncele = new SimpleButton(); btnYenile = new SimpleButton();
+            gridColumn1 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn2 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn3 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn4 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn5 = new DevExpress.XtraGrid.Columns.GridColumn();
+            gridColumn6 = new DevExpress.XtraGrid.Columns.GridColumn();
+            btnEkle = new SimpleButton();
+            btnDegistir = new SimpleButton();
+            btnSil = new SimpleButton();
+            btnIncele = new SimpleButton();
+            btnYenile = new SimpleButton();
             lblDurum = new LabelControl();
-
             ((System.ComponentModel.ISupportInitialize)gridPersonel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
             SuspendLayout();
-
-            gridPersonel.Location = new System.Drawing.Point(12, 12);
+            // 
+            // gridPersonel
+            // 
+            gridPersonel.Location = new Point(12, 12);
             gridPersonel.MainView = gridView;
-            gridPersonel.Size = new System.Drawing.Size(650, 380);
+            gridPersonel.Name = "gridPersonel";
+            gridPersonel.Size = new Size(650, 380);
+            gridPersonel.TabIndex = 0;
             gridPersonel.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
+            // 
+            // gridView
+            // 
             gridView.GridControl = gridPersonel;
+            gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
-
-            int bx = 675, by = 12, bw = 130, bh = 35, bgap = 10;
-            btnEkle.Location = new System.Drawing.Point(bx, by); by += bh + bgap; btnEkle.Size = new System.Drawing.Size(bw, bh); btnEkle.Text = "Ekle"; btnEkle.Click += btnEkle_Click;
-            btnDegistir.Location = new System.Drawing.Point(bx, by); by += bh + bgap; btnDegistir.Size = new System.Drawing.Size(bw, bh); btnDegistir.Text = "Değiştir"; btnDegistir.Click += btnDegistir_Click;
-            btnSil.Location = new System.Drawing.Point(bx, by); by += bh + bgap; btnSil.Size = new System.Drawing.Size(bw, bh); btnSil.Text = "Sil"; btnSil.Click += btnSil_Click;
-            btnIncele.Location = new System.Drawing.Point(bx, by); by += bh + bgap; btnIncele.Size = new System.Drawing.Size(bw, bh); btnIncele.Text = "İncele"; btnIncele.Click += btnIncele_Click;
-            btnYenile.Location = new System.Drawing.Point(bx, by); btnYenile.Size = new System.Drawing.Size(bw, bh); btnYenile.Text = "Yenile"; btnYenile.Click += btnYenile_Click;
-
-            lblDurum.Location = new System.Drawing.Point(12, 400); lblDurum.Text = "";
-
-            AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            gridView.OptionsView.ShowGroupPanel = false;
+            gridView.Appearance.HeaderPanel.Options.UseTextOptions = true;
+            gridView.Appearance.HeaderPanel.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView.Appearance.Row.Options.UseTextOptions = true;
+            gridView.Appearance.Row.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
+            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { gridColumn1, gridColumn2, gridColumn3, gridColumn4, gridColumn5, gridColumn6 });
+            //
+            // gridColumn1
+            //
+            gridColumn1.Caption = "ID";
+            gridColumn1.FieldName = "Id";
+            gridColumn1.Name = "gridColumn1";
+            gridColumn1.Visible = true;
+            gridColumn1.VisibleIndex = 0;
+            gridColumn1.Width = 40;
+            //
+            // gridColumn2
+            //
+            gridColumn2.Caption = "Ad";
+            gridColumn2.FieldName = "Ad";
+            gridColumn2.Name = "gridColumn2";
+            gridColumn2.Visible = true;
+            gridColumn2.VisibleIndex = 1;
+            gridColumn2.Width = 100;
+            //
+            // gridColumn3
+            //
+            gridColumn3.Caption = "Soyad";
+            gridColumn3.FieldName = "Soyad";
+            gridColumn3.Name = "gridColumn3";
+            gridColumn3.Visible = true;
+            gridColumn3.VisibleIndex = 2;
+            gridColumn3.Width = 100;
+            //
+            // gridColumn4
+            //
+            gridColumn4.Caption = "E-posta";
+            gridColumn4.FieldName = "Email";
+            gridColumn4.Name = "gridColumn4";
+            gridColumn4.Visible = true;
+            gridColumn4.VisibleIndex = 3;
+            gridColumn4.Width = 180;
+            //
+            // gridColumn5
+            //
+            gridColumn5.Caption = "Maaş";
+            gridColumn5.FieldName = "Maas";
+            gridColumn5.Name = "gridColumn5";
+            gridColumn5.DisplayFormat.FormatString = "₺{0:N2}";
+            gridColumn5.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
+            gridColumn5.Visible = true;
+            gridColumn5.VisibleIndex = 4;
+            gridColumn5.Width = 100;
+            //
+            // gridColumn6
+            //
+            gridColumn6.Caption = "İşe Giriş";
+            gridColumn6.FieldName = "IseGirisTarihi";
+            gridColumn6.Name = "gridColumn6";
+            gridColumn6.DisplayFormat.FormatString = "dd.MM.yyyy";
+            gridColumn6.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
+            gridColumn6.Visible = true;
+            gridColumn6.VisibleIndex = 5;
+            gridColumn6.Width = 100;
+            //
+            // btnEkle
+            // 
+            btnEkle.Location = new Point(675, 12);
+            btnEkle.Name = "btnEkle";
+            btnEkle.Size = new Size(130, 35);
+            btnEkle.TabIndex = 1;
+            btnEkle.Text = "Ekle";
+            btnEkle.Click += btnEkle_Click;
+            // 
+            // btnDegistir
+            // 
+            btnDegistir.Location = new Point(675, 57);
+            btnDegistir.Name = "btnDegistir";
+            btnDegistir.Size = new Size(130, 35);
+            btnDegistir.TabIndex = 2;
+            btnDegistir.Text = "Değiştir";
+            btnDegistir.Click += btnDegistir_Click;
+            // 
+            // btnSil
+            // 
+            btnSil.Location = new Point(675, 102);
+            btnSil.Name = "btnSil";
+            btnSil.Size = new Size(130, 35);
+            btnSil.TabIndex = 3;
+            btnSil.Text = "Sil";
+            btnSil.Click += btnSil_Click;
+            // 
+            // btnIncele
+            // 
+            btnIncele.Location = new Point(675, 147);
+            btnIncele.Name = "btnIncele";
+            btnIncele.Size = new Size(130, 35);
+            btnIncele.TabIndex = 4;
+            btnIncele.Text = "İncele";
+            btnIncele.Click += btnIncele_Click;
+            // 
+            // btnYenile
+            // 
+            btnYenile.Location = new Point(675, 192);
+            btnYenile.Name = "btnYenile";
+            btnYenile.Size = new Size(130, 35);
+            btnYenile.TabIndex = 5;
+            btnYenile.Text = "Yenile";
+            btnYenile.Click += btnYenile_Click;
+            // 
+            // lblDurum
+            // 
+            lblDurum.Location = new Point(12, 400);
+            lblDurum.Name = "lblDurum";
+            lblDurum.Size = new Size(0, 13);
+            lblDurum.TabIndex = 6;
+            // 
+            // KaptanBrowserForm
+            // 
+            AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(820, 430);
-            Controls.Add(gridPersonel); Controls.Add(btnEkle); Controls.Add(btnDegistir);
-            Controls.Add(btnSil); Controls.Add(btnIncele); Controls.Add(btnYenile); Controls.Add(lblDurum);
-            Name = "KaptanBrowserForm"; StartPosition = FormStartPosition.CenterParent; Text = "Kaptan Yönetimi";
+            ClientSize = new Size(820, 430);
+            Controls.Add(gridPersonel);
+            Controls.Add(btnEkle);
+            Controls.Add(btnDegistir);
+            Controls.Add(btnSil);
+            Controls.Add(btnIncele);
+            Controls.Add(btnYenile);
+            Controls.Add(lblDurum);
+            MaximizeBox = false;
+            Name = "KaptanBrowserForm";
+            StartPosition = FormStartPosition.CenterParent;
+            Text = "Kaptan Yönetimi";
             Load += KaptanBrowserForm_Load;
-
             ((System.ComponentModel.ISupportInitialize)gridPersonel).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
-            ResumeLayout(false); PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -63,5 +196,11 @@ namespace StajWinForms
         private GridView gridView;
         private SimpleButton btnEkle, btnDegistir, btnSil, btnIncele, btnYenile;
         private LabelControl lblDurum;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn1;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn2;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn3;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn4;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn5;
+        private DevExpress.XtraGrid.Columns.GridColumn gridColumn6;
     }
 }

@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -43,76 +43,58 @@ namespace StajWinForms
             lblHosgeldin.TabIndex = 1;
             lblHosgeldin.Text = "";
 
-            int btnY = 100;
-            int btnH = 45;
-            int btnGap = 10;
-            int btnW = 300;
-            int btnX = 20;
-
             // btnFirmaBrowser
-            btnFirmaBrowser.Location = new System.Drawing.Point(btnX, btnY);
+            btnFirmaBrowser.Location = new System.Drawing.Point(20, 100);
             btnFirmaBrowser.Name = "btnFirmaBrowser";
-            btnFirmaBrowser.Size = new System.Drawing.Size(btnW, btnH);
+            btnFirmaBrowser.Size = new System.Drawing.Size(300, 45);
             btnFirmaBrowser.TabIndex = 2;
             btnFirmaBrowser.Text = "Firma Yönetimi";
             btnFirmaBrowser.Click += btnFirmaBrowser_Click;
 
-            btnY += btnH + btnGap;
-
             // btnOtobusBrowser
-            btnOtobusBrowser.Location = new System.Drawing.Point(btnX, btnY);
+            btnOtobusBrowser.Location = new System.Drawing.Point(20, 155);
             btnOtobusBrowser.Name = "btnOtobusBrowser";
-            btnOtobusBrowser.Size = new System.Drawing.Size(btnW, btnH);
+            btnOtobusBrowser.Size = new System.Drawing.Size(300, 45);
             btnOtobusBrowser.TabIndex = 3;
             btnOtobusBrowser.Text = "Otobüs Yönetimi";
             btnOtobusBrowser.Click += btnOtobusBrowser_Click;
 
-            btnY += btnH + btnGap;
-
             // btnFirmaOtobusEsle
-            btnFirmaOtobusEsle.Location = new System.Drawing.Point(btnX, btnY);
+            btnFirmaOtobusEsle.Location = new System.Drawing.Point(20, 210);
             btnFirmaOtobusEsle.Name = "btnFirmaOtobusEsle";
-            btnFirmaOtobusEsle.Size = new System.Drawing.Size(btnW, btnH);
+            btnFirmaOtobusEsle.Size = new System.Drawing.Size(300, 45);
             btnFirmaOtobusEsle.TabIndex = 4;
             btnFirmaOtobusEsle.Text = "Firma – Otobüs Eşleme";
             btnFirmaOtobusEsle.Click += btnFirmaOtobusEsle_Click;
 
-            btnY += btnH + btnGap;
-
             // btnKaptanBrowser
-            btnKaptanBrowser.Location = new System.Drawing.Point(btnX, btnY);
+            btnKaptanBrowser.Location = new System.Drawing.Point(20, 265);
             btnKaptanBrowser.Name = "btnKaptanBrowser";
-            btnKaptanBrowser.Size = new System.Drawing.Size(btnW, btnH);
+            btnKaptanBrowser.Size = new System.Drawing.Size(300, 45);
             btnKaptanBrowser.TabIndex = 5;
             btnKaptanBrowser.Text = "Kaptan Yönetimi";
             btnKaptanBrowser.Click += btnKaptanBrowser_Click;
 
-            btnY += btnH + btnGap;
-
             // btnKaptanEsle
-            btnKaptanEsle.Location = new System.Drawing.Point(btnX, btnY);
+            btnKaptanEsle.Location = new System.Drawing.Point(20, 320);
             btnKaptanEsle.Name = "btnKaptanEsle";
-            btnKaptanEsle.Size = new System.Drawing.Size(btnW, btnH);
+            btnKaptanEsle.Size = new System.Drawing.Size(300, 45);
             btnKaptanEsle.TabIndex = 6;
             btnKaptanEsle.Text = "Otobüs – Kaptan Eşleme";
             btnKaptanEsle.Click += btnKaptanEsle_Click;
 
-            btnY += btnH + btnGap;
-
             // btnKullaniciYonetim
-            btnKullaniciYonetim.Location = new System.Drawing.Point(btnX, btnY);
+            btnKullaniciYonetim.Location = new System.Drawing.Point(20, 375);
             btnKullaniciYonetim.Name = "btnKullaniciYonetim";
-            btnKullaniciYonetim.Size = new System.Drawing.Size(btnW, btnH);
+            btnKullaniciYonetim.Size = new System.Drawing.Size(300, 45);
             btnKullaniciYonetim.TabIndex = 7;
             btnKullaniciYonetim.Text = "Kullanıcı Yönetimi";
             btnKullaniciYonetim.Click += btnKullaniciYonetim_Click;
 
-            btnY += btnH + btnGap;
-
             // btnYetkiAtama
-            btnYetkiAtama.Location = new System.Drawing.Point(btnX, btnY);
+            btnYetkiAtama.Location = new System.Drawing.Point(20, 430);
             btnYetkiAtama.Name = "btnYetkiAtama";
-            btnYetkiAtama.Size = new System.Drawing.Size(btnW, btnH);
+            btnYetkiAtama.Size = new System.Drawing.Size(300, 45);
             btnYetkiAtama.TabIndex = 8;
             btnYetkiAtama.Text = "Yetki Atama";
             btnYetkiAtama.Click += btnYetkiAtama_Click;
@@ -120,7 +102,7 @@ namespace StajWinForms
             // AdminPanelForm
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(360, btnY + btnH + 30);
+            ClientSize = new System.Drawing.Size(360, 505);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(btnFirmaBrowser);

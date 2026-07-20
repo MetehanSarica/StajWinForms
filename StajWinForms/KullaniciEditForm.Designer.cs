@@ -29,36 +29,43 @@ namespace StajWinForms
             ((System.ComponentModel.ISupportInitialize)chkAktif.Properties).BeginInit();
             SuspendLayout();
 
-            int lx = 20, tx = 130, tw = 220, th = 20, gap = 12, y = 20;
+            lblKullaniciAdi.Location = new System.Drawing.Point(20, 23);
+            lblKullaniciAdi.Text = "Kullanıcı Adı:";
+            txtKullaniciAdi.Location = new System.Drawing.Point(130, 20);
+            txtKullaniciAdi.Size = new System.Drawing.Size(220, 20);
 
-            lblKullaniciAdi.Location = new System.Drawing.Point(lx, y + 3); lblKullaniciAdi.Text = "Kullanıcı Adı:";
-            txtKullaniciAdi.Location = new System.Drawing.Point(tx, y); txtKullaniciAdi.Size = new System.Drawing.Size(tw, th); y += th + gap;
+            lblAdSoyad.Location = new System.Drawing.Point(20, 55);
+            lblAdSoyad.Text = "Ad Soyad:";
+            txtAdSoyad.Location = new System.Drawing.Point(130, 52);
+            txtAdSoyad.Size = new System.Drawing.Size(220, 20);
 
-            lblAdSoyad.Location = new System.Drawing.Point(lx, y + 3); lblAdSoyad.Text = "Ad Soyad:";
-            txtAdSoyad.Location = new System.Drawing.Point(tx, y); txtAdSoyad.Size = new System.Drawing.Size(tw, th); y += th + gap;
+            lblSifre.Location = new System.Drawing.Point(20, 87);
+            lblSifre.Text = "Şifre:";
+            txtSifre.Location = new System.Drawing.Point(130, 84);
+            txtSifre.Size = new System.Drawing.Size(220, 20);
+            txtSifre.Properties.PasswordChar = '*';
 
-            lblSifre.Location = new System.Drawing.Point(lx, y + 3); lblSifre.Text = "Şifre:";
-            txtSifre.Location = new System.Drawing.Point(tx, y); txtSifre.Size = new System.Drawing.Size(tw, th);
-            txtSifre.Properties.PasswordChar = '*'; y += th + 4;
-
-            lblSifreBilgi.Location = new System.Drawing.Point(tx, y);
-            lblSifreBilgi.Size = new System.Drawing.Size(tw, 13);
+            lblSifreBilgi.Location = new System.Drawing.Point(130, 108);
+            lblSifreBilgi.Size = new System.Drawing.Size(220, 13);
             lblSifreBilgi.Appearance.ForeColor = System.Drawing.Color.Gray;
-            y += 20;
 
-            chkAktif.Location = new System.Drawing.Point(tx, y); chkAktif.Size = new System.Drawing.Size(100, 20);
-            chkAktif.Properties.Caption = "Aktif"; y += 28;
+            chkAktif.Location = new System.Drawing.Point(130, 128);
+            chkAktif.Size = new System.Drawing.Size(100, 20);
+            chkAktif.Properties.Caption = "Aktif";
 
-            btnKaydet.Location = new System.Drawing.Point(tx, y); btnKaydet.Size = new System.Drawing.Size(100, 35);
-            btnKaydet.Text = "Kaydet"; btnKaydet.Click += btnKaydet_Click;
+            btnKaydet.Location = new System.Drawing.Point(130, 156);
+            btnKaydet.Size = new System.Drawing.Size(100, 35);
+            btnKaydet.Text = "Kaydet";
+            btnKaydet.Click += btnKaydet_Click;
 
-            btnIptal.Location = new System.Drawing.Point(tx + 110, y); btnIptal.Size = new System.Drawing.Size(100, 35);
-            btnIptal.Text = "İptal"; btnIptal.Click += btnIptal_Click;
-            y += 35 + 20;
+            btnIptal.Location = new System.Drawing.Point(240, 156);
+            btnIptal.Size = new System.Drawing.Size(100, 35);
+            btnIptal.Text = "İptal";
+            btnIptal.Click += btnIptal_Click;
 
             AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new System.Drawing.Size(380, y);
+            ClientSize = new System.Drawing.Size(380, 211);
             Controls.Add(lblKullaniciAdi); Controls.Add(txtKullaniciAdi);
             Controls.Add(lblAdSoyad); Controls.Add(txtAdSoyad);
             Controls.Add(lblSifre); Controls.Add(txtSifre);
@@ -69,6 +76,7 @@ namespace StajWinForms
             MaximizeBox = false; MinimizeBox = false;
             StartPosition = FormStartPosition.CenterParent;
             Name = "KullaniciEditForm";
+            Shown += KullaniciEditForm_Shown;
 
             ((System.ComponentModel.ISupportInitialize)txtKullaniciAdi.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)txtSifre.Properties).EndInit();

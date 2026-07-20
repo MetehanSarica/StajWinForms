@@ -1,4 +1,5 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
+using DevExpress.XtraSpreadsheet.Internal;
 using static StajWinForms.OtobusBrowserForm;
 
 namespace StajWinForms
@@ -6,11 +7,12 @@ namespace StajWinForms
     public partial class OtobusEditForm : XtraForm
     {
         public object Sonuc { get; private set; } = null!;
+        private Boolean incele = false;
 
-        public OtobusEditForm(OtobusModel? mevcut, List<FirmaComboItem> firmalar)
+        public OtobusEditForm(OtobusModel? mevcut, List<FirmaComboItem> firmalar, Boolean _incele = false)
         {
             InitializeComponent();
-
+            incele = _incele;
             cmbFirma.Items.Add(new FirmaComboItem { FirmaId = 0, FirmaAdi = "(Firma Yok)" });
             foreach (var f in firmalar) cmbFirma.Items.Add(f);
             cmbFirma.DisplayMember = "FirmaAdi";
@@ -40,6 +42,11 @@ namespace StajWinForms
                 XtraMessageBox.Show("Plaka boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (txtPlaka.SelectionLength > 8)
+            {
+                XtraMessageBox.Show("Geçersiz plaka.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             var firma = cmbFirma.SelectedItem as FirmaComboItem;
             Sonuc = new
             {
@@ -53,10 +60,31 @@ namespace StajWinForms
             Close();
         }
 
+        private void txtPlaka_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Back) return;
+            if (!char.IsLetterOrDigit(e.KeyChar)) { e.Handled = true; return; }
+            e.KeyChar = char.ToUpperInvariant(e.KeyChar);
+        }
+
         private void btnIptal_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.Cancel;
             Close();
+        }
+
+        private void OtobusEditForm_Shown(object sender, EventArgs e)
+        {
+            if (incele)
+            {
+                txtPlaka.ReadOnly = true;
+                txtMarka.ReadOnly = true;
+                txtModel.ReadOnly = true;
+                spnKoltuk.ReadOnly = true;
+                cmbFirma.Enabled = false;
+                btnKaydet.Visible = false;
+                btnIptal.Text = "Kapat";
+            }
         }
     }
 }

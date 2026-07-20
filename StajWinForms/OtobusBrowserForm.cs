@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -84,13 +84,21 @@ namespace StajWinForms
             await VeriYukle();
         }
 
-        private void btnIncele_Click(object sender, EventArgs e)
+        private async void btnIncele_Click(object sender, EventArgs e)
         {
             var otobus = GetSeciliOtobus();
             if (otobus == null) return;
-            XtraMessageBox.Show(
-                $"Otobüs ID: {otobus.OtobusId}\nPlaka: {otobus.Plaka}\nMarka: {otobus.Marka}\nModel: {otobus.Model}\nKoltuk: {otobus.KoltukKapasitesi}\nFirma: {otobus.FirmaAdi ?? "-"}",
-                "Otobüs Detayı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            var firmalar = await FirmalariGetir();
+            var dlg = new OtobusEditForm(otobus, firmalar, true);
+            if (dlg.ShowDialog() != DialogResult.OK) return;
+            try
+            {
+                var resp = await AppConfig.Http.PutAsJsonAsync($"api/otobusler/{otobus.OtobusId}", dlg.Sonuc);
+                if (!resp.IsSuccessStatusCode)
+                    XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            await VeriYukle();
         }
 
         private async void btnYenile_Click(object sender, EventArgs e) => await VeriYukle();

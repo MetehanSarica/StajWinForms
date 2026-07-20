@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -86,9 +86,7 @@ namespace StajWinForms
         {
             var p = GetSeciliPersonel();
             if (p == null) return;
-            XtraMessageBox.Show(
-                $"ID: {p.Id}\nAd: {p.Ad}\nSoyad: {p.Soyad}\nEmail: {p.Email ?? "-"}\nMaaş: {p.Maas?.ToString("C") ?? "-"}\nİşe Giriş: {p.IseGirisTarihi?.ToString("dd.MM.yyyy") ?? "-"}",
-                "Kaptan Detayı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new KaptanEditForm(p, incele: true).ShowDialog();
         }
 
         private async void btnYenile_Click(object sender, EventArgs e) => await VeriYukle();

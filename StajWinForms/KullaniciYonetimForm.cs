@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -91,9 +91,7 @@ namespace StajWinForms
         {
             var k = GetSeciliKullanici();
             if (k == null) return;
-            XtraMessageBox.Show(
-                $"ID: {k.KullaniciId}\nKullanıcı Adı: {k.KullaniciAdi}\nAd Soyad: {k.AdSoyad ?? "-"}\nAktif: {(k.Aktif ? "Evet" : "Hayır")}\nKayıt: {k.OlusturmaTarihi:dd.MM.yyyy HH:mm}",
-                "Kullanıcı Detayı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new KullaniciEditForm(k, incele: true).ShowDialog();
         }
 
         private async void btnYenile_Click(object sender, EventArgs e) => await VeriYukle();

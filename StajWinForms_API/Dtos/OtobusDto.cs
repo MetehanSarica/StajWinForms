@@ -25,5 +25,5 @@ public class OtobusKaptanDto
     public int Id { get; set; }
     public int OtobusId { get; set; }
     public int PersonelId { get; set; }
-    public string PersonelAdSoyad { get; set; } = null!;
+    public string? PersonelAdSoyad { get; set; }
 }

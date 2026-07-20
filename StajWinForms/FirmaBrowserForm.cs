@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 using System.ComponentModel;
@@ -141,7 +141,7 @@ namespace StajWinForms
         {
             var firma = GetSeciliFirma();
             if (firma == null) return;
-            XtraMessageBox.Show($"Firma ID: {firma.FirmaId}\nFirma Adı: {firma.FirmaAdi}", "Firma Detayı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            new FirmaInceleForm(firma).ShowDialog();
         }
 
         private FirmaModel? GetSeciliFirma()
@@ -164,7 +164,7 @@ namespace StajWinForms
             btnIncele.Enabled = aktif;
         }
 
-        private class FirmaModel
+        public class FirmaModel
         {
             public int FirmaId { get; set; }
             public string FirmaAdi { get; set; } = "";

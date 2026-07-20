@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Dtos;
 using StajWinForms_API.Helpers;
@@ -88,6 +88,9 @@ public class KullanicilarController : ControllerBase
         var kullanici = await _context.Kullanicilars.FindAsync(id);
         if (kullanici == null) return NotFound();
 
+        if (kullanici.KullaniciAdi == "metehansarica")
+            return BadRequest("Bu kullanıcı silinemez.");
+
         _context.Kullanicilars.Remove(kullanici);
         await _context.SaveChangesAsync();
         return NoContent();
@@ -114,6 +117,9 @@ public class KullanicilarController : ControllerBase
             .FirstOrDefaultAsync(k => k.KullaniciId == id);
 
         if (kullanici == null) return NotFound();
+
+        if (kullanici.KullaniciAdi == "metehansarica")
+            return BadRequest("Bu kullanıcının yetkileri değiştirilemez.");
 
         var tumYetkiler = await _context.Yetkilers.ToListAsync();
         var hedefYetkiler = tumYetkiler.Where(y => yetkiKodlari.Contains(y.YetkiKodu)).ToList();
