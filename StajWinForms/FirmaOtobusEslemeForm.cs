@@ -22,8 +22,8 @@ namespace StajWinForms
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnFirmaOtobusEsle");
             if (y != null)
             {
-                btnAta.Visible = y.Ata;
-                btnKaldir.Visible = y.Kaldir;
+                btnKaldir.Visible = y.Ata;
+                btnAta.Visible = y.Kaldir;
             }
         }
 
@@ -75,12 +75,18 @@ namespace StajWinForms
         {
             var firma = cmbFirma.SelectedItem as FirmaItem;
             if (firma == null || lstDigerOtobusler.SelectedItem is not OtobusItem otobus) return;
+            if (otobus.FirmaId != null)
+            {
+                XtraMessageBox.Show($"Bu otobüs '{otobus.FirmaAdi}' firmasına atanmış. Önce mevcut firmadan kaldırın.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
             try
             {
                 var resp = await AppConfig.Http.PutAsJsonAsync($"api/otobusler/{otobus.OtobusId}/firma", firma.FirmaId);
                 if (!resp.IsSuccessStatusCode)
                 { XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 otobus.FirmaId = firma.FirmaId;
+                otobus.FirmaAdi = firma.FirmaAdi;
                 ListeleriGuncelle();
             }
             catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -95,12 +101,13 @@ namespace StajWinForms
                 if (!resp.IsSuccessStatusCode)
                 { XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 otobus.FirmaId = null;
+                otobus.FirmaAdi = null;
                 ListeleriGuncelle();
             }
             catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private class FirmaItem { public int FirmaId { get; set; } public string FirmaAdi { get; set; } = ""; public override string ToString() => FirmaAdi; }
-        private class OtobusItem { public int OtobusId { get; set; } public string Plaka { get; set; } = ""; public int? FirmaId { get; set; } public override string ToString() => Plaka; }
+        private class OtobusItem { public int OtobusId { get; set; } public string Plaka { get; set; } = ""; public int? FirmaId { get; set; } public string? FirmaAdi { get; set; } public override string ToString() => Plaka; }
     }
 }

@@ -42,6 +42,21 @@ namespace StajWinForms
                 XtraMessageBox.Show("Plaka boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+            if (txtPlaka.Text.Length < 7 || txtPlaka.Text.Length > 9)
+            {
+                XtraMessageBox.Show("Geçersiz plaka.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtMarka.Text))
+            {
+                XtraMessageBox.Show("Marka boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (string.IsNullOrWhiteSpace(txtModel.Text))
+            {
+                XtraMessageBox.Show("Model boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
             var firma = cmbFirma.SelectedItem as FirmaComboItem;
             Sonuc = new
