@@ -19,6 +19,13 @@ namespace StajWinForms
         {
             await TumKaptanlariYukle();
             await OtubusleriYukle();
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnKaptanEsle");
+            if (y != null)
+            {
+                btnAta.Visible = y.Ata;
+                btnKaldir.Visible = y.Kaldir;
+            }
         }
 
         private async Task OtubusleriYukle()

@@ -18,6 +18,13 @@ namespace StajWinForms
         {
             await FirmalariYukle();
             await OtubusleriYukle();
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnFirmaOtobusEsle");
+            if (y != null)
+            {
+                btnAta.Visible = y.Ata;
+                btnKaldir.Visible = y.Kaldir;
+            }
         }
 
         private async Task FirmalariYukle()

@@ -1,4 +1,6 @@
-﻿using DevExpress.XtraEditors;
+﻿using DevExpress.Utils;
+using DevExpress.XtraEditors;
+using DevExpress.XtraScheduler.Native;
 
 namespace StajWinForms
 {
@@ -8,21 +10,8 @@ namespace StajWinForms
         {
             InitializeComponent();
             lblHosgeldin.Text = $"Hoş geldiniz, {Oturum.AdSoyad} ({Oturum.KullaniciAdi})";
-            YetkiyeGoreMenuGoster();
         }
-
-        private void YetkiyeGoreMenuGoster()
-        {
-            btnFirmaBrowser.Visible     = Oturum.HasYetki("FIRMA");
-            btnOtobusBrowser.Visible    = Oturum.HasYetki("OTOBUS");
-            btnFirmaOtobusEsle.Visible  = Oturum.HasYetki("FIRMA_OTOBUS");
-            btnKaptanBrowser.Visible    = Oturum.HasYetki("KAPTAN");
-            btnKaptanEsle.Visible       = Oturum.HasYetki("KAPTAN");
-            btnSeferOtobusEsle.Visible  = Oturum.HasYetki("SEFER_OTOBUS");
-            btnKullaniciYonetim.Visible = Oturum.HasYetki("KULLANICI");
-            btnYetkiAtama.Visible       = Oturum.HasYetki("YETKI");
-        }
-
+        
         private void btnFirmaBrowser_Click(object sender, EventArgs e)
         {
             new FirmaBrowserForm().ShowDialog();
@@ -71,8 +60,20 @@ namespace StajWinForms
             Oturum.KullaniciId = 0;
             Oturum.KullaniciAdi = "";
             Oturum.AdSoyad = "";
-            Oturum.YetkiKodlari = new();
+            Oturum.Yetkiler = new();
             Close();
+        }
+
+        private void AdminPanelForm_Load(object sender, EventArgs e)
+        {
+            foreach (Control cntrl in this.Controls)
+            {
+                if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
+                {
+                    var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == btn.Name);
+                    btn.Visible = y != null && (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet);
+                }
+            }
         }
     }
 }

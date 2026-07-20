@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -19,6 +19,13 @@ namespace StajWinForms
         {
             await OtubusleriYukle();
             await SeferleriYukle();
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnSeferOtobusEsle");
+            if (y != null)
+            {
+                btnAta.Visible = y.Ata;
+                btnKaldir.Visible = y.Kaldir;
+            }
         }
 
         private async Task SeferleriYukle()

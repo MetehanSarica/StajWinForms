@@ -4,13 +4,16 @@ namespace StajWinForms_API.Models;
 
 public partial class KullaniciYetkileri
 {
-    public int Id { get; set; }
+    public string FormAdi { get; set; } = null!;
     public int KullaniciId { get; set; }
-    public int YetkiId { get; set; }
+    public bool Ekle { get; set; }
+    public bool Sil { get; set; }
+    public bool Degistir { get; set; }
+    public bool Incele { get; set; }
+    public bool Ata { get; set; }
+    public bool Kaldir { get; set; }
+    public bool Kaydet { get; set; }
 
     [JsonIgnore]
-    public virtual Kullanicilar Kullanici { get; set; } = null!;
-
-    [JsonIgnore]
-    public virtual Yetkiler Yetki { get; set; } = null!;
+    public virtual Kullanicilar? Kullanici { get; set; }
 }

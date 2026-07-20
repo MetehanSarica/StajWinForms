@@ -14,7 +14,19 @@ namespace StajWinForms
             InitializeComponent();
         }
 
-        private async void KaptanBrowserForm_Load(object sender, EventArgs e) => await VeriYukle();
+        private async void KaptanBrowserForm_Load(object sender, EventArgs e) 
+        { 
+            await VeriYukle();
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnKaptanBrowser");
+            if (y != null) {
+
+                btnEkle.Visible = y.Ekle;
+                btnDegistir.Visible = y.Degistir;
+                btnSil.Visible = y.Sil;
+                btnIncele.Visible = y.Incele;
+            }
+        }
 
         private async Task VeriYukle()
         {

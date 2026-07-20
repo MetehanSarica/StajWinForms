@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
@@ -40,7 +40,7 @@ namespace StajWinForms
                     Oturum.KullaniciId = sonuc!.KullaniciId;
                     Oturum.KullaniciAdi = sonuc.KullaniciAdi;
                     Oturum.AdSoyad = sonuc.AdSoyad ?? "";
-                    Oturum.YetkiKodlari = sonuc.YetkiKodlari;
+                    Oturum.Yetkiler = sonuc.Yetkiler;
                     DialogResult = DialogResult.OK;
                     Close();
                 }
@@ -74,7 +74,7 @@ namespace StajWinForms
             public int KullaniciId { get; set; }
             public string KullaniciAdi { get; set; } = "";
             public string? AdSoyad { get; set; }
-            public List<string> YetkiKodlari { get; set; } = new();
+            public List<KullaniciYetkiDto> Yetkiler { get; set; } = new();
         }
     }
 }

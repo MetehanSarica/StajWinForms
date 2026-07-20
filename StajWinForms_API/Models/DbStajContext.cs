@@ -43,8 +43,6 @@ public partial class DbStajContext : DbContext
 
     public virtual DbSet<Sehirler> Sehirlers { get; set; }
 
-    public virtual DbSet<Yetkiler> Yetkilers { get; set; }
-
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Biletler>(entity =>
@@ -269,35 +267,16 @@ public partial class DbStajContext : DbContext
             entity.HasIndex(e => e.KullaniciAdi, "UQ_Kullanicilar_KullaniciAdi").IsUnique();
         });
 
-        modelBuilder.Entity<Yetkiler>(entity =>
-        {
-            entity.HasKey(e => e.YetkiId).HasName("PK__Yetkiler");
-            entity.ToTable("Yetkiler");
-            entity.Property(e => e.YetkiId).HasColumnName("YetkiID");
-            entity.Property(e => e.YetkiKodu).HasMaxLength(50);
-            entity.Property(e => e.YetkiAdi).HasMaxLength(100);
-            entity.HasIndex(e => e.YetkiKodu, "UQ_Yetkiler_YetkiKodu").IsUnique();
-        });
-
         modelBuilder.Entity<KullaniciYetkileri>(entity =>
         {
-            entity.HasKey(e => e.Id).HasName("PK__KullaniciYetkileri");
+            entity.HasKey(e => new { e.FormAdi, e.KullaniciId });
             entity.ToTable("KullaniciYetkileri");
-            entity.Property(e => e.KullaniciId).HasColumnName("KullaniciID");
-            entity.Property(e => e.YetkiId).HasColumnName("YetkiID");
-            entity.HasIndex(e => new { e.KullaniciId, e.YetkiId }, "UQ_KullaniciYetkileri").IsUnique();
-
-            entity.HasOne(d => d.Kullanici).WithMany(p => p.KullaniciYetkileri)
+            entity.HasOne(d => d.Kullanici).WithMany(k => k.KullaniciYetkileri)
                 .HasForeignKey(d => d.KullaniciId)
                 .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_KullaniciYetkileri_Kullanici");
-
-            entity.HasOne(d => d.Yetki).WithMany(p => p.KullaniciYetkileri)
-                .HasForeignKey(d => d.YetkiId)
-                .OnDelete(DeleteBehavior.Cascade)
-                .HasConstraintName("FK_KullaniciYetkileri_Yetki");
         });
-
+        
         modelBuilder.Entity<Otobusler>(entity =>
         {
             entity.HasKey(e => e.OtobusId).HasName("PK__Otobusler");

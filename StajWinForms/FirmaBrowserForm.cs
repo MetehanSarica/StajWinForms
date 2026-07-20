@@ -24,7 +24,18 @@ namespace StajWinForms
             bgwIslem.RunWorkerCompleted += BgwIslem_RunWorkerCompleted;
         }
 
-        private void FirmaBrowserForm_Load(object sender, EventArgs e) => VeriYukle();
+        private void FirmaBrowserForm_Load(object sender, EventArgs e)
+        {
+            VeriYukle();
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnFirmaBrowser");
+            if (y != null) {
+                btnEkle.Visible = y.Ekle;
+                btnDegistir.Visible = y.Degistir;
+                btnSil.Visible = y.Sil;
+                btnIncele.Visible = y.Incele;
+            }
+        }
 
         private void VeriYukle()
         {
@@ -34,7 +45,6 @@ namespace StajWinForms
             bgwVeriYukle.RunWorkerAsync();
         }
 
-        // BackgroundWorker — ana thread dışında çalışır, async kullanılamaz
         private void BgwVeriYukle_DoWork(object? sender, DoWorkEventArgs e)
         {
             var json = AppConfig.Http.GetStringAsync("api/firmalar").GetAwaiter().GetResult();

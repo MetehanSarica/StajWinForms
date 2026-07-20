@@ -8,7 +8,17 @@ namespace StajWinForms
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<KullaniciItem> _kullanicilar = new();
-        private List<YetkiItem> _tumYetkiler = new();
+        private static readonly Dictionary<string, string> _formAdlari = new()
+        {
+            ["btnFirmaBrowser"] = "Firma Yönetimi",
+            ["btnOtobusBrowser"] = "Otobüs Yönetimi",
+            ["btnFirmaOtobusEsle"] = "Firma-Otobüs Eşleme",
+            ["btnKaptanBrowser"] = "Kaptan Yönetimi",
+            ["btnKaptanEsle"] = "Otobüs-Kaptan Eşleme",
+            ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
+            ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",
+            ["btnYetkiAtama"] = "Yetki Atama"
+        };
 
         public YetkiAtamaForm()
         {
@@ -18,7 +28,13 @@ namespace StajWinForms
         private async void YetkiAtamaForm_Load(object sender, EventArgs e)
         {
             await KullanicilariYukle();
-            await YetkileriYukle();
+            dgvYetkiler.Rows.Clear();
+            foreach (var kv in _formAdlari)
+                dgvYetkiler.Rows.Add(kv.Value, false, false, false, false, false, false, false);
+
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnYetkiAtama");
+            if (y != null)
+                btnKaydet.Visible = y.Kaydet;
         }
 
         private async Task KullanicilariYukle()
@@ -33,27 +49,6 @@ namespace StajWinForms
             catch (Exception ex) { XtraMessageBox.Show("Kullanıcılar yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private async Task YetkileriYukle()
-        {
-            try
-            {
-                // Yetkiler API endpoint'i olmasa da statik liste kullanalım
-                _tumYetkiler = new List<YetkiItem>
-                {
-                    new("FIRMA",        "Firma Yönetimi"),
-                    new("OTOBUS",       "Otobüs Yönetimi"),
-                    new("FIRMA_OTOBUS", "Firma-Otobüs Eşleme"),
-                    new("KAPTAN",       "Kaptan Yönetimi"),
-                    new("SEFER_OTOBUS", "Sefer-Otobüs Eşleme"),
-                    new("KULLANICI",    "Kullanıcı Yönetimi"),
-                    new("YETKI",        "Yetki Yönetimi")
-                };
-                clbYetkiler.Items.Clear();
-                foreach (var y in _tumYetkiler) clbYetkiler.Items.Add(y, false);
-            }
-            catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
-        }
-
         private async void lstKullanicilar_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem k) return;
@@ -61,11 +56,18 @@ namespace StajWinForms
             try
             {
                 var json = await AppConfig.Http.GetStringAsync($"api/kullanicilar/{k.KullaniciId}/yetkiler");
-                var mevcutYetkiler = JsonSerializer.Deserialize<List<string>>(json, _jsonOpts) ?? new();
-                for (int i = 0; i < clbYetkiler.ItemCount; i++)
+                var mevcutYetkiler = JsonSerializer.Deserialize<List<KullaniciYetkiDto>>(json, _jsonOpts) ?? new();
+                var keys = _formAdlari.Keys.ToList();
+                for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
                 {
-                    var yetkiItem = clbYetkiler.GetItemValue(i) as YetkiItem;
-                    clbYetkiler.SetItemChecked(i, yetkiItem != null && mevcutYetkiler.Contains(yetkiItem.Kod));
+                    var dto = mevcutYetkiler.FirstOrDefault(y => y.FormAdi == keys[i]);
+                    dgvYetkiler.Rows[i].Cells["colEkle"].Value = dto?.Ekle ?? false;
+                    dgvYetkiler.Rows[i].Cells["colSil"].Value = dto?.Sil ?? false;
+                    dgvYetkiler.Rows[i].Cells["colDegistir"].Value = dto?.Degistir ?? false;
+                    dgvYetkiler.Rows[i].Cells["colIncele"].Value = dto?.Incele ?? false;
+                    dgvYetkiler.Rows[i].Cells["colAta"].Value = dto?.Ata ?? false;
+                    dgvYetkiler.Rows[i].Cells["colKaldir"].Value = dto?.Kaldir ?? false;
+                    dgvYetkiler.Rows[i].Cells["colKaydet"].Value = dto?.Kaydet ?? false;
                 }
             }
             catch (Exception ex) { XtraMessageBox.Show("Yetkiler yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -74,15 +76,25 @@ namespace StajWinForms
         private async void btnKaydet_Click(object sender, EventArgs e)
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem k) return;
-            var seciliYetkiler = clbYetkiler.CheckedItems
-                .Cast<DevExpress.XtraEditors.Controls.CheckedListBoxItem>()
-                .Select(i => i.Value as YetkiItem)
-                .Where(y => y != null)
-                .Select(y => y!.Kod)
-                .ToList();
+            var keys = _formAdlari.Keys.ToList();
+            var yetkiler = new List<KullaniciYetkiDto>();
+            for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
+            {
+                yetkiler.Add(new KullaniciYetkiDto
+                {
+                    FormAdi = keys[i],
+                    Ekle = (bool)(dgvYetkiler.Rows[i].Cells["colEkle"].Value ?? false),
+                    Sil = (bool)(dgvYetkiler.Rows[i].Cells["colSil"].Value ?? false),
+                    Degistir = (bool)(dgvYetkiler.Rows[i].Cells["colDegistir"].Value ?? false),
+                    Incele = (bool)(dgvYetkiler.Rows[i].Cells["colIncele"].Value ?? false),
+                    Ata = (bool)(dgvYetkiler.Rows[i].Cells["colAta"].Value ?? false),
+                    Kaldir = (bool)(dgvYetkiler.Rows[i].Cells["colKaldir"].Value ?? false),
+                    Kaydet = (bool)(dgvYetkiler.Rows[i].Cells["colKaydet"].Value ?? false),
+                });
+            }
             try
             {
-                var resp = await AppConfig.Http.PutAsJsonAsync($"api/kullanicilar/{k.KullaniciId}/yetkiler", seciliYetkiler);
+                var resp = await AppConfig.Http.PutAsJsonAsync($"api/kullanicilar/{k.KullaniciId}/yetkiler", yetkiler);
                 if (resp.IsSuccessStatusCode)
                     XtraMessageBox.Show("Yetkiler kaydedildi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
@@ -92,6 +104,5 @@ namespace StajWinForms
         }
 
         private record KullaniciItem(int KullaniciId, string KullaniciAdi) { public override string ToString() => KullaniciAdi; }
-        private record YetkiItem(string Kod, string Adi) { public override string ToString() => Adi; }
     }
 }

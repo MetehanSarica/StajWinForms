@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Dtos;
 using StajWinForms_API.Helpers;
@@ -24,7 +24,6 @@ public class AuthController : ControllerBase
 
         var kullanici = await _context.Kullanicilars
             .Include(k => k.KullaniciYetkileri)
-                .ThenInclude(ky => ky.Yetki)
             .FirstOrDefaultAsync(k => k.KullaniciAdi == dto.KullaniciAdi && k.SifreMd5 == sifreMd5);
 
         if (kullanici == null)
@@ -38,7 +37,19 @@ public class AuthController : ControllerBase
             KullaniciId = kullanici.KullaniciId,
             KullaniciAdi = kullanici.KullaniciAdi,
             AdSoyad = kullanici.AdSoyad,
-            YetkiKodlari = kullanici.KullaniciYetkileri.Select(ky => ky.Yetki.YetkiKodu).ToList()
+            Yetkiler = kullanici.KullaniciYetkileri
+                .Select(ky => new KullaniciYetkiDto
+                {
+                    FormAdi = ky.FormAdi,
+                    Ekle = ky.Ekle,
+                    Sil = ky.Sil,
+                    Degistir = ky.Degistir,
+                    Incele = ky.Incele,
+                    Ata = ky.Ata,
+                    Kaldir = ky.Kaldir,
+                    Kaydet = ky.Kaydet,
+                })
+                .ToList()
         };
 
         return Ok(sonuc);

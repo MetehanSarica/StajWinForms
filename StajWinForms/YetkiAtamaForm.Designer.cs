@@ -18,12 +18,19 @@ namespace StajWinForms
         {
             lblKullanicilar = new LabelControl();
             lstKullanicilar = new ListBoxControl();
-            lblYetkiler = new LabelControl();
-            clbYetkiler = new CheckedListBoxControl();
             lblSeciliKullanici = new LabelControl();
+            dgvYetkiler = new DataGridView();
+            colFormAdi = new DataGridViewTextBoxColumn();
+            colEkle = new DataGridViewCheckBoxColumn();
+            colSil = new DataGridViewCheckBoxColumn();
+            colDegistir = new DataGridViewCheckBoxColumn();
+            colIncele = new DataGridViewCheckBoxColumn();
+            colAta = new DataGridViewCheckBoxColumn();
+            colKaldir = new DataGridViewCheckBoxColumn();
+            colKaydet = new DataGridViewCheckBoxColumn();
             btnKaydet = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)lstKullanicilar).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)clbYetkiler).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dgvYetkiler).BeginInit();
             SuspendLayout();
             // 
             // lblKullanicilar
@@ -38,41 +45,91 @@ namespace StajWinForms
             // 
             lstKullanicilar.Location = new Point(12, 30);
             lstKullanicilar.Name = "lstKullanicilar";
-            lstKullanicilar.Size = new Size(200, 300);
+            lstKullanicilar.Size = new Size(180, 300);
             lstKullanicilar.TabIndex = 1;
             lstKullanicilar.SelectedIndexChanged += lstKullanicilar_SelectedIndexChanged;
-            // 
-            // lblYetkiler
-            // 
-            lblYetkiler.Location = new Point(230, 12);
-            lblYetkiler.Name = "lblYetkiler";
-            lblYetkiler.Size = new Size(35, 13);
-            lblYetkiler.TabIndex = 2;
-            lblYetkiler.Text = "Yetkiler";
-            // 
-            // clbYetkiler
-            // 
-            clbYetkiler.Location = new Point(230, 30);
-            clbYetkiler.Name = "clbYetkiler";
-            clbYetkiler.Size = new Size(250, 200);
-            clbYetkiler.TabIndex = 3;
             // 
             // lblSeciliKullanici
             // 
             lblSeciliKullanici.Appearance.ForeColor = Color.DimGray;
             lblSeciliKullanici.Appearance.Options.UseForeColor = true;
-            lblSeciliKullanici.Location = new Point(230, 245);
+            lblSeciliKullanici.Location = new Point(205, 12);
             lblSeciliKullanici.Name = "lblSeciliKullanici";
             lblSeciliKullanici.Size = new Size(76, 13);
-            lblSeciliKullanici.TabIndex = 4;
+            lblSeciliKullanici.TabIndex = 2;
             lblSeciliKullanici.Text = "Kullanıcı seçin...";
+            // 
+            // dgvYetkiler
+            // 
+            dgvYetkiler.AllowUserToAddRows = false;
+            dgvYetkiler.AllowUserToDeleteRows = false;
+            dgvYetkiler.AllowUserToResizeColumns = false;
+            dgvYetkiler.AllowUserToResizeRows = false;
+            dgvYetkiler.MultiSelect = false;
+            dgvYetkiler.EditMode = DataGridViewEditMode.EditOnEnter;
+            dgvYetkiler.Columns.AddRange(new DataGridViewColumn[] { colFormAdi, colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet });
+            dgvYetkiler.Location = new Point(205, 30);
+            dgvYetkiler.Name = "dgvYetkiler";
+            dgvYetkiler.RowHeadersVisible = false;
+            dgvYetkiler.Size = new Size(563, 265);
+            dgvYetkiler.TabIndex = 3;
+            // 
+            // colFormAdi
+            // 
+            colFormAdi.HeaderText = "Form";
+            colFormAdi.Name = "colFormAdi";
+            colFormAdi.ReadOnly = true;
+            colFormAdi.SortMode = DataGridViewColumnSortMode.NotSortable;
+            colFormAdi.Width = 160;
+            // 
+            // colEkle
+            // 
+            colEkle.HeaderText = "Ekle";
+            colEkle.Name = "colEkle";
+            colEkle.Width = 50;
+            // 
+            // colSil
+            // 
+            colSil.HeaderText = "Sil";
+            colSil.Name = "colSil";
+            colSil.Width = 50;
+            // 
+            // colDegistir
+            // 
+            colDegistir.HeaderText = "Değiştir";
+            colDegistir.Name = "colDegistir";
+            colDegistir.Width = 65;
+            // 
+            // colIncele
+            // 
+            colIncele.HeaderText = "İncele";
+            colIncele.Name = "colIncele";
+            colIncele.Width = 60;
+            // 
+            // colAta
+            // 
+            colAta.HeaderText = "Ata";
+            colAta.Name = "colAta";
+            colAta.Width = 50;
+            // 
+            // colKaldir
+            // 
+            colKaldir.HeaderText = "Kaldır";
+            colKaldir.Name = "colKaldir";
+            colKaldir.Width = 60;
+            // 
+            // colKaydet
+            // 
+            colKaydet.HeaderText = "Kaydet";
+            colKaydet.Name = "colKaydet";
+            colKaydet.Width = 65;
             // 
             // btnKaydet
             // 
-            btnKaydet.Location = new Point(230, 270);
+            btnKaydet.Location = new Point(205, 310);
             btnKaydet.Name = "btnKaydet";
-            btnKaydet.Size = new Size(150, 40);
-            btnKaydet.TabIndex = 5;
+            btnKaydet.Size = new Size(150, 35);
+            btnKaydet.TabIndex = 4;
             btnKaydet.Text = "Yetkileri Kaydet";
             btnKaydet.Click += btnKaydet_Click;
             // 
@@ -80,12 +137,11 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(500, 350);
+            ClientSize = new Size(784, 360);
             Controls.Add(lblKullanicilar);
             Controls.Add(lstKullanicilar);
-            Controls.Add(lblYetkiler);
-            Controls.Add(clbYetkiler);
             Controls.Add(lblSeciliKullanici);
+            Controls.Add(dgvYetkiler);
             Controls.Add(btnKaydet);
             MaximizeBox = false;
             Name = "YetkiAtamaForm";
@@ -93,16 +149,18 @@ namespace StajWinForms
             Text = "Yetki Atama";
             Load += YetkiAtamaForm_Load;
             ((System.ComponentModel.ISupportInitialize)lstKullanicilar).EndInit();
-            ((System.ComponentModel.ISupportInitialize)clbYetkiler).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dgvYetkiler).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
 
         #endregion
 
-        private LabelControl lblKullanicilar, lblYetkiler, lblSeciliKullanici;
+        private LabelControl lblKullanicilar, lblSeciliKullanici;
         private ListBoxControl lstKullanicilar;
-        private CheckedListBoxControl clbYetkiler;
+        private DataGridView dgvYetkiler;
+        private DataGridViewTextBoxColumn colFormAdi;
+        private DataGridViewCheckBoxColumn colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet;
         private SimpleButton btnKaydet;
     }
 }

@@ -97,20 +97,31 @@ public class KullanicilarController : ControllerBase
     }
 
     [HttpGet("{id}/yetkiler")]
-    public async Task<ActionResult<IEnumerable<string>>> GetYetkiler(int id)
+    public async Task<ActionResult<IEnumerable<KullaniciYetkiDto>>> GetYetkiler(int id)
     {
         var kullanici = await _context.Kullanicilars
             .Include(k => k.KullaniciYetkileri)
-                .ThenInclude(ky => ky.Yetki)
             .FirstOrDefaultAsync(k => k.KullaniciId == id);
 
         if (kullanici == null) return NotFound();
 
-        return Ok(kullanici.KullaniciYetkileri.Select(ky => ky.Yetki.YetkiKodu).ToList());
+        return Ok(kullanici.KullaniciYetkileri
+            .Select(ky => new KullaniciYetkiDto
+            {
+                FormAdi = ky.FormAdi,
+                Ekle = ky.Ekle,
+                Sil = ky.Sil,
+                Degistir = ky.Degistir,
+                Incele = ky.Incele,
+                Ata = ky.Ata,
+                Kaldir = ky.Kaldir,
+                Kaydet = ky.Kaydet,
+            })
+                .ToList());
     }
 
     [HttpPut("{id}/yetkiler")]
-    public async Task<IActionResult> YetkiGuncelle(int id, [FromBody] List<string> yetkiKodlari)
+    public async Task<IActionResult> YetkiGuncelle(int id, [FromBody] List<KullaniciYetkiDto> yetkiler)
     {
         var kullanici = await _context.Kullanicilars
             .Include(k => k.KullaniciYetkileri)
@@ -118,35 +129,33 @@ public class KullanicilarController : ControllerBase
 
         if (kullanici == null) return NotFound();
 
-        var tumYetkiler = await _context.Yetkilers.ToListAsync();
-
-        if (kullanici.KullaniciAdi == "metehansarica")
+        foreach (var dto in yetkiler)
         {
-            var mevcutYetkiIdler = kullanici.KullaniciYetkileri.Select(ky => ky.YetkiId).ToHashSet();
-            var eklenecekler = tumYetkiler.Where(y => yetkiKodlari.Contains(y.YetkiKodu) && !mevcutYetkiIdler.Contains(y.YetkiId));
-            foreach (var yetki in eklenecekler)
+            var satir = kullanici.KullaniciYetkileri
+                .FirstOrDefault(ky => ky.FormAdi == dto.FormAdi);
+
+            if (satir == null) continue;
+
+            if (kullanici.KullaniciAdi == "metehansarica")
             {
-                _context.KullaniciYetkileri.Add(new KullaniciYetkileri
-                {
-                    KullaniciId = id,
-                    YetkiId = yetki.YetkiId
-                });
+                satir.Ekle = satir.Ekle || dto.Ekle;
+                satir.Sil = satir.Sil || dto.Sil;
+                satir.Degistir = satir.Degistir || dto.Degistir;
+                satir.Incele = satir.Incele || dto.Incele;
+                satir.Ata = satir.Ata || dto.Ata;
+                satir.Kaldir = satir.Kaldir || dto.Kaldir;
+                satir.Kaydet = satir.Kaydet || dto.Kaydet;
             }
-            await _context.SaveChangesAsync();
-            return NoContent();
-        }
-
-        var hedefYetkiler = tumYetkiler.Where(y => yetkiKodlari.Contains(y.YetkiKodu)).ToList();
-
-        _context.KullaniciYetkileri.RemoveRange(kullanici.KullaniciYetkileri);
-
-        foreach (var yetki in hedefYetkiler)
-        {
-            _context.KullaniciYetkileri.Add(new KullaniciYetkileri
+            else
             {
-                KullaniciId = id,
-                YetkiId = yetki.YetkiId
-            });
+                satir.Ekle = dto.Ekle;
+                satir.Sil = dto.Sil;
+                satir.Degistir= dto.Degistir;
+                satir.Incele = dto.Incele;
+                satir.Ata = dto.Ata;
+                satir.Kaldir= dto.Kaldir;
+                satir.Kaydet= dto.Kaydet;
+            }
         }
 
         await _context.SaveChangesAsync();
