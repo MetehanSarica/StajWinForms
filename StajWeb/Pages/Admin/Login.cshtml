@@ -1,0 +1,22 @@
+@page
+@model StajWeb.Pages.Admin.LoginModel
+@{
+    ViewData["Title"] = "Yönetici Girişi";
+}
+
+<div class="row justify-content-center mt-5">
+    <div class="col-md-4">
+        <h4 class="mb-3">Yönetici Girişi</h4>
+
+        @if (!string.IsNullOrEmpty(Model.HataMesaji))
+        {
+            <div class="alert alert-danger">@Model.HataMesaji</div>
+        }
+
+        <form method="post">
+            <input asp-for="KullaniciAdi" class="form-control mb-2" placeholder="Kullanıcı Adı" required />
+            <input asp-for="Sifre" type="password" class="form-control mb-3" placeholder="Şifre" required />
+            <button type="submit" class="btn btn-primary w-100">Giriş Yap</button>
+        </form>
+    </div>
+</div>

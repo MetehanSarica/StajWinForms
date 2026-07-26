@@ -1,0 +1,35 @@
+@page
+@model StajWeb.Pages.Admin.IndexModel
+@{
+    ViewData["Title"] = "Yönetim Paneli";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Yönetim Paneli — Hoş geldin, @Model.Oturum.AdSoyad</h4>
+    <form method="post" asp-page-handler="Cikis">
+        <button type="submit" class="btn btn-outline-danger btn-sm">Çıkış</button>
+    </form>
+</div>
+
+<div class="row g-3">
+    @foreach (var (formAdi, baslik, link) in new[] {
+          ("btnFirmaBrowser",    "Firmalar",            "/Admin/Firmalar"),
+          ("btnOtobusBrowser",   "Otobüsler",           "/Admin/Otobusler"),
+          ("btnKaptanBrowser",   "Kaptanlar",           "/Admin/Kaptanlar"),
+          ("btnFirmaOtobusEsle", "Firma–Otobüs Eşleme", "/Admin/FirmaOtobusEsleme"),
+          ("btnKaptanEsle",      "Kaptan Eşleme",       "/Admin/KaptanEsleme"),
+          ("btnSeferOtobusEsle", "Sefer–Otobüs Eşleme", "/Admin/SeferOtobusEsleme"),
+          ("btnKullaniciYonetim","Kullanıcı Yönetimi",  "/Admin/Kullanicilar"),
+          ("btnYetkiAtama",      "Yetki Atama",         "/Admin/YetkiAtama") })
+    {
+        if (Model.Oturum.Yetkiler.Any(y => y.FormAdi == formAdi &&
+            (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet)))
+        {
+            <div class="col-md-3">
+                <a href="@link" class="card text-decoration-none h-100">
+                    <div class="card-body text-center fw-bold">@baslik</div>
+                </a>
+            </div>
+        }
+    }
+</div>

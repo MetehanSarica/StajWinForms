@@ -145,6 +145,11 @@ public class BiletlerController : ControllerBase
 
             var musteriVarMi = await _context.Musteris.AnyAsync(m => m.Tc == satinAlDto.MusteriTc);
             if (!musteriVarMi)
+            {
+                var mailKullanimda = await _context.Musteris.AnyAsync(m => m.Email == satinAlDto.MusteriMail);
+                if (mailKullanimda)
+                    return Conflict($"'{satinAlDto.MusteriMail}' e-posta adresi başka bir müşteriye kayıtlı.");
+
                 _context.Musteris.Add(new Musteri
                 {
                     Tc = satinAlDto.MusteriTc,
@@ -156,6 +161,7 @@ public class BiletlerController : ControllerBase
                     Adres = satinAlDto.MusteriAdres,
                     Cinsiyet = satinAlDto.MusteriCinsiyet
                 });
+            }
 
             var seferVarMi = await _context.Seferlers.AnyAsync(s => s.SeferId == satinAlDto.SeferId);
             if (!seferVarMi)

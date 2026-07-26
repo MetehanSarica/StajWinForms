@@ -1,0 +1,70 @@
+@page
+@model StajWeb.Pages.Admin.YetkiAtamaModel
+@using StajWeb.Dtos
+@{
+    ViewData["Title"] = "Yetki Atama";
+    var y = Model.Yetki;
+
+    KullaniciYetkiDto GetYetki(string formAdi) =>
+        Model.Yetkiler.FirstOrDefault(x => x.FormAdi == formAdi) ?? new();
+}
+
+<h4>Yetki Atama</h4>
+<a href="/Admin" class="btn btn-secondary btn-sm mb-3">← Panele Dön</a>
+
+<div class="mb-3">
+    <label class="form-label fw-bold">Kullanıcı Seç</label>
+    <select class="form-select w-auto" onchange="location='?kullaniciId='+this.value">
+        <option value="">-- Seçiniz --</option>
+        @foreach (var k in Model.Kullanicilar)
+        {
+            if (k.KullaniciId == Model.SeciliKullanici?.KullaniciId)
+            { <option value="@k.KullaniciId" selected>@k.KullaniciAdi (@(k.AdSoyad ?? "—"))</option> }
+            else
+            { <option value="@k.KullaniciId">@k.KullaniciAdi (@(k.AdSoyad ?? "—"))</option> }
+        }
+    </select>
+</div>
+
+@if (Model.SeciliKullanici != null)
+{
+    <form method="post" asp-page-handler="Kaydet">
+        <input type="hidden" name="kullaniciId" value="@Model.SeciliKullanici.KullaniciId" />
+
+        <table class="table table-bordered table-sm">
+            <thead class="table-dark">
+                <tr>
+                    <th>Form</th>
+                    <th class="text-center">Ekle</th>
+                    <th class="text-center">Sil</th>
+                    <th class="text-center">Değiştir</th>
+                    <th class="text-center">İncele</th>
+                    <th class="text-center">Ata</th>
+                    <th class="text-center">Kaldır</th>
+                    <th class="text-center">Kaydet</th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var (formAdi, baslik) in YetkiAtamaModel.FormAdlari)
+            {
+                var yetki = GetYetki(formAdi);
+                <tr>
+                    <td>@baslik</td>
+                    <td class="text-center"><input type="checkbox" name="ekle_@formAdi" @(yetki.Ekle ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="sil_@formAdi" @(yetki.Sil ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="degistir_@formAdi" @(yetki.Degistir ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="incele_@formAdi" @(yetki.Incele ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="ata_@formAdi" @(yetki.Ata ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="kaldir_@formAdi" @(yetki.Kaldir ? "checked" : "") /></td>
+                    <td class="text-center"><input type="checkbox" name="kaydet_@formAdi" @(yetki.Kaydet ? "checked" : "") /></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+
+        @if (y?.Kaydet == true)
+        {
+            <button type="submit" class="btn btn-primary">Kaydet</button>
+        }
+    </form>
+}

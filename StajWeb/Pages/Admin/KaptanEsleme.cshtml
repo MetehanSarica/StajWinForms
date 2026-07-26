@@ -1,0 +1,75 @@
+@page
+@model StajWeb.Pages.Admin.KaptanEslemeModel
+@{
+    ViewData["Title"] = "Kaptan Eşleme";
+    var y = Model.Yetki;
+    var seciliOtobusId = int.TryParse(Request.Query["seciliOtobusId"], out var oid) ? oid : (Model.Otobusler.FirstOrDefault()?.OtobusId ?? 0);
+    var atanmisIds = Model.AtanmisKaptanlar.Select(k => k.PersonelId).ToHashSet();
+    var serbest = Model.TumKaptanlar.Where(k => !atanmisIds.Contains(k.Id)).ToList();
+}
+
+<h4>Kaptan Eşleme</h4>
+<a href="/Admin" class="btn btn-secondary btn-sm mb-3">← Panele Dön</a>
+
+<div class="mb-3">
+    <label class="form-label fw-bold">Otobüs Seç</label>
+    <select class="form-select w-auto" onchange="location='?seciliOtobusId='+this.value">
+        @foreach (var o in Model.Otobusler)
+        {
+            if (o.OtobusId == seciliOtobusId)
+            {
+                <option value="@o.OtobusId" selected>@o.Plaka</option>
+            }
+            else
+            {
+                <option value="@o.OtobusId">@o.Plaka</option>
+            }
+        }
+    </select>
+</div>
+
+<div class="row">
+    <div class="col-md-5">
+        <h6 class="text-success">Atanmış Kaptanlar (@Model.AtanmisKaptanlar.Count)</h6>
+        <ul class="list-group">
+            @foreach (var k in Model.AtanmisKaptanlar)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @k.PersonelAdSoyad
+                    @if (y?.Kaldir == true)
+                    {
+                        <form method="post" asp-page-handler="Kaldir">
+                            <input type="hidden" name="atamaId" value="@k.Id" />
+                            <input type="hidden" name="otobusId" value="@seciliOtobusId" />
+                            <button type="submit" class="btn btn-outline-danger btn-sm">Kaldır</button>
+                        </form>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+
+    <div class="col-md-2 d-flex align-items-center justify-content-center">
+        <span class="fs-3">⇄</span>
+    </div>
+
+    <div class="col-md-5">
+        <h6 class="text-secondary">Serbest Kaptanlar (@serbest.Count)</h6>
+        <ul class="list-group">
+            @foreach (var k in serbest)
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    @k.Ad @k.Soyad
+                    @if (y?.Ata == true)
+                    {
+                        <form method="post" asp-page-handler="Ata">
+                            <input type="hidden" name="otobusId" value="@seciliOtobusId" />
+                            <input type="hidden" name="personelId" value="@k.Id" />
+                            <button type="submit" class="btn btn-outline-success btn-sm">Ata</button>
+                        </form>
+                    }
+                </li>
+            }
+        </ul>
+    </div>
+</div>

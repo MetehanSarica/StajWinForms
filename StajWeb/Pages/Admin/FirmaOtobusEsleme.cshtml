@@ -1,0 +1,72 @@
+@page
+  @model StajWeb.Pages.Admin.FirmaOtobusEslemeModel
+  @{
+      ViewData["Title"] = "Firma–Otobüs Eşleme";
+      var y = Model.Yetki;
+      var seciliFirmaId = int.TryParse(Request.Query["seciliFirmaId"], out var fid) ? fid : (Model.Firmalar.FirstOrDefault()?.FirmaId ?? 0);
+      var seciliFirma = Model.Firmalar.FirstOrDefault(f => f.FirmaId == seciliFirmaId) ?? Model.Firmalar.FirstOrDefault();
+      var firmaOtobusler = Model.Otobusler.Where(o => o.FirmaId == seciliFirma?.FirmaId).ToList();
+      var digerOtobusler = Model.Otobusler.Where(o => o.FirmaId == null).ToList();
+  }
+
+  <h4>Firma–Otobüs Eşleme</h4>
+  <a href="/Admin" class="btn btn-secondary btn-sm mb-3">← Panele Dön</a>
+
+  <div class="mb-3">
+      <label class="form-label fw-bold">Firma Seç</label>
+      <select class="form-select w-auto" onchange="location='?seciliFirmaId='+this.value">
+          @foreach (var f in Model.Firmalar)
+          {
+              if (f.FirmaId == seciliFirma?.FirmaId)
+              { <option value="@f.FirmaId" selected>@f.FirmaAdi</option> }
+              else
+              { <option value="@f.FirmaId">@f.FirmaAdi</option> }
+          }
+      </select>
+  </div>
+
+  <div class="row">
+      <div class="col-md-5">
+          <h6 class="text-success">Bu Firmaya Atanmış Otobüsler (@firmaOtobusler.Count)</h6>
+          <ul class="list-group">
+              @foreach (var o in firmaOtobusler)
+              {
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      @o.Plaka
+                      @if (y?.Kaldir == true)
+                      {
+                          <form method="post" asp-page-handler="Kaldir">
+                              <input type="hidden" name="otobusId" value="@o.OtobusId" />
+                              <input type="hidden" name="firmaId" value="@seciliFirma!.FirmaId" />
+                              <button type="submit" class="btn btn-outline-danger btn-sm">Kaldır</button>
+                          </form>
+                      }
+                  </li>
+              }
+          </ul>
+      </div>
+
+      <div class="col-md-2 d-flex align-items-center justify-content-center">
+          <span class="fs-3">⇄</span>
+      </div>
+
+      <div class="col-md-5">
+          <h6 class="text-secondary">Atamasız Otobüsler (@digerOtobusler.Count)</h6>
+          <ul class="list-group">
+              @foreach (var o in digerOtobusler)
+              {
+                  <li class="list-group-item d-flex justify-content-between align-items-center">
+                      @o.Plaka
+                      @if (y?.Ata == true)
+                      {
+                          <form method="post" asp-page-handler="Ata">
+                              <input type="hidden" name="otobusId" value="@o.OtobusId" />
+                              <input type="hidden" name="firmaId" value="@seciliFirma!.FirmaId" />
+                              <button type="submit" class="btn btn-outline-success btn-sm">Ata</button>
+                          </form>
+                      }
+                  </li>
+              }
+          </ul>
+      </div>
+  </div>

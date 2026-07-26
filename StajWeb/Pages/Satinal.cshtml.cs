@@ -17,6 +17,7 @@ namespace StajWeb.Pages
         [BindProperty(SupportsGet = true)] public int Binis {  get; set; }
         [BindProperty(SupportsGet = true)] public int Inis { get; set; }
         public List<int> KoltukList { get; set; } = new List<int>();
+        public string? HataMesaji { get; set; }
         private readonly IHttpClientFactory _clientFactory;
 
         public SatinAlModel(IHttpClientFactory clientFactory)
@@ -38,6 +39,23 @@ namespace StajWeb.Pages
                 KoltukList = Koltuklar.Split(',').Select(int.Parse).ToList();
 
                 if (!ModelState.IsValid) return Page();
+
+                foreach (var yolcu in Yolcular)
+                {
+                    var tc = yolcu.MusteriTc?.Trim() ?? "";
+                    if (tc.Length != 11 || tc[0] == '0' || !tc.All(char.IsDigit))
+                    {
+                        HataMesaji = "TC Kimlik No 11 haneli olmalı, 0 ile başlamamalı ve sadece rakamlardan oluşmalıdır.";
+                        return Page();
+                    }
+                    var tel = yolcu.MusteriTelefon?.Trim() ?? "";
+                    if (tel.Length != 11 || tel[0] != '0' || !tel.All(char.IsDigit))
+                    {
+                        HataMesaji = "Telefon numarası 11 haneli olmalı, 0 ile başlamalı ve sadece rakamlardan oluşmalıdır.";
+                        return Page();
+                    }
+                }
+
                 var client = _clientFactory.CreateClient("API");
 
                     for (int i = 0; i < KoltukList.Count; i++)
@@ -58,10 +76,14 @@ namespace StajWeb.Pages
                             BinisDurakSira = Binis,
                             InisDurakSira = Inis,
                         });
-                        if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
-                            return Page();
                         if (!response.IsSuccessStatusCode)
+                        {
+                            var apiMesaj = await response.Content.ReadAsStringAsync();
+                            HataMesaji = string.IsNullOrWhiteSpace(apiMesaj)
+                                ? "Bilet satın alınamadı. Lütfen tekrar deneyin."
+                                : apiMesaj;
                             return Page();
+                        }
                     }
                     return RedirectToPage("/Index");
         }

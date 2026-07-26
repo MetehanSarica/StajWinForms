@@ -7,6 +7,11 @@
 <h4 class="mb-4">Yolcu Bilgileri</h4>
 <p class="text-muted">Seçilen Koltuklar: <strong>@string.Join(", ", Model.KoltukList)</strong></p>
 
+@if (!string.IsNullOrEmpty(Model.HataMesaji))
+{
+    <div class="alert alert-danger">@Model.HataMesaji</div>
+}
+
 <form method="post">
     <input type="hidden" asp-for="SeferId" />
     <input type="hidden" asp-for="Koltuklar" />
@@ -20,7 +25,11 @@
             <div class="card-body">
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriTc" class="form-control" placeholder="TC Kimlik No" maxlength="11" required />
+                        <input name="Yolcular[@i].MusteriTc" class="form-control" placeholder="TC Kimlik No"
+                               inputmode="numeric" maxlength="11" minlength="11"
+                               pattern="[1-9][0-9]{10}"
+                               title="11 haneli olmalı, 0 ile başlamamalı ve sadece rakamlardan oluşmalıdır"
+                               required />
                     </div>
                     <div class="col-md-6">
                         <select name="Yolcular[@i].MusteriCinsiyet" class="form-select" required>
@@ -30,22 +39,31 @@
                         </select>
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriAd" class="form-control" placeholder="Ad" required />
+                        <input name="Yolcular[@i].MusteriAd" class="form-control" placeholder="Ad"
+                               maxlength="50" required />
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriSoyad" class="form-control" placeholder="Soyad" required />
+                        <input name="Yolcular[@i].MusteriSoyad" class="form-control" placeholder="Soyad"
+                               maxlength="50" required />
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriMail" class="form-control" placeholder="E-posta" type="email" required />
+                        <input name="Yolcular[@i].MusteriMail" class="form-control" placeholder="E-posta"
+                               type="email" maxlength="100" required />
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriTelefon" class="form-control" placeholder="Telefon (0 ile başlamalı)" maxlength="11" required />
+                        <input name="Yolcular[@i].MusteriTelefon" class="form-control" placeholder="Telefon (0 ile başlamalı)"
+                               inputmode="numeric" maxlength="11" minlength="11"
+                               pattern="0[0-9]{10}"
+                               title="11 haneli olmalı, 0 ile başlamalı ve sadece rakamlardan oluşmalıdır"
+                               required />
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriSehir" class="form-control" placeholder="Şehir" required />
+                        <input name="Yolcular[@i].MusteriSehir" class="form-control" placeholder="Şehir"
+                               maxlength="50" required />
                     </div>
                     <div class="col-12">
-                        <input name="Yolcular[@i].MusteriAdres" class="form-control" placeholder="Adres" required />
+                        <textarea name="Yolcular[@i].MusteriAdres" class="form-control" placeholder="Adres"
+                                  maxlength="200" rows="2" required></textarea>
                     </div>
                 </div>
             </div>
