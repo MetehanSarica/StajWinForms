@@ -25,7 +25,7 @@ namespace StajWeb.Pages
         {
             var client = _clientFactory.CreateClient("API");
             var response = await client.DeleteAsync($"/api/biletler/{BiletId}");
-            return RedirectToPage("/BiletSorgula");
+            return RedirectToPage("/Musteri/BiletSorgula");
         }
     }
 }

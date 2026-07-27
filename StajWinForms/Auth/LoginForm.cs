@@ -1,4 +1,5 @@
 ﻿using DevExpress.XtraEditors;
+using StajWinForms.Dtos;
 using System.Net.Http.Json;
 using System.Text.Json;
 

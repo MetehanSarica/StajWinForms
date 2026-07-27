@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace StajWinForms
+namespace StajWinForms.Dtos
 {
     public class KullaniciYetkiDto
     {

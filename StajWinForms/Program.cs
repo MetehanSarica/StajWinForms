@@ -24,7 +24,7 @@ namespace StajWinForms
 
             WindowsFormsSettings.TrackWindowsAccentColor = DefaultBoolean.True;
 
-            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("WXI");
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Basic");
 
             bool adminMod = args.Length > 0 && args[0].Equals("adminp", StringComparison.OrdinalIgnoreCase);
 

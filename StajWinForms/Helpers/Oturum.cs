@@ -1,4 +1,6 @@
-﻿namespace StajWinForms;
+﻿using StajWinForms.Dtos;
+
+namespace StajWinForms;
 
 public static class Oturum
 {
