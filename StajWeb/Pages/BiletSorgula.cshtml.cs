@@ -9,7 +9,7 @@ namespace StajWeb.Pages
 {
     public class BiletSorgulaModel : PageModel
     {
-        [BindProperty] public string MusteriTc { get; set; }
+        [BindProperty] public string MusteriTc { get; set; } = "";
 
         public List<BiletDto> Biletler { get; set; } = new List<BiletDto>();
 
@@ -27,7 +27,7 @@ namespace StajWeb.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             var client = _clientFactory.CreateClient("API");
-            Biletler = await client.GetFromJsonAsync<List<BiletDto>>($"/api/biletler/musteri/{MusteriTc}");
+            Biletler = await client.GetFromJsonAsync<List<BiletDto>>($"/api/biletler/musteri/{MusteriTc}") ?? new();
             return Page();
         }
     }
