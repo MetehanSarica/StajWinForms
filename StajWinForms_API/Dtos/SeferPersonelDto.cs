@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace StajWinForms_API.Dtos
 {
     public class SeferPersonelDto
@@ -11,8 +13,8 @@ namespace StajWinForms_API.Dtos
 
     public class AtaPersonelDto
     {
-        public required int SeferId { get; set; }
-        public required int PersonelId { get; set; }
-        public string? Rol { get; set; }
+        [Range(1, int.MaxValue)] public required int SeferId { get; set; }
+        [Range(1, int.MaxValue)] public required int PersonelId { get; set; }
+        [StringLength(50)] public string? Rol { get; set; }
     }
 }

@@ -46,37 +46,50 @@ namespace StajWinForms
 
         public bool Dogrula()
         {
-            string telefon = TelefonRakamlari();
-            if (spTC.Text.Trim().Length == 0 ||
-                txtboxAd.Text.Trim().Length == 0 ||
-                txtboxSoyad.Text.Trim().Length == 0 ||
-                txtboxEmail.Text.Trim().Length == 0 ||
-                telefon.Length == 0 ||
-                cmbSehir.SelectedIndex == -1 ||
-                memoAdres.Text.Trim().Length == 0 ||
-                cmbCinsiyet.SelectedIndex == -1)
-            {
-                MessageBox.Show($"Koltuk {_koltukNo}: Lütfen tüm alanları doldurunuz.", "Eksik Bilgi",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+            string prefix = $"Koltuk {_koltukNo}: ";
+
+            if (spTC.Text.Trim().Length == 0)
+                return Uyar(prefix + "TC Kimlik No boş bırakılamaz.");
 
             string tc = spTC.Text.Trim();
             if (!Dogrulama.TcGecerliMi(tc))
-            {
-                MessageBox.Show($"Koltuk {_koltukNo}: TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+                return Uyar(prefix + "TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.");
+
+            if (txtboxAd.Text.Trim().Length == 0)
+                return Uyar(prefix + "Ad alanı boş bırakılamaz.");
+
+            if (txtboxSoyad.Text.Trim().Length == 0)
+                return Uyar(prefix + "Soyad alanı boş bırakılamaz.");
+
+            if (txtboxEmail.Text.Trim().Length == 0)
+                return Uyar(prefix + "E-posta alanı boş bırakılamaz.");
+
+            if (!Dogrulama.EmailGecerliMi(txtboxEmail.Text.Trim()))
+                return Uyar(prefix + "Geçerli bir e-posta adresi giriniz (örn: ornek@mail.com).");
+
+            string telefon = TelefonRakamlari();
+            if (telefon.Length == 0)
+                return Uyar(prefix + "Telefon alanı boş bırakılamaz.");
 
             if (!Dogrulama.TelefonGecerliMi(telefon))
-            {
-                MessageBox.Show($"Koltuk {_koltukNo}: Telefon numarası 11 haneli olmalı ve 0 ile başlamalıdır.", "Geçersiz Telefon",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
+                return Uyar(prefix + "Telefon numarası 11 haneli olmalı ve 0 ile başlamalıdır.");
+
+            if (cmbSehir.SelectedIndex == -1)
+                return Uyar(prefix + "Şehir seçiniz.");
+
+            if (memoAdres.Text.Trim().Length == 0)
+                return Uyar(prefix + "Adres alanı boş bırakılamaz.");
+
+            if (cmbCinsiyet.SelectedIndex == -1)
+                return Uyar(prefix + "Cinsiyet seçiniz.");
 
             return true;
+        }
+
+        private static bool Uyar(string mesaj)
+        {
+            MessageBox.Show(mesaj, "Geçersiz Bilgi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            return false;
         }
 
         private string TelefonRakamlari() => Regex.Replace(txtboxTelefon.Text, "[^0-9]", "");

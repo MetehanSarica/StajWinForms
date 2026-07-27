@@ -1,8 +1,13 @@
-﻿namespace StajWinForms_API.Dtos;
+using System.ComponentModel.DataAnnotations;
+
+namespace StajWinForms_API.Dtos;
 
 public class LoginDto
 {
+    [Required, StringLength(50, MinimumLength = 3)]
     public string KullaniciAdi { get; set; } = null!;
+
+    [Required, StringLength(100, MinimumLength = 4)]
     public string Sifre { get; set; } = null!;
 }
 
@@ -16,6 +21,7 @@ public class LoginSonucDto
 
 public class KullaniciYetkiDto
 {
+    [Required, StringLength(100)]
     public string FormAdi { get; set; } = null!;
     public bool Ekle {  get; set; }
     public bool Sil {  get; set; }

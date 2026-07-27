@@ -109,6 +109,9 @@ public class KullanicilarController : ControllerBase
         if (kullanici.KullaniciAdi == "metehansarica")
             return BadRequest("Bu kullanıcı silinemez.");
 
+        var yetkiler = _context.KullaniciYetkileri.Where(ky => ky.KullaniciId == id);
+        _context.KullaniciYetkileri.RemoveRange(yetkiler);
+
         _context.Kullanicilars.Remove(kullanici);
         await _context.SaveChangesAsync();
         return NoContent();

@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Dtos;
 using StajWinForms_API.Models;
@@ -43,8 +43,8 @@ public class OtobusKaptanController : ControllerBase
         if (!await _context.Personels.AnyAsync(p => p.Id == dto.PersonelId))
             return BadRequest("Personel bulunamadı.");
 
-        if (await _context.OtobusKaptanlar.AnyAsync(ok => ok.OtobusId == dto.OtobusId && ok.PersonelId == dto.PersonelId))
-            return Conflict("Bu kaptan zaten bu otobüse atanmış.");
+        if (await _context.OtobusKaptanlar.AnyAsync(ok => ok.OtobusId == dto.OtobusId))
+            return Conflict("Bu kaptan zaten bir kaptan atanmış. Önce mevcut kaptanı kaldırın.");
 
         var atama = new OtobusKaptan
         {

@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace StajWinForms_API.Dtos;
 
 public class OtobusDto
@@ -13,10 +15,19 @@ public class OtobusDto
 
 public class OtobusOlusturDto
 {
+    [Required, RegularExpression(@"^\d{2}\s?[A-Z]{1,3}\s?\d{2,4}$", ErrorMessage = "Geçerli bir plaka giriniz (örn: 34 ABC 123)")]
     public string Plaka { get; set; } = null!;
+
+    [StringLength(50)]
     public string? Marka { get; set; }
+
+    [StringLength(50)]
     public string? Model { get; set; }
+
+    [Range(1, 60)]
     public int KoltukKapasitesi { get; set; } = 36;
+
+    [Range(1, int.MaxValue)]
     public int? FirmaId { get; set; }
 }
 

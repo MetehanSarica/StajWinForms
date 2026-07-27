@@ -1,4 +1,6 @@
-﻿namespace StajWinForms_API.Dtos
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace StajWinForms_API.Dtos
 {
     public class BiletDto
     {

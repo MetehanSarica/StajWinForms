@@ -1,4 +1,6 @@
-﻿namespace StajWinForms_API.Dtos
+using System.ComponentModel.DataAnnotations;
+
+namespace StajWinForms_API.Dtos
 {
     public class SeferlerDto
     {
@@ -16,6 +18,7 @@
 
     public class SeferOtobusAtaDto
     {
+        [Range(1, int.MaxValue)]
         public int OtobusId { get; set; }
     }
 }

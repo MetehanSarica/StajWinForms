@@ -89,8 +89,12 @@ namespace StajWinForms
                     }
                     else if (!response.IsSuccessStatusCode)
                     {
-                        MessageBox.Show($"Koltuk {model.KoltukNo}: Bilet oluşturulamadı.", "Hata",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        var mesaj = await response.Content.ReadAsStringAsync();
+                        MessageBox.Show(
+                            $"Koltuk {model.KoltukNo}: Bilet oluşturulamadı.\n\n" +
+                            $"Durum: {(int)response.StatusCode} {response.StatusCode}\n\n" +
+                            $"API Cevabı:\n{mesaj}",
+                            "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         return;
                     }
                 }

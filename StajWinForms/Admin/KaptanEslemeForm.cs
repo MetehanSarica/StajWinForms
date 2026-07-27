@@ -74,6 +74,7 @@ namespace StajWinForms
             lstTumKaptanlar.Items.Clear();
             foreach (var k in _atanmisKaptanlar) lstAtanmisKaptanlar.Items.Add(k);
             foreach (var k in _tumKaptanlar.Where(k => !atanmisIds.Contains(k.Id))) lstTumKaptanlar.Items.Add(k);
+            btnAta.Enabled = _atanmisKaptanlar.Count == 0;
         }
 
         private async void btnAta_Click(object sender, EventArgs e)
