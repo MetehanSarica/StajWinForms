@@ -1,5 +1,7 @@
-using Microsoft.Extensions.Configuration;
+﻿using Microsoft.Extensions.Configuration;
 using System.Net.Http;
+using DevExpress.Utils;
+using DevExpress.XtraEditors;
 
 namespace StajWinForms
 {
@@ -19,7 +21,10 @@ namespace StajWinForms
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             ApplicationConfiguration.Initialize();
-            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("Office 2019 Colorful");
+
+            WindowsFormsSettings.TrackWindowsAccentColor = DefaultBoolean.True;
+
+            DevExpress.LookAndFeel.UserLookAndFeel.Default.SetSkinStyle("WXI");
 
             bool adminMod = args.Length > 0 && args[0].Equals("adminp", StringComparison.OrdinalIgnoreCase);
 

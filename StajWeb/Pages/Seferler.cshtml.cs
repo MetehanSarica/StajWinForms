@@ -23,7 +23,7 @@ namespace StajWeb.Pages
             Seferler = await client.GetFromJsonAsync<List<SeferDetay>>("/api/seferdetay") ?? new();
 
             if (kalkisId.HasValue && varisId.HasValue && tarih.HasValue)
-            { 
+            {
             Seferler = Seferler
                 .Where(s => s.KalkisZamani.Date == tarih.Value.Date
                 && s.KalkisSehirId == kalkisId.Value
