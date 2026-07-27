@@ -52,6 +52,24 @@ public class KullanicilarController : ControllerBase
         _context.Kullanicilars.Add(kullanici);
         await _context.SaveChangesAsync();
 
+        var formAdlari = new[]             
+        {
+        "btnFirmaBrowser", "btnOtobusBrowser", "btnFirmaOtobusEsle",
+        "btnKaptanBrowser", "btnKaptanEsle", "btnSeferOtobusEsle",
+        "btnKullaniciYonetim", "btnYetkiAtama"
+        };
+
+        foreach (var f in formAdlari)
+        {
+            _context.KullaniciYetkileri.Add(new KullaniciYetkileri
+            {
+                KullaniciId = kullanici.KullaniciId,
+                FormAdi = f
+            });
+        }
+
+        await _context.SaveChangesAsync();
+
         return CreatedAtAction(nameof(GetKullanicilar), new { id = kullanici.KullaniciId }, new KullaniciGosterDto
         {
             KullaniciId = kullanici.KullaniciId,
@@ -134,7 +152,16 @@ public class KullanicilarController : ControllerBase
             var satir = kullanici.KullaniciYetkileri
                 .FirstOrDefault(ky => ky.FormAdi == dto.FormAdi);
 
-            if (satir == null) continue;
+            if (satir == null)
+            {
+                satir = new KullaniciYetkileri
+                {
+                    KullaniciId = id,
+                    FormAdi = dto.FormAdi,
+                };
+                _context.KullaniciYetkileri.Add(satir);
+                kullanici.KullaniciYetkileri.Add(satir);
+            }
 
             if (kullanici.KullaniciAdi == "metehansarica")
             {
