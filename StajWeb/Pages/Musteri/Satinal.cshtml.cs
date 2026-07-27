@@ -17,6 +17,7 @@ namespace StajWeb.Pages
         [BindProperty(SupportsGet = true)] public int Binis {  get; set; }
         [BindProperty(SupportsGet = true)] public int Inis { get; set; }
         public List<int> KoltukList { get; set; } = new List<int>();
+        public List<string> SehirListesi { get; set; } = new();
         public string? HataMesaji { get; set; }
         private readonly IHttpClientFactory _clientFactory;
 
@@ -25,18 +26,26 @@ namespace StajWeb.Pages
             _clientFactory = clientFactory;
         }
 
-        public void OnGet() {
+        public async Task OnGet() {
             
             if (!string.IsNullOrEmpty(Koltuklar))
             {
                 KoltukList = Koltuklar.Split(',').Select(int.Parse).ToList();
             }
+
+            var client = _clientFactory.CreateClient("API");
+            SehirListesi = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler")
+                is { } list ? list.Select(s => s.SehirAdi).ToList() : new();
         }
 
         public async Task<IActionResult> OnPostAsync()
         {
             if (!string.IsNullOrEmpty(Koltuklar)) 
                 KoltukList = Koltuklar.Split(',').Select(int.Parse).ToList();
+
+            var client = _clientFactory.CreateClient("API");
+            SehirListesi = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler")
+                is { } list ? list.Select(s => s.SehirAdi).ToList() : new();
 
                 if (!ModelState.IsValid) return Page();
 
@@ -55,8 +64,6 @@ namespace StajWeb.Pages
                         return Page();
                     }
                 }
-
-                var client = _clientFactory.CreateClient("API");
 
                     for (int i = 0; i < KoltukList.Count; i++)
                     {

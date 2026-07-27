@@ -58,8 +58,13 @@
                                required />
                     </div>
                     <div class="col-md-6">
-                        <input name="Yolcular[@i].MusteriSehir" class="form-control" placeholder="Şehir"
-                               maxlength="50" required />
+                        <select name="Yolcular[@i].MusteriSehir" class="form-select" required>
+                            <option value="">Şehir Seçin</option>
+                            @foreach (var s in Model.SehirListesi)
+                                {
+                                    <option value="@s">@s</option>
+                                }
+                            </select>
                     </div>
                     <div class="col-12">
                         <textarea name="Yolcular[@i].MusteriAdres" class="form-control" placeholder="Adres"

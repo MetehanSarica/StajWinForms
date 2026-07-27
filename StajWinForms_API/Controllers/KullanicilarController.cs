@@ -137,8 +137,7 @@ public class KullanicilarController : ControllerBase
                 Ata = ky.Ata,
                 Kaldir = ky.Kaldir,
                 Kaydet = ky.Kaydet,
-            })
-                .ToList());
+            }).ToList());
     }
 
     [HttpPut("{id}/yetkiler")]
