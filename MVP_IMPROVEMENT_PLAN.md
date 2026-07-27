@@ -378,10 +378,10 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 
 ## 9. Definition of Done for MVP
 
-- [ ] No secrets in git; `appsettings.Example.json` documented in README.
-- [ ] All passwords stored as PBKDF2 (via `PasswordHasher<T>`); MD5 helper deleted.
+- [X] No secrets in git; `appsettings.Example.json` documented in README.
+- [X] All passwords stored as PBKDF2 (via `PasswordHasher<T>`); MD5 helper deleted.
 - [ ] All controllers return DTOs; no raw entities in responses.
-- [ ] All DTOs have data-annotation validation; `[ApiController]` returns 400 on bad input.
+- [X] All DTOs have data-annotation validation; `[ApiController]` returns 400 on bad input.
 - [ ] CORS policy explicit; security headers set; HTTPS enforced.
 - [ ] Admin endpoints require valid JWT with correct `Yetki` claim.
 - [ ] Structured logs written to file for warnings/errors in production.

@@ -104,6 +104,56 @@ namespace StajWinForms
             catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
+        private async void btnKopyala_Click(object sender, EventArgs e)
+        {
+            if (lstKullanicilar.SelectedItem is not KullaniciItem kaynak)
+            {
+                XtraMessageBox.Show("Önce yetkileri kopyalanacak kullanıcıyı seçin.",
+                    "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using var frm = new YetkiKopyalaForm(kaynak.KullaniciId);
+            if (frm.ShowDialog(this) != DialogResult.OK) return;
+
+            var isimler = string.Join(", ", frm.HedefKullanicilar.Select(h => h.Adi));
+            var onay = XtraMessageBox.Show(
+                $"{kaynak.KullaniciAdi} kullanıcısının yetkileri {frm.HedefKullanicilar.Count} kullanıcısına kopyalanacak:\n\n{isimler}\n\nDevam edilsin mi?",
+                "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (onay != DialogResult.Yes) return;
+
+            try
+            {
+                var json = await AppConfig.Http.GetStringAsync($"api/kullanicilar/{kaynak.KullaniciId}/yetkiler");
+                var yetkiler = JsonSerializer.Deserialize<List<KullaniciYetkiDto>>(json, _jsonOpts) ?? new();
+
+                var hatalar = new List<string>();
+                foreach (var hedef in frm.HedefKullanicilar)
+                {
+                    var resp = await AppConfig.Http.PutAsJsonAsync(
+                        $"api/kullanicilar/{hedef.Id}/yetkiler", yetkiler);
+                    if (!resp.IsSuccessStatusCode)
+                        hatalar.Add($"{hedef.Adi}: {await resp.Content.ReadAsStringAsync()}");
+                }
+
+                if (hatalar.Count == 0)
+                    XtraMessageBox.Show($"Yetkiler {frm.HedefKullanicilar.Count} kullanıcıya kopyalandı.",
+                        "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                else
+                    XtraMessageBox.Show("Bazı kopyalamalar başarısız:\n" + string.Join("\n", hatalar),
+                        "Kısmi Başarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void btnTemizle_Click(object sender, EventArgs e)
+        {
+
+        }
+
         private record KullaniciItem(int KullaniciId, string KullaniciAdi) { public override string ToString() => KullaniciAdi; }
     }
 }

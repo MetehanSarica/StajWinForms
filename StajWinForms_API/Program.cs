@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
 using Scalar.AspNetCore;
 using System.Security.Cryptography;
@@ -13,6 +13,8 @@ builder.Services.AddOpenApi();
 // dbStaj entegrasyonu
 builder.Services.AddDbContext<DbStajContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbStajConnection")));
+
+
 
 var app = builder.Build();
 

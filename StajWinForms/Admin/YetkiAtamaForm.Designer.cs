@@ -29,6 +29,8 @@ namespace StajWinForms
             colKaldir = new DataGridViewCheckBoxColumn();
             colKaydet = new DataGridViewCheckBoxColumn();
             btnKaydet = new SimpleButton();
+            btnKopyala = new SimpleButton();
+            btnTemizle = new SimpleButton();
             ((System.ComponentModel.ISupportInitialize)lstKullanicilar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dgvYetkiler).BeginInit();
             SuspendLayout();
@@ -65,10 +67,10 @@ namespace StajWinForms
             dgvYetkiler.AllowUserToDeleteRows = false;
             dgvYetkiler.AllowUserToResizeColumns = false;
             dgvYetkiler.AllowUserToResizeRows = false;
-            dgvYetkiler.MultiSelect = false;
-            dgvYetkiler.EditMode = DataGridViewEditMode.EditOnEnter;
             dgvYetkiler.Columns.AddRange(new DataGridViewColumn[] { colFormAdi, colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet });
+            dgvYetkiler.EditMode = DataGridViewEditMode.EditOnEnter;
             dgvYetkiler.Location = new Point(205, 30);
+            dgvYetkiler.MultiSelect = false;
             dgvYetkiler.Name = "dgvYetkiler";
             dgvYetkiler.RowHeadersVisible = false;
             dgvYetkiler.Size = new Size(563, 265);
@@ -133,11 +135,31 @@ namespace StajWinForms
             btnKaydet.Text = "Yetkileri Kaydet";
             btnKaydet.Click += btnKaydet_Click;
             // 
+            // btnKopyala
+            // 
+            btnKopyala.Location = new Point(618, 310);
+            btnKopyala.Name = "btnKopyala";
+            btnKopyala.Size = new Size(150, 35);
+            btnKopyala.TabIndex = 5;
+            btnKopyala.Text = "Yetkileri Kopyala";
+            btnKopyala.Click += btnKopyala_Click;
+            // 
+            // btnTemizle
+            // 
+            btnTemizle.Location = new Point(414, 310);
+            btnTemizle.Name = "btnTemizle";
+            btnTemizle.Size = new Size(150, 35);
+            btnTemizle.TabIndex = 6;
+            btnTemizle.Text = "Yetkileri Temizle";
+            btnTemizle.Click += btnTemizle_Click;
+            // 
             // YetkiAtamaForm
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(784, 360);
+            Controls.Add(btnTemizle);
+            Controls.Add(btnKopyala);
             Controls.Add(lblKullanicilar);
             Controls.Add(lstKullanicilar);
             Controls.Add(lblSeciliKullanici);
@@ -162,5 +184,7 @@ namespace StajWinForms
         private DataGridViewTextBoxColumn colFormAdi;
         private DataGridViewCheckBoxColumn colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet;
         private SimpleButton btnKaydet;
+        private SimpleButton btnKopyala;
+        private SimpleButton btnTemizle;
     }
 }
