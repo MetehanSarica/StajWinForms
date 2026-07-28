@@ -19,7 +19,9 @@ namespace StajWinForms
             ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
             ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",
             ["btnYetkiAtama"] = "Yetki Atama",
-            ["btnDashboard"] = "Dashboard"
+            ["btnDashboard"] = "Dashboard",
+            ["btnSeferBrowser"] = "Sefer Yönetimi",
+            ["btnBiletArama"] = "Bilet Arama"
         };
 
         public YetkiAtamaForm()

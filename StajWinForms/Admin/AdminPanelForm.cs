@@ -58,6 +58,16 @@ namespace StajWinForms
             new DashboardForm().ShowDialog();
         }
 
+        private void btnSeferBrowser_Click(object sender, EventArgs e)
+        {
+            new SeferBrowserForm().ShowDialog();
+        }
+
+        private void btnBiletArama_Click(object sender, EventArgs e)
+        {
+            new BiletAramaForm().ShowDialog();
+        }
+
         public bool CikisYapildi { get; private set; } = false;
 
         private void btnCikis_Click(object sender, EventArgs e)

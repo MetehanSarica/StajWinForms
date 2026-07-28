@@ -29,6 +29,8 @@ namespace StajWinForms
             btnKullaniciYonetim = new SimpleButton();
             btnYetkiAtama = new SimpleButton();
             btnDashboard = new SimpleButton();
+            btnSeferBrowser = new SimpleButton();
+            btnBiletArama = new SimpleButton();
             btnCikis = new SimpleButton();
             flpButonlar.SuspendLayout();
             SuspendLayout();
@@ -63,6 +65,8 @@ namespace StajWinForms
             flpButonlar.Controls.Add(btnKullaniciYonetim);
             flpButonlar.Controls.Add(btnYetkiAtama);
             flpButonlar.Controls.Add(btnDashboard);
+            flpButonlar.Controls.Add(btnSeferBrowser);
+            flpButonlar.Controls.Add(btnBiletArama);
             flpButonlar.Controls.Add(btnCikis);
             flpButonlar.FlowDirection = FlowDirection.TopDown;
             flpButonlar.Location = new Point(20, 85);
@@ -151,9 +155,27 @@ namespace StajWinForms
             btnDashboard.TabIndex = 8;
             btnDashboard.Text = "Dashboard";
             btnDashboard.Click += btnDashboard_Click;
-            // 
+            //
+            // btnSeferBrowser
+            //
+            btnSeferBrowser.Location = new Point(3, 417);
+            btnSeferBrowser.Name = "btnSeferBrowser";
+            btnSeferBrowser.Size = new Size(300, 40);
+            btnSeferBrowser.TabIndex = 10;
+            btnSeferBrowser.Text = "Sefer Yönetimi";
+            btnSeferBrowser.Click += btnSeferBrowser_Click;
+            //
+            // btnBiletArama
+            //
+            btnBiletArama.Location = new Point(3, 463);
+            btnBiletArama.Name = "btnBiletArama";
+            btnBiletArama.Size = new Size(300, 40);
+            btnBiletArama.TabIndex = 11;
+            btnBiletArama.Text = "Bilet Arama";
+            btnBiletArama.Click += btnBiletArama_Click;
+            //
             // btnCikis
-            // 
+            //
             btnCikis.Appearance.BackColor = Color.FromArgb(220, 53, 69);
             btnCikis.Appearance.ForeColor = Color.White;
             btnCikis.Appearance.Options.UseBackColor = true;
@@ -169,7 +191,7 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(352, 550);
+            ClientSize = new Size(352, 640);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(flpButonlar);
@@ -198,6 +220,8 @@ namespace StajWinForms
         private SimpleButton btnKullaniciYonetim;
         private SimpleButton btnYetkiAtama;
         private SimpleButton btnDashboard;
+        private SimpleButton btnSeferBrowser;
+        private SimpleButton btnBiletArama;
         private SimpleButton btnCikis;
     }
 }

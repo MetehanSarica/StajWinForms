@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
 using StajWinForms_API.Dtos;
@@ -28,6 +28,7 @@ public class SeferlerController : ControllerBase
                 SeferId = s.SeferId,
                 KalkisZamani = s.KalkisZamani,
                 Fiyat = s.Fiyat,
+                FirmaAdi = s.Firma.FirmaAdi ?? "",
                 KalkisSehirAdi = s.KalkisSehir.SehirAdi,
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 OtobusId = s.OtobusId,
@@ -36,6 +37,25 @@ public class SeferlerController : ControllerBase
             .ToListAsync();
 
         return Ok(seferler);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> Create([FromBody] SeferCreateDto dto)
+    {
+        var sefer = new Seferler
+        {
+            FirmaId = dto.FirmaId,
+            KalkisSehirId = dto.KalkisSehirId,
+            VarisSehirId = dto.VarisSehirId,
+            KalkisZamani = dto.KalkisZamani,
+            SureDakika = dto.SureDakika,
+            Fiyat = dto.Fiyat,
+            KoltukKapasitesi = dto.KoltukKapasitesi,
+            BosKoltuk = dto.KoltukKapasitesi
+        };
+        _context.Seferlers.Add(sefer);
+        await _context.SaveChangesAsync();
+        return Ok(new { sefer.SeferId });
     }
 
     [HttpPut("{id}/otobus")]
@@ -52,6 +72,24 @@ public class SeferlerController : ControllerBase
         return NoContent();
     }
 
+    [HttpPut("{id}")]
+    public async Task<IActionResult> Update(int id, [FromBody] SeferCreateDto dto)
+    {
+        var sefer = await _context.Seferlers.FindAsync(id);
+        if (sefer == null) return NotFound();
+
+        sefer.FirmaId = dto.FirmaId;
+        sefer.KalkisSehirId = dto.KalkisSehirId;
+        sefer.VarisSehirId = dto.VarisSehirId;
+        sefer.KalkisZamani = dto.KalkisZamani;
+        sefer.SureDakika = dto.SureDakika;
+        sefer.Fiyat = dto.Fiyat;
+        sefer.KoltukKapasitesi = dto.KoltukKapasitesi;
+
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
     [HttpDelete("{id}/otobus")]
     public async Task<IActionResult> OtobusKaldir(int id)
     {
@@ -59,6 +97,21 @@ public class SeferlerController : ControllerBase
         if (sefer == null) return NotFound();
 
         sefer.OtobusId = null;
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> Delete(int id)
+    {
+        var sefer = await _context.Seferlers.FindAsync(id);
+        if (sefer == null) return NotFound();
+
+        var biletVarMi = await _context.Biletlers.AnyAsync(b => b.SeferId == id);
+        if (biletVarMi)
+            return Conflict("Bu sefere ait biletler var, silinemez.");
+
+        _context.Seferlers.Remove(sefer);
         await _context.SaveChangesAsync();
         return NoContent();
     }

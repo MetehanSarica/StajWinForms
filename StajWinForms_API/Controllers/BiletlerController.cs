@@ -92,6 +92,40 @@ public class BiletlerController : ControllerBase
             .ToListAsync();
         return Ok(biletler);
     }
+    [HttpGet("ara")]
+    public async Task<ActionResult<IEnumerable<BiletDto>>> Ara(
+        [FromQuery] int? kalkisId,
+        [FromQuery] int? varisId,
+        [FromQuery] DateTime? tarih)
+    {
+        var query = _context.Biletlers.AsQueryable();
+
+        if (kalkisId.HasValue)
+            query = query.Where(b => b.Sefer.KalkisSehirId == kalkisId.Value);
+        if (varisId.HasValue)
+            query = query.Where(b => b.Sefer.VarisSehirId ==  varisId.Value);
+        if (tarih.HasValue)
+            query = query.Where(b => b.Sefer.KalkisZamani.Date == tarih.Value.Date);
+
+        var biletler = await query.Select(b => new BiletDto
+        {
+            BiletId = b.BiletId,
+            KoltukNo = b.KoltukNo,
+            MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+            MusteriTc = b.MusteriTc,
+            SeferId = b.SeferId,
+            KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
+            VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
+            KalkisZamani = b.Sefer.KalkisZamani,
+            FirmaAdi = b.Sefer.Firma.FirmaAdi ?? "",
+            Fiyat = b.Sefer.Fiyat,
+            Cinsiyet = b.Cinsiyet,
+            BinisDurakSira = b.BinisDurakSira,
+            InisDurakSira = b.InisDurakSira
+        }).ToListAsync();
+
+        return Ok(biletler);
+    }
 
     [HttpPost]
     public async Task<ActionResult> CreateBilet(CreateBiletDto dto)
