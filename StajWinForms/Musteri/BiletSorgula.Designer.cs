@@ -118,7 +118,7 @@ namespace StajWinForms
             gridColumn1.AppearanceHeader.Options.UseTextOptions = true;
             gridColumn1.AppearanceHeader.TextOptions.HAlignment = DevExpress.Utils.HorzAlignment.Center;
             gridColumn1.Caption = "Bilet No";
-            gridColumn1.FieldName = "BiletId";
+            gridColumn1.FieldName = "BiletID";
             gridColumn1.Name = "gridColumn1";
             gridColumn1.Visible = true;
             gridColumn1.VisibleIndex = 0;
