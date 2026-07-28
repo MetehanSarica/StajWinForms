@@ -397,6 +397,12 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] SeferDetay sayfası kaldırıldı; koltuk seçimi Seferler sayfasında inline açılıyor.
 - [X] WinForms MusteriKaydiControl fire-and-forget düzeltildi (Load event'e taşındı).
 - [X] Session yenileme (4.6) atlandı — 11 dosya etkiliyor, scope dışı bırakıldı.
+- [X] **Dashboard** eklendi (Web + WinForms): Toplam Bilet, Toplam Gelir, Toplam Sefer, En Popüler Güzergahlar. Web → Bootstrap kartlar + progress bar; WinForms → DevExpress TileControl + ChartControl (bar chart). API: `GET /api/istatistikler`.
+- [X] **Sefer Yönetimi (Admin CRUD)** eklendi: `SeferBrowserForm` (liste + grid), `SeferEditForm` (ekle/düzenle). API: `POST /api/seferler`, `PUT /api/seferler/{id}`, `DELETE /api/seferler/{id}` (bilet varsa 409 engeli).
+- [X] **Bilet Arama (Admin)** eklendi: `BiletAramaForm` — kalkış şehri, varış şehri, tarih filtresi. API: `GET /api/biletler/ara?kalkisId=&varisId=&tarih=`.
+- [X] **Yolcu Listesi** eklendi: `YolcuListesiForm` — sefer bazlı yolcu listesi (koltuk no, ad soyad, TC, cinsiyet). Sefer Yönetimi ekranından açılıyor.
+- [X] `AdminPanelForm`'a "Sefer Yönetimi" (`btnSeferBrowser`) ve "Bilet Arama" (`btnBiletArama`) butonları eklendi.
+- [X] `YetkiAtamaForm._formAdlari`'na "Sefer Yönetimi" ve "Bilet Arama" yetki satırları eklendi.
 
 ---
 
