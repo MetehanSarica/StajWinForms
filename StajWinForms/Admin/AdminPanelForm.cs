@@ -1,6 +1,7 @@
 ﻿using DevExpress.Utils;
 using DevExpress.XtraEditors;
 using DevExpress.XtraScheduler.Native;
+using StajWinForms.Admin;
 
 namespace StajWinForms
 {
@@ -50,6 +51,11 @@ namespace StajWinForms
         private void btnYetkiAtama_Click(object sender, EventArgs e)
         {
             new YetkiAtamaForm().ShowDialog();
+        }
+
+        private void btnDashboard_Click(object sender, EventArgs e)
+        {
+            new DashboardForm().ShowDialog();
         }
 
         public bool CikisYapildi { get; private set; } = false;

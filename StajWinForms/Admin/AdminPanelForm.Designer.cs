@@ -28,6 +28,7 @@ namespace StajWinForms
             btnSeferOtobusEsle = new SimpleButton();
             btnKullaniciYonetim = new SimpleButton();
             btnYetkiAtama = new SimpleButton();
+            btnDashboard = new SimpleButton();
             btnCikis = new SimpleButton();
             flpButonlar.SuspendLayout();
             SuspendLayout();
@@ -61,11 +62,12 @@ namespace StajWinForms
             flpButonlar.Controls.Add(btnSeferOtobusEsle);
             flpButonlar.Controls.Add(btnKullaniciYonetim);
             flpButonlar.Controls.Add(btnYetkiAtama);
+            flpButonlar.Controls.Add(btnDashboard);
             flpButonlar.Controls.Add(btnCikis);
             flpButonlar.FlowDirection = FlowDirection.TopDown;
             flpButonlar.Location = new Point(20, 85);
             flpButonlar.Name = "flpButonlar";
-            flpButonlar.Size = new Size(306, 409);
+            flpButonlar.Size = new Size(306, 455);
             flpButonlar.TabIndex = 2;
             flpButonlar.WrapContents = false;
             // 
@@ -141,16 +143,25 @@ namespace StajWinForms
             btnYetkiAtama.Text = "Yetki Atama";
             btnYetkiAtama.Click += btnYetkiAtama_Click;
             // 
+            // btnDashboard
+            // 
+            btnDashboard.Location = new Point(3, 371);
+            btnDashboard.Name = "btnDashboard";
+            btnDashboard.Size = new Size(300, 40);
+            btnDashboard.TabIndex = 8;
+            btnDashboard.Text = "Dashboard";
+            btnDashboard.Click += btnDashboard_Click;
+            // 
             // btnCikis
             // 
             btnCikis.Appearance.BackColor = Color.FromArgb(220, 53, 69);
             btnCikis.Appearance.ForeColor = Color.White;
             btnCikis.Appearance.Options.UseBackColor = true;
             btnCikis.Appearance.Options.UseForeColor = true;
-            btnCikis.Location = new Point(3, 371);
+            btnCikis.Location = new Point(3, 417);
             btnCikis.Name = "btnCikis";
             btnCikis.Size = new Size(300, 35);
-            btnCikis.TabIndex = 8;
+            btnCikis.TabIndex = 9;
             btnCikis.Text = "Çıkış Yap";
             btnCikis.Click += btnCikis_Click;
             // 
@@ -158,7 +169,7 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(352, 509);
+            ClientSize = new Size(352, 550);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(flpButonlar);
@@ -186,6 +197,7 @@ namespace StajWinForms
         private SimpleButton btnSeferOtobusEsle;
         private SimpleButton btnKullaniciYonetim;
         private SimpleButton btnYetkiAtama;
+        private SimpleButton btnDashboard;
         private SimpleButton btnCikis;
     }
 }

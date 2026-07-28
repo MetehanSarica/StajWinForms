@@ -12,6 +12,11 @@
 </div>
 
 <div class="row g-3">
+    <div class="col-md-3">
+        <a href="/Admin/Dashboard" class="card text-decoration-none h-100">
+            <div class="card-body text-center fw-bold">Dashboard</div>
+        </a>
+    </div>
     @foreach (var (formAdi, baslik, link) in new[] {
           ("btnFirmaBrowser",    "Firmalar",            "/Admin/Firmalar"),
           ("btnOtobusBrowser",   "Otobüsler",           "/Admin/Otobusler"),

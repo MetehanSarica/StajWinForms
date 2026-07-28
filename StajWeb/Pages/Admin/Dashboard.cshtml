@@ -1,0 +1,61 @@
+@page
+@model StajWeb.Pages.Admin.DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-4">
+    <h4>Dashboard</h4>
+    <a href="/Admin" class="btn btn-outline-secondary btn-sm">← Geri</a>
+</div>
+
+<div class="row g-3 mb-4">
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="fs-1 fw-bold text-primary">@Model.Istatistik.ToplamBilet</div>
+                <div class="text-muted">Toplam Bilet</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="fs-1 fw-bold text-success">₺@Model.Istatistik.ToplamGelir.ToString("N2")</div>
+                <div class="text-muted">Toplam Gelir</div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card text-center">
+            <div class="card-body">
+                <div class="fs-1 fw-bold text-warning">@Model.Istatistik.AktifSeferler</div>
+                <div class="text-muted">Toplam Sefer</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card">
+    <div class="card-header fw-bold">En Popüler Güzergahlar</div>
+    <div class="card-body">
+        @{
+            var max = Model.Istatistik.PopulerGuzergahlar.Count > 0
+                ? Model.Istatistik.PopulerGuzergahlar.Max(x => x.BiletSayisi)
+                : 1;
+        }
+        @foreach (var g in Model.Istatistik.PopulerGuzergahlar)
+        {
+            var yuzde = (int)((double)g.BiletSayisi / max * 100);
+            <div class="mb-3">
+                <div class="d-flex justify-content-between mb-1">
+                    <span>@g.Guzergah</span>
+                    <span class="text-muted">@g.BiletSayisi bilet</span>
+                </div>
+                <div class="progress" style="height: 8px;">
+                    <div class="progress-bar" style="width: @yuzde%"></div>
+                </div>
+            </div>
+        }
+    </div>
+</div>
