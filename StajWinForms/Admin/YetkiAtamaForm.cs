@@ -149,9 +149,70 @@ namespace StajWinForms
             }
         }
 
-        private void btnTemizle_Click(object sender, EventArgs e)
+        private async void btnTemizle_Click(object sender, EventArgs e)
         {
+            if (lstKullanicilar.SelectedItem is not KullaniciItem k)
+            {
+                XtraMessageBox.Show("Önce bir kullanıcı seçin.",
+                    "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
 
+            if (k.KullaniciAdi == "metehansarica")
+            {
+                XtraMessageBox.Show("Bu kullanıcının yetkileri temizlenemez.",
+                    "İzin Verilmedi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            var onay = XtraMessageBox.Show(
+                $"{k.KullaniciAdi} kullanıcısının TÜM yetkileri temizlenecek. Devam edilsin mi?",
+                "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
+            if (onay != DialogResult.Yes) return;
+
+            var keys = _formAdlari.Keys.ToList();
+            var bosYetkiler = keys.Select(f => new KullaniciYetkiDto
+            {
+                FormAdi = f,
+                Ekle = false,
+                Sil = false,
+                Degistir = false,
+                Incele = false,
+                Ata = false,
+                Kaldir = false,
+                Kaydet = false
+            }).ToList();
+
+            try
+            {
+                var resp = await AppConfig.Http.PutAsJsonAsync(
+                    $"api/kullanicilar/{k.KullaniciId}/yetkiler", bosYetkiler);
+                if (!resp.IsSuccessStatusCode)
+                {
+                    XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(),
+                        "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    return;
+                }
+                
+                for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
+                    {
+                        dgvYetkiler.Rows[i].Cells["colEkle"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colSil"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colDegistir"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colIncele"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colAta"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colKaldir"].Value = false;
+                        dgvYetkiler.Rows[i].Cells["colKaydet"].Value = false;
+                    }
+
+                    XtraMessageBox.Show($"{k.KullaniciAdi} kullanıcısının yetkileri temizlendi.",
+                        "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+
+            catch (Exception ex) 
+                {
+                    XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
         }
 
         private record KullaniciItem(int KullaniciId, string KullaniciAdi) { public override string ToString() => KullaniciAdi; }

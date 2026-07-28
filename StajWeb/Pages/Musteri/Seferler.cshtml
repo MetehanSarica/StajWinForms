@@ -4,13 +4,28 @@
     ViewData["Title"] = "Seferler";
 }
 
+<style>
+    .bus-h { display:flex; flex-direction:row; border:3px solid #666; border-radius:20px; padding:12px; background:#f5f5f5; width:fit-content; }
+    .driver-col { display:flex; flex-direction:column; align-items:center; justify-content:space-between; margin-right:12px; border-right:2px dashed #aaa; padding-right:12px; gap:6px; }
+    .driver-seat { width:42px; height:42px; background:#ffc107; border-radius:6px; }
+    .steering-wheel { width:36px; height:36px; border:4px solid #555; border-radius:50%; background:#ccc; }
+    .seats-area { display:flex; flex-direction:column; gap:0; }
+    .seat-row { display:flex; flex-direction:row; gap:4px; margin:2px 0; }
+    .aisle-h { height:16px; }
+    .seat { width:42px; height:42px; border-radius:6px; font-weight:bold; font-size:12px; border:none; cursor:pointer; }
+    .seat.available { background:#28a745; color:white; }
+    .seat.available:hover { background:#218838; }
+    .seat.male   { background:#007bff; color:white; cursor:not-allowed; }
+    .seat.female { background:#e83e8c; color:white; cursor:not-allowed; }
+</style>
+
 <h4 class="mb-4">Uygun Seferler</h4>
 
-@if (Model.Seferler != null && Model.Seferler.Any())
+@if (Model.Seferler.Any())
 {
     @foreach (var sefer in Model.Seferler)
     {
-        <div class="card mb-3 shadow-sm">
+        <div class="card mb-3 shadow-sm" id="sefer-@sefer.SeferId">
             <div class="card-body d-flex justify-content-between align-items-center">
                 <div>
                     <h5 class="mb-1">@sefer.KalkisSehirAdi → @sefer.VarisSehirAdi</h5>
@@ -22,9 +37,106 @@
                 </div>
                 <div class="text-end">
                     <div class="fw-bold fs-5 text-primary mb-2">@sefer.Fiyat ₺</div>
-                    <a href="/Musteri/SeferDetay/@sefer.SeferId" class="btn btn-primary btn-sm">Seç</a>
+                    <a asp-page="/Musteri/Seferler"
+                       asp-route-KalkisId="@Model.KalkisId"
+                       asp-route-VarisId="@Model.VarisId"
+                       asp-route-Tarih="@Model.Tarih?.ToString("yyyy-MM-dd")"
+                       asp-route-ExpandId="@(Model.ExpandId == sefer.SeferId ? (int?)null : sefer.SeferId)"
+                       class="btn btn-primary btn-sm">
+                        @(Model.ExpandId == sefer.SeferId ? "Kapat" : "Seç")
+                    </a>
                 </div>
             </div>
+
+            @if (Model.ExpandId == sefer.SeferId && Model.SeciliSefer != null)
+            {
+                var toplamKoltuk = 36;
+                var alinmis = Model.Biletler
+                    .Where(b => b.BinisDurakSira < Model.Inis && b.InisDurakSira > Model.Binis)
+                    .GroupBy(b => b.KoltukNo)
+                    .ToDictionary(g => g.Key, g => g.First().Cinsiyet);
+
+                <div class="card-footer">
+                    <form method="get" action="/Musteri/Seferler" class="d-flex gap-3 mb-3">
+                        <input type="hidden" name="KalkisId" value="@Model.KalkisId" />
+                        <input type="hidden" name="VarisId"  value="@Model.VarisId"  />
+                        <input type="hidden" name="Tarih"    value="@Model.Tarih?.ToString("yyyy-MM-dd")" />
+                        <input type="hidden" name="ExpandId" value="@Model.ExpandId" />
+                        <div>
+                            <label class="form-label">Biniş Durağı</label>
+                            <select name="Binis" class="form-select" onchange="this.form.submit()">
+                                @foreach (var d in Model.Duraklar)
+                                {
+                                    <option value="@d.DurakSira" selected="@(d.DurakSira == Model.Binis)">@d.SehirAdi</option>
+                                }
+                            </select>
+                        </div>
+                        <div>
+                            <label class="form-label">İniş Durağı</label>
+                            <select name="Inis" class="form-select" onchange="this.form.submit()">
+                                @foreach (var d in Model.Duraklar)
+                                {
+                                    <option value="@d.DurakSira" selected="@(d.DurakSira == Model.Inis)">@d.SehirAdi</option>
+                                }
+                            </select>
+                        </div>
+                    </form>
+
+                    <div class="bus-h">
+                        <div class="driver-col">
+                            <div class="driver-seat"></div>
+                            <div class="steering-wheel"></div>
+                            <div class="driver-seat"></div>
+                        </div>
+                        <div class="seats-area">
+                            @for (int r = 0; r < 2; r++)
+                            {
+                                <div class="seat-row">
+                                    @for (int c = 0; c < 9; c++)
+                                    {
+                                        int koltukNo = c * 4 + r + 1;
+                                        if (koltukNo <= toplamKoltuk)
+                                        {
+                                            var cins = alinmis.ContainsKey(koltukNo) ? alinmis[koltukNo] : null;
+                                            if (cins == "E")      { <button class="seat male"      disabled>@koltukNo</button> }
+                                            else if (cins == "K") { <button class="seat female"    disabled>@koltukNo</button> }
+                                            else                  { <button class="seat available" onclick="koltukSec(this,@koltukNo)">@koltukNo</button> }
+                                        }
+                                    }
+                                </div>
+                            }
+                            <div class="aisle-h"></div>
+                            @for (int r = 2; r < 4; r++)
+                            {
+                                <div class="seat-row">
+                                    @for (int c = 0; c < 9; c++)
+                                    {
+                                        int koltukNo = c * 4 + r + 1;
+                                        if (koltukNo <= toplamKoltuk)
+                                        {
+                                            var cins = alinmis.ContainsKey(koltukNo) ? alinmis[koltukNo] : null;
+                                            if (cins == "E")      { <button class="seat male"      disabled>@koltukNo</button> }
+                                            else if (cins == "K") { <button class="seat female"    disabled>@koltukNo</button> }
+                                            else                  { <button class="seat available" onclick="koltukSec(this,@koltukNo)">@koltukNo</button> }
+                                        }
+                                    }
+                                </div>
+                            }
+                        </div>
+                    </div>
+
+                    <div class="d-flex gap-3 mt-3 align-items-center">
+                        <span><span style="display:inline-block;width:16px;height:16px;background:#28a745;border-radius:3px;"></span> Boş</span>
+                        <span><span style="display:inline-block;width:16px;height:16px;background:#007bff;border-radius:3px;"></span> Erkek</span>
+                        <span><span style="display:inline-block;width:16px;height:16px;background:#e83e8c;border-radius:3px;"></span> Kadın</span>
+                        <span><span style="display:inline-block;width:16px;height:16px;background:#ffc107;border-radius:3px;"></span> Seçili</span>
+                    </div>
+
+                    <div class="mt-3">
+                        <button onclick="devamEt()" class="btn btn-primary px-4">Devam Et</button>
+                    </div>
+                </div>
+            }
         </div>
     }
 }
@@ -32,3 +144,27 @@ else
 {
     <div class="alert alert-warning">Uygun sefer bulunamadı.</div>
 }
+
+<script>
+    const secilenKoltuklar = [];
+
+    function koltukSec(btn, koltukNo) {
+        const idx = secilenKoltuklar.indexOf(koltukNo);
+        if (idx === -1) { secilenKoltuklar.push(koltukNo); btn.style.background = '#ffc107'; }
+        else { secilenKoltuklar.splice(idx, 1); btn.style.background = '#28a745'; }
+    }
+
+    function devamEt() {
+        if (secilenKoltuklar.length === 0) { alert("Lütfen en az bir koltuk seçin."); return; }
+        window.location = '/Musteri/Satinal?seferId=@Model.ExpandId&koltuklar='
+            + secilenKoltuklar.join(',') + '&binis=@Model.Binis&inis=@Model.Inis';
+    }
+
+    window.addEventListener('DOMContentLoaded', function () {
+        var expandId = @(Model.ExpandId?.ToString() ?? "null");
+    if (expandId) {
+        var el = document.getElementById('sefer-' + expandId);
+        if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+    });
+</script>

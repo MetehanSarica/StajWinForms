@@ -26,8 +26,20 @@ namespace StajWeb.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
+            if (string.IsNullOrWhiteSpace(MusteriTc))
+            {
+                ModelState.AddModelError("MusteriTc", "TC kimlik numarası boş olamaz.");
+                return Page();
+            }
+
             var client = _clientFactory.CreateClient("API");
-            Biletler = await client.GetFromJsonAsync<List<BiletDto>>($"/api/biletler/musteri/{MusteriTc}") ?? new();
+            var response = await client.GetAsync($"/api/biletler/musteri/{MusteriTc}");
+
+            if (response.IsSuccessStatusCode)
+                Biletler = await response.Content.ReadFromJsonAsync<List<BiletDto>>() ?? new();
+            else
+                ModelState.AddModelError("", "Bilet bulunamadı veya geçersiz TC.");
+
             return Page();
         }
     }

@@ -22,8 +22,8 @@ namespace StajWinForms
             lstAtanmisKaptanlar = new ListBoxControl();
             lblTum = new LabelControl();
             lstTumKaptanlar = new ListBoxControl();
-            btnKaldir = new SimpleButton();
             btnAta = new SimpleButton();
+            btnKaldir = new SimpleButton();
             flpButonlar = new FlowLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)lstAtanmisKaptanlar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lstTumKaptanlar).BeginInit();
@@ -49,76 +49,77 @@ namespace StajWinForms
             //
             // lblAtanmis
             //
-            lblAtanmis.Location = new Point(12, 50);
+            lblAtanmis.Location = new Point(340, 50);
             lblAtanmis.Name = "lblAtanmis";
-            lblAtanmis.Size = new Size(87, 13);
+            lblAtanmis.Size = new Size(129, 13);
             lblAtanmis.TabIndex = 2;
-            lblAtanmis.Text = "Atanmış Kaptanlar";
+            lblAtanmis.Text = "Otobüse Atanmış Kaptanlar";
             //
             // lstAtanmisKaptanlar
             //
-            lstAtanmisKaptanlar.Location = new Point(12, 70);
+            lstAtanmisKaptanlar.Location = new Point(340, 70);
             lstAtanmisKaptanlar.Name = "lstAtanmisKaptanlar";
-            lstAtanmisKaptanlar.Size = new Size(200, 280);
+            lstAtanmisKaptanlar.Size = new Size(200, 300);
             lstAtanmisKaptanlar.TabIndex = 3;
             //
             // lblTum
             //
-            lblTum.Location = new Point(340, 50);
+            lblTum.Location = new Point(12, 50);
             lblTum.Name = "lblTum";
-            lblTum.Size = new Size(69, 13);
+            lblTum.Size = new Size(102, 13);
             lblTum.TabIndex = 4;
-            lblTum.Text = "Tüm Kaptanlar";
+            lblTum.Text = "Atanmamış Kaptanlar";
             //
             // lstTumKaptanlar
             //
-            lstTumKaptanlar.Location = new Point(340, 70);
+            lstTumKaptanlar.Location = new Point(12, 70);
             lstTumKaptanlar.Name = "lstTumKaptanlar";
-            lstTumKaptanlar.Size = new Size(200, 280);
+            lstTumKaptanlar.Size = new Size(200, 300);
             lstTumKaptanlar.TabIndex = 5;
-            //
-            // btnKaldir
-            //
-            btnKaldir.Location = new Point(3, 3);
-            btnKaldir.Name = "btnKaldir";
-            btnKaldir.Size = new Size(100, 35);
-            btnKaldir.TabIndex = 6;
-            btnKaldir.Text = "Kaldır ►";
-            btnKaldir.Click += btnKaldir_Click;
             //
             // btnAta
             //
-            btnAta.Location = new Point(3, 46);
+            btnAta.Location = new Point(3, 3);
             btnAta.Name = "btnAta";
             btnAta.Size = new Size(100, 35);
-            btnAta.TabIndex = 7;
-            btnAta.Text = "◄ Ata ";
+            btnAta.TabIndex = 6;
+            btnAta.Text = "Ata ►";
             btnAta.Click += btnAta_Click;
+            //
+            // btnKaldir
+            //
+            btnKaldir.Location = new Point(3, 44);
+            btnKaldir.Name = "btnKaldir";
+            btnKaldir.Size = new Size(100, 35);
+            btnKaldir.TabIndex = 7;
+            btnKaldir.Text = "◄ Kaldır";
+            btnKaldir.Click += btnKaldir_Click;
             //
             // flpButonlar
             //
             flpButonlar.AutoSize = true;
             flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flpButonlar.Controls.Add(btnKaldir);
             flpButonlar.Controls.Add(btnAta);
+            flpButonlar.Controls.Add(btnKaldir);
             flpButonlar.FlowDirection = FlowDirection.TopDown;
-            flpButonlar.Location = new Point(225, 150);
+            flpButonlar.Location = new Point(225, 160);
             flpButonlar.Name = "flpButonlar";
-            flpButonlar.WrapContents = false;
+            flpButonlar.Size = new Size(106, 82);
             flpButonlar.TabIndex = 8;
+            flpButonlar.WrapContents = false;
             //
             // KaptanEslemeForm
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(560, 380);
+            ClientSize = new Size(560, 400);
             Controls.Add(lblOtobus);
             Controls.Add(cmbOtobus);
-            Controls.Add(lblAtanmis);
-            Controls.Add(lstAtanmisKaptanlar);
             Controls.Add(lblTum);
             Controls.Add(lstTumKaptanlar);
             Controls.Add(flpButonlar);
+            Controls.Add(lblAtanmis);
+            Controls.Add(lstAtanmisKaptanlar);
             MaximizeBox = false;
             Name = "KaptanEslemeForm";
             StartPosition = FormStartPosition.CenterParent;
