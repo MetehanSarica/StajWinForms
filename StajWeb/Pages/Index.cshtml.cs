@@ -21,7 +21,7 @@ public class IndexModel : PageModel
     public async Task OnGetAsync()
     {
         var client = _clientFactory.CreateClient("API");
-        Sehirler = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler");
+        Sehirler = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler") ?? new();
         SehirListesi = new SelectList(Sehirler, "SehirId", "SehirAdi");
     }
 }

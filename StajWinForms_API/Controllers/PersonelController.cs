@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
 
@@ -27,7 +27,16 @@ public class PersonelController : ControllerBase
     {
         personel.Id = 0;
         _context.Personels.Add(personel);
-        await _context.SaveChangesAsync();
+        
+        try 
+        { 
+            await _context.SaveChangesAsync();
+        }
+
+        catch (DbUpdateException) 
+        {
+            return Conflict("Bu email adresi zaten kayıtlı.");
+        }
         return CreatedAtAction(nameof(GetPersonel), new { id = personel.Id }, personel);
     }
 
@@ -43,7 +52,15 @@ public class PersonelController : ControllerBase
         personel.Maas = dto.Maas;
         personel.IseGirisTarihi = dto.IseGirisTarihi;
 
-        await _context.SaveChangesAsync();
+        try
+        {
+            await _context.SaveChangesAsync();
+        }
+
+        catch (DbUpdateException)
+        {
+            return Conflict("Bu email adresi zaten kayıtlı.");
+        }
         return NoContent();
     }
 

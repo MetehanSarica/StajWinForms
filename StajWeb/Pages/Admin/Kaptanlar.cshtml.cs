@@ -1,4 +1,4 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using StajWeb.Dtos;
 using StajWeb.Helpers;
 using System.Net.Http.Json;
@@ -24,7 +24,7 @@ namespace StajWeb.Pages.Admin
             decimal? maas, DateOnly? iseGirisTarihi)
         {
             var client = _clientFactory.CreateClient("API");
-            await client.PostAsJsonAsync("api/personel", new
+            var resp = await client.PostAsJsonAsync("api/personel", new
             {
                 Ad = ad.Trim(),
                 Soyad = soyad.Trim(),
@@ -32,6 +32,8 @@ namespace StajWeb.Pages.Admin
                 Maas = maas > 0 ? maas : null,
                 IseGirisTarihi = iseGirisTarihi ?? DateOnly.FromDateTime(DateTime.Today)
             });
+            if (!resp.IsSuccessStatusCode)
+                TempData["Hata"] = await resp.Content.ReadAsStringAsync();
             return RedirectToPage();
         }
 
@@ -39,7 +41,7 @@ namespace StajWeb.Pages.Admin
             string? email, decimal? maas, DateOnly? iseGirisTarihi)
         {
             var client = _clientFactory.CreateClient("API");
-            await client.PutAsJsonAsync($"api/personel/{personelId}", new
+            var resp = await client.PutAsJsonAsync($"api/personel/{personelId}", new
             {
                 Ad = ad.Trim(),
                 Soyad = soyad.Trim(),
@@ -47,6 +49,8 @@ namespace StajWeb.Pages.Admin
                 Maas = maas > 0 ? maas : null,
                 IseGirisTarihi = iseGirisTarihi ?? DateOnly.FromDateTime(DateTime.Today)
             });
+            if (!resp.IsSuccessStatusCode)
+                TempData["Hata"] = await resp.Content.ReadAsStringAsync();
             return RedirectToPage();
         }
 

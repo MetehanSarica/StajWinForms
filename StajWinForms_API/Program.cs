@@ -9,6 +9,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+builder.Services.AddCors(o => o.AddPolicy("Default", p =>
+    p.WithOrigins("http://localhost:5920", "https://localhost:7250")
+    .AllowAnyMethod()
+    .AllowAnyHeader()));
 builder.Services.AddOpenApi();
 // dbStaj entegrasyonu
 builder.Services.AddDbContext<DbStajContext>(options =>
@@ -26,6 +30,15 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+app.UseCors("Default");
+
+app.Use(async (ctx, next) =>
+{
+    ctx.Response.Headers["X-Content-Type-Options"] = "nosniff";
+    ctx.Response.Headers["X-Frame-Options"] = "DENY";
+    ctx.Response.Headers["Referrer-Policy"] = "no-referrer";
+    await next();
+});
 
 var apiKey = app.Configuration["ApiKey"]!;
 app.Use(async (context, next) =>
