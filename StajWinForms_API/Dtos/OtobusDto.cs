@@ -1,4 +1,4 @@
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace StajWinForms_API.Dtos;
 
@@ -37,4 +37,16 @@ public class OtobusKaptanDto
     public int OtobusId { get; set; }
     public int PersonelId { get; set; }
     public string? PersonelAdSoyad { get; set; }
+}
+
+public class FirmaDto
+{
+    public int FirmaId { get; set; }
+    public string FirmaAdi { get; set; } = "";
+}
+
+public class SehirDto
+{
+    public int SehirId { get; set; }
+    public string SehirAdi { get; set; } = "";
 }

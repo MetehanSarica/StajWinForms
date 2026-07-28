@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
+using StajWinForms_API.Dtos;
 
 namespace StajWinForms_API.Controllers;
 
@@ -16,9 +17,11 @@ public class SehirlerController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Sehirler>>> GetSehirler()
+    public async Task<ActionResult<IEnumerable<SehirDto>>> GetSehirler()
     {
-        var sehirler = await _context.Sehirlers.ToListAsync();
+        var sehirler = await _context.Sehirlers
+            .Select(s => new SehirDto { SehirId = s.SehirId, SehirAdi = s.SehirAdi,})
+            .ToListAsync();
         return Ok(sehirler);
     }
 }

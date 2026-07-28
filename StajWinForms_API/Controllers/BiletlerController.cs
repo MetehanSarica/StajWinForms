@@ -10,10 +10,12 @@ namespace StajWinForms_API.Controllers;
 public class BiletlerController : ControllerBase
 {
     private readonly DbStajContext _context;
+    private readonly ILogger<BiletlerController> _logger;
 
-    public BiletlerController(DbStajContext context)
+    public BiletlerController(DbStajContext context, ILogger<BiletlerController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpGet]
@@ -181,9 +183,11 @@ public class BiletlerController : ControllerBase
             await transaction.CommitAsync();
             return Ok(new { mesaj = "Bilet satın alındı", biletId = yeniBilet.BiletId });
         }
-        catch
+        catch (Exception ex)
         {
             await transaction.RollbackAsync();
+            _logger.LogError(ex, "SatinAlBilet işlemi başarısız. SeferId={SeferId} KoltukNo={KoltukNo}",
+                satinAlDto.SeferId, satinAlDto.KoltukNo);
             return StatusCode(500, "İşlem sırasında hata oluştu.");
         }
     }

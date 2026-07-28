@@ -11,10 +11,12 @@ namespace StajWinForms_API.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly DbStajContext _context;
+    private readonly ILogger<AuthController> _logger;
 
-    public AuthController(DbStajContext context)
+    public AuthController(DbStajContext context, ILogger<AuthController> logger)
     {
         _context = context;
+        _logger = logger;
     }
 
     [HttpPost("login")]
@@ -27,10 +29,16 @@ public class AuthController : ControllerBase
             .FirstOrDefaultAsync(k => k.KullaniciAdi == dto.KullaniciAdi && k.SifreMd5 == sifreMd5);
 
         if (kullanici == null)
+            {
+            _logger.LogWarning("Başarısız giriş denemesi. KullaniciAdi={KullaniciAdi}", dto.KullaniciAdi);
             return Unauthorized("Kullanıcı adı veya şifre hatalı.");
+            }
 
         if (!kullanici.Aktif)
+            {
+            _logger.LogWarning("Pasif hesaba giriş denemesi. KullaniciAdi={KullaniciAdi}", dto.KullaniciAdi);
             return Unauthorized("Bu hesap pasif durumda.");
+            }
 
         var sonuc = new LoginSonucDto
         {

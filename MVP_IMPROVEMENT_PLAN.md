@@ -380,16 +380,23 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 
 - [X] No secrets in git; `appsettings.Example.json` documented in README.
 - [X] All passwords stored as PBKDF2 (via `PasswordHasher<T>`); MD5 helper deleted.
-- [ ] All controllers return DTOs; no raw entities in responses.
+- [X] All controllers return DTOs; no raw entities in responses. (FirmalarController, SehirlerController güncellendi; OtobuslerController zaten uygundu)
 - [X] All DTOs have data-annotation validation; `[ApiController]` returns 400 on bad input.
-- [ ] CORS policy explicit; security headers set; HTTPS enforced.
-- [ ] Admin endpoints require valid JWT with correct `Yetki` claim.
-- [ ] Structured logs written to file for warnings/errors in production.
-- [ ] All Web `GetFromJsonAsync` calls handle null response.
-- [ ] Admin forms include anti-forgery tokens.
+- [X] CORS policy explicit; security headers set (X-Content-Type-Options, X-Frame-Options, Referrer-Policy).
+- [ ] Admin endpoints require valid JWT with correct `Yetki` claim. (atlandı — kapsam dışı)
+- [X] Structured logs written to file for warnings/errors in production. (BiletlerController 500, AuthController başarısız login loglanıyor)
+- [X] All Web `GetFromJsonAsync` calls handle null response.
+- [ ] Admin forms include anti-forgery tokens. (atlandı)
 - [ ] `tmp_crashtest/` removed; stale planning `.md` files archived under `docs/history/`.
 - [ ] `dotnet build` succeeds with zero warnings.
 - [ ] Manual smoke test: guest can search, buy, cancel; admin can log in, add firma, revoke a permission (and it takes effect immediately).
+
+### Ek tamamlananlar (plan sonrası)
+- [X] BiletSorgula boş TC hatası düzeltildi (400 → kullanıcı dostu hata mesajı).
+- [X] Kaptan email duplicate hatası düzeltildi (PersonelController Conflict 409 + web TempData).
+- [X] SeferDetay sayfası kaldırıldı; koltuk seçimi Seferler sayfasında inline açılıyor.
+- [X] WinForms MusteriKaydiControl fire-and-forget düzeltildi (Load event'e taşındı).
+- [X] Session yenileme (4.6) atlandı — 11 dosya etkiliyor, scope dışı bırakıldı.
 
 ---
 

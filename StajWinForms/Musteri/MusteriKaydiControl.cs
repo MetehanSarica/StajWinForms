@@ -28,7 +28,7 @@ namespace StajWinForms
             };
             spTC.EditValue = null;
             lblKoltukBilgi.Text = $"Seçilen Koltuk: {_koltukNo}";
-            _ = SehirleriYukle();
+            this.Load += async (s, e) => await SehirleriYukle();
         }
 
         private async Task SehirleriYukle()

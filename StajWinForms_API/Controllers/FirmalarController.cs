@@ -1,6 +1,7 @@
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Models;
+using StajWinForms_API.Dtos;
 
 namespace StajWinForms_API.Controllers;
 
@@ -18,21 +19,24 @@ public class FirmalarController : ControllerBase
     [HttpGet]
     public async Task<ActionResult<IEnumerable<Firmalar>>> GetFirmalar()
     {
-        var firmalar = await _context.Firmalars.ToListAsync();
+        var firmalar = await _context.Firmalars
+            .Select(f => new FirmaDto { FirmaId = f.FirmaId, FirmaAdi = f.FirmaAdi })
+            .ToListAsync();
         return Ok(firmalar);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Firmalar>> FirmaEkle([FromBody] Firmalar firma)
+    public async Task<ActionResult<Firmalar>> FirmaEkle([FromBody] FirmaDto dto)
     {
-        firma.FirmaId = 0;
+        var firma = new Firmalar { FirmaAdi = dto.FirmaAdi };
         _context.Firmalars.Add(firma);
         await _context.SaveChangesAsync();
-        return CreatedAtAction(nameof(GetFirmalar), new { id = firma.FirmaId }, firma);
+        return CreatedAtAction(nameof(GetFirmalar), new { id = firma.FirmaId },
+            new FirmaDto { FirmaId = firma.FirmaId, FirmaAdi = firma.FirmaAdi });
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> FirmaGuncelle(int id, [FromBody] Firmalar dto)
+    public async Task<IActionResult> FirmaGuncelle(int id, [FromBody] FirmaDto dto)
     {
         var firma = await _context.Firmalars.FindAsync(id);
         if (firma == null) return NotFound();
