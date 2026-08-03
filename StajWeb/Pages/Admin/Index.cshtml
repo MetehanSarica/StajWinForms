@@ -25,7 +25,9 @@
           ("btnKaptanEsle",      "Kaptan Eşleme",       "/Admin/KaptanEsleme"),
           ("btnSeferOtobusEsle", "Sefer–Otobüs Eşleme", "/Admin/SeferOtobusEsleme"),
           ("btnKullaniciYonetim","Kullanıcı Yönetimi",  "/Admin/Kullanicilar"),
-          ("btnYetkiAtama",      "Yetki Atama",         "/Admin/YetkiAtama") })
+          ("btnYetkiAtama",      "Yetki Atama",         "/Admin/YetkiAtama"),
+          ("btnBiletArama",      "Bilet Arama",         "/Admin/BiletArama"),
+          ("btnSeferBrowser",    "Sefer Yönetimi",      "/Admin/SeferYonetim") })
     {
         if (Model.Oturum.Yetkiler.Any(y => y.FormAdi == formAdi &&
             (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet)))

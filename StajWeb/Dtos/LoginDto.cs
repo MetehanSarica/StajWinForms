@@ -66,6 +66,13 @@ namespace StajWeb.Dtos
 
     public class SeferDto
     {
+        public int FirmaId { get; set; }
+        public string FirmaAdi { get; set; } = "";
+        public int KalkisSehirId { get; set; }
+        public int VarisSehirId { get; set; }
+        public int SureDakika { get; set; }
+        public decimal Fiyat { get; set; }
+        public int KoltukKapasitesi { get; set; }
         public int SeferId { get; set; }
         public string KalkisSehirAdi { get; set; } = "";
         public string VarisSehirAdi { get; set; } = "";

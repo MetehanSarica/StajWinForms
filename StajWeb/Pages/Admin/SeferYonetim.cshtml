@@ -1,0 +1,215 @@
+@page
+@model StajWeb.Pages.Admin.SeferYonetimModel
+@{
+    ViewData["Title"] = "Sefer Yönetimi";
+    var y = Model.Yetki;
+}
+
+<h4>Sefer Yönetimi</h4>
+<a href="/Admin" class="btn btn-secondary btn-sm mb-3">← Panele Dön</a>
+
+@if (TempData["SuccessMessage"] != null)
+{
+    <div class="alert alert-success">@TempData["SuccessMessage"]</div>
+}
+@if (TempData["ErrorMessage"] != null)
+{
+    <div class="alert alert-danger">@TempData["ErrorMessage"]</div>
+}
+
+@if (y?.Ekle == true)
+{
+    <button class="btn btn-success btn-sm mb-3" data-bs-toggle="modal" data-bs-target="#ekleModal">+ Ekle</button>
+}
+
+<table id="tblSeferler" class="table table-striped table-bordered table-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>ID</th>
+            <th>Firma</th>
+            <th>Kalkış</th>
+            <th>Varış</th>
+            <th>Tarih</th>
+            <th>Süre</th>
+            <th>Fiyat</th>
+            <th>Kapasite</th>
+            <th>Otobüs</th>
+            <th>İşlemler</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model.Seferler)
+        {
+            <tr>
+                <td>@s.SeferId</td>
+                <td>@s.FirmaAdi</td>
+                <td>@s.KalkisSehirAdi</td>
+                <td>@s.VarisSehirAdi</td>
+                <td>@s.KalkisZamani.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@s.SureDakika dk</td>
+                <td>₺@s.Fiyat.ToString("N2")</td>
+                <td>@s.KoltukKapasitesi</td>
+                <td>@(s.OtobusPlaka ?? "—")</td>
+                <td>
+                    @if (y?.Degistir == true)
+                    {
+                        <button class="btn btn-warning btn-sm"
+                                onclick="duzenleAc(@s.SeferId, @s.FirmaId, @s.KalkisSehirId, @s.VarisSehirId,
+                                    '@s.KalkisZamani.ToString("yyyy-MM-ddTHH:mm")', @s.SureDakika,
+                                    '@s.Fiyat.ToString(System.Globalization.CultureInfo.InvariantCulture)',
+                                    @s.KoltukKapasitesi)">
+                            Düzenle
+                        </button>
+                    }
+                    @if (y?.Sil == true)
+                    {
+                        <form method="post" asp-page-handler="Sil" style="display:inline"
+                              onsubmit="return confirm('@s.KalkisSehirAdi → @s.VarisSehirAdi seferi silinsin mi?')">
+                            <input type="hidden" name="seferId" value="@s.SeferId" />
+                            <button type="submit" class="btn btn-danger btn-sm">Sil</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@if (y?.Ekle == true)
+{
+    <div class="modal fade" id="ekleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">Sefer Ekle</h5></div>
+                <form method="post" asp-page-handler="Ekle">
+                    <div class="modal-body row g-2">
+                        <div class="col-12">
+                            <label class="form-label">Firma</label>
+                            <select name="FirmaId" class="form-select form-select-sm" required>
+                                <option value="">-- Seçin --</option>
+                                @foreach (var f in Model.Firmalar)
+                                { <option value="@f.FirmaId">@f.FirmaAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Kalkış Şehri</label>
+                            <select name="KalkisSehirId" class="form-select form-select-sm" required>
+                                <option value="">-- Seçin --</option>
+                                @foreach (var s in Model.Sehirler)
+                                { <option value="@s.SehirId">@s.SehirAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Varış Şehri</label>
+                            <select name="VarisSehirId" class="form-select form-select-sm" required>
+                                <option value="">-- Seçin --</option>
+                                @foreach (var s in Model.Sehirler)
+                                { <option value="@s.SehirId">@s.SehirAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Kalkış Zamanı</label>
+                            <input type="datetime-local" name="KalkisZamani" class="form-control form-control-sm" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Süre (dakika)</label>
+                            <input type="number" name="SureDakika" class="form-control form-control-sm" min="1" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Fiyat (₺)</label>
+                            <input type="number" name="Fiyat" class="form-control form-control-sm" min="0" step="0.01" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Koltuk Kapasitesi</label>
+                            <input type="number" name="KoltukKapasitesi" class="form-control form-control-sm" min="1" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                        <button type="submit" class="btn btn-success">Kaydet</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@if (y?.Degistir == true)
+{
+    <div class="modal fade" id="duzenleModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header"><h5 class="modal-title">Sefer Düzenle</h5></div>
+                <form method="post" asp-page-handler="Duzenle">
+                    <input type="hidden" name="SeferId" id="dSeferId" />
+                    <div class="modal-body row g-2">
+                        <div class="col-12">
+                            <label class="form-label">Firma</label>
+                            <select name="FirmaId" id="dFirmaId" class="form-select form-select-sm" required>
+                                @foreach (var f in Model.Firmalar)
+                                { <option value="@f.FirmaId">@f.FirmaAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Kalkış Şehri</label>
+                            <select name="KalkisSehirId" id="dKalkisId" class="form-select form-select-sm" required>
+                                @foreach (var s in Model.Sehirler)
+                                { <option value="@s.SehirId">@s.SehirAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Varış Şehri</label>
+                            <select name="VarisSehirId" id="dVarisId" class="form-select form-select-sm" required>
+                                @foreach (var s in Model.Sehirler)
+                                { <option value="@s.SehirId">@s.SehirAdi</option> }
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Kalkış Zamanı</label>
+                            <input type="datetime-local" name="KalkisZamani" id="dZaman" class="form-control form-control-sm" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Süre (dakika)</label>
+                            <input type="number" name="SureDakika" id="dSure" class="form-control form-control-sm" min="1" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Fiyat (₺)</label>
+                            <input type="number" name="Fiyat" id="dFiyat" class="form-control form-control-sm" min="0" step="0.01" required />
+                        </div>
+                        <div class="col-6">
+                            <label class="form-label">Koltuk Kapasitesi</label>
+                            <input type="number" name="KoltukKapasitesi" id="dKapasite" class="form-control form-control-sm" min="1" required />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                        <button type="submit" class="btn btn-warning">Güncelle</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(function () {
+            $('#tblSeferler').DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' }, order: [[0, 'desc']] });
+        });
+
+        function duzenleAc(seferId, firmaId, kalkisId, varisId, zaman, sure, fiyat, kapasite) {
+            document.getElementById('dSeferId').value = seferId;
+            document.getElementById('dFirmaId').value = firmaId;
+            document.getElementById('dKalkisId').value = kalkisId;
+            document.getElementById('dVarisId').value = varisId;
+            document.getElementById('dZaman').value = zaman;
+            document.getElementById('dSure').value = sure;
+            document.getElementById('dFiyat').value = fiyat;
+            document.getElementById('dKapasite').value = kapasite;
+            new bootstrap.Modal(document.getElementById('duzenleModal')).show();
+        }
+    </script>
+}

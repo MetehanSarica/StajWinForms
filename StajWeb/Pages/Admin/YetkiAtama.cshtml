@@ -67,4 +67,50 @@
             <button type="submit" class="btn btn-primary">Kaydet</button>
         }
     </form>
+
+    <div class="mt-2 d-flex gap-2">
+        @if (y?.Kaydet == true)
+        {
+            <form method="post" asp-page-handler="Temizle"
+                  onsubmit="return confirm('@Model.SeciliKullanici.KullaniciAdi kullanıcısının tüm yetkileri temizlensin mi?')">
+                <input type="hidden" name="kullaniciId" value="@Model.SeciliKullanici.KullaniciId" />
+                <button type="submit" class="btn btn-warning btn-sm">Tümünü Temizle</button>
+            </form>
+        }
+
+        <button class="btn btn-outline-secondary btn-sm" data-bs-toggle="modal" data-bs-target="#kopyalaModal">
+            Yetkileri Kopyala →
+        </button>
+    </div>
+
+    <!-- Kopyala Modal -->
+    <div class="modal fade" id="kopyalaModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Yetkileri Kopyala — @Model.SeciliKullanici.KullaniciAdi</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <form method="post" asp-page-handler="Kopyala">
+                    <input type="hidden" name="kaynakId" value="@Model.SeciliKullanici.KullaniciId" />
+                    <div class="modal-body">
+                        <p class="text-muted small mb-2">Hedef kullanıcıları seçin:</p>
+                        @foreach (var k in Model.Kullanicilar.Where(k => k.KullaniciId != Model.SeciliKullanici.KullaniciId))
+                        {
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" name="hedefler" value="@k.KullaniciId" id="hdf_@k.KullaniciId" />
+                                <label class="form-check-label" for="hdf_@k.KullaniciId">
+                                    @k.KullaniciAdi (@(k.AdSoyad ?? "—"))
+                                </label>
+                            </div>
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                        <button type="submit" class="btn btn-primary">Kopyala</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
 }

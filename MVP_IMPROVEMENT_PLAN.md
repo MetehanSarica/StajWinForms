@@ -403,6 +403,9 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] **Yolcu Listesi** eklendi: `YolcuListesiForm` — sefer bazlı yolcu listesi (koltuk no, ad soyad, TC, cinsiyet). Sefer Yönetimi ekranından açılıyor.
 - [X] `AdminPanelForm`'a "Sefer Yönetimi" (`btnSeferBrowser`) ve "Bilet Arama" (`btnBiletArama`) butonları eklendi.
 - [X] `YetkiAtamaForm._formAdlari`'na "Sefer Yönetimi" ve "Bilet Arama" yetki satırları eklendi.
+- [X] **Web Bilet Arama (Admin)** eklendi: `BiletArama.cshtml` — kalkış/varış/tarih filtreli, DataTables tablosu. `Index.cshtml`'e kart eklendi.
+- [X] **Web YetkiAtama genişletildi**: `FormAdlari`'na btnSeferBrowser, btnBiletArama, btnDashboard eklendi; "Tümünü Temizle" butonu ve "Yetkileri Kopyala" modal eklendi (`OnPostTemizleAsync`, `OnPostKopyalaAsync`).
+- [X] **Web Sefer Yönetimi (Admin CRUD)** eklendi: `SeferYonetim.cshtml` — DataTables listesi, Ekle/Düzenle modal, Sil; `SeferDto` eksik alanlarla güncellendi. `Index.cshtml`'e kart eklendi.
 
 ---
 
