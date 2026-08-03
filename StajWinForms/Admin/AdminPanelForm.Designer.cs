@@ -201,7 +201,7 @@ namespace StajWinForms
             // 
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(352, 640);
+            ClientSize = new Size(352, 700);
             Controls.Add(lblBaslik);
             Controls.Add(lblHosgeldin);
             Controls.Add(flpButonlar);

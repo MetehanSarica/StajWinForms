@@ -36,6 +36,14 @@ namespace StajWinForms.Admin
                 txtAdres.Text = _mevcut.Adres ?? "";
                 txtTelefon.Text = _mevcut.Telefon ?? "";
             }
+
+            txtTelefon.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.Simple;
+            txtTelefon.Properties.Mask.EditMask = @"\0(000) 000 00 00";
+            txtTelefon.MouseUp += (s, e) =>
+            {
+                int firstEmpty = txtTelefon.Text.IndexOf('_');
+                txtTelefon.SelectionStart = firstEmpty >= 0 ? firstEmpty : txtTelefon.Text.Length;
+            };
         }
 
         private async void btnKaydet_Click(object sender, EventArgs e)
