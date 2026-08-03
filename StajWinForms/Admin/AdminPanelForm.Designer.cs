@@ -56,17 +56,17 @@ namespace StajWinForms
             // 
             flpButonlar.AutoSize = true;
             flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnDashboard);
+            flpButonlar.Controls.Add(btnSeferBrowser);
+            flpButonlar.Controls.Add(btnBiletArama);
             flpButonlar.Controls.Add(btnFirmaBrowser);
             flpButonlar.Controls.Add(btnOtobusBrowser);
-            flpButonlar.Controls.Add(btnFirmaOtobusEsle);
             flpButonlar.Controls.Add(btnKaptanBrowser);
+            flpButonlar.Controls.Add(btnFirmaOtobusEsle);
             flpButonlar.Controls.Add(btnKaptanEsle);
             flpButonlar.Controls.Add(btnSeferOtobusEsle);
             flpButonlar.Controls.Add(btnKullaniciYonetim);
             flpButonlar.Controls.Add(btnYetkiAtama);
-            flpButonlar.Controls.Add(btnDashboard);
-            flpButonlar.Controls.Add(btnSeferBrowser);
-            flpButonlar.Controls.Add(btnBiletArama);
             flpButonlar.Controls.Add(btnCikis);
             flpButonlar.FlowDirection = FlowDirection.TopDown;
             flpButonlar.Location = new Point(20, 85);

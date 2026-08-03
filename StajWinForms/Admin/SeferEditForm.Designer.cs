@@ -109,8 +109,12 @@ namespace StajWinForms.Admin
             //
             spSure.Location = new Point(130, 156);
             spSure.Name = "spSure";
+            spSure.Properties.IsFloatValue = false;
             spSure.Properties.MaxValue = 9999;
-            spSure.Properties.MinValue = 1;
+            spSure.Properties.MinValue = 0;
+            spSure.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            spSure.Properties.DisplayFormat.FormatString = "{0:0}";
+            spSure.Properties.EditFormat.FormatString = "{0:0}";
             spSure.Size = new Size(220, 20);
             spSure.TabIndex = 4;
             //
@@ -126,6 +130,9 @@ namespace StajWinForms.Admin
             spFiyat.Name = "spFiyat";
             spFiyat.Properties.MaxValue = 99999;
             spFiyat.Properties.MinValue = 0;
+            spFiyat.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            spFiyat.Properties.DisplayFormat.FormatString = "{0:0.##}";
+            spFiyat.Properties.EditFormat.FormatString = "{0:0.##}";
             spFiyat.Size = new Size(220, 20);
             spFiyat.TabIndex = 5;
             //
@@ -139,8 +146,12 @@ namespace StajWinForms.Admin
             //
             spKapasite.Location = new Point(130, 226);
             spKapasite.Name = "spKapasite";
+            spKapasite.Properties.IsFloatValue = false;
             spKapasite.Properties.MaxValue = 999;
-            spKapasite.Properties.MinValue = 1;
+            spKapasite.Properties.MinValue = 0;
+            spKapasite.Properties.AllowNullInput = DevExpress.Utils.DefaultBoolean.True;
+            spKapasite.Properties.DisplayFormat.FormatString = "{0:0}";
+            spKapasite.Properties.EditFormat.FormatString = "{0:0}";
             spKapasite.Size = new Size(220, 20);
             spKapasite.TabIndex = 6;
             //

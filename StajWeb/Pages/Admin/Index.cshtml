@@ -12,12 +12,10 @@
 </div>
 
 <div class="row g-3">
-    <div class="col-md-3">
-        <a href="/Admin/Dashboard" class="card text-decoration-none h-100">
-            <div class="card-body text-center fw-bold">Dashboard</div>
-        </a>
-    </div>
     @foreach (var (formAdi, baslik, link) in new[] {
+          ("btnDashboard",       "Dashboard",           "/Admin/Dashboard"),
+          ("btnSeferBrowser",    "Sefer Yönetimi",      "/Admin/SeferYonetim"),
+          ("btnBiletArama",      "Bilet Arama",         "/Admin/BiletArama"),
           ("btnFirmaBrowser",    "Firmalar",            "/Admin/Firmalar"),
           ("btnOtobusBrowser",   "Otobüsler",           "/Admin/Otobusler"),
           ("btnKaptanBrowser",   "Kaptanlar",           "/Admin/Kaptanlar"),
@@ -25,9 +23,7 @@
           ("btnKaptanEsle",      "Kaptan Eşleme",       "/Admin/KaptanEsleme"),
           ("btnSeferOtobusEsle", "Sefer–Otobüs Eşleme", "/Admin/SeferOtobusEsleme"),
           ("btnKullaniciYonetim","Kullanıcı Yönetimi",  "/Admin/Kullanicilar"),
-          ("btnYetkiAtama",      "Yetki Atama",         "/Admin/YetkiAtama"),
-          ("btnBiletArama",      "Bilet Arama",         "/Admin/BiletArama"),
-          ("btnSeferBrowser",    "Sefer Yönetimi",      "/Admin/SeferYonetim") })
+          ("btnYetkiAtama",      "Yetki Atama",         "/Admin/YetkiAtama") })
     {
         if (Model.Oturum.Yetkiler.Any(y => y.FormAdi == formAdi &&
             (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet)))

@@ -13,6 +13,8 @@ namespace StajWinForms_API.Dtos
         public string FirmaAdi { get; set; } = "";
         public string KalkisSehirAdi { get; set; } = "";
         public string VarisSehirAdi { get; set; } = "";
+        public int SureDakika { get; set; }
+        public int KoltukKapasitesi { get; set; }
         public int? OtobusId { get; set; }
         public string? OtobusPlaka { get; set; }
     }

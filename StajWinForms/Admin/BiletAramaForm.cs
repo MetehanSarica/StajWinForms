@@ -31,6 +31,9 @@ namespace StajWinForms.Admin
             cboVaris.Properties.Items.AddRange(sehirler);
             cboKalkis.SelectedIndex = 0;
             cboVaris.SelectedIndex = 0;
+            cboKalkis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cboVaris.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            dtTarih.MouseClick += (s, ev) => dtTarih.ShowPopup();
         }
 
         private async void btnAra_Click(object sender, EventArgs e)

@@ -36,6 +36,11 @@ namespace StajWinForms.Admin
             cboKalkis.Properties.Items.AddRange(sehirler);
             cboVaris.Properties.Items.AddRange(sehirler);
 
+            cboFirma.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cboKalkis.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            cboVaris.Properties.TextEditStyle = DevExpress.XtraEditors.Controls.TextEditStyles.DisableTextEditor;
+            dtKalkisZamani.MouseClick += (s, ev) => dtKalkisZamani.ShowPopup();
+
             if (_mevcut != null)
             {
                 cboFirma.SelectedItem = firmalar.FirstOrDefault(f => f.FirmaId == _mevcut.FirmaId);
