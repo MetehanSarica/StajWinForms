@@ -1,0 +1,160 @@
+@page
+@model StajWeb.Pages.Admin.OtogarlarModel
+@{
+    ViewData["Title"] = "Otogar Yönetimi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Otogar Yönetimi</h4>
+    @if (Model.Yetki?.Ekle == true)
+    {
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEkle">
+            + Yeni Otogar
+        </button>
+    }
+</div>
+
+<table id="tblOtogarlar" class="table table-bordered table-hover table-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Şehir</th>
+            <th>Otogar Adı</th>
+            <th>Adres</th>
+            <th>Telefon</th>
+            <th style="width:130px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var o in Model.Otogarlar)
+        {
+            <tr>
+                <td>@o.SehirAdi</td>
+                <td>@o.OtogarAdi</td>
+                <td>@(o.Adres ?? "-")</td>
+                <td>@(o.Telefon ?? "-")</td>
+                <td class="text-center">
+                    @if (Model.Yetki?.Degistir == true)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                onclick="duzenleAc(@o.OtogarId, @o.SehirId, '@o.OtogarAdi', '@(o.Adres ?? "")', '@(o.Telefon ?? "")')">
+                            Düzenle
+                        </button>
+                    }
+                    @if (Model.Yetki?.Sil == true)
+                    {
+                        <form method="post" asp-page-handler="Sil" asp-route-otogarId="@o.OtogarId" class="d-inline"
+                              onsubmit="return confirm('@o.OtogarAdi silinecek. Emin misiniz?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Ekle Modal -->
+<div class="modal fade" id="modalEkle" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Otogar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Ekle">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Şehir</label>
+                        <select name="sehirId" class="form-select" required>
+                            <option value="">— Seçin —</option>
+                            @foreach (var s in Model.Sehirler)
+                            {
+                                <option value="@s.SehirId">@s.SehirAdi</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Otogar Adı</label>
+                        <input type="text" name="otogarAdi" class="form-control" required maxlength="100" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Adres</label>
+                        <input type="text" name="adres" class="form-control" maxlength="200" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="text" name="telefon" class="form-control" maxlength="20" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-success">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Düzenle Modal -->
+<div class="modal fade" id="modalDuzenle" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Otogar Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Duzenle">
+                <input type="hidden" name="otogarId" id="editOtogarId" />
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Şehir</label>
+                        <select name="sehirId" id="editSehirId" class="form-select" required>
+                            <option value="">— Seçin —</option>
+                            @foreach (var s in Model.Sehirler)
+                            {
+                                <option value="@s.SehirId">@s.SehirAdi</option>
+                            }
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Otogar Adı</label>
+                        <input type="text" name="otogarAdi" id="editOtogarAdi" class="form-control" required maxlength="100" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Adres</label>
+                        <input type="text" name="adres" id="editAdres" class="form-control" maxlength="200" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Telefon</label>
+                        <input type="text" name="telefon" id="editTelefon" class="form-control" maxlength="20" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        $('#tblOtogarlar').DataTable({
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' },
+            order: [[0, 'asc']],
+            pageLength: 25
+        });
+    });
+
+    function duzenleAc(otogarId, sehirId, otogarAdi, adres, telefon) {
+        document.getElementById('editOtogarId').value = otogarId;
+        document.getElementById('editSehirId').value = sehirId;
+        document.getElementById('editOtogarAdi').value = otogarAdi;
+        document.getElementById('editAdres').value = adres;
+        document.getElementById('editTelefon').value = telefon;
+        new bootstrap.Modal(document.getElementById('modalDuzenle')).show();
+    }
+</script>
+}
