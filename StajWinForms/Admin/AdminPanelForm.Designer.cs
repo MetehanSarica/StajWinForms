@@ -24,6 +24,7 @@ namespace StajWinForms
             btnOtobusBrowser = new SimpleButton();
             btnFirmaOtobusEsle = new SimpleButton();
             btnKaptanBrowser = new SimpleButton();
+            btnOtogarBrowser = new SimpleButton();
             btnKaptanEsle = new SimpleButton();
             btnSeferOtobusEsle = new SimpleButton();
             btnKullaniciYonetim = new SimpleButton();
@@ -62,6 +63,7 @@ namespace StajWinForms
             flpButonlar.Controls.Add(btnFirmaBrowser);
             flpButonlar.Controls.Add(btnOtobusBrowser);
             flpButonlar.Controls.Add(btnKaptanBrowser);
+            flpButonlar.Controls.Add(btnOtogarBrowser);
             flpButonlar.Controls.Add(btnFirmaOtobusEsle);
             flpButonlar.Controls.Add(btnKaptanEsle);
             flpButonlar.Controls.Add(btnSeferOtobusEsle);
@@ -93,8 +95,16 @@ namespace StajWinForms
             btnOtobusBrowser.Text = "Otobüs Yönetimi";
             btnOtobusBrowser.Click += btnOtobusBrowser_Click;
             // 
+            // btnOtogarBrowser
+            //
+            btnOtogarBrowser.Location = new Point(3, 3);
+            btnOtogarBrowser.Name = "btnOtogarBrowser";
+            btnOtogarBrowser.Size = new Size(300, 40);
+            btnOtogarBrowser.TabIndex = 12;
+            btnOtogarBrowser.Text = "Otogar Yönetimi";
+            btnOtogarBrowser.Click += btnOtogarBrowser_Click;
             // btnFirmaOtobusEsle
-            // 
+            //
             btnFirmaOtobusEsle.Location = new Point(3, 95);
             btnFirmaOtobusEsle.Name = "btnFirmaOtobusEsle";
             btnFirmaOtobusEsle.Size = new Size(300, 40);
@@ -222,6 +232,7 @@ namespace StajWinForms
         private SimpleButton btnDashboard;
         private SimpleButton btnSeferBrowser;
         private SimpleButton btnBiletArama;
+        private SimpleButton btnOtogarBrowser;
         private SimpleButton btnCikis;
     }
 }

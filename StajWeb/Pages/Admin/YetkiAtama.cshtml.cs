@@ -23,6 +23,7 @@ namespace StajWeb.Pages.Admin
             ["btnSeferBrowser"] = "Sefer Yönetimi",
             ["btnBiletArama"] = "Bilet Arama",
             ["btnDashboard"] = "Dashboard",
+            ["btnOtogarBrowser"] = "Otogar Yönetimi",
             ["btnMusteriBrowser"] = "Müşteriler"
         };
 

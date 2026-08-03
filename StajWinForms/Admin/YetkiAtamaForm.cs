@@ -15,6 +15,7 @@ namespace StajWinForms
             ["btnOtobusBrowser"] = "Otobüs Yönetimi",
             ["btnFirmaOtobusEsle"] = "Firma-Otobüs Eşleme",
             ["btnKaptanBrowser"] = "Kaptan Yönetimi",
+            ["btnOtogarBrowser"] = "Otogar Yönetimi",
             ["btnKaptanEsle"] = "Otobüs-Kaptan Eşleme",
             ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
             ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",

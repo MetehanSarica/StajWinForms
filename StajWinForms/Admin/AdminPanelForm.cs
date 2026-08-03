@@ -33,6 +33,11 @@ namespace StajWinForms
             new KaptanBrowserForm().ShowDialog();
         }
 
+        private void btnOtogarBrowser_Click(object sender, EventArgs e)
+        {
+            new OtogarBrowserForm().ShowDialog();
+        }
+
         private void btnKaptanEsle_Click(object sender, EventArgs e)
         {
             new KaptanEslemeForm().ShowDialog();
