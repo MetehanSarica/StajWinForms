@@ -387,8 +387,8 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] Structured logs written to file for warnings/errors in production. (BiletlerController 500, AuthController başarısız login loglanıyor)
 - [X] All Web `GetFromJsonAsync` calls handle null response.
 - [ ] Admin forms include anti-forgery tokens. (atlandı)
-- [ ] `tmp_crashtest/` removed; stale planning `.md` files archived under `docs/history/`.
-- [ ] `dotnet build` succeeds with zero warnings.
+- [X] `tmp_crashtest/` removed; stale planning `.md` files archived under `docs/history/`.
+- [X] `dotnet build` succeeds with zero warnings.
 - [ ] Manual smoke test: guest can search, buy, cancel; admin can log in, add firma, revoke a permission (and it takes effect immediately).
 
 ### Ek tamamlananlar (plan sonrası)
@@ -406,6 +406,13 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] **Web Bilet Arama (Admin)** eklendi: `BiletArama.cshtml` — kalkış/varış/tarih filtreli, DataTables tablosu. `Index.cshtml`'e kart eklendi.
 - [X] **Web YetkiAtama genişletildi**: `FormAdlari`'na btnSeferBrowser, btnBiletArama, btnDashboard eklendi; "Tümünü Temizle" butonu ve "Yetkileri Kopyala" modal eklendi (`OnPostTemizleAsync`, `OnPostKopyalaAsync`).
 - [X] **Web Sefer Yönetimi (Admin CRUD)** eklendi: `SeferYonetim.cshtml` — DataTables listesi, Ekle/Düzenle modal, Sil; `SeferDto` eksik alanlarla güncellendi. `Index.cshtml`'e kart eklendi.
+- [X] `tmp_crashtest/` silindi; stale planning `.md` dosyaları `docs/history/` altına taşındı.
+- [X] `dotnet build` sıfır hata ve sıfır uyarı (DevExpress lisans DX1000/DX1001 dışında).
+- [X] **WinForms Sefer Yönetimi UI iyileştirmeleri**: SpinEdit'lerde virgül kaldırıldı, boş varsayılan değer (`AllowNullInput`), Firma/Kalkış/Varış ComboBox'ları dropdown-only (`DisableTextEditor`), Kalkış Zamanı tıklanınca takvim açılıyor (`ShowPopup`).
+- [X] **WinForms Bilet Arama UI iyileştirmeleri**: Kalkış/Varış ComboBox'ları dropdown-only, Tarih tıklanınca takvim açılıyor.
+- [X] Admin panel buton sırası düzenlendi (WinForms + Web): Dashboard → Sefer Yönetimi → Bilet Arama → Firmalar → Otobüsler → Kaptanlar → Eşlemeler → Kullanıcı/Yetki.
+- [X] **Müşteri Yönetimi (Web Admin)** eklendi: `Musteriler.cshtml` — TC/ad soyad filtreli liste, Biletler modal (müşteri bilet geçmişi), Sil. API: `GET /api/musteri?ara=`, `GET /api/musteri/{id}/biletler`, `DELETE /api/musteri/{id}`. `MusteriDto`'ya Tc/Email/Telefon eklendi. `Index.cshtml`'e kart, `YetkiAtama`'ya `btnMusteriBrowser` eklendi.
+- [X] **Dashboard Firma Gelir Dağılımı grafiği** eklendi: Web → Chart.js doughnut grafik; WinForms → DevExpress Pie chart (`chartPie`). API: `IstatistikDto`'ya `FirmaGelirler` listesi eklendi, firma bazında gelir + bilet sayısı hesaplanıyor.
 
 ---
 

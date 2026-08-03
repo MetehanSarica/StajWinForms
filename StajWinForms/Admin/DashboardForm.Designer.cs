@@ -15,7 +15,9 @@ namespace StajWinForms.Admin
         {
             tileControl = new DevExpress.XtraEditors.TileControl();
             chartControl = new DevExpress.XtraCharts.ChartControl();
+            chartPie = new DevExpress.XtraCharts.ChartControl();
             ((System.ComponentModel.ISupportInitialize)chartControl).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)chartPie).BeginInit();
             SuspendLayout();
             //
             // tileControl
@@ -30,12 +32,19 @@ namespace StajWinForms.Admin
             chartControl.Dock = DockStyle.Fill;
             chartControl.Name = "chartControl";
             //
+            // chartPie
+            //
+            chartPie.Dock = DockStyle.Right;
+            chartPie.Width = 380;
+            chartPie.Name = "chartPie";
+            //
             // DashboardForm
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 520);
+            ClientSize = new Size(1000, 520);
             Controls.Add(chartControl);
+            Controls.Add(chartPie);
             Controls.Add(tileControl);
             FormBorderStyle = FormBorderStyle.FixedSingle;
             MaximizeBox = false;
@@ -43,10 +52,12 @@ namespace StajWinForms.Admin
             StartPosition = FormStartPosition.CenterParent;
             Text = "Dashboard";
             ((System.ComponentModel.ISupportInitialize)chartControl).EndInit();
+            ((System.ComponentModel.ISupportInitialize)chartPie).EndInit();
             ResumeLayout(false);
         }
 
         internal DevExpress.XtraEditors.TileControl tileControl;
         internal DevExpress.XtraCharts.ChartControl chartControl;
+        internal DevExpress.XtraCharts.ChartControl chartPie;
     }
 }

@@ -43,6 +43,13 @@ namespace StajWinForms.Admin
 
             chartControl.Series.Add(series);
             ((XYDiagram)chartControl.Diagram).AxisX.Label.Angle = -15;
+
+            var pieSeries = new Series("Firma Geliri", ViewType.Pie);
+            foreach (var f in data.FirmaGelirler)
+                pieSeries.Points.Add(new SeriesPoint(f.FirmaAdi, (double)f.ToplamGelir));
+            pieSeries.Label.TextPattern = "{A}: {VP:p0}";
+            pieSeries.LabelsVisibility = DevExpress.Utils.DefaultBoolean.True;
+            chartPie.Series.Add(pieSeries);
         }
 
         private DevExpress.XtraEditors.TileItem CreateTile(string baslik, string deger, Color renk)
@@ -69,11 +76,18 @@ namespace StajWinForms.Admin
         public decimal ToplamGelir { get; set; }
         public int AktifSeferler { get; set; }
         public List<DashboardGuzergahDto> PopulerGuzergahlar { get; set; } = new();
+        public List<DashboardFirmaGelirDto> FirmaGelirler { get; set;  } = new();
     }
 
     class DashboardGuzergahDto
     {
         public string Guzergah { get; set; } = "";
         public int BiletSayisi { get; set; }
+    }
+
+    class DashboardFirmaGelirDto
+    {
+        public string FirmaAdi { get; set; } = "";
+        public decimal ToplamGelir { get; set; }
     }
 }

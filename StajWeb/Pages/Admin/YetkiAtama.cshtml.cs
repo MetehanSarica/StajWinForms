@@ -22,7 +22,8 @@ namespace StajWeb.Pages.Admin
             ["btnYetkiAtama"] = "Yetki Atama",
             ["btnSeferBrowser"] = "Sefer Yönetimi",
             ["btnBiletArama"] = "Bilet Arama",
-            ["btnDashboard"] = "Dashboard"
+            ["btnDashboard"] = "Dashboard",
+            ["btnMusteriBrowser"] = "Müşteriler"
         };
 
         public List<KullaniciDto> Kullanicilar { get; set; } = new();

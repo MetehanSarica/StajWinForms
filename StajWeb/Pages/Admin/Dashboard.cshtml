@@ -59,3 +59,37 @@
         }
     </div>
 </div>
+
+<div class="card mt-4">
+    <div class="card-header fw-bold">Firma Gelir Dağılımı</div>
+    <div class="card-body d-flex justify-content-center">
+        <canvas id="firmaGelirChart" style="max-width:420px; max-height:420px;"></canvas>
+    </div>
+</div>
+
+@section Scripts {
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script>
+    var labels = [@Html.Raw(string.Join(",", Model.Istatistik.FirmaGelirler.Select(f => $"'{f.FirmaAdi}'")))];
+    var values = [@Html.Raw(string.Join(",", Model.Istatistik.FirmaGelirler.Select(f => f.ToplamGelir.ToString(System.Globalization.CultureInfo.InvariantCulture))))];
+    var colors = ['#0078D7','#10781B','#CA5010','#8764B8','#038387','#C43E1C','#107C41','#002050'];
+
+    new Chart(document.getElementById('firmaGelirChart'), {
+        type: 'doughnut',
+        data: {
+            labels: labels,
+            datasets: [{ data: values, backgroundColor: colors }]
+        },
+        options: {
+            plugins: {
+                legend: { position: 'bottom' },
+                tooltip: {
+                    callbacks: {
+                        label: ctx => ' ₺' + Number(ctx.raw).toLocaleString('tr-TR', {minimumFractionDigits:2})
+                    }
+                }
+            }
+        }
+    });
+</script>
+}

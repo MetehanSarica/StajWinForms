@@ -1,8 +1,7 @@
 {
   "profiles": {
     "StajWinForms": {
-      "commandName": "Project",
-      "commandLineArgs": "adminp"
+      "commandName": "Project"
     }
   }
 }

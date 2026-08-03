@@ -1,0 +1,132 @@
+@page
+@model StajWeb.Pages.Admin.MusterilerModel
+@{
+    ViewData["Title"] = "Müşteriler";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Müşteriler</h4>
+</div>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-auto">
+        <input type="text" name="Ara" value="@Model.Ara" class="form-control"
+               placeholder="TC veya Ad Soyad" style="width:250px" />
+    </div>
+    <div class="col-auto">
+        <button type="submit" class="btn btn-primary">Ara</button>
+    </div>
+    @if (!string.IsNullOrEmpty(Model.Ara))
+    {
+        <div class="col-auto">
+            <a href="/Admin/Musteriler" class="btn btn-outline-secondary">Temizle</a>
+        </div>
+    }
+</form>
+
+<table id="tblMusteriler" class="table table-bordered table-hover table-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>TC</th>
+            <th>Ad Soyad</th>
+            <th>Cinsiyet</th>
+            <th>Şehir</th>
+            <th>E-posta</th>
+            <th>Telefon</th>
+            <th>Kayıt Tarihi</th>
+            <th style="width:130px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var m in Model.Musteriler)
+        {
+            <tr>
+                <td>@m.Tc</td>
+                <td>@m.Ad @m.Soyad</td>
+                <td>@m.Cinsiyet</td>
+                <td>@(m.Sehir ?? "-")</td>
+                <td>@(m.Email ?? "-")</td>
+                <td>@(m.Telefon ?? "-")</td>
+                <td>@(m.KayitTarihi?.ToString("dd.MM.yyyy") ?? "-")</td>
+                <td class="text-center">
+                    <button type="button" class="btn btn-sm btn-outline-info"
+                            onclick="biletleriGoster(@m.Id, '@m.Ad @m.Soyad')">
+                        Biletler
+                    </button>
+                    @if (Model.Yetki?.Sil == true)
+                    {
+                        <form method="post" asp-page-handler="Sil" asp-route-id="@m.Id" class="d-inline"
+                              onsubmit="return confirm('@m.Ad @m.Soyad adlı müşteri ve tüm biletleri silinecek. Emin misiniz?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Biletler Modal -->
+<div class="modal fade" id="modalBiletler" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalBiletlerBaslik">Biletler</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-sm table-bordered">
+                    <thead class="table-secondary">
+                        <tr>
+                            <th>Bilet No</th>
+                            <th>Firma</th>
+                            <th>Kalkış</th>
+                            <th>Varış</th>
+                            <th>Kalkış Zamanı</th>
+                            <th>Koltuk</th>
+                            <th>Fiyat</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblBiletlerBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        $('#tblMusteriler').DataTable({
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' },
+            order: [[1, 'asc']],
+            pageLength: 25
+        });
+    });
+
+    function biletleriGoster(musteriId, adSoyad) {
+        document.getElementById('modalBiletlerBaslik').textContent = adSoyad + ' — Biletler';
+        document.getElementById('tblBiletlerBody').innerHTML =
+            '<tr><td colspan="7" class="text-center">Yükleniyor...</td></tr>';
+        var modal = new bootstrap.Modal(document.getElementById('modalBiletler'));
+        modal.show();
+
+        fetch('?handler=Biletler&id=' + musteriId)
+            .then(r => r.json())
+            .then(data => {
+                if (!data.length) {
+                    document.getElementById('tblBiletlerBody').innerHTML =
+                        '<tr><td colspan="7" class="text-center text-muted">Bilet bulunamadı.</td></tr>';
+                    return;
+                }
+                var rows = data.map(b =>
+                    '<tr><td>' + b.biletId + '</td><td>' + b.firmaAdi + '</td><td>' +
+                    b.kalkisSehir + '</td><td>' + b.varisSehir + '</td><td>' +
+                    new Date(b.kalkisZamani).toLocaleString('tr-TR') + '</td><td>' +
+                    b.koltukNo + '</td><td>₺' + Number(b.fiyat).toFixed(2) + '</td></tr>'
+                ).join('');
+                document.getElementById('tblBiletlerBody').innerHTML = rows;
+            });
+    }
+</script>
+}

@@ -96,6 +96,8 @@ namespace StajWinForms.Admin
             Close();
         }
 
+        
+
         record FirmaItem(int FirmaId, string FirmaAdi) { public override string ToString() => FirmaAdi; }
         record SehirItem(int SehirId, string SehirAdi) { public override string ToString() => SehirAdi; }
     }

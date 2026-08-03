@@ -44,12 +44,24 @@ namespace StajWinForms_API.Controllers
                 .Take(5)
                 .ToListAsync();
 
+            var firmaGelirler = await _context.Biletlers
+                .GroupBy(b => b.Sefer.Firma.FirmaAdi)
+                .Select(g => new FirmaGelirDto
+                {
+                    FirmaAdi = g.Key ?? "Bilinmiyor",
+                    ToplamGelir = g.Sum(b => (decimal?)b.Sefer.Fiyat) ?? 0,
+                    BiletSayisi = g.Count()
+                })
+                .OrderByDescending(f => f.ToplamGelir)
+                .ToListAsync();
+
             return Ok(new IstatistikDto
             {
                 ToplamBilet = toplamBilet,
                 ToplamGelir = bugunkuGelir,
                 AktifSeferler = aktifSefer,
-                PopulerGuzergahlar = populer
+                PopulerGuzergahlar = populer,
+                FirmaGelirler = firmaGelirler
             });
         }
     }

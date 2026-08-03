@@ -35,9 +35,9 @@
 - [X] **Firma Yönetimi**: liste geliyor, ekle/düzenle/sil çalışıyor
 - [x] **Otobüs Yönetimi**: liste geliyor, ekle/sil çalışıyor
 - [X] **Kaptan Yönetimi**: liste geliyor, ekle/sil çalışıyor
-- [ ] **Sefer Yönetimi**: liste geliyor, ekle/düzenle/sil çalışıyor (Sefer Oluşturma Hatası çözüldü. textboxlar düzenlenecek(virgülleri kaldırılacak, 0 yerine varsayılan değeri boş olacak ), firma, kalkissehir ve varissehir dropdown şeklinde olacak, kalkis zamanina tiklaninca takvim acilacak)
+- [X] **Sefer Yönetimi**: liste geliyor, ekle/düzenle/sil çalışıyor 
 - [X] **Sefer Yönetimi → Yolcular**: sefer seçilip Yolcular açılıyor, liste geliyor
-- [ ] **Bilet Arama**: filtre seçilip arama yapılıyor, sonuçlar geliyor (comboboxlarda kalkis ve varis sehirlari dropdown seklinde menu acacak, tarih'e takvim olacak)
+- [X] **Bilet Arama**: filtre seçilip arama yapılıyor, sonuçlar geliyor
 - [X] **Kullanıcı Yönetimi**: liste geliyor, ekle/düzenle/sil çalışıyor
 - [X] **Yetki Atama**: kullanıcı seçilip yetkiler gösteriliyor, kaydediliyor
 - [X] **Yetki Atama → Kopyala**: modal açılıyor, hedef seçilip kopyalanıyor
