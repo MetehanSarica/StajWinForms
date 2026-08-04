@@ -48,6 +48,7 @@ namespace StajWinForms
             {
                 var json = await AppConfig.Http.GetStringAsync("api/personel");
                 _tumKaptanlar = JsonSerializer.Deserialize<List<KaptanItem>>(json, _jsonOpts) ?? new();
+                _tumKaptanlar = _tumKaptanlar.Where(p => p.Unvan == "Şoför" || p.Unvan == "Kaptan").ToList();
             }
             catch (Exception ex) { XtraMessageBox.Show("Personel yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
@@ -106,7 +107,7 @@ namespace StajWinForms
         }
 
         private class OtobusItem{ public int OtobusId { get; set; } public string Plaka { get; set; } = ""; public override string ToString() => Plaka; }
-        private class KaptanItem { public int Id { get; set; } public string Ad { get; set; } = ""; public string Soyad { get; set; } = ""; public override string ToString() => $"{Ad} {Soyad}"; }
+        private class KaptanItem { public int Id { get; set; } public string Ad { get; set; } = ""; public string Soyad { get; set; } = ""; public string? Unvan { get; set; } = ""; public override string ToString() => $"{Ad} {Soyad}"; }
         private class KaptanAtamaItem { public int Id { get; set; } public int OtobusId { get; set; } public int PersonelId { get; set; } public string PersonelAdSoyad { get; set; } = ""; public override string ToString() => PersonelAdSoyad; }
     }
 }

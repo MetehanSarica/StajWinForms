@@ -36,6 +36,7 @@ namespace StajWinForms
             {
                 var json = await AppConfig.Http.GetStringAsync("api/personel");
                 _personeller = JsonSerializer.Deserialize<List<PersonelModel>>(json, _jsonOpts) ?? new();
+                _personeller = _personeller.Where(p => p.Unvan == "Şoför" || p.Unvan == "Kaptan").ToList();
                 gridPersonel.DataSource = null;
                 gridPersonel.DataSource = _personeller;
                 gridView.RefreshData();
@@ -128,6 +129,7 @@ namespace StajWinForms
             public string? Email { get; set; }
             public decimal? Maas { get; set; }
             public DateOnly? IseGirisTarihi { get; set; }
+            public string? Unvan { get; set; }
         }
     }
 }

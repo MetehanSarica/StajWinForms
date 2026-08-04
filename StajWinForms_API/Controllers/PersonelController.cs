@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using StajWinForms_API.Dtos;
 using StajWinForms_API.Models;
 
 namespace StajWinForms_API.Controllers;
@@ -16,16 +17,36 @@ public class PersonelController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Personel>>> GetPersonel()
+    public async Task<ActionResult<IEnumerable<PersonelDto>>> GetPersonel()
     {
-        var personel = await _context.Personels.ToListAsync();
+        var personel = await _context.Personels
+            .Select(p => new PersonelDto
+            {
+                Id = p.Id,
+                Ad = p.Ad,
+                Soyad = p.Soyad,
+                Email = p.Email,
+                Unvan = p.Unvan,
+                Maas = p.Maas,
+                IseGirisTarihi = p.IseGirisTarihi
+            })
+            .ToListAsync();
         return Ok(personel);
     }
 
     [HttpPost]
-    public async Task<ActionResult<Personel>> PersonelEkle([FromBody] Personel personel)
+    public async Task<ActionResult<PersonelDto>> PersonelEkle([FromBody] PersonelDto dto)
     {
-        personel.Id = 0;
+        var personel = new Personel
+        {
+            Id = 0,
+            Ad = dto.Ad,
+            Soyad = dto.Soyad,
+            Email = dto.Email,
+            Unvan = dto.Unvan,
+            Maas = dto.Maas,
+            IseGirisTarihi = dto.IseGirisTarihi
+        };
         _context.Personels.Add(personel);
         
         try 
@@ -37,11 +58,20 @@ public class PersonelController : ControllerBase
         {
             return Conflict("Bu email adresi zaten kayıtlı.");
         }
-        return CreatedAtAction(nameof(GetPersonel), new { id = personel.Id }, personel);
+        return CreatedAtAction(nameof(GetPersonel), new { id = personel.Id }, new PersonelDto
+        {
+            Id = personel.Id,
+            Ad = personel.Ad,
+            Soyad = personel.Soyad,
+            Email = personel.Email,
+            Unvan = personel.Unvan,
+            Maas = personel.Maas,
+            IseGirisTarihi = personel.IseGirisTarihi
+        });
     }
 
     [HttpPut("{id}")]
-    public async Task<IActionResult> PersonelGuncelle(int id, [FromBody] Personel dto)
+    public async Task<IActionResult> PersonelGuncelle(int id, [FromBody] PersonelDto dto)
     {
         var personel = await _context.Personels.FindAsync(id);
         if (personel == null) return NotFound();
@@ -49,6 +79,7 @@ public class PersonelController : ControllerBase
         personel.Ad = dto.Ad;
         personel.Soyad = dto.Soyad;
         personel.Email = dto.Email;
+        personel.Unvan = dto.Unvan;
         personel.Maas = dto.Maas;
         personel.IseGirisTarihi = dto.IseGirisTarihi;
 

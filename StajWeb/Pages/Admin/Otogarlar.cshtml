@@ -83,7 +83,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefon</label>
-                        <input type="text" name="telefon" class="form-control" maxlength="20" />
+                        <input type="text" name="telefon" id="ekleTelefon" class="form-control"
+                               inputmode="numeric" maxlength="11" pattern="0[0-9]{10}"
+                               placeholder="05XXXXXXXXX"
+                               title="11 haneli olmalı, 0 ile başlamalı ve sadece rakamlardan oluşmalıdır" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -126,7 +129,10 @@
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Telefon</label>
-                        <input type="text" name="telefon" id="editTelefon" class="form-control" maxlength="20" />
+                        <input type="text" name="telefon" id="editTelefon" class="form-control"
+                               inputmode="numeric" maxlength="11" pattern="0[0-9]{10}"
+                               placeholder="05XXXXXXXXX"
+                               title="11 haneli olmalı, 0 ile başlamalı ve sadece rakamlardan oluşmalıdır" />
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -146,6 +152,7 @@
             order: [[0, 'asc']],
             pageLength: 25
         });
+
     });
 
     function duzenleAc(otogarId, sehirId, otogarAdi, adres, telefon) {

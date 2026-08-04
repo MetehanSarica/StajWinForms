@@ -28,14 +28,19 @@ namespace StajWinForms
             new FirmaOtobusEslemeForm().ShowDialog();
         }
 
-        private void btnKaptanBrowser_Click(object sender, EventArgs e)
-        {
-            new KaptanBrowserForm().ShowDialog();
-        }
-
         private void btnOtogarBrowser_Click(object sender, EventArgs e)
         {
             new OtogarBrowserForm().ShowDialog();
+        }
+
+        private void btnPersonelBrowser_Click(object sender, EventArgs e)
+        {
+            new PersonelBrowserForm().ShowDialog();
+        }
+
+        private void btnMusteriBrowser_Click(object sender, EventArgs e)
+        {
+            new MusteriBrowserForm().ShowDialog();
         }
 
         private void btnKaptanEsle_Click(object sender, EventArgs e)

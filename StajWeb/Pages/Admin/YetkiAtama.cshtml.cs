@@ -15,7 +15,6 @@ namespace StajWeb.Pages.Admin
             ["btnFirmaBrowser"] = "Firma Yönetimi",
             ["btnOtobusBrowser"] = "Otobüs Yönetimi",
             ["btnFirmaOtobusEsle"] = "Firma-Otobüs Eşleme",
-            ["btnKaptanBrowser"] = "Kaptan Yönetimi",
             ["btnKaptanEsle"] = "Otobüs-Kaptan Eşleme",
             ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
             ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",
@@ -24,7 +23,8 @@ namespace StajWeb.Pages.Admin
             ["btnBiletArama"] = "Bilet Arama",
             ["btnDashboard"] = "Dashboard",
             ["btnOtogarBrowser"] = "Otogar Yönetimi",
-            ["btnMusteriBrowser"] = "Müşteriler"
+            ["btnMusteriBrowser"] = "Müşteriler",
+            ["btnPersonelBrowser"] = "Personel Yönetimi"
         };
 
         public List<KullaniciDto> Kullanicilar { get; set; } = new();

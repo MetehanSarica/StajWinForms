@@ -51,6 +51,7 @@ namespace StajWeb.Dtos
         public string Ad { get; set; } = "";
         public string Soyad { get; set; } = "";
         public string? Email { get; set; }
+        public string? Unvan { get; set; }
         public decimal? Maas { get; set; }
         public DateOnly? IseGirisTarihi { get; set; }
     }

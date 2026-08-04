@@ -22,6 +22,7 @@ namespace StajWeb.Pages.Admin
             var client = _clientFactory.CreateClient("API");
             Otobusler = await client.GetFromJsonAsync<List<OtobusDto>>("api/otobusler") ?? new();
             TumKaptanlar = await client.GetFromJsonAsync<List<PersonelDto>>("api/personel") ?? new();
+            TumKaptanlar = TumKaptanlar.Where(p => p.Unvan == "Şoför" || p.Unvan == "Kaptan").ToList();
 
             var oid = seciliOtobusId ?? Otobusler.FirstOrDefault()?.OtobusId;
             if (oid.HasValue)

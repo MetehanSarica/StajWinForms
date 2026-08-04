@@ -1,0 +1,170 @@
+@page
+@model StajWeb.Pages.Admin.PersonellerModel
+@{
+    ViewData["Title"] = "Personel Yönetimi";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h4>Personel Yönetimi</h4>
+    @if (Model.Yetki?.Ekle == true)
+    {
+        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalEkle">
+            + Yeni Personel
+        </button>
+    }
+</div>
+
+<table id="tblPersoneller" class="table table-bordered table-hover table-sm">
+    <thead class="table-dark">
+        <tr>
+            <th>Ad</th>
+            <th>Soyad</th>
+            <th>Ünvan</th>
+            <th>E-posta</th>
+            <th>Maaş</th>
+            <th>İşe Giriş</th>
+            <th style="width:130px"></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var p in Model.Personeller)
+        {
+            <tr>
+                <td>@p.Ad</td>
+                <td>@p.Soyad</td>
+                <td>@(p.Unvan ?? "-")</td>
+                <td>@(p.Email ?? "-")</td>
+                <td>@(p.Maas.HasValue ? p.Maas.Value.ToString("₺#,##0.00") : "-")</td>
+                <td>@(p.IseGirisTarihi?.ToString("dd.MM.yyyy") ?? "-")</td>
+                <td class="text-center">
+                    @if (Model.Yetki?.Degistir == true)
+                    {
+                        <button type="button" class="btn btn-sm btn-outline-primary"
+                                onclick="duzenleAc(@p.Id, '@p.Ad', '@p.Soyad', '@(p.Email ?? "")', '@(p.Unvan ?? "")', @(p.Maas.HasValue ? p.Maas.Value.ToString("0.00", System.Globalization.CultureInfo.InvariantCulture) : "0"), '@(p.IseGirisTarihi?.ToString("yyyy-MM-dd") ?? "")')">
+                            Düzenle
+                        </button>
+                    }
+                    @if (Model.Yetki?.Sil == true)
+                    {
+                        <form method="post" asp-page-handler="Sil" asp-route-id="@p.Id" class="d-inline"
+                              onsubmit="return confirm('@p.Ad @p.Soyad silinecek. Emin misiniz?')">
+                            <button type="submit" class="btn btn-sm btn-outline-danger">Sil</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<!-- Ekle Modal -->
+<div class="modal fade" id="modalEkle" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Yeni Personel</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Ekle">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Ad</label>
+                        <input type="text" name="ad" class="form-control" required maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Soyad</label>
+                        <input type="text" name="soyad" class="form-control" required maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-posta</label>
+                        <input type="email" name="email" class="form-control" maxlength="100" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ünvan</label>
+                        <input type="text" name="unvan" class="form-control" maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Maaş (₺)</label>
+                        <input type="number" name="maas" class="form-control" min="0" step="0.01" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">İşe Giriş</label>
+                        <input type="date" name="iseGirisTarihi" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-success">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Düzenle Modal -->
+<div class="modal fade" id="modalDuzenle" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Personel Düzenle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <form method="post" asp-page-handler="Duzenle">
+                <input type="hidden" name="id" id="editId" />
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Ad</label>
+                        <input type="text" name="ad" id="editAd" class="form-control" required maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Soyad</label>
+                        <input type="text" name="soyad" id="editSoyad" class="form-control" required maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">E-posta</label>
+                        <input type="email" name="email" id="editEmail" class="form-control" maxlength="100" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Ünvan</label>
+                        <input type="text" name="unvan" id="editUnvan" class="form-control" maxlength="50" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Maaş (₺)</label>
+                        <input type="number" name="maas" id="editMaas" class="form-control" min="0" step="0.01" />
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">İşe Giriş</label>
+                        <input type="date" name="iseGirisTarihi" id="editIseGiris" class="form-control" />
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">İptal</button>
+                    <button type="submit" class="btn btn-primary">Kaydet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+<script>
+    $(document).ready(function () {
+        $('#tblPersoneller').DataTable({
+            language: { url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' },
+            order: [[0, 'asc']],
+            pageLength: 25
+        });
+    });
+
+    function duzenleAc(id, ad, soyad, email, unvan, maas, iseGiris) {
+        document.getElementById('editId').value = id;
+        document.getElementById('editAd').value = ad;
+        document.getElementById('editSoyad').value = soyad;
+        document.getElementById('editEmail').value = email;
+        document.getElementById('editUnvan').value = unvan;
+        document.getElementById('editMaas').value = maas;
+        document.getElementById('editIseGiris').value = iseGiris;
+        new bootstrap.Modal(document.getElementById('modalDuzenle')).show();
+    }
+</script>
+}

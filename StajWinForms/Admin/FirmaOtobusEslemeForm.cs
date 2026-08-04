@@ -66,7 +66,7 @@ namespace StajWinForms
             {
                 if (o.FirmaId == firma.FirmaId)
                     lstFirmaOtobusler.Items.Add(o);
-                else
+                else if (o.FirmaId == null)
                     lstDigerOtobusler.Items.Add(o);
             }
         }

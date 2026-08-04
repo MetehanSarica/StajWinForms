@@ -14,6 +14,8 @@ public partial class Personel
 
     public string? Email { get; set; }
 
+    public string? Unvan { get; set; }
+
     public decimal? Maas { get; set; }
 
     public DateOnly? IseGirisTarihi { get; set; }

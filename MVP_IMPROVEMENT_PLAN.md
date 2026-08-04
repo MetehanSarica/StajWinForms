@@ -413,7 +413,7 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] Admin panel buton sırası düzenlendi (WinForms + Web): Dashboard → Sefer Yönetimi → Bilet Arama → Firmalar → Otobüsler → Kaptanlar → Eşlemeler → Kullanıcı/Yetki.
 - [X] **Müşteri Yönetimi (Web Admin)** eklendi: `Musteriler.cshtml` — TC/ad soyad filtreli liste, Biletler modal (müşteri bilet geçmişi), Sil. API: `GET /api/musteri?ara=`, `GET /api/musteri/{id}/biletler`, `DELETE /api/musteri/{id}`. `MusteriDto`'ya Tc/Email/Telefon eklendi. `Index.cshtml`'e kart, `YetkiAtama`'ya `btnMusteriBrowser` eklendi.
 - [X] **Dashboard Firma Gelir Dağılımı grafiği** eklendi: Web → Chart.js doughnut grafik; WinForms → DevExpress Pie chart (`chartPie`). API: `IstatistikDto`'ya `FirmaGelirler` listesi eklendi, firma bazında gelir + bilet sayısı hesaplanıyor.
-- [X] **Otogar Yönetimi** eklendi: API → `OtogarlarController` (GET/POST/PUT/DELETE), `OtogarDto`/`OtogarCreateDto`. WinForms → `OtogarEditForm` (şehir dropdown, ad, adres, maskeli telefon) + `OtogarBrowserForm` (grid + ekle/düzenle/sil). `AdminPanelForm`'a `btnOtogarBrowser` eklendi. `YetkiAtamaForm` ve Web `YetkiAtama`'ya yetki satırı eklendi.
+- [X] **Otogar Yönetimi** eklendi: API → `OtogarlarController` (GET/POST/PUT/DELETE), `OtogarDto`/`OtogarCreateDto`. WinForms → `OtogarEditForm` (şehir dropdown, ad, adres, maskeli telefon) + `OtogarBrowserForm` (grid + ekle/düzenle/sil). `AdminPanelForm`'a `btnOtogarBrowser` eklendi. `YetkiAtamaForm` ve Web `YetkiAtama`'ya yetki satırı eklendi. Web → `Otogarlar.cshtml` DataTables listesi + Ekle/Düzenle modal + Sil. `Index.cshtml`'e kart eklendi.
 
 ---
 

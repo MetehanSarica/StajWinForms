@@ -18,6 +18,7 @@ namespace StajWeb.Pages.Admin
             Yetki = HttpContext.Session.GetYetki("btnKaptanBrowser");
             var client = _clientFactory.CreateClient("API");
             Kaptanlar = await client.GetFromJsonAsync<List<PersonelDto>>("api/personel") ?? new();
+            Kaptanlar = Kaptanlar.Where(p => p.Unvan == "Şoför" || p.Unvan == "Kaptan").ToList();
         }
 
         public async Task<IActionResult> OnPostEkleAsync(string ad, string soyad, string? email,
