@@ -1,13 +1,14 @@
 ﻿using DevExpress.XtraEditors;
-using QuestPDF.Fluent;
-using QuestPDF.Helpers;
-using QuestPDF.Infrastructure;
+//using QuestPDF.Fluent;
+//using QuestPDF.Helpers;
+//using QuestPDF.Infrastructure;
 using Size = System.Drawing.Size;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Windows.Forms;
+using StajWinForms.Musteri;
 
 namespace StajWinForms
 {
@@ -115,7 +116,26 @@ namespace StajWinForms
 
         private static void BiletPdfOlustur(SatinAlModel model)
         {
+
             string telefonFormatli = model.MusteriTelefon.Length == 11
+                ? $"0({model.MusteriTelefon[1..4]}) {model.MusteriTelefon[4..7]} {model.MusteriTelefon[7..9]} {model.MusteriTelefon[9..11]}"
+                : model.MusteriTelefon;
+            string cinsiyetAdi = model.MusteriCinsiyet == "E" ? "Erkek" : model.MusteriCinsiyet == "K" ? "Kadın" : model.MusteriCinsiyet;
+
+            var report = new BiletReport(
+                adSoyad: $"{model.MusteriAd} {model.MusteriSoyad}",
+                tc: model.MusteriTc,
+                telefon: telefonFormatli,
+                email: model.MusteriMail,
+                sehir: model.MusteriSehir,
+                cinsiyet: cinsiyetAdi,
+                adres: model.MusteriAdres,
+                koltukNo: model.KoltukNo,
+                seferNo: model.SeferId
+                );
+            new BiletPdfForm(report).ShowDialog();
+
+            /* string telefonFormatli = model.MusteriTelefon.Length == 11
                 ? $"0({model.MusteriTelefon[1..4]}) {model.MusteriTelefon[4..7]} {model.MusteriTelefon[7..9]} {model.MusteriTelefon[9..11]}"
                 : model.MusteriTelefon;
             string cinsiyetAdi = model.MusteriCinsiyet == "E" ? "Erkek" : model.MusteriCinsiyet == "K" ? "Kadın" : model.MusteriCinsiyet;
@@ -183,7 +203,7 @@ namespace StajWinForms
                         .FontSize(9).FontColor(Colors.Grey.Darken1);
                 });
             }).GeneratePdf(dosyaYolu);
-            Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true }); */
         }
     }
 }

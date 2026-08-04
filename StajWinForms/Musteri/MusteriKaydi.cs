@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
@@ -13,6 +13,7 @@ using System.Text;
 using System.Text.Json;
 using System.Windows.Forms;
 using System.Net.Http.Json;
+using StajWinForms.Musteri;
 
 namespace StajWinForms
 {
@@ -161,7 +162,23 @@ namespace StajWinForms
         }
         private void BiletPdfOlustur()
         {
-            string dosyaYolu = Path.GetTempPath() + $"Bilet_{spTC.Text}_{_koltukNo}_{txtboxAd.Text}.pdf";
+            var report = new BiletReport(
+                adSoyad: $"{txtboxAd.Text} {txtboxSoyad.Text}",
+                tc: spTC.Text,
+                telefon: txtboxTelefon.Text,
+                email: txtboxEmail.Text,
+                sehir: cmbSehir.Text,
+                cinsiyet: cmbCinsiyet.SelectedItem?.ToString() ?? "",
+                adres: memoAdres.Text,
+                koltukNo: _koltukNo,
+                seferNo: _seferID
+            );
+            new BiletPdfForm(report).ShowDialog();
+
+            /*
+             *                                     QuestPDF
+             * 
+             * string dosyaYolu = Path.GetTempPath() + $"Bilet_{spTC.Text}_{_koltukNo}_{txtboxAd.Text}.pdf";
             Document.Create(doc =>
             {
                 doc.Page(page =>
@@ -225,7 +242,7 @@ namespace StajWinForms
                         .FontSize(9).FontColor(Colors.Grey.Darken1);
                 });
             }).GeneratePdf(dosyaYolu);
-            Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true });
+            Process.Start(new ProcessStartInfo(dosyaYolu) { UseShellExecute = true }); */
         }
     }
     internal class SatinAlModel
