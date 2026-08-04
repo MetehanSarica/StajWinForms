@@ -13,8 +13,8 @@ namespace StajWinForms.Musteri
             string sehir, string cinsiyet, string adres, int koltukNo, int seferNo)
         {
             this.Bands.Add(new ReportHeaderBand { HeightF = 50 });
-            this.Bands.Add(new DetailBand { HeightF = 200 });
-            this.Bands.Add(new ReportFooterBand { HeightF = 30 });
+            this.Bands.Add(new DetailBand { HeightF = 195 });
+            this.Bands.Add(new ReportFooterBand { HeightF = 25 });
 
             var header = (ReportHeaderBand)this.Bands[BandKind.ReportHeader];
             var detail = (DetailBand)this.Bands[BandKind.Detail];
@@ -26,7 +26,7 @@ namespace StajWinForms.Musteri
                 Font = new System.Drawing.Font("Tahoma", 18, System.Drawing.FontStyle.Bold),
                 ForeColor = System.Drawing.Color.White,
                 BackColor = System.Drawing.Color.FromArgb(21, 101, 192),
-                BoundsF = new System.Drawing.RectangleF(0, 0, 650, 45),
+                BoundsF = new System.Drawing.RectangleF(0, 0, 777, 45),
                 TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter
             };
             header.Controls.Add(lblBaslik);
@@ -36,7 +36,7 @@ namespace StajWinForms.Musteri
                 Text = $"Koltuk No: {koltukNo}",
                 Font = new System.Drawing.Font("Tahoma", 14, System.Drawing.FontStyle.Bold),
                 ForeColor = System.Drawing.Color.Red,
-                BoundsF = new System.Drawing.RectangleF(0, 0, 650, 30),
+                BoundsF = new System.Drawing.RectangleF(0, 0, 777, 30),
                 TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleRight
             };
             detail.Controls.Add(lblKoltuk);
@@ -65,7 +65,7 @@ namespace StajWinForms.Musteri
                 {
                     Text = deger,
                     Font = new System.Drawing.Font("Tahoma", 9),
-                    BoundsF = new System.Drawing.RectangleF(125, y, 525, 20)
+                    BoundsF = new System.Drawing.RectangleF(125, y, 652, 20)
                 };
                 detail.Controls.Add(lbl);
                 detail.Controls.Add(val);
@@ -77,13 +77,15 @@ namespace StajWinForms.Musteri
                 Text = $"Sefer No: {seferNo} | Bilet Tarihi: {DateTime.Now:dd.MM.yyyy HH:mm}",
                 Font = new System.Drawing.Font("Tahoma", 8),
                 ForeColor = System.Drawing.Color.Gray,
-                BoundsF = new System.Drawing.RectangleF(0, 0, 650, 25),
+                BoundsF = new System.Drawing.RectangleF(0, 0, 777, 25),
                 TextAlignment = DevExpress.XtraPrinting.TextAlignment.MiddleCenter
             };
             footer.Controls.Add(lblFooter);
 
-            this.PaperKind = (DevExpress.Drawing.Printing.DXPaperKind)System.Drawing.Printing.PaperKind.A5;
-            this.Landscape = true;
+            this.PageWidth = 827;
+            this.PageHeight = 305;
+            this.Landscape = false;
+            this.Margins = new System.Drawing.Printing.Margins(25, 25, 15, 15);
         }
     }
 }

@@ -121,7 +121,7 @@ namespace StajWinForms
             }
         }
 
-        private void btnKoltukSec_Click(object sender, EventArgs e)
+        private async void btnKoltukSec_Click(object sender, EventArgs e)
         {
             try
             {
@@ -132,20 +132,8 @@ namespace StajWinForms
                 }
 
                 var form = new CokluMusteriKaydi(_secilenKoltuklar, _seferID, _binisSira, _inisSira);
-                form.FormClosed += async (s, args) =>
-                {
-                    try
-                    {
-                        await KoltuklariRenklendir();
-                    }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show("Koltuk bilgileri güncellenemedi: " + ex.Message, "Hata",
-                            MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
-                };
-
-                form.Show();
+                form.ShowDialog(this);
+                await KoltuklariRenklendir();
             }
             catch (Exception ex)
             {

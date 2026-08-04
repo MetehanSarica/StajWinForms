@@ -15,7 +15,6 @@ namespace StajWinForms.Musteri
         private void InitializeComponent()
         {
             pdfViewer = new PdfViewer();
-            ((System.ComponentModel.ISupportInitialize)pdfViewer).BeginInit();
             SuspendLayout();
             //
             // pdfViewer
@@ -31,10 +30,10 @@ namespace StajWinForms.Musteri
             ClientSize = new Size(900, 650);
             Controls.Add(pdfViewer);
             MaximizeBox = false;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "BiletPdfForm";
             StartPosition = FormStartPosition.CenterParent;
             Text = "Bilet Önizleme";
-            ((System.ComponentModel.ISupportInitialize)pdfViewer).EndInit();
             ResumeLayout(false);
         }
 

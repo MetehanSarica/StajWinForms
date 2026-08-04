@@ -6,13 +6,16 @@ namespace StajWinForms.Musteri
 {
     public partial class BiletPdfForm : XtraForm
     {
+        private readonly MemoryStream _pdfStream;
+
         public BiletPdfForm(BiletReport report)
         {
             InitializeComponent();
-            using var stream = new MemoryStream();
-            report.ExportToPdf(stream);
-            stream.Position = 0;
-            pdfViewer.LoadDocument(stream);
+            _pdfStream = new MemoryStream();
+            report.ExportToPdf(_pdfStream);
+            _pdfStream.Position = 0;
+            pdfViewer.LoadDocument(_pdfStream);
+            pdfViewer.ZoomMode = PdfZoomMode.FitToVisible;
         }
     }
 }
