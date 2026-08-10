@@ -77,7 +77,7 @@ namespace StajWinForms
             string tc = spTC.Text.Trim();
             if (!Dogrulama.TcGecerliMi(tc))
             {
-                MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Geçersiz TC",
+                MessageBox.Show("Hatalı TC kimlik numarası girişi yapıldı.", "Geçersiz TC",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }

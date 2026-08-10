@@ -92,6 +92,38 @@ public class BiletlerController : ControllerBase
             .ToListAsync();
         return Ok(biletler);
     }
+    [HttpGet("detay/{biletId}")]
+    public async Task<ActionResult<BiletDetayDto>> GetDetay(int biletId)
+    {
+        var b = await _context.Biletlers
+            .Include(x => x.MusteriTcNavigation)
+            .Include(x => x.Sefer).ThenInclude(x => x.KalkisSehir)
+            .Include(x => x.Sefer).ThenInclude(x => x.VarisSehir)
+            .Include(x => x.Sefer).ThenInclude(x => x.Firma)
+            .FirstOrDefaultAsync(x => x.BiletId == biletId);
+
+        if (b == null) return NotFound();
+
+        return Ok(new BiletDetayDto
+        {
+            BiletId = b.BiletId,
+            KoltukNo = b.KoltukNo,
+            SeferId = b.SeferId,
+            MusteriAd = b.MusteriTcNavigation.Ad,
+            MusteriSoyad = b.MusteriTcNavigation.Soyad,
+            MusteriTc = b.MusteriTc,
+            MusteriTelefon = b.MusteriTcNavigation.Telefon ?? "",
+            MusteriEmail = b.MusteriTcNavigation.Email ?? "",
+            MusteriSehir = b.MusteriTcNavigation.Sehir ?? "",
+            MusteriAdres = b.MusteriTcNavigation.Adres ?? "",
+            Cinsiyet = b.Cinsiyet ?? "",
+            KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
+            VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
+            KalkisZamani = b.Sefer.KalkisZamani,
+            FirmaAdi = b.Sefer.Firma.FirmaAdi ?? "",
+            Fiyat = b.Sefer.Fiyat
+        });
+    }
     [HttpGet("ara")]
     public async Task<ActionResult<IEnumerable<BiletDto>>> Ara(
         [FromQuery] int? kalkisId,

@@ -77,3 +77,21 @@
 
     <button type="submit" class="btn btn-primary px-4">Satın Al</button>
 </form>
+
+@section Scripts {
+<script>
+    document.querySelectorAll('input[name$=".MusteriTc"]').forEach(input => {
+        input.addEventListener('input', function () {
+            this.setCustomValidity(tcGecerliMi(this.value) ? '' : 'Geçersiz TC Kimlik No');
+        });
+    });
+
+    function tcGecerliMi(tc) {
+        if (!/^[1-9][0-9]{10}$/.test(tc)) return false;
+        const h = tc.split('').map(Number);
+        let hane10 = ((h[0]+h[2]+h[4]+h[6]+h[8]) * 7 - (h[1]+h[3]+h[5]+h[7])) % 10;
+        if (hane10 < 0) hane10 += 10;
+        return hane10 === h[9] && h.slice(0,10).reduce((a,b)=>a+b,0) % 10 === h[10];
+    }
+</script>
+}

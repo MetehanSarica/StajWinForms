@@ -1,11 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
+using StajWeb.Dtos;
 using StajWeb.Models;
 using System.Net.Http.Json;
-using System.ComponentModel.DataAnnotations;
-using StajWeb.Dtos;
-using Microsoft.Extensions.Configuration.Ini;
 
 namespace StajWeb.Pages
 {
@@ -52,9 +49,9 @@ namespace StajWeb.Pages
                 foreach (var yolcu in Yolcular)
                 {
                     var tc = yolcu.MusteriTc?.Trim() ?? "";
-                    if (tc.Length != 11 || tc[0] == '0' || !tc.All(char.IsDigit))
+                    if (!TcGecerliMi(tc))
                     {
-                        HataMesaji = "TC Kimlik No 11 haneli olmalı, 0 ile başlamamalı ve sadece rakamlardan oluşmalıdır.";
+                        HataMesaji = "Hatalı TC Kimlik Numarası girişi yapıldı.";
                         return Page();
                     }
                     var tel = yolcu.MusteriTelefon?.Trim() ?? "";
@@ -92,7 +89,20 @@ namespace StajWeb.Pages
                             return Page();
                         }
                     }
-                    return RedirectToPage("/Index");
+
+            return RedirectToPage("/Musteri/Seferler");
+
+        }
+
+        private static bool TcGecerliMi(string tc)
+        {
+            if (string.IsNullOrEmpty(tc) || tc.Length != 11 || tc[0] == '0' || !tc.All(char.IsDigit))
+                return false;
+
+            int[] h = tc.Select(c => c - '0').ToArray();
+            int hane10 = ((h[0] + h[2] + h[4] + h[6] + h[8]) * 7 - (h[1] + h[3] + h[5] + h[7])) % 10;
+            if (hane10 < 0) hane10 += 10;
+            return hane10 == h[9] && h.Take(10).Sum() % 10 == h[10];
         }
     }
 }

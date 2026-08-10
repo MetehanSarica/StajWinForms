@@ -35,5 +35,32 @@ namespace StajWeb.Pages.Admin
             var url = "api/biletler/ara" + (parts.Count > 0 ? "?" + string.Join("&", parts) : "");
             Biletler = await client.GetFromJsonAsync<List<BiletDto>>(url) ?? new();
         }
+
+        public async Task<IActionResult> OnGetPdfAsync(int biletId)
+        {
+            var client = _clientFactory.CreateClient("API");
+            var detay = await client.GetFromJsonAsync<BiletDetayDto>($"api/biletler/detay/{biletId}");
+            
+            if (detay == null)
+                return NotFound();
+
+            var pdf = BiletPdfHelper.Olustur(
+                adSoyad: $"{detay.MusteriAd} {detay.MusteriSoyad}",
+                tc: detay.MusteriTc,
+                telefon: detay.MusteriTelefon,
+                email: detay.MusteriEmail,
+                sehir: detay.MusteriSehir,
+                cinsiyet: detay.Cinsiyet,
+                adres: detay.MusteriAdres,
+                koltukNo: detay.KoltukNo,
+                seferNo: detay.SeferId,
+                kalkisSehir: detay.KalkisSehirAdi,
+                varisSehir: detay.VarisSehirAdi,
+                kalkisZamani: detay.KalkisZamani
+                );
+
+            return File(pdf, "application/pdf", $"Bilet_{detay.MusteriTc}_{detay.KoltukNo}.pdf");
+
+        }
     }
 }

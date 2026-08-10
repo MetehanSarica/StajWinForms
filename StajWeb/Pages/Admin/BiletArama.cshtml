@@ -55,6 +55,7 @@ else
                 <th>Tarih</th>
                 <th>Firma</th>
                 <th>Fiyat</th>
+                <th></th>
             </tr>
         </thead>
         <tbody>
@@ -70,6 +71,7 @@ else
                     <td>@b.KalkisZamani.ToString("dd.MM.yyyy HH:mm")</td>
                     <td>@b.FirmaAdi</td>
                     <td>₺@b.Fiyat.ToString("N2")</td>
+                    <td><a href="?handler=Pdf&biletId=@b.BiletId" class="btn btn-sm btn-outline-primary" target="_blank">Yazdır</a></td>
                 </tr>
             }
         </tbody>

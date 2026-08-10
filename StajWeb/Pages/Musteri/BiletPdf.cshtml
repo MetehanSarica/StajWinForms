@@ -1,0 +1,13 @@
+@page
+@model StajWeb.Pages.Musteri.BiletPdfModel
+<script>
+    window.onload = function () {
+        var iframe = document.createElement('iframe');
+        iframe.style.display = 'none';
+        iframe.src = '?handler=Download';
+        document.body.appendChild(iframe);
+        setTimeout(function () {
+            window.location.href = '/Musteri/Seferler';
+        }, 300);
+    };
+</script>
