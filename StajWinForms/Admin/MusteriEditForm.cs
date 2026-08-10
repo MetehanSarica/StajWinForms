@@ -13,7 +13,7 @@ namespace StajWinForms.Admin
 {
     public partial class MusteriEditForm : XtraForm
     {
-        private readonly MusteriBrowserForm.MusteriModel? _mevcut;
+        private readonly MusteriBrowserControl.MusteriModel? _mevcut;
         private readonly bool _incele;
         public object? Sonuc { get; private set; }
 
@@ -22,7 +22,7 @@ namespace StajWinForms.Admin
             InitializeComponent();
         }
 
-        public MusteriEditForm(MusteriBrowserForm.MusteriModel m, bool incele = false) : this()
+        public MusteriEditForm(MusteriBrowserControl.MusteriModel m, bool incele = false) : this()
         {
             _mevcut = m;
             _incele = incele;

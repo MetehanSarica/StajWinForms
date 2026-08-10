@@ -1,21 +1,21 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class KaptanEslemeForm : XtraForm
+    public partial class KaptanEslemeControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<KaptanItem> _tumKaptanlar = new();
         private List<KaptanAtamaItem> _atanmisKaptanlar = new();
 
-        public KaptanEslemeForm()
+        public KaptanEslemeControl()
         {
             InitializeComponent();
         }
 
-        private async void KaptanEslemeForm_Load(object sender, EventArgs e)
+        private async void KaptanEslemeControl_Load(object sender, EventArgs e)
         {
             await TumKaptanlariYukle();
             await OtubusleriYukle();
@@ -106,7 +106,7 @@ namespace StajWinForms
             catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private class OtobusItem{ public int OtobusId { get; set; } public string Plaka { get; set; } = ""; public override string ToString() => Plaka; }
+        private class OtobusItem { public int OtobusId { get; set; } public string Plaka { get; set; } = ""; public override string ToString() => Plaka; }
         private class KaptanItem { public int Id { get; set; } public string Ad { get; set; } = ""; public string Soyad { get; set; } = ""; public string? Unvan { get; set; } = ""; public override string ToString() => $"{Ad} {Soyad}"; }
         private class KaptanAtamaItem { public int Id { get; set; } public int OtobusId { get; set; } public int PersonelId { get; set; } public string PersonelAdSoyad { get; set; } = ""; public override string ToString() => PersonelAdSoyad; }
     }

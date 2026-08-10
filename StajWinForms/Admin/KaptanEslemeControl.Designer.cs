@@ -1,8 +1,8 @@
 using DevExpress.XtraEditors;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    partial class KaptanEslemeForm
+    partial class KaptanEslemeControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -11,8 +11,6 @@ namespace StajWinForms
             if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
 
         private void InitializeComponent()
         {
@@ -25,14 +23,27 @@ namespace StajWinForms
             btnAta = new SimpleButton();
             btnKaldir = new SimpleButton();
             flpButonlar = new FlowLayoutPanel();
+            pnlOtobus = new Panel();
+            tblMain = new TableLayoutPanel();
             ((System.ComponentModel.ISupportInitialize)lstAtanmisKaptanlar).BeginInit();
             ((System.ComponentModel.ISupportInitialize)lstTumKaptanlar).BeginInit();
             flpButonlar.SuspendLayout();
+            pnlOtobus.SuspendLayout();
+            tblMain.SuspendLayout();
             SuspendLayout();
+            //
+            // pnlOtobus
+            //
+            pnlOtobus.Controls.Add(cmbOtobus);
+            pnlOtobus.Controls.Add(lblOtobus);
+            pnlOtobus.Dock = DockStyle.Top;
+            pnlOtobus.Height = 40;
+            pnlOtobus.Name = "pnlOtobus";
+            pnlOtobus.Padding = new Padding(8, 8, 8, 0);
             //
             // lblOtobus
             //
-            lblOtobus.Location = new Point(12, 15);
+            lblOtobus.Location = new Point(8, 12);
             lblOtobus.Name = "lblOtobus";
             lblOtobus.Size = new Size(39, 13);
             lblOtobus.TabIndex = 0;
@@ -41,45 +52,59 @@ namespace StajWinForms
             // cmbOtobus
             //
             cmbOtobus.DropDownStyle = ComboBoxStyle.DropDownList;
-            cmbOtobus.Location = new Point(65, 12);
+            cmbOtobus.Location = new Point(60, 9);
             cmbOtobus.Name = "cmbOtobus";
             cmbOtobus.Size = new Size(300, 21);
             cmbOtobus.TabIndex = 1;
             cmbOtobus.SelectedIndexChanged += cmbOtobus_SelectedIndexChanged;
             //
-            // lblAtanmis
+            // tblMain
             //
-            lblAtanmis.Location = new Point(340, 50);
-            lblAtanmis.Name = "lblAtanmis";
-            lblAtanmis.Size = new Size(129, 13);
-            lblAtanmis.TabIndex = 2;
-            lblAtanmis.Text = "Otobüse Atanmış Kaptanlar";
-            //
-            // lstAtanmisKaptanlar
-            //
-            lstAtanmisKaptanlar.Location = new Point(340, 70);
-            lstAtanmisKaptanlar.Name = "lstAtanmisKaptanlar";
-            lstAtanmisKaptanlar.Size = new Size(200, 300);
-            lstAtanmisKaptanlar.TabIndex = 3;
+            tblMain.ColumnCount = 3;
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 45F));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 55F));
+            tblMain.Controls.Add(lblTum, 0, 0);
+            tblMain.Controls.Add(lstTumKaptanlar, 0, 1);
+            tblMain.Controls.Add(flpButonlar, 1, 1);
+            tblMain.Controls.Add(lblAtanmis, 2, 0);
+            tblMain.Controls.Add(lstAtanmisKaptanlar, 2, 1);
+            tblMain.Dock = DockStyle.Fill;
+            tblMain.Name = "tblMain";
+            tblMain.Padding = new Padding(8);
+            tblMain.RowCount = 2;
+            tblMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            tblMain.TabIndex = 0;
             //
             // lblTum
             //
-            lblTum.Location = new Point(12, 50);
+            lblTum.Dock = DockStyle.Fill;
             lblTum.Name = "lblTum";
-            lblTum.Size = new Size(102, 13);
             lblTum.TabIndex = 4;
             lblTum.Text = "Atanmamış Kaptanlar";
             //
             // lstTumKaptanlar
             //
-            lstTumKaptanlar.Location = new Point(12, 70);
+            lstTumKaptanlar.Dock = DockStyle.Fill;
             lstTumKaptanlar.Name = "lstTumKaptanlar";
-            lstTumKaptanlar.Size = new Size(200, 300);
             lstTumKaptanlar.TabIndex = 5;
+            //
+            // flpButonlar
+            //
+            flpButonlar.AutoSize = true;
+            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            flpButonlar.Controls.Add(btnAta);
+            flpButonlar.Controls.Add(btnKaldir);
+            flpButonlar.Dock = DockStyle.Fill;
+            flpButonlar.FlowDirection = FlowDirection.TopDown;
+            flpButonlar.Name = "flpButonlar";
+            flpButonlar.Padding = new Padding(8, 60, 8, 0);
+            flpButonlar.WrapContents = false;
+            flpButonlar.TabIndex = 8;
             //
             // btnAta
             //
-            btnAta.Location = new Point(3, 3);
             btnAta.Name = "btnAta";
             btnAta.Size = new Size(100, 35);
             btnAta.TabIndex = 6;
@@ -88,56 +113,48 @@ namespace StajWinForms
             //
             // btnKaldir
             //
-            btnKaldir.Location = new Point(3, 44);
             btnKaldir.Name = "btnKaldir";
             btnKaldir.Size = new Size(100, 35);
             btnKaldir.TabIndex = 7;
             btnKaldir.Text = "◄ Kaldır";
             btnKaldir.Click += btnKaldir_Click;
             //
-            // flpButonlar
+            // lblAtanmis
             //
-            flpButonlar.AutoSize = true;
-            flpButonlar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            flpButonlar.Controls.Add(btnAta);
-            flpButonlar.Controls.Add(btnKaldir);
-            flpButonlar.FlowDirection = FlowDirection.TopDown;
-            flpButonlar.Location = new Point(225, 160);
-            flpButonlar.Name = "flpButonlar";
-            flpButonlar.Size = new Size(106, 82);
-            flpButonlar.TabIndex = 8;
-            flpButonlar.WrapContents = false;
+            lblAtanmis.Dock = DockStyle.Fill;
+            lblAtanmis.Name = "lblAtanmis";
+            lblAtanmis.TabIndex = 2;
+            lblAtanmis.Text = "Otobüse Atanmış Kaptanlar";
             //
-            // KaptanEslemeForm
+            // lstAtanmisKaptanlar
+            //
+            lstAtanmisKaptanlar.Dock = DockStyle.Fill;
+            lstAtanmisKaptanlar.Name = "lstAtanmisKaptanlar";
+            lstAtanmisKaptanlar.TabIndex = 3;
+            //
+            // KaptanEslemeControl
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(560, 400);
-            Controls.Add(lblOtobus);
-            Controls.Add(cmbOtobus);
-            Controls.Add(lblTum);
-            Controls.Add(lstTumKaptanlar);
-            Controls.Add(flpButonlar);
-            Controls.Add(lblAtanmis);
-            Controls.Add(lstAtanmisKaptanlar);
-            MaximizeBox = false;
-            Name = "KaptanEslemeForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Otobüs – Kaptan Eşleme";
-            Load += KaptanEslemeForm_Load;
+            Controls.Add(tblMain);
+            Controls.Add(pnlOtobus);
+            Name = "KaptanEslemeControl";
+            Load += KaptanEslemeControl_Load;
             ((System.ComponentModel.ISupportInitialize)lstAtanmisKaptanlar).EndInit();
             ((System.ComponentModel.ISupportInitialize)lstTumKaptanlar).EndInit();
             flpButonlar.ResumeLayout(false);
+            pnlOtobus.ResumeLayout(false);
+            tblMain.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
-
-        #endregion
 
         private LabelControl lblOtobus, lblAtanmis, lblTum;
         private System.Windows.Forms.ComboBox cmbOtobus;
         private ListBoxControl lstAtanmisKaptanlar, lstTumKaptanlar;
         private SimpleButton btnAta, btnKaldir;
         private FlowLayoutPanel flpButonlar;
+        private Panel pnlOtobus;
+        private TableLayoutPanel tblMain;
     }
 }

@@ -1,28 +1,21 @@
-﻿using DevExpress.XtraEditors;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http;
 
 namespace StajWinForms.Admin
 {
-    public partial class BiletAramaForm : XtraForm
+    public partial class BiletAramaControl : UserControl
     {
         private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 
-        public BiletAramaForm()
+        public BiletAramaControl()
         {
             InitializeComponent();
         }
 
-        private async void BiletAramaForm_Load(object sender, EventArgs e)
+        private async void BiletAramaControl_Load(object sender, EventArgs e)
         {
             var sehirler = await _http.GetFromJsonAsync<List<SehirItem>>("api/sehirler", _opts) ?? new();
             cboKalkis.Properties.Items.Add(new SehirItem(0, "(Tümü)"));

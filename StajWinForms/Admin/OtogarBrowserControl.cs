@@ -1,21 +1,21 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http;
 
 namespace StajWinForms.Admin
 {
-    public partial class OtogarBrowserForm : XtraForm
+    public partial class OtogarBrowserControl : UserControl
     {
         private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 
-        public OtogarBrowserForm() 
+        public OtogarBrowserControl()
         {
             InitializeComponent();
         }
 
-        private async void OtogarBrowserForm_Load(object sender, EventArgs e)
+        private async void OtogarBrowserControl_Load(object sender, EventArgs e)
         {
             await OtogarlariYukle();
         }
@@ -35,8 +35,7 @@ namespace StajWinForms.Admin
 
         private void btnDuzenle_Click(object sender, EventArgs e)
         {
-            if (gridView.FocusedRowHandle < 0)
-                return;
+            if (gridView.FocusedRowHandle < 0) return;
             var otogar = (OtogarDto)gridView.GetFocusedRow();
             using var frm = new OtogarEditForm(otogar);
             if (frm.ShowDialog(this) == DialogResult.OK)
@@ -45,13 +44,11 @@ namespace StajWinForms.Admin
 
         private async void btnSil_Click(object sender, EventArgs e)
         {
-            if (gridView.FocusedRowHandle < 0)
-                return;
+            if (gridView.FocusedRowHandle < 0) return;
             var otogar = (OtogarDto)gridView.GetFocusedRow();
             var onay = XtraMessageBox.Show($"{otogar.OtogarAdi} otogarını silmek istiyor musunuz?",
                 "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-            if (onay != DialogResult.Yes)
-                return;
+            if (onay != DialogResult.Yes) return;
 
             var resp = await _http.DeleteAsync($"api/otogarlar/{otogar.OtogarId}");
             if (resp.IsSuccessStatusCode)

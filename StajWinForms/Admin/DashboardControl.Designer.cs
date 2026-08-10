@@ -1,6 +1,6 @@
-namespace StajWinForms.Admin
+﻿namespace StajWinForms.Admin
 {
-    partial class DashboardForm
+    partial class DashboardControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -19,38 +19,46 @@ namespace StajWinForms.Admin
             ((System.ComponentModel.ISupportInitialize)chartControl).BeginInit();
             ((System.ComponentModel.ISupportInitialize)chartPie).BeginInit();
             SuspendLayout();
-            //
+            // 
             // tileControl
-            //
-            tileControl.Dock = DockStyle.Top;
-            tileControl.Height = 190;
-            tileControl.Name = "tileControl";
+            // 
             tileControl.AllowDrag = false;
-            //
+            tileControl.Dock = DockStyle.Top;
+            tileControl.Location = new Point(0, 0);
+            tileControl.Margin = new Padding(4, 3, 4, 3);
+            tileControl.Name = "tileControl";
+            tileControl.Padding = new Padding(21);
+            tileControl.Size = new Size(175, 219);
+            tileControl.TabIndex = 2;
+            // 
             // chartControl
-            //
+            // 
             chartControl.Dock = DockStyle.Fill;
+            chartControl.Location = new Point(0, 219);
+            chartControl.Margin = new Padding(4, 3, 4, 3);
             chartControl.Name = "chartControl";
-            //
+            chartControl.Size = new Size(0, 0);
+            chartControl.TabIndex = 0;
+            // 
             // chartPie
-            //
+            // 
             chartPie.Dock = DockStyle.Right;
-            chartPie.Width = 380;
+            chartPie.Location = new Point(-268, 219);
+            chartPie.Margin = new Padding(4, 3, 4, 3);
             chartPie.Name = "chartPie";
-            //
-            // DashboardForm
-            //
-            AutoScaleDimensions = new SizeF(6F, 13F);
+            chartPie.Size = new Size(443, 0);
+            chartPie.TabIndex = 1;
+            // 
+            // DashboardControl
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1000, 520);
             Controls.Add(chartControl);
             Controls.Add(chartPie);
             Controls.Add(tileControl);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            Name = "DashboardForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Dashboard";
+            Margin = new Padding(4, 3, 4, 3);
+            Name = "DashboardControl";
+            Size = new Size(175, 173);
             ((System.ComponentModel.ISupportInitialize)chartControl).EndInit();
             ((System.ComponentModel.ISupportInitialize)chartPie).EndInit();
             ResumeLayout(false);

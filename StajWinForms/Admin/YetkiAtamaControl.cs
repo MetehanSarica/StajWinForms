@@ -1,11 +1,11 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using StajWinForms.Dtos;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class YetkiAtamaForm : XtraForm
+    public partial class YetkiAtamaControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<KullaniciItem> _kullanicilar = new();
@@ -26,12 +26,12 @@ namespace StajWinForms
             ["btnBiletArama"] = "Bilet Arama"
         };
 
-        public YetkiAtamaForm()
+        public YetkiAtamaControl()
         {
             InitializeComponent();
         }
 
-        private async void YetkiAtamaForm_Load(object sender, EventArgs e)
+        private async void YetkiAtamaControl_Load(object sender, EventArgs e)
         {
             await KullanicilariYukle();
             dgvYetkiler.Rows.Clear();
@@ -113,11 +113,9 @@ namespace StajWinForms
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem kaynak)
             {
-                XtraMessageBox.Show("Önce yetkileri kopyalanacak kullanıcıyı seçin.",
-                    "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Önce yetkileri kopyalanacak kullanıcıyı seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             using var frm = new YetkiKopyalaForm(kaynak.KullaniciId);
             if (frm.ShowDialog(this) != DialogResult.OK) return;
 
@@ -131,93 +129,58 @@ namespace StajWinForms
             {
                 var json = await AppConfig.Http.GetStringAsync($"api/kullanicilar/{kaynak.KullaniciId}/yetkiler");
                 var yetkiler = JsonSerializer.Deserialize<List<KullaniciYetkiDto>>(json, _jsonOpts) ?? new();
-
                 var hatalar = new List<string>();
                 foreach (var hedef in frm.HedefKullanicilar)
                 {
-                    var resp = await AppConfig.Http.PutAsJsonAsync(
-                        $"api/kullanicilar/{hedef.Id}/yetkiler", yetkiler);
+                    var resp = await AppConfig.Http.PutAsJsonAsync($"api/kullanicilar/{hedef.Id}/yetkiler", yetkiler);
                     if (!resp.IsSuccessStatusCode)
                         hatalar.Add($"{hedef.Adi}: {await resp.Content.ReadAsStringAsync()}");
                 }
-
                 if (hatalar.Count == 0)
-                    XtraMessageBox.Show($"Yetkiler {frm.HedefKullanicilar.Count} kullanıcıya kopyalandı.",
-                        "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    XtraMessageBox.Show($"Yetkiler {frm.HedefKullanicilar.Count} kullanıcıya kopyalandı.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 else
-                    XtraMessageBox.Show("Bazı kopyalamalar başarısız:\n" + string.Join("\n", hatalar),
-                        "Kısmi Başarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    XtraMessageBox.Show("Bazı kopyalamalar başarısız:\n" + string.Join("\n", hatalar), "Kısmi Başarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
             }
-            catch (Exception ex)
-            {
-                XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private async void btnTemizle_Click(object sender, EventArgs e)
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem k)
             {
-                XtraMessageBox.Show("Önce bir kullanıcı seçin.",
-                    "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Önce bir kullanıcı seçin.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             if (k.KullaniciAdi == "metehansarica")
             {
-                XtraMessageBox.Show("Bu kullanıcının yetkileri temizlenemez.",
-                    "İzin Verilmedi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Bu kullanıcının yetkileri temizlenemez.", "İzin Verilmedi", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-
             var onay = XtraMessageBox.Show(
                 $"{k.KullaniciAdi} kullanıcısının TÜM yetkileri temizlenecek. Devam edilsin mi?",
                 "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (onay != DialogResult.Yes) return;
 
             var keys = _formAdlari.Keys.ToList();
-            var bosYetkiler = keys.Select(f => new KullaniciYetkiDto
-            {
-                FormAdi = f,
-                Ekle = false,
-                Sil = false,
-                Degistir = false,
-                Incele = false,
-                Ata = false,
-                Kaldir = false,
-                Kaydet = false
-            }).ToList();
-
+            var bosYetkiler = keys.Select(f => new KullaniciYetkiDto { FormAdi = f }).ToList();
             try
             {
-                var resp = await AppConfig.Http.PutAsJsonAsync(
-                    $"api/kullanicilar/{k.KullaniciId}/yetkiler", bosYetkiler);
+                var resp = await AppConfig.Http.PutAsJsonAsync($"api/kullanicilar/{k.KullaniciId}/yetkiler", bosYetkiler);
                 if (!resp.IsSuccessStatusCode)
-                {
-                    XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(),
-                        "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    return;
-                }
-                
+                { XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); return; }
                 for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
-                    {
-                        dgvYetkiler.Rows[i].Cells["colEkle"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colSil"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colDegistir"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colIncele"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colAta"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colKaldir"].Value = false;
-                        dgvYetkiler.Rows[i].Cells["colKaydet"].Value = false;
-                    }
-
-                    XtraMessageBox.Show($"{k.KullaniciAdi} kullanıcısının yetkileri temizlendi.",
-                        "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-
-            catch (Exception ex) 
                 {
-                    XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    dgvYetkiler.Rows[i].Cells["colEkle"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colSil"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colDegistir"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colIncele"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colAta"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colKaldir"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colKaydet"].Value = false;
                 }
+                XtraMessageBox.Show($"{k.KullaniciAdi} kullanıcısının yetkileri temizlendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
         private record KullaniciItem(int KullaniciId, string KullaniciAdi) { public override string ToString() => KullaniciAdi; }

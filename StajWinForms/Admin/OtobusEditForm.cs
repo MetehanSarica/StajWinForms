@@ -1,6 +1,6 @@
 ﻿using DevExpress.XtraEditors;
 using DevExpress.XtraSpreadsheet.Internal;
-using static StajWinForms.OtobusBrowserForm;
+using StajWinForms.Admin;
 
 namespace StajWinForms
 {

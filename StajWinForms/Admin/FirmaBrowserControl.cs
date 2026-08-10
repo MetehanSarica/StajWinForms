@@ -5,9 +5,9 @@ using System.ComponentModel;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class FirmaBrowserForm : XtraForm
+    public partial class FirmaBrowserControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<FirmaModel> _firmalar = new();
@@ -15,7 +15,7 @@ namespace StajWinForms
         private readonly BackgroundWorker bgwVeriYukle = new() { WorkerReportsProgress = true };
         private readonly BackgroundWorker bgwIslem = new() { WorkerReportsProgress = false };
 
-        public FirmaBrowserForm()
+        public FirmaBrowserControl()
         {
             InitializeComponent();
             bgwVeriYukle.DoWork += BgwVeriYukle_DoWork;
@@ -24,12 +24,13 @@ namespace StajWinForms
             bgwIslem.RunWorkerCompleted += BgwIslem_RunWorkerCompleted;
         }
 
-        private void FirmaBrowserForm_Load(object sender, EventArgs e)
+        private void FirmaBrowserControl_Load(object sender, EventArgs e)
         {
             VeriYukle();
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnFirmaBrowser");
-            if (y != null) {
+            if (y != null)
+            {
                 btnEkle.Visible = y.Ekle;
                 btnDegistir.Visible = y.Degistir;
                 btnSil.Visible = y.Sil;

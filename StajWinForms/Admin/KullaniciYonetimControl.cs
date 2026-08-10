@@ -1,21 +1,21 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class KullaniciYonetimForm : XtraForm
+    public partial class KullaniciYonetimControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<KullaniciModel> _kullanicilar = new();
 
-        public KullaniciYonetimForm()
+        public KullaniciYonetimControl()
         {
             InitializeComponent();
         }
 
-        private async void KullaniciYonetimForm_Load(object sender, EventArgs e) 
-        { 
+        private async void KullaniciYonetimControl_Load(object sender, EventArgs e)
+        {
             await VeriYukle();
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnKullaniciYonetim");

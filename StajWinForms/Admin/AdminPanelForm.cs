@@ -15,67 +15,106 @@ namespace StajWinForms
         
         private void btnFirmaBrowser_Click(object sender, EventArgs e)
         {
-            new FirmaBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.FirmaBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnOtobusBrowser_Click(object sender, EventArgs e)
         {
-            new OtobusBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.OtobusBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnFirmaOtobusEsle_Click(object sender, EventArgs e)
         {
-            new FirmaOtobusEslemeForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.FirmaOtobusEslemeControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnOtogarBrowser_Click(object sender, EventArgs e)
         {
-            new OtogarBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.OtogarBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnPersonelBrowser_Click(object sender, EventArgs e)
         {
-            new PersonelBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.PersonelBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnMusteriBrowser_Click(object sender, EventArgs e)
         {
-            new MusteriBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.MusteriBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnKaptanEsle_Click(object sender, EventArgs e)
         {
-            new KaptanEslemeForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.KaptanEslemeControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnSeferOtobusEsle_Click(object sender, EventArgs e)
         {
-            new SeferOtobusEslemeForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.SeferOtobusEslemeControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnKullaniciYonetim_Click(object sender, EventArgs e)
         {
-            new KullaniciYonetimForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.KullaniciYonetimControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnYetkiAtama_Click(object sender, EventArgs e)
         {
-            new YetkiAtamaForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.YetkiAtamaControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnDashboard_Click(object sender, EventArgs e)
         {
-            new DashboardForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new DashboardControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnSeferBrowser_Click(object sender, EventArgs e)
         {
-            new SeferBrowserForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.SeferBrowserControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         private void btnBiletArama_Click(object sender, EventArgs e)
         {
-            new BiletAramaForm().ShowDialog();
+            pnlIcerik.Controls.Clear();
+            var uc = new Admin.BiletAramaControl();
+            uc.Dock = DockStyle.Fill;
+            pnlIcerik.Controls.Add(uc);
         }
 
         public bool CikisYapildi { get; private set; } = false;

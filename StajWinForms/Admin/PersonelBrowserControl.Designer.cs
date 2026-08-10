@@ -4,7 +4,7 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace StajWinForms.Admin
 {
-    partial class OtogarBrowserForm
+    partial class PersonelBrowserControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -22,16 +22,17 @@ namespace StajWinForms.Admin
             btnDuzenle = new SimpleButton();
             btnSil = new SimpleButton();
             btnYenile = new SimpleButton();
-            gridOtogarlar = new GridControl();
+            gridPersonel = new GridControl();
             gridView = new GridView();
-            colOtogarId = new DevExpress.XtraGrid.Columns.GridColumn();
-            colSehir = new DevExpress.XtraGrid.Columns.GridColumn();
             colAd = new DevExpress.XtraGrid.Columns.GridColumn();
-            colAdres = new DevExpress.XtraGrid.Columns.GridColumn();
-            colTelefon = new DevExpress.XtraGrid.Columns.GridColumn();
+            colSoyad = new DevExpress.XtraGrid.Columns.GridColumn();
+            colEmail = new DevExpress.XtraGrid.Columns.GridColumn();
+            colUnvan = new DevExpress.XtraGrid.Columns.GridColumn();
+            colMaas = new DevExpress.XtraGrid.Columns.GridColumn();
+            colIseGiris = new DevExpress.XtraGrid.Columns.GridColumn();
             ((System.ComponentModel.ISupportInitialize)pnlButonlar).BeginInit();
             pnlButonlar.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)gridOtogarlar).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)gridPersonel).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
             SuspendLayout();
             //
@@ -82,85 +83,89 @@ namespace StajWinForms.Admin
             btnYenile.Text = "Yenile";
             btnYenile.Click += btnYenile_Click;
             //
-            // gridOtogarlar
+            // gridPersonel
             //
-            gridOtogarlar.Dock = DockStyle.Fill;
-            gridOtogarlar.MainView = gridView;
-            gridOtogarlar.Name = "gridOtogarlar";
-            gridOtogarlar.TabIndex = 1;
-            gridOtogarlar.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
+            gridPersonel.Dock = DockStyle.Fill;
+            gridPersonel.MainView = gridView;
+            gridPersonel.Name = "gridPersonel";
+            gridPersonel.TabIndex = 1;
+            gridPersonel.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
             //
             // gridView
             //
-            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colOtogarId, colSehir, colAd, colAdres, colTelefon });
-            gridView.GridControl = gridOtogarlar;
+            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colAd, colSoyad, colUnvan, colEmail, colMaas, colIseGiris });
+            gridView.GridControl = gridPersonel;
             gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
             gridView.OptionsView.ShowGroupPanel = false;
             gridView.OptionsDetail.EnableMasterViewMode = false;
             gridView.OptionsView.ShowIndicator = false;
             //
-            // colOtogarId
-            //
-            colOtogarId.Caption = "ID";
-            colOtogarId.FieldName = "OtogarId";
-            colOtogarId.Name = "colOtogarId";
-            colOtogarId.Visible = true;
-            colOtogarId.VisibleIndex = 0;
-            colOtogarId.Width = 50;
-            //
-            // colSehir
-            //
-            colSehir.Caption = "Şehir";
-            colSehir.FieldName = "SehirAdi";
-            colSehir.Name = "colSehir";
-            colSehir.Visible = true;
-            colSehir.VisibleIndex = 1;
-            colSehir.Width = 120;
-            //
             // colAd
             //
-            colAd.Caption = "Otogar Adı";
-            colAd.FieldName = "OtogarAdi";
+            colAd.Caption = "Ad";
+            colAd.FieldName = "Ad";
             colAd.Name = "colAd";
             colAd.Visible = true;
-            colAd.VisibleIndex = 2;
-            colAd.Width = 180;
+            colAd.VisibleIndex = 0;
+            colAd.Width = 120;
             //
-            // colAdres
+            // colSoyad
             //
-            colAdres.Caption = "Adres";
-            colAdres.FieldName = "Adres";
-            colAdres.Name = "colAdres";
-            colAdres.Visible = true;
-            colAdres.VisibleIndex = 3;
-            colAdres.Width = 200;
+            colSoyad.Caption = "Soyad";
+            colSoyad.FieldName = "Soyad";
+            colSoyad.Name = "colSoyad";
+            colSoyad.Visible = true;
+            colSoyad.VisibleIndex = 1;
+            colSoyad.Width = 120;
             //
-            // colTelefon
+            // colUnvan
             //
-            colTelefon.Caption = "Telefon";
-            colTelefon.FieldName = "Telefon";
-            colTelefon.Name = "colTelefon";
-            colTelefon.Visible = true;
-            colTelefon.VisibleIndex = 4;
-            colTelefon.Width = 110;
+            colUnvan.Caption = "Ünvan";
+            colUnvan.FieldName = "Unvan";
+            colUnvan.Name = "colUnvan";
+            colUnvan.Visible = true;
+            colUnvan.VisibleIndex = 2;
+            colUnvan.Width = 120;
             //
-            // OtogarBrowserForm
+            // colEmail
+            //
+            colEmail.Caption = "E-posta";
+            colEmail.FieldName = "Email";
+            colEmail.Name = "colEmail";
+            colEmail.Visible = true;
+            colEmail.VisibleIndex = 3;
+            colEmail.Width = 180;
+            //
+            // colMaas
+            //
+            colMaas.Caption = "Maaş";
+            colMaas.FieldName = "Maas";
+            colMaas.Name = "colMaas";
+            colMaas.Visible = true;
+            colMaas.VisibleIndex = 4;
+            colMaas.Width = 100;
+            //
+            // colIseGiris
+            //
+            colIseGiris.Caption = "İşe Giriş";
+            colIseGiris.FieldName = "IseGirisTarihi";
+            colIseGiris.Name = "colIseGiris";
+            colIseGiris.Visible = true;
+            colIseGiris.VisibleIndex = 5;
+            colIseGiris.Width = 100;
+            //
+            // PersonelBrowserControl
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(700, 480);
-            Controls.Add(gridOtogarlar);
+            Controls.Add(gridPersonel);
             Controls.Add(pnlButonlar);
-            FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
-            Name = "OtogarBrowserForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Otogar Yönetimi";
-            Load += OtogarBrowserForm_Load;
+            Name = "PersonelBrowserControl";
+            Load += PersonelBrowserControl_Load;
             ((System.ComponentModel.ISupportInitialize)pnlButonlar).EndInit();
             pnlButonlar.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)gridOtogarlar).EndInit();
+            ((System.ComponentModel.ISupportInitialize)gridPersonel).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
             ResumeLayout(false);
         }
@@ -170,12 +175,13 @@ namespace StajWinForms.Admin
         internal SimpleButton btnDuzenle;
         internal SimpleButton btnSil;
         internal SimpleButton btnYenile;
-        internal GridControl gridOtogarlar;
+        internal GridControl gridPersonel;
         internal GridView gridView;
-        private DevExpress.XtraGrid.Columns.GridColumn colOtogarId;
-        private DevExpress.XtraGrid.Columns.GridColumn colSehir;
         private DevExpress.XtraGrid.Columns.GridColumn colAd;
-        private DevExpress.XtraGrid.Columns.GridColumn colAdres;
-        private DevExpress.XtraGrid.Columns.GridColumn colTelefon;
+        private DevExpress.XtraGrid.Columns.GridColumn colSoyad;
+        private DevExpress.XtraGrid.Columns.GridColumn colUnvan;
+        private DevExpress.XtraGrid.Columns.GridColumn colEmail;
+        private DevExpress.XtraGrid.Columns.GridColumn colMaas;
+        private DevExpress.XtraGrid.Columns.GridColumn colIseGiris;
     }
 }

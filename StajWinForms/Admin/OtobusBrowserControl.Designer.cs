@@ -2,9 +2,9 @@ using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    partial class OtobusBrowserForm
+    partial class OtobusBrowserControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -15,7 +15,7 @@ namespace StajWinForms
             base.Dispose(disposing);
         }
 
-        #region Windows Form Designer generated code
+        #region Component Designer generated code
 
         private void InitializeComponent()
         {
@@ -41,10 +41,9 @@ namespace StajWinForms
             //
             // gridOtobusler
             //
-            gridOtobusler.Location = new Point(12, 12);
+            gridOtobusler.Dock = DockStyle.Fill;
             gridOtobusler.MainView = gridView;
             gridOtobusler.Name = "gridOtobusler";
-            gridOtobusler.Size = new Size(700, 380);
             gridOtobusler.TabIndex = 0;
             gridOtobusler.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
             //
@@ -161,10 +160,11 @@ namespace StajWinForms
             //
             // lblDurum
             //
-            lblDurum.Location = new Point(12, 400);
+            lblDurum.Dock = DockStyle.Bottom;
             lblDurum.Name = "lblDurum";
             lblDurum.Size = new Size(0, 13);
             lblDurum.TabIndex = 6;
+            lblDurum.Padding = new Padding(4, 2, 0, 2);
             //
             // flpButonlar
             //
@@ -175,25 +175,22 @@ namespace StajWinForms
             flpButonlar.Controls.Add(btnSil);
             flpButonlar.Controls.Add(btnIncele);
             flpButonlar.Controls.Add(btnYenile);
+            flpButonlar.Dock = DockStyle.Right;
             flpButonlar.FlowDirection = FlowDirection.TopDown;
-            flpButonlar.Location = new Point(725, 12);
             flpButonlar.Name = "flpButonlar";
+            flpButonlar.Padding = new Padding(8);
             flpButonlar.WrapContents = false;
             flpButonlar.TabIndex = 7;
             //
-            // OtobusBrowserForm
+            // OtobusBrowserControl
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(870, 430);
             Controls.Add(gridOtobusler);
             Controls.Add(flpButonlar);
             Controls.Add(lblDurum);
-            MaximizeBox = false;
-            Name = "OtobusBrowserForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Otobüs Yönetimi";
-            Load += OtobusBrowserForm_Load;
+            Name = "OtobusBrowserControl";
+            Load += OtobusBrowserControl_Load;
             ((System.ComponentModel.ISupportInitialize)gridOtobusler).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
             flpButonlar.ResumeLayout(false);

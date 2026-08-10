@@ -1,19 +1,19 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http;
 using StajWinForms.Dtos;
 
 namespace StajWinForms.Admin
 {
-    public partial class PersonelBrowserForm : XtraForm
+    public partial class PersonelBrowserControl : UserControl
     {
         private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 
-        public PersonelBrowserForm() { InitializeComponent(); }
+        public PersonelBrowserControl() { InitializeComponent(); }
 
-        private async void PersonelBrowserForm_Load(object sender, EventArgs e)
+        private async void PersonelBrowserControl_Load(object sender, EventArgs e)
             => await PersonelleriYukle();
 
         private async Task PersonelleriYukle()

@@ -1,29 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
 using DevExpress.XtraEditors;
-using DevExpress.XtraGrid;
-using DevExpress.XtraGrid.Views.Grid;
 using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace StajWinForms.Admin
 {
-    public partial class MusteriBrowserForm : XtraForm
+    public partial class MusteriBrowserControl : UserControl
     {
         private static readonly JsonSerializerOptions _Opts = new() { PropertyNameCaseInsensitive = true };
         private List<MusteriModel> _musteriler = new();
 
-        public MusteriBrowserForm()
+        public MusteriBrowserControl()
         {
             InitializeComponent();
         }
 
-        private async void MusteriBrowserForm_Load(object sender, EventArgs e)
+        private async void MusteriBrowserControl_Load(object sender, EventArgs e)
         {
             await VeriYukle();
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnMusteriBrowser");
@@ -47,7 +38,7 @@ namespace StajWinForms.Admin
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Hata oluştu: " + ex.Message);
+                XtraMessageBox.Show("Hata oluştu: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -81,8 +72,7 @@ namespace StajWinForms.Admin
             if (val == null || val == DBNull.Value) return;
             var m = _musteriler.FirstOrDefault(x => x.Id == Convert.ToInt32(val));
             if (m == null) return;
-            var dlg = new MusteriEditForm(m);
-            if (dlg.ShowDialog() != DialogResult.OK) return;
+            if (XtraMessageBox.Show($"{m.Ad} {m.Soyad} silinsin mi?", "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes) return;
             var resp = await AppConfig.Http.DeleteAsync($"api/musteri/{m.Id}");
             if (!resp.IsSuccessStatusCode)
                 XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);

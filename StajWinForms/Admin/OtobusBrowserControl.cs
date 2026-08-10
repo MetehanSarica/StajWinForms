@@ -2,22 +2,21 @@
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class OtobusBrowserForm : XtraForm
+    public partial class OtobusBrowserControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<OtobusModel> _otobusler = new();
 
-        public OtobusBrowserForm()
+        public OtobusBrowserControl()
         {
             InitializeComponent();
         }
 
-        private async void OtobusBrowserForm_Load(object sender, EventArgs e) 
+        private async void OtobusBrowserControl_Load(object sender, EventArgs e)
         {
             await VeriYukle();
-
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnOtobusBrowser");
             if (y != null)
@@ -61,10 +60,12 @@ namespace StajWinForms
                 if (!resp.IsSuccessStatusCode)
                     XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
-            catch (Exception ex) { XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
+            catch (Exception ex)
+            {
+                XtraMessageBox.Show(ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
             await VeriYukle();
         }
-
         private async void btnDegistir_Click(object sender, EventArgs e)
         {
             var otobus = GetSeciliOtobus();
@@ -132,8 +133,7 @@ namespace StajWinForms
             try
             {
                 var json = await AppConfig.Http.GetStringAsync("api/firmalar");
-                var firmalar = JsonSerializer.Deserialize<List<FirmaComboItem>>(json, _jsonOpts) ?? new();
-                return firmalar;
+                return JsonSerializer.Deserialize<List<FirmaComboItem>>(json, _jsonOpts) ?? new();
             }
             catch { return new(); }
         }
@@ -146,23 +146,24 @@ namespace StajWinForms
             btnYenile.Enabled = aktif;
             btnIncele.Enabled = aktif;
         }
+    }
 
-        public class OtobusModel
-        {
-            public int OtobusId { get; set; }
-            public string Plaka { get; set; } = "";
-            public string? Marka { get; set; }
-            public string? Model { get; set; }
-            public int KoltukKapasitesi { get; set; }
-            public int? FirmaId { get; set; }
-            public string? FirmaAdi { get; set; }
-        }
+    public class OtobusModel
+    {
+        public int OtobusId { get; set; }
+        public string Plaka { get; set; } = "";
+        public string? Marka { get; set; }
+        public string? Model { get; set; }
+        public int KoltukKapasitesi { get; set; }
+        public int? FirmaId { get; set; }
+        public string? FirmaAdi { get; set; }
+    }
 
-        public class FirmaComboItem
-        {
-            public int FirmaId { get; set; }
-            public string FirmaAdi { get; set; } = "";
-            public override string ToString() => FirmaAdi;
-        }
+    public class FirmaComboItem
+    {
+        public int FirmaId { get; set; }
+        public string FirmaAdi { get; set; } = "";
+        public override string ToString() => FirmaAdi;
+        
     }
 }

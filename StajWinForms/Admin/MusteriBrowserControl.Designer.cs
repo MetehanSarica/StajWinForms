@@ -4,7 +4,7 @@ using DevExpress.XtraGrid.Views.Grid;
 
 namespace StajWinForms.Admin
 {
-    partial class MusteriBrowserForm
+    partial class MusteriBrowserControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -39,10 +39,9 @@ namespace StajWinForms.Admin
             //
             // gridMusteriler
             //
-            gridMusteriler.Location = new Point(12, 12);
+            gridMusteriler.Dock = DockStyle.Fill;
             gridMusteriler.MainView = gridView;
             gridMusteriler.Name = "gridMusteriler";
-            gridMusteriler.Size = new Size(780, 400);
             gridMusteriler.TabIndex = 0;
             gridMusteriler.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
             //
@@ -135,24 +134,21 @@ namespace StajWinForms.Admin
             flpButonlar.Controls.Add(btnIncele);
             flpButonlar.Controls.Add(btnSil);
             flpButonlar.Controls.Add(btnYenile);
+            flpButonlar.Dock = DockStyle.Right;
             flpButonlar.FlowDirection = FlowDirection.TopDown;
-            flpButonlar.Location = new Point(805, 12);
             flpButonlar.Name = "flpButonlar";
+            flpButonlar.Padding = new Padding(8);
             flpButonlar.WrapContents = false;
             flpButonlar.TabIndex = 3;
             //
-            // MusteriBrowserForm
+            // MusteriBrowserControl
             //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(955, 430);
             Controls.Add(gridMusteriler);
             Controls.Add(flpButonlar);
-            MaximizeBox = false;
-            Name = "MusteriBrowserForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Müşteri Yönetimi";
-            Load += MusteriBrowserForm_Load;
+            Name = "MusteriBrowserControl";
+            Load += MusteriBrowserControl_Load;
             ((System.ComponentModel.ISupportInitialize)gridMusteriler).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();
             flpButonlar.ResumeLayout(false);

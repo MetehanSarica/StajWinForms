@@ -1,8 +1,8 @@
 using DevExpress.XtraEditors;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    partial class SeferOtobusEslemeForm
+    partial class SeferOtobusEslemeControl
     {
         private System.ComponentModel.IContainer components = null;
 
@@ -11,8 +11,6 @@ namespace StajWinForms
             if (disposing && (components != null)) components.Dispose();
             base.Dispose(disposing);
         }
-
-        #region Windows Form Designer generated code
 
         private void InitializeComponent()
         {
@@ -25,60 +23,98 @@ namespace StajWinForms
             btnAta = new SimpleButton();
             btnKaldir = new SimpleButton();
             flpButonlar = new FlowLayoutPanel();
+            tblMain = new TableLayoutPanel();
             flpButonlar.SuspendLayout();
+            tblMain.SuspendLayout();
             SuspendLayout();
-
-            lblSefer.Location = new Point(12, 18);
+            //
+            // tblMain
+            //
+            tblMain.ColumnCount = 2;
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.AutoSize));
+            tblMain.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 100F));
+            tblMain.Controls.Add(lblSefer, 0, 0);
+            tblMain.Controls.Add(cmbSefer, 1, 0);
+            tblMain.Controls.Add(lblMevcutBaslik, 0, 1);
+            tblMain.Controls.Add(lblMevcut, 1, 1);
+            tblMain.Controls.Add(lblOtobus, 0, 2);
+            tblMain.Controls.Add(cmbOtobus, 1, 2);
+            tblMain.Controls.Add(flpButonlar, 0, 3);
+            tblMain.SetColumnSpan(flpButonlar, 2);
+            tblMain.Dock = DockStyle.Top;
+            tblMain.AutoSize = true;
+            tblMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tblMain.Name = "tblMain";
+            tblMain.Padding = new Padding(12);
+            tblMain.RowCount = 4;
+            tblMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMain.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+            tblMain.TabIndex = 0;
+            //
+            // lblSefer
+            //
+            lblSefer.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            lblSefer.Margin = new Padding(0, 8, 8, 8);
             lblSefer.Name = "lblSefer";
             lblSefer.Text = "Sefer:";
-
-            cmbSefer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbSefer.Location = new Point(75, 15);
+            //
+            // cmbSefer
+            //
+            cmbSefer.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            cmbSefer.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbSefer.Margin = new Padding(0, 4, 0, 8);
             cmbSefer.Name = "cmbSefer";
-            cmbSefer.Size = new Size(415, 21);
             cmbSefer.TabIndex = 0;
             cmbSefer.SelectedIndexChanged += cmbSefer_SelectedIndexChanged;
-
-            lblMevcutBaslik.Location = new Point(12, 55);
+            //
+            // lblMevcutBaslik
+            //
+            lblMevcutBaslik.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            lblMevcutBaslik.Margin = new Padding(0, 8, 8, 8);
             lblMevcutBaslik.Name = "lblMevcutBaslik";
             lblMevcutBaslik.Text = "Mevcut Otobüs:";
-
-            lblMevcut.Location = new Point(120, 55);
+            //
+            // lblMevcut
+            //
+            lblMevcut.Anchor = AnchorStyles.Left;
+            lblMevcut.Margin = new Padding(0, 8, 0, 8);
             lblMevcut.Name = "lblMevcut";
             lblMevcut.Text = "-";
             lblMevcut.Appearance.ForeColor = System.Drawing.Color.Navy;
             lblMevcut.Appearance.Font = new System.Drawing.Font("Tahoma", 8.25F, System.Drawing.FontStyle.Bold);
-
-            lblOtobus.Location = new Point(12, 95);
+            //
+            // lblOtobus
+            //
+            lblOtobus.Anchor = AnchorStyles.Left | AnchorStyles.Top;
+            lblOtobus.Margin = new Padding(0, 8, 8, 8);
             lblOtobus.Name = "lblOtobus";
             lblOtobus.Text = "Otobüs Seç:";
-
-            cmbOtobus.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            cmbOtobus.Location = new Point(100, 92);
+            //
+            // cmbOtobus
+            //
+            cmbOtobus.Anchor = AnchorStyles.Left | AnchorStyles.Right;
+            cmbOtobus.DropDownStyle = ComboBoxStyle.DropDownList;
+            cmbOtobus.Margin = new Padding(0, 4, 0, 8);
             cmbOtobus.Name = "cmbOtobus";
-            cmbOtobus.Size = new Size(280, 21);
             cmbOtobus.TabIndex = 1;
-
             //
             // btnAta
             //
-            btnAta.Location = new Point(3, 3);
             btnAta.Name = "btnAta";
             btnAta.Size = new Size(120, 35);
             btnAta.TabIndex = 2;
             btnAta.Text = "Ata";
             btnAta.Click += btnAta_Click;
-
             //
             // btnKaldir
             //
-            btnKaldir.Location = new Point(129, 3);
             btnKaldir.Name = "btnKaldir";
             btnKaldir.Size = new Size(120, 35);
             btnKaldir.TabIndex = 3;
             btnKaldir.Text = "Kaldır";
             btnKaldir.Click += btnKaldir_Click;
-
             //
             // flpButonlar
             //
@@ -87,37 +123,28 @@ namespace StajWinForms
             flpButonlar.Controls.Add(btnAta);
             flpButonlar.Controls.Add(btnKaldir);
             flpButonlar.FlowDirection = FlowDirection.LeftToRight;
-            flpButonlar.Location = new Point(12, 135);
+            flpButonlar.Margin = new Padding(0, 8, 0, 0);
             flpButonlar.Name = "flpButonlar";
             flpButonlar.WrapContents = false;
             flpButonlar.TabIndex = 4;
-
+            //
+            // SeferOtobusEslemeControl
+            //
             AutoScaleDimensions = new SizeF(6F, 13F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(510, 195);
-            Controls.Add(lblSefer);
-            Controls.Add(cmbSefer);
-            Controls.Add(lblMevcutBaslik);
-            Controls.Add(lblMevcut);
-            Controls.Add(lblOtobus);
-            Controls.Add(cmbOtobus);
-            Controls.Add(flpButonlar);
-            FormBorderStyle = FormBorderStyle.FixedDialog;
-            MaximizeBox = false;
-            Name = "SeferOtobusEslemeForm";
-            StartPosition = FormStartPosition.CenterParent;
-            Text = "Sefer – Otobüs Eşleme";
-            Load += SeferOtobusEslemeForm_Load;
+            Controls.Add(tblMain);
+            Name = "SeferOtobusEslemeControl";
+            Load += SeferOtobusEslemeControl_Load;
             flpButonlar.ResumeLayout(false);
+            tblMain.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
-
-        #endregion
 
         private LabelControl lblSefer, lblMevcutBaslik, lblMevcut, lblOtobus;
         private System.Windows.Forms.ComboBox cmbSefer, cmbOtobus;
         private SimpleButton btnAta, btnKaldir;
         private FlowLayoutPanel flpButonlar;
+        private TableLayoutPanel tblMain;
     }
 }

@@ -1,5 +1,5 @@
 using DevExpress.XtraEditors;
-using static StajWinForms.FirmaBrowserForm;
+using static StajWinForms.Admin.FirmaBrowserControl;
 
 namespace StajWinForms
 {

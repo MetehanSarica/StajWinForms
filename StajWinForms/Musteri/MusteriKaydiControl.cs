@@ -53,7 +53,7 @@ namespace StajWinForms
 
             string tc = spTC.Text.Trim();
             if (!Dogrulama.TcGecerliMi(tc))
-                return Uyar(prefix + "TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.");
+                return Uyar(prefix + "Geçersiz TC Kimlik No.");
 
             if (txtboxAd.Text.Trim().Length == 0)
                 return Uyar(prefix + "Ad alanı boş bırakılamaz.");

@@ -1,21 +1,21 @@
-﻿using DevExpress.XtraEditors;
+using DevExpress.XtraEditors;
 using System.Net.Http.Json;
 using System.Text.Json;
 
-namespace StajWinForms
+namespace StajWinForms.Admin
 {
-    public partial class SeferOtobusEslemeForm : XtraForm
+    public partial class SeferOtobusEslemeControl : UserControl
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<SeferItem> _seferler = new();
         private List<OtobusItem> _otobusler = new();
 
-        public SeferOtobusEslemeForm()
+        public SeferOtobusEslemeControl()
         {
             InitializeComponent();
         }
 
-        private async void SeferOtobusEslemeForm_Load(object sender, EventArgs e)
+        private async void SeferOtobusEslemeControl_Load(object sender, EventArgs e)
         {
             await OtubusleriYukle();
             await SeferleriYukle();

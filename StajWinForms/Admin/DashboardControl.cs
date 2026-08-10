@@ -1,24 +1,16 @@
-﻿using DevExpress.XtraEditors;
-using DevExpress.XtraCharts;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+﻿using DevExpress.XtraCharts;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http;
 
 namespace StajWinForms.Admin
 {
-    public partial class DashboardForm : XtraForm
+    public partial class DashboardControl : UserControl
     {
         private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 
-        public DashboardForm()
+        public DashboardControl()
         {
             InitializeComponent();
             this.Load += async (s, e) => await LoadData();
@@ -28,14 +20,12 @@ namespace StajWinForms.Admin
         {
             var data = await _http.GetFromJsonAsync<DashboardDto>("api/istatistikler", _opts) ?? new();
 
-            
             var group = new DevExpress.XtraEditors.TileGroup();
             tileControl.Groups.Add(group);
 
             group.Items.Add(CreateTile("Toplam Bilet", data.ToplamBilet.ToString(), Color.FromArgb(0, 120, 215)));
             group.Items.Add(CreateTile("Toplam Gelir", $"₺{data.ToplamGelir:N0}", Color.FromArgb(16, 124, 16)));
             group.Items.Add(CreateTile("Toplam Sefer", data.AktifSeferler.ToString(), Color.FromArgb(202, 80, 16)));
-
 
             var series = new Series("Güzergah", ViewType.Bar);
             foreach (var g in data.PopulerGuzergahlar)
@@ -76,7 +66,7 @@ namespace StajWinForms.Admin
         public decimal ToplamGelir { get; set; }
         public int AktifSeferler { get; set; }
         public List<DashboardGuzergahDto> PopulerGuzergahlar { get; set; } = new();
-        public List<DashboardFirmaGelirDto> FirmaGelirler { get; set;  } = new();
+        public List<DashboardFirmaGelirDto> FirmaGelirler { get; set; } = new();
     }
 
     class DashboardGuzergahDto

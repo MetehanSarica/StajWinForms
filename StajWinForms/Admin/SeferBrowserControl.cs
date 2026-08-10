@@ -1,28 +1,21 @@
-﻿using DevExpress.XtraEditors;
-using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
+using DevExpress.XtraEditors;
+using System.Net.Http;
 using System.Net.Http.Json;
 using System.Text.Json;
-using System.Net.Http;
 
 namespace StajWinForms.Admin
 {
-    public partial class SeferBrowserForm : XtraForm
+    public partial class SeferBrowserControl : UserControl
     {
         private static readonly HttpClient _http = AppConfig.Http;
         private static readonly JsonSerializerOptions _opts = new() { PropertyNameCaseInsensitive = true };
 
-        public SeferBrowserForm()
+        public SeferBrowserControl()
         {
             InitializeComponent();
         }
 
-        private async void SeferBrowserForm_Load(object sender, EventArgs e)
+        private async void SeferBrowserControl_Load(object sender, EventArgs e)
         {
             await SeferleriYukle();
         }
@@ -31,6 +24,7 @@ namespace StajWinForms.Admin
         {
             var seferler = await _http.GetFromJsonAsync<List<SeferDto>>("api/seferler", _opts) ?? new();
             gridSeferler.DataSource = seferler;
+            lblDurum.Text = $"{seferler.Count} sefer listelendi.";
         }
 
         private void btnEkle_Click(object sender, EventArgs e)
@@ -48,6 +42,7 @@ namespace StajWinForms.Admin
             if (frm.ShowDialog(this) == DialogResult.OK)
                 _ = SeferleriYukle();
         }
+
         private async void btnSil_Click(object sender, EventArgs e)
         {
             if (gridView.FocusedRowHandle < 0) return;
@@ -74,22 +69,12 @@ namespace StajWinForms.Admin
         {
             await SeferleriYukle();
         }
-
     }
 
-    class SeferDto
-    {
-        public int SeferId { get; set; }
-        public int FirmaId { get; set; }
-        public string FirmaAdi { get; set; } = "";
-        public int KalkisSehirId { get; set; }
-        public string KalkisSehirAdi { get; set; } = "";
-        public int VarisSehirId { get; set; }
-        public string VarisSehirAdi { get; set; } = "";
-        public DateTime KalkisZamani { get; set; }
-        public int SureDakika { get; set; }
-        public decimal Fiyat { get; set; }
-        public int KoltukKapasitesi { get; set; }
-        public string? OtobusPlaka { get; set; }
-    }
+    public record SeferDto(
+        int SeferId, int FirmaId, string FirmaAdi,
+        int KalkisSehirId, string KalkisSehirAdi,
+        int VarisSehirId, string VarisSehirAdi,
+        DateTime KalkisZamani, int SureDakika,
+        decimal Fiyat, int KoltukKapasitesi, string OtobusPlaka);
 }

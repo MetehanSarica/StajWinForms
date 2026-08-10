@@ -1,5 +1,5 @@
 ﻿using DevExpress.XtraEditors;
-using static StajWinForms.KullaniciYonetimForm;
+using static StajWinForms.Admin.KullaniciYonetimControl;
 
 namespace StajWinForms
 {
