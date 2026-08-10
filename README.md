@@ -1,19 +1,18 @@
 # StajWinForms — Otobüs Bilet Satış Sistemi
 
-Staj projesi: WinForms (DevExpress) istemci + ASP.NET Core Web API ile otobüs bilet satış uygulaması.
+Staj projesi. Otobüs bileti satış ve yönetim uygulaması.
 
-## Yapı
+## Projeler
 
-- **StajWinForms/** — WinForms istemci (DevExpress kontrolleri). Sefer arama, koltuk seçimi (cinsiyete göre renklendirme), müşteri kaydı, bilet oluşturma (QuestPDF ile PDF bilet), bilet sorgulama ve iptal.
-- **StajWinForms_API/** — ASP.NET Core Web API + Entity Framework Core (SQL Server LocalDB, `dbStaj` veritabanı).
+- **StajWinForms** — WinForms masaüstü istemci (DevExpress). Personel ve yönetici kullanımına yönelik.
+- **StajWinForms_API** — ASP.NET Core Web API. Entity Framework Core + SQL Server LocalDB.
+- **StajWeb** — ASP.NET Core Razor Pages. Müşteri tarafı: sefer arama, koltuk seçimi, bilet satın alma, sorgulama ve iptal.
 
 ## Çalıştırma
 
-1. API'yi başlat: `dotnet run --project StajWinForms_API` (http://localhost:8081)
-2. İstemciyi başlat: `dotnet run --project StajWinForms`
+1. `dotnet run --project StajWinForms_API` (http://localhost:8081)
+2. `dotnet run --project StajWeb` veya `dotnet run --project StajWinForms`
 
-## Güvenlik Notu
+## Notlar
 
-`appsettings.json` dosyalarındaki `ApiKey` (`staj-2026-gizli-anahtar`) **demo amaçlıdır**.
-Gerçek bir projede gizli anahtarlar repoya commit edilmemeli; bunun yerine
-`dotnet user-secrets` (geliştirme) veya ortam değişkenleri (üretim) kullanılmalıdır.
+`appsettings.json` dosyaları `.gitignore` kapsamındadır. Projeyi klonladıktan sonra bağlantı dizesini kendiniz oluşturmanız gerekir.
