@@ -6,6 +6,9 @@
 # Secrets
 appsettings.json
 
+# Claude Code
+.claude/
+
 # User-specific files
 *.rsuser
 *.suo
