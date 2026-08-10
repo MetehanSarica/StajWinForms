@@ -1,4 +1,4 @@
-using QuestPDF.Fluent;
+﻿using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
 using StajWeb.Dtos;
@@ -11,7 +11,7 @@ namespace StajWeb.Helpers
             string adSoyad, string tc, string telefon, string email,
             string sehir, string cinsiyet, string adres,
             int koltukNo, int seferNo,
-            string kalkisSehir, string varisSehir, DateTime kalkisZamani)
+            string kalkisSehir, string varisSehir, DateTime kalkisZamani, DateTime satinAlmaTarihi)
         {
             return Document.Create(doc =>
             {
@@ -65,7 +65,7 @@ namespace StajWeb.Helpers
                     });
 
                     page.Footer().AlignCenter().PaddingTop(4)
-                        .Text($"Sefer No: {seferNo} | Bilet Tarihi: {DateTime.Now:dd.MM.yyyy HH:mm}")
+                        .Text($"Sefer No: {seferNo} | Bilet Tarihi: {(satinAlmaTarihi == DateTime.MinValue ? "-" : satinAlmaTarihi.ToString("dd.MM.yyyy HH:mm"))}")
                         .FontSize(8).FontColor(Colors.Grey.Darken1);
                 });
 
@@ -128,7 +128,7 @@ namespace StajWeb.Helpers
                         });
 
                         page.Footer().AlignCenter().PaddingTop(4)
-                            .Text($"Sefer No: {d.SeferId}  |  Bilet Tarihi: {DateTime.Now:dd.MM.yyyy HH:mm}")
+                            .Text($"Sefer No: {d.SeferId}  |  Bilet Tarihi: {(d.SatinAlmaTarihi == DateTime.MinValue ? "-" : d.SatinAlmaTarihi.ToString("dd.MM.yyyy HH:mm"))}")
                             .FontSize(8).FontColor(Colors.Grey.Darken1);
                     });
                 }

@@ -18,5 +18,6 @@
         public DateTime KalkisZamani { get; set; }
         public string FirmaAdi { get; set; } = "";
         public decimal Fiyat { get; set; }
+        public DateTime SatinAlmaTarihi { get; set; }
     }
 }

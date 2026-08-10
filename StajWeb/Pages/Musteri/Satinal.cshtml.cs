@@ -62,6 +62,8 @@ namespace StajWeb.Pages
                     }
                 }
 
+                    var biletIdler = new List<int>();
+
                     for (int i = 0; i < KoltukList.Count; i++)
                     {
                         var yolcu = Yolcular[i];
@@ -88,9 +90,12 @@ namespace StajWeb.Pages
                                 : apiMesaj;
                             return Page();
                         }
+                        var sonuc = await response.Content.ReadFromJsonAsync<BiletSonucDto>();
+                        if (sonuc != null) biletIdler.Add(sonuc.BiletId);
                     }
 
-            return RedirectToPage("/Musteri/Seferler");
+            TempData["BiletIdler"] = System.Text.Json.JsonSerializer.Serialize(biletIdler);
+            return RedirectToPage("/Musteri/BiletPdf");
 
         }
 

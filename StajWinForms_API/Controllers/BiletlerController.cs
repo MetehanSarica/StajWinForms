@@ -121,7 +121,8 @@ public class BiletlerController : ControllerBase
             VarisSehirAdi = b.Sefer.VarisSehir.SehirAdi,
             KalkisZamani = b.Sefer.KalkisZamani,
             FirmaAdi = b.Sefer.Firma.FirmaAdi ?? "",
-            Fiyat = b.Sefer.Fiyat
+            Fiyat = b.Sefer.Fiyat,
+            SatinAlmaTarihi = b.SatinAlmaTarihi
         });
     }
     [HttpGet("ara")]
@@ -242,7 +243,8 @@ public class BiletlerController : ControllerBase
                 MusteriTc = satinAlDto.MusteriTc,
                 BinisDurakSira = satinAlDto.BinisDurakSira,
                 InisDurakSira = satinAlDto.InisDurakSira,
-                Cinsiyet = satinAlDto.MusteriCinsiyet
+                Cinsiyet = satinAlDto.MusteriCinsiyet,
+                SatinAlmaTarihi = DateTime.Now
             };
             _context.Biletlers.Add(yeniBilet);
             await _context.SaveChangesAsync();

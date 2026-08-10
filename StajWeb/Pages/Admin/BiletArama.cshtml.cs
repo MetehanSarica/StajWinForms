@@ -56,7 +56,8 @@ namespace StajWeb.Pages.Admin
                 seferNo: detay.SeferId,
                 kalkisSehir: detay.KalkisSehirAdi,
                 varisSehir: detay.VarisSehirAdi,
-                kalkisZamani: detay.KalkisZamani
+                kalkisZamani: detay.KalkisZamani,
+                satinAlmaTarihi: detay.SatinAlmaTarihi
                 );
 
             return File(pdf, "application/pdf", $"Bilet_{detay.MusteriTc}_{detay.KoltukNo}.pdf");

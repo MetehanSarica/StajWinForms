@@ -22,4 +22,6 @@ public partial class Biletler
     public virtual Musteri MusteriTcNavigation { get; set; } = null!;
 
     public virtual Seferler Sefer { get; set; } = null!;
+
+    public DateTime SatinAlmaTarihi {  get; set; }
 }

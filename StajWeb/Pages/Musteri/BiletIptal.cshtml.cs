@@ -9,6 +9,7 @@ namespace StajWeb.Pages
 {
     public class BiletIptalModel : PageModel
     {
+        [BindProperty(SupportsGet = true)] public string MusteriTc { get; set; } = "";
         [BindProperty(SupportsGet = true)] public int BiletId { get; set; }
 
         private readonly IHttpClientFactory _clientFactory;
@@ -24,7 +25,11 @@ namespace StajWeb.Pages
         public async Task<IActionResult> OnPostAsync()
         {
             var client = _clientFactory.CreateClient("API");
-            var response = await client.DeleteAsync($"/api/biletler/{BiletId}");
+            var bilet = await client.GetFromJsonAsync<BiletDetayDto>($"api/biletler/detay/{BiletId}");
+            if (bilet == null || bilet.MusteriTc != MusteriTc)
+                return RedirectToPage("/Musteri/BiletSorgula");
+
+            await client.DeleteAsync($"/api/biletler/{BiletId}");
             return RedirectToPage("/Musteri/BiletSorgula");
         }
     }

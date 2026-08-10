@@ -44,7 +44,7 @@
                         <td>@b.KalkisZamani.ToString("dd/MM/yyyy HH:mm")</td>
                         <td>@b.KoltukNo</td>
                         <td>@b.Fiyat ₺</td>
-                        <td><a href="/Musteri/BiletIptal?biletId=@b.BiletId" class="btn btn-danger btn-sm">İptal</a></td>
+                        <td><a href="/Musteri/BiletIptal?biletId=@b.BiletId&musteriTc=@Model.MusteriTc" class="btn btn-danger btn-sm">İptal</a></td>
                     </tr>
                 }
             </tbody>

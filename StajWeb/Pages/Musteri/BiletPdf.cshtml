@@ -1,13 +1,17 @@
 @page
 @model StajWeb.Pages.Musteri.BiletPdfModel
-<script>
-    window.onload = function () {
-        var iframe = document.createElement('iframe');
-        iframe.style.display = 'none';
-        iframe.src = '?handler=Download';
-        document.body.appendChild(iframe);
-        setTimeout(function () {
-            window.location.href = '/Musteri/Seferler';
-        }, 300);
-    };
-</script>
+@{
+    ViewData["Title"] = "Bilet Hazır";
+}
+
+<div class="text-center mt-5">
+    <h4 class="mb-4">Biletiniz hazırlandı!</h4>
+    @foreach (var id in Model.BiletIdler)
+    {
+        <a href="?handler=Download&biletId=@id" target="_blank" class="btn btn-primary m-2">
+            Bileti Görüntüle
+        </a>
+    }
+    <br /><br />
+    <a href="/Musteri/Seferler" class="btn btn-secondary">Seferlere Dön</a>
+</div>

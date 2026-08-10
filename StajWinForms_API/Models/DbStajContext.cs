@@ -63,6 +63,7 @@ public partial class DbStajContext : DbContext
                 .IsFixedLength()
                 .HasColumnName("MusteriTC");
             entity.Property(e => e.SeferId).HasColumnName("SeferID");
+            entity.Property(e => e.SatinAlmaTarihi).HasColumnName("SatinAlmaTarihi");
 
             entity.HasOne(d => d.MusteriTcNavigation).WithMany(p => p.Biletlers)
                 .HasPrincipalKey(p => p.Tc)
