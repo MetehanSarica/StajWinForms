@@ -18,9 +18,6 @@ namespace StajWeb.Pages
         {
             _clientFactory = clientFactory;
         }
-        public void OnGet()
-        {
-        }
         
         public async Task<IActionResult> OnPostAsync()
         {
