@@ -83,6 +83,8 @@ namespace StajWeb.Dtos
         public string? OtobusPlaka { get; set; }
     }
 
+    public record YolcuDto(int KoltukNo, string MusteriAdSoyad, string MusteriTc, string? Cinsiyet);
+
     public class OtobusKaptanDto
     {
         public int Id { get; set; }

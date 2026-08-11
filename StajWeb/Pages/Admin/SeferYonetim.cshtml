@@ -69,6 +69,7 @@
                             <button type="submit" class="btn btn-danger btn-sm">Sil</button>
                         </form>
                     }
+                    <button class="btn btn-info btn-sm" onclick="yolcularAc(@s.SeferId, '@s.KalkisSehirAdi → @s.VarisSehirAdi')">Yolcular</button>
                 </td>
             </tr>
         }
@@ -191,6 +192,34 @@
     </div>
 }
 
+<!-- Yolcular Modal -->
+<div class="modal fade" id="yolcularModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="yolcularBaslik">Yolcular</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <table class="table table-bordered table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Koltuk No</th>
+                            <th>Ad Soyad</th>
+                            <th>TC</th>
+                            <th>Cinsiyet</th>
+                        </tr>
+                    </thead>
+                    <tbody id="yolcularTbody"></tbody>
+                </table>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css" />
     <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
@@ -199,6 +228,24 @@
         $(function () {
             $('#tblSeferler').DataTable({ language: { url: '//cdn.datatables.net/plug-ins/1.13.6/i18n/tr.json' }, order: [[0, 'desc']] });
         });
+
+        async function yolcularAc(seferId, guzergah) {
+            document.getElementById('yolcularBaslik').textContent = 'Yolcular — ' + guzergah;
+            document.getElementById('yolcularTbody').innerHTML = '<tr><td colspan="4" class="text-center">Yükleniyor...</td></tr>';
+            new bootstrap.Modal(document.getElementById('yolcularModal')).show();
+
+            const resp = await fetch(`?handler=Yolcular&seferId=${seferId}`);
+            const yolcular = await resp.json();
+
+            const tbody = document.getElementById('yolcularTbody');
+            if (yolcular.length === 0) {
+                tbody.innerHTML = '<tr><td colspan="4" class="text-center text-muted">Bu seferde yolcu yok.</td></tr>';
+            } else {
+                tbody.innerHTML = yolcular.map(y =>
+                    `<tr><td>${y.koltukNo}</td><td>${y.musteriAdSoyad}</td><td>${y.musteriTc}</td><td>${y.cinsiyet ?? '—'}</td></tr>`
+                ).join('');
+            }
+        }
 
         function duzenleAc(seferId, firmaId, kalkisId, varisId, zaman, sure, fiyat, kapasite) {
             document.getElementById('dSeferId').value = seferId;

@@ -80,6 +80,13 @@ namespace StajWeb.Pages.Admin
             return RedirectToPage();
         }
 
+        public async Task<IActionResult> OnGetYolcularAsync(int seferId)
+        {
+            var client = _clientFactory.CreateClient("API");
+            var yolcular = await client.GetFromJsonAsync<List<YolcuDto>>($"api/biletler/{seferId}") ?? new();
+            return new JsonResult(yolcular);
+        }
+
         public async Task<IActionResult> OnPostSilAsync(int seferId)
         {
             var client = _clientFactory.CreateClient("API");
