@@ -17,7 +17,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnPersonelBrowser");
+            Yetki = HttpContext.Session.GetYetki("personel_yonetimi");
             var client = _clientFactory.CreateClient("API");
             Personeller = await client.GetFromJsonAsync<List<PersonelDto>>("api/personel") ?? new();
         }

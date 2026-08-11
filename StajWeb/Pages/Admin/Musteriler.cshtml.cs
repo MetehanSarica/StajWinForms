@@ -20,7 +20,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnMusteriBrowser");
+            Yetki = HttpContext.Session.GetYetki("musteri_yonetimi");
             var client = _clientFactory.CreateClient("API");
             var url = "api/musteri" + (string.IsNullOrEmpty(Ara) ? "" : $"?ara={Uri.EscapeDataString(Ara)}");
             Musteriler = await client.GetFromJsonAsync<List<MusteriDto>>(url) ?? new();

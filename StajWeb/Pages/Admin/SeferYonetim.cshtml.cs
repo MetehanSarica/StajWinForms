@@ -20,7 +20,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnSeferBrowser");
+            Yetki = HttpContext.Session.GetYetki("sefer_yonetimi");
             var client = _clientFactory.CreateClient("API");
             Seferler = await client.GetFromJsonAsync<List<SeferDto>>("api/seferler") ?? new();
             Firmalar = await client.GetFromJsonAsync<List<FirmaDto>>("api/firmalar") ?? new();

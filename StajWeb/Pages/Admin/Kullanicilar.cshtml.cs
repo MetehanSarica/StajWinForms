@@ -15,7 +15,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnKullaniciYonetim");
+            Yetki = HttpContext.Session.GetYetki("kullanici_yonetimi");
             var client = _clientFactory.CreateClient("API");
             Kullanicilar = await client.GetFromJsonAsync<List<KullaniciDto>>("api/kullanicilar") ?? new();
         }

@@ -16,7 +16,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnOtobusBrowser");
+            Yetki = HttpContext.Session.GetYetki("otobus_yonetimi");
             var client = _clientFactory.CreateClient("API");
             Otobusler = await client.GetFromJsonAsync<List<OtobusDto>>("api/otobusler") ?? new();
             Firmalar = await client.GetFromJsonAsync<List<FirmaDto>>("api/firmalar") ?? new();

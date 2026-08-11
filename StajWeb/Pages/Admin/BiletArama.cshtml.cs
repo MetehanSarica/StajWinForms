@@ -23,7 +23,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task OnGetAsync()
         {
-            Yetki = HttpContext.Session.GetYetki("btnBiletArama");
+            Yetki = HttpContext.Session.GetYetki("bilet_arama");
             var client = _clientFactory.CreateClient("API");
             Sehirler = await client.GetFromJsonAsync<List<Sehirler>>("api/sehirler") ?? new();
 

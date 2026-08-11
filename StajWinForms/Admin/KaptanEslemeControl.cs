@@ -20,7 +20,7 @@ namespace StajWinForms.Admin
             await TumKaptanlariYukle();
             await OtubusleriYukle();
 
-            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnKaptanEsle");
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "kaptan_esleme");
             if (y != null)
             {
                 btnAta.Visible = y.Ata;

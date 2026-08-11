@@ -17,7 +17,7 @@ namespace StajWinForms.Admin
         private async void MusteriBrowserControl_Load(object sender, EventArgs e)
         {
             await VeriYukle();
-            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnMusteriBrowser");
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "musteri_yonetimi");
             if (y != null)
             {
                 btnEkle.Visible = y.Ekle;

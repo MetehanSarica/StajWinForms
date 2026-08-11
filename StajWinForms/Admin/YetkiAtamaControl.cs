@@ -13,19 +13,19 @@ namespace StajWinForms.Admin
 
         private static readonly Dictionary<string, HashSet<string>> _formYetkileri = new()
         {
-            ["btnDashboard"] = new() { "Incele" },
-            ["btnSeferBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele", "AktifPasif" },
-            ["btnBiletArama"] = new() { "Incele" },
-            ["btnFirmaBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
-            ["btnOtobusBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
-            ["btnMusteriBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
-            ["btnOtogarBrowser"] = new() { "Ekle", "Degistir", "Sil" },
-            ["btnPersonelBrowser"] = new() { "Ekle", "Degistir", "Sil" },
-            ["btnFirmaOtobusEsle"] = new() { "Ata", "Kaldir" },
-            ["btnKaptanEsle"] = new() { "Ata", "Kaldir" },
-            ["btnSeferOtobusEsle"] = new() { "Ata", "Kaldir" },
-            ["btnKullaniciYonetim"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
-            ["btnYetkiAtama"] = new() { "Kaydet" },
+            ["dashboard"]           = new() { "Incele" },
+            ["sefer_yonetimi"]      = new() { "Ekle", "Degistir", "Sil", "Incele", "AktifPasif" },
+            ["bilet_arama"]         = new() { "Incele" },
+            ["firma_yonetimi"]      = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["otobus_yonetimi"]     = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["musteri_yonetimi"]    = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["otogar_yonetimi"]     = new() { "Ekle", "Degistir", "Sil" },
+            ["personel_yonetimi"]   = new() { "Ekle", "Degistir", "Sil" },
+            ["firma_otobus_esleme"] = new() { "Ata", "Kaldir" },
+            ["kaptan_esleme"]       = new() { "Ata", "Kaldir" },
+            ["sefer_otobus_esleme"] = new() { "Ata", "Kaldir" },
+            ["kullanici_yonetimi"]  = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["yetki_atama"]         = new() { "Kaydet" },
         };
 
         private static readonly (string Col, string Key)[] _sutunlar =
@@ -68,7 +68,7 @@ namespace StajWinForms.Admin
                 HucreStilUygula(i, _formlar[i].Name);
             }
 
-            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnYetkiAtama");
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "yetki_atama");
             if (y != null)
                 btnKaydet.Visible = y.Kaydet;
         }

@@ -131,11 +131,31 @@ namespace StajWinForms
             Close();
         }
 
+        private static readonly Dictionary<string, string> _btnKeyMap = new()
+        {
+            ["btnDashboard"]        = "dashboard",
+            ["btnSeferBrowser"]     = "sefer_yonetimi",
+            ["btnBiletArama"]       = "bilet_arama",
+            ["btnFirmaBrowser"]     = "firma_yonetimi",
+            ["btnOtobusBrowser"]    = "otobus_yonetimi",
+            ["btnMusteriBrowser"]   = "musteri_yonetimi",
+            ["btnOtogarBrowser"]    = "otogar_yonetimi",
+            ["btnPersonelBrowser"]  = "personel_yonetimi",
+            ["btnFirmaOtobusEsle"]  = "firma_otobus_esleme",
+            ["btnKaptanEsle"]       = "kaptan_esleme",
+            ["btnSeferOtobusEsle"]  = "sefer_otobus_esleme",
+            ["btnKullaniciYonetim"] = "kullanici_yonetimi",
+            ["btnYetkiAtama"]       = "yetki_atama",
+        };
+
         private async void AdminPanelForm_Load(object sender, EventArgs e)
         {
             var formlar = flpButonlar.Controls.OfType<SimpleButton>()
                 .Where(b => b.Name != "btnCikis")
-                .Select(b => new { FormAdi = b.Name, FormAciklamasi = b.Text})
+                .Select(b => new { 
+                    FormAdi = _btnKeyMap.TryGetValue(b.Name, out var k) ? k : b.Name,
+                    FormAciklamasi = b.Text
+                })
                 .ToList();
             await AppConfig.Http.PostAsJsonAsync("api/formlar/sync", formlar);
 
@@ -143,6 +163,7 @@ namespace StajWinForms
             {
                 if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
                 {
+                    var key = _btnKeyMap.TryGetValue(btn.Name, out var k) ? k : btn.Name;
                     var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == btn.Name);
                     btn.Visible = y != null && (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet || y.AktifPasif);
                 }

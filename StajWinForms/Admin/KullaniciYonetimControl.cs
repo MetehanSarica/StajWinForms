@@ -18,7 +18,7 @@ namespace StajWinForms.Admin
         {
             await VeriYukle();
 
-            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnKullaniciYonetim");
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "kullanici_yonetimi");
             if (y != null)
             {
                 btnEkle.Visible = y.Ekle;
