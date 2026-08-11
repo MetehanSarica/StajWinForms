@@ -34,7 +34,8 @@ public class SeferlerController : ControllerBase
                 KalkisSehirAdi = s.KalkisSehir.SehirAdi,
                 VarisSehirAdi = s.VarisSehir.SehirAdi,
                 OtobusId = s.OtobusId,
-                OtobusPlaka = s.Otobus != null ? s.Otobus.Plaka : null
+                OtobusPlaka = s.Otobus != null ? s.Otobus.Plaka : null,
+                Aktif = s.Aktif,
             })
             .ToListAsync();
 
@@ -88,6 +89,26 @@ public class SeferlerController : ControllerBase
         sefer.Fiyat = dto.Fiyat;
         sefer.KoltukKapasitesi = dto.KoltukKapasitesi;
 
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPut("{id}/iptal")]
+    public async Task<IActionResult> IptalEt(int id)
+    {
+        var sefer = await _context.Seferlers.FindAsync(id);
+        if (sefer == null) return NotFound();
+        sefer.Aktif = false;
+        await _context.SaveChangesAsync();
+        return NoContent();
+    }
+
+    [HttpPut("{id}/aktifet")]
+    public async Task<IActionResult> AktifEt(int id)
+    {
+        var sefer = await _context.Seferlers.FindAsync(id);
+        if (sefer == null) return NotFound();
+        sefer.Aktif = true;
         await _context.SaveChangesAsync();
         return NoContent();
     }

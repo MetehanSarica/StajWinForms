@@ -81,9 +81,10 @@ namespace StajWeb.Dtos
         public DateTime KalkisZamani { get; set; }
         public int? OtobusId { get; set; }
         public string? OtobusPlaka { get; set; }
+        public bool Aktif { get; set; }
     }
 
-    public record YolcuDto(int KoltukNo, string MusteriAdSoyad, string MusteriTc, string? Cinsiyet);
+    public record YolcuListesiDto(int KoltukNo, string MusteriAdSoyad, string MusteriTc, string? Cinsiyet);
 
     public class OtobusKaptanDto
     {

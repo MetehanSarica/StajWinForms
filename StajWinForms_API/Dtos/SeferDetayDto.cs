@@ -1,4 +1,6 @@
-﻿namespace StajWinForms_API.Dtos
+﻿using System.Diagnostics.Eventing.Reader;
+
+namespace StajWinForms_API.Dtos
 {
     public class SeferDetayDto
     {
@@ -13,5 +15,6 @@
         public required int KalkisSehirId { get; set; }
         public required int VarisSehirId { get; set; }
         public List<string> Personeller { get; set; } = new();
+        public required bool Aktif {  get; set; }
     }
 }

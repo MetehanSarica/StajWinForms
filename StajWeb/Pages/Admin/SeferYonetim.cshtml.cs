@@ -83,8 +83,22 @@ namespace StajWeb.Pages.Admin
         public async Task<IActionResult> OnGetYolcularAsync(int seferId)
         {
             var client = _clientFactory.CreateClient("API");
-            var yolcular = await client.GetFromJsonAsync<List<YolcuDto>>($"api/biletler/{seferId}") ?? new();
+            var yolcular = await client.GetFromJsonAsync<List<YolcuListesiDto>>($"api/biletler/{seferId}") ?? new();
             return new JsonResult(yolcular);
+        }
+
+        public async Task<IActionResult> OnPostIptalAsync(int seferId)
+        {
+            var client = _clientFactory.CreateClient("API");
+            await client.PutAsync($"api/seferler/{seferId}/iptal", null);
+            return RedirectToPage();
+        }
+
+        public async Task<IActionResult> OnPostAktifEtAsync(int seferId)
+        {
+            var client = _clientFactory.CreateClient("API");
+            await client.PutAsync($"api/seferler/{seferId}/aktifet", null);
+            return RedirectToPage();
         }
 
         public async Task<IActionResult> OnPostSilAsync(int seferId)

@@ -183,6 +183,7 @@ public partial class DbStajContext : DbContext
             entity.Property(e => e.KoltukKapasitesi).HasDefaultValue(36);
             entity.Property(e => e.VarisSehirId).HasColumnName("VarisSehirID");
             entity.Property(e => e.OtobusId).HasColumnName("OtobusID");
+            entity.Property(e => e.Aktif).HasDefaultValue(true);
             entity.HasOne(d => d.Firma).WithMany(p => p.Seferlers)
                 .HasForeignKey(d => d.FirmaId)
                 .OnDelete(DeleteBehavior.ClientSetNull)

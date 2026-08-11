@@ -40,4 +40,6 @@ public partial class Seferler
     public virtual ICollection<SeferPersonel> SeferPersonels { get; set; } = new List<SeferPersonel>();
 
     public virtual Sehirler VarisSehir { get; set; } = null!;
+
+    public bool Aktif {  get; set; }
 }

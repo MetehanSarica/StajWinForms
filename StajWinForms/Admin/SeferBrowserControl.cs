@@ -13,6 +13,11 @@ namespace StajWinForms.Admin
         public SeferBrowserControl()
         {
             InitializeComponent();
+            gridView.CustomColumnDisplayText += (s, e) =>
+            {
+                if (e.Column == colAktif && e.Value is bool aktif)
+                    e.DisplayText = aktif ? "Aktif" : "Deaktif";
+            };
         }
 
         private async void SeferBrowserControl_Load(object sender, EventArgs e)
@@ -41,6 +46,25 @@ namespace StajWinForms.Admin
             using var frm = new SeferEditForm(sefer);
             if (frm.ShowDialog(this) == DialogResult.OK)
                 _ = SeferleriYukle();
+        }
+
+        private async void btnIptal_Click(object sender, EventArgs e)
+        {
+            if (gridView.FocusedRowHandle < 0) return;
+            var sefer = (SeferDto)gridView.GetFocusedRow();
+            var eylem = sefer.Aktif ? "deaktif etmek" : "tekrar aktif etmek";
+            var onay = XtraMessageBox.Show(
+                $"{sefer.KalkisSehirAdi} → {sefer.VarisSehirAdi} seferini {eylem} istiyor musunuz?",
+                "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            if (onay != DialogResult.Yes) return;
+
+            var url = sefer.Aktif ? $"api/seferler/{sefer.SeferId}/iptal" : $"api/seferler/{sefer.SeferId}/aktifet";
+            var resp = await _http.PutAsync(url, null);
+            if (resp.IsSuccessStatusCode)
+                await SeferleriYukle();
+            else
+                XtraMessageBox.Show(await resp.Content.ReadAsStringAsync(), "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                
         }
 
         private async void btnSil_Click(object sender, EventArgs e)
@@ -76,5 +100,8 @@ namespace StajWinForms.Admin
         int KalkisSehirId, string KalkisSehirAdi,
         int VarisSehirId, string VarisSehirAdi,
         DateTime KalkisZamani, int SureDakika,
-        decimal Fiyat, int KoltukKapasitesi, string OtobusPlaka);
+        decimal Fiyat, 
+        int KoltukKapasitesi, 
+        string OtobusPlaka,
+        bool Aktif);
 }

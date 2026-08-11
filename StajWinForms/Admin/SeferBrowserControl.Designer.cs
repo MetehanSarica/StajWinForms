@@ -26,11 +26,13 @@ namespace StajWinForms.Admin
             colTarih = new DevExpress.XtraGrid.Columns.GridColumn();
             colFiyat = new DevExpress.XtraGrid.Columns.GridColumn();
             colPlaka = new DevExpress.XtraGrid.Columns.GridColumn();
+            colAktif = new DevExpress.XtraGrid.Columns.GridColumn();
             flpButonlar = new FlowLayoutPanel();
             btnEkle = new SimpleButton();
             btnDuzenle = new SimpleButton();
             btnSil = new SimpleButton();
             btnYolcular = new SimpleButton();
+            btnIptal = new SimpleButton();
             btnYenile = new SimpleButton();
             lblDurum = new LabelControl();
             ((System.ComponentModel.ISupportInitialize)gridSeferler).BeginInit();
@@ -52,7 +54,7 @@ namespace StajWinForms.Admin
             // 
             // gridView
             // 
-            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colId, colFirma, colKalkis, colVaris, colTarih, colFiyat, colPlaka });
+            gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colId, colFirma, colKalkis, colVaris, colTarih, colFiyat, colPlaka, colAktif });
             gridView.DetailHeight = 404;
             gridView.GridControl = gridSeferler;
             gridView.Name = "gridView";
@@ -134,6 +136,16 @@ namespace StajWinForms.Admin
             colPlaka.VisibleIndex = 6;
             colPlaka.Width = 93;
             // 
+            // colAktif
+            // 
+            colAktif.Caption = "Durum";
+            colAktif.FieldName = "Aktif";
+            colAktif.MinWidth = 23;
+            colAktif.Name = "colAktif";
+            colAktif.Visible = true;
+            colAktif.VisibleIndex = 7;
+            colAktif.Width = 70;
+            // 
             // flpButonlar
             // 
             flpButonlar.AutoSize = true;
@@ -142,6 +154,7 @@ namespace StajWinForms.Admin
             flpButonlar.Controls.Add(btnDuzenle);
             flpButonlar.Controls.Add(btnSil);
             flpButonlar.Controls.Add(btnYolcular);
+            flpButonlar.Controls.Add(btnIptal);
             flpButonlar.Controls.Add(btnYenile);
             flpButonlar.Dock = DockStyle.Right;
             flpButonlar.FlowDirection = FlowDirection.TopDown;
@@ -193,13 +206,23 @@ namespace StajWinForms.Admin
             btnYolcular.Text = "Yolcular";
             btnYolcular.Click += btnYolcular_Click;
             // 
+            // btnIptal
+            // 
+            btnIptal.Location = new Point(13, 196);
+            btnIptal.Margin = new Padding(4, 3, 4, 3);
+            btnIptal.Name = "btnIptal";
+            btnIptal.Size = new Size(152, 40);
+            btnIptal.TabIndex = 4;
+            btnIptal.Text = "İptal Et / Aktif Et";
+            btnIptal.Click += btnIptal_Click;
+            // 
             // btnYenile
             // 
-            btnYenile.Location = new Point(13, 196);
+            btnYenile.Location = new Point(13, 242);
             btnYenile.Margin = new Padding(4, 3, 4, 3);
             btnYenile.Name = "btnYenile";
             btnYenile.Size = new Size(152, 40);
-            btnYenile.TabIndex = 4;
+            btnYenile.TabIndex = 5;
             btnYenile.Text = "Yenile";
             btnYenile.Click += btnYenile_Click;
             // 
@@ -233,9 +256,9 @@ namespace StajWinForms.Admin
 
         internal GridControl gridSeferler;
         internal GridView gridView;
-        private DevExpress.XtraGrid.Columns.GridColumn colId, colFirma, colKalkis, colVaris, colTarih, colFiyat, colPlaka;
+        private DevExpress.XtraGrid.Columns.GridColumn colId, colFirma, colKalkis, colVaris, colTarih, colFiyat, colPlaka, colAktif;
         private FlowLayoutPanel flpButonlar;
-        internal SimpleButton btnEkle, btnDuzenle, btnSil, btnYolcular, btnYenile;
+        internal SimpleButton btnEkle, btnDuzenle, btnSil, btnYolcular, btnIptal, btnYenile;
         private LabelControl lblDurum;
     }
 }

@@ -20,6 +20,7 @@ public class SeferDetayController : ControllerBase
     public async Task<ActionResult<IEnumerable<SeferDetayDto>>> GetSeferDetaylar()
     {
         var list = await _context.Seferlers
+            .Where(s => s.Aktif)
             .Select(s => new SeferDetayDto
             {
                 SeferId = s.SeferId,
@@ -31,6 +32,7 @@ public class SeferDetayController : ControllerBase
                 BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Select(b => b.KoltukNo).Distinct().Count(),
                 KalkisSehirId = s.KalkisSehirId,
                 VarisSehirId = s.VarisSehirId,
+                Aktif = s.Aktif,
             })
             .ToListAsync();
 
@@ -41,7 +43,7 @@ public class SeferDetayController : ControllerBase
     public async Task<ActionResult<SeferDetayDto>> GetSeferDetayById(int id)
     {
         var sefer = await _context.Seferlers
-            .Where(s => s.SeferId == id)
+            .Where(s => s.SeferId == id && s.Aktif)
             .Select(s => new SeferDetayDto
             {
                 SeferId = s.SeferId,
@@ -53,6 +55,7 @@ public class SeferDetayController : ControllerBase
                 BosKoltuk = s.KoltukKapasitesi - s.Biletlers.Select(b => b.KoltukNo).Distinct().Count(),
                 KalkisSehirId = s.KalkisSehirId,
                 VarisSehirId = s.VarisSehirId,
+                Aktif = s.Aktif,
                 Duraklar = s.SeferDurakOtogars
                     .OrderBy(d => d.DurakSira)
                     .Select(d => d.Otogar.OtogarAdi)

@@ -17,6 +17,7 @@ namespace StajWinForms_API.Dtos
         public int KoltukKapasitesi { get; set; }
         public int? OtobusId { get; set; }
         public string? OtobusPlaka { get; set; }
+        public bool Aktif {  get; set; }
     }
 
     public class SeferOtobusAtaDto
