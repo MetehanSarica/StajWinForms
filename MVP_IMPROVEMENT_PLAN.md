@@ -381,7 +381,7 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] No secrets in git; `appsettings.Example.json` documented in README.
 - [X] All passwords stored as PBKDF2 (via `PasswordHasher<T>`); MD5 helper deleted.
 - [X] All controllers return DTOs; no raw entities in responses. (FirmalarController, SehirlerController güncellendi; OtobuslerController zaten uygundu)
-- [X] All DTOs have data-annotation validation; `[ApiController]` returns 400 on bad input.
+- [X] All DTOs have data-annotation validation; `[ApiController]` returns 400 on bad input. (tüm DTO'lar: SatinAlDto, CreateBiletDto, OtogarCreateDto, SeferCreateDto, FirmaDto, PersonelDto, FormSyncDto, KullaniciDto, OtobusOlusturDto)
 - [X] CORS policy explicit; security headers set (X-Content-Type-Options, X-Frame-Options, Referrer-Policy).
 - [ ] Admin endpoints require valid JWT with correct `Yetki` claim. (atlandı — kapsam dışı)
 - [X] Structured logs written to file for warnings/errors in production. (BiletlerController 500, AuthController başarısız login loglanıyor)
@@ -406,8 +406,12 @@ After this sprint the project should be **~85% MVP-ready** and safe to deploy to
 - [X] **Web Bilet Arama (Admin)** eklendi: `BiletArama.cshtml` — kalkış/varış/tarih filtreli, DataTables tablosu. `Index.cshtml`'e kart eklendi.
 - [X] **Web YetkiAtama genişletildi**: `FormAdlari`'na btnSeferBrowser, btnBiletArama, btnDashboard eklendi; "Tümünü Temizle" butonu ve "Yetkileri Kopyala" modal eklendi (`OnPostTemizleAsync`, `OnPostKopyalaAsync`).
 - [X] **Web Sefer Yönetimi (Admin CRUD)** eklendi: `SeferYonetim.cshtml` — DataTables listesi, Ekle/Düzenle modal, Sil; `SeferDto` eksik alanlarla güncellendi. `Index.cshtml`'e kart eklendi.
-- [X] `tmp_crashtest/` silindi; stale planning `.md` dosyaları `docs/history/` altına taşındı.
+- [X] `tmp_crashtest/` silindi; stale planning `.md` dosyaları `docs/history/` altına taşındı. `db/` ve `docs/` klasörleri `.gitignore`'a alındı ve repodan kaldırıldı.
 - [X] `dotnet build` sıfır hata ve sıfır uyarı (DevExpress lisans DX1000/DX1001 dışında).
+- [X] **Admin formlar UserControl'e dönüştürüldü** (12 form): Tüm `XtraForm` + `ShowDialog()` yapıları `UserControl` + `pnlIcerik` içine yükleme şekline geçirildi. `FirmaBrowserControl`, `OtobusBrowserControl`, `FirmaOtobusEslemeControl`, `OtogarBrowserControl`, `PersonelBrowserControl`, `MusteriBrowserControl`, `KaptanEslemeControl`, `SeferOtobusEslemeControl`, `KullaniciYonetimControl`, `YetkiAtamaControl`, `SeferBrowserControl`, `BiletAramaControl`.
+- [X] **Yetki sistemi Formlar tablosuyla güçlendirildi**: `KullaniciYetkileri.FormAdi` string yerine `Formlar` tablosuna FK referansı (`FormId`) kullanıyor. `YetkiAtamaControl`'daki hardcoded `_formAdlari` dictionary'si kaldırıldı; buton listesi `AdminPanelForm.flpButonlar`'dan dinamik geliyor. Admin panel açılışında `api/formlar/sync` ile DB otomatik senkronize ediliyor.
+- [X] **WinForms input validation eklendi**: `OtobusEditForm` (plaka regex), `OtogarEditForm` (min 2 karakter), `PersonelEditForm` (ad/soyad min 2 karakter, email format), `KullaniciEditForm` (kullanıcı adı min 3, şifre min 4 karakter).
+- [X] **AdminPanelForm fullscreen + non-resizable** yapıldı.
 - [X] **WinForms Sefer Yönetimi UI iyileştirmeleri**: SpinEdit'lerde virgül kaldırıldı, boş varsayılan değer (`AllowNullInput`), Firma/Kalkış/Varış ComboBox'ları dropdown-only (`DisableTextEditor`), Kalkış Zamanı tıklanınca takvim açılıyor (`ShowPopup`).
 - [X] **WinForms Bilet Arama UI iyileştirmeleri**: Kalkış/Varış ComboBox'ları dropdown-only, Tarih tıklanınca takvim açılıyor.
 - [X] Admin panel buton sırası düzenlendi (WinForms + Web): Dashboard → Sefer Yönetimi → Bilet Arama → Firmalar → Otobüsler → Kaptanlar → Eşlemeler → Kullanıcı/Yetki.
