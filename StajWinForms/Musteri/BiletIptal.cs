@@ -20,10 +20,9 @@ namespace StajWinForms
         private async void btnSorgula_Click(object sender, EventArgs e)
         {
             string tc = System.Text.RegularExpressions.Regex.Replace(spTC.Text, "[^0-9]", "");
-            if (!Dogrulama.TcGecerliMi(tc))
+            if (string.IsNullOrWhiteSpace(tc))
             {
-                MessageBox.Show("TC Kimlik No 11 haneli olmalı ve 0 ile başlamamalıdır.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                spTC.EditValue = null;
+                MessageBox.Show("TC Kimlik No boş olamaz.", "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             try
