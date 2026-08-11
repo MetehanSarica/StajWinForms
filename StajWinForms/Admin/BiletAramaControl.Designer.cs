@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using DevExpress.XtraGrid;
 using DevExpress.XtraGrid.Views.Grid;
 
@@ -17,7 +17,7 @@ namespace StajWinForms.Admin
 
         private void InitializeComponent()
         {
-            pnlFiltre = new DevExpress.XtraEditors.PanelControl();
+            pnlFiltre = new PanelControl();
             lblKalkis = new LabelControl();
             cboKalkis = new ComboBoxEdit();
             lblVaris = new LabelControl();
@@ -42,12 +42,13 @@ namespace StajWinForms.Admin
             ((System.ComponentModel.ISupportInitialize)cboKalkis.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)cboVaris.Properties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)dtTarih.Properties).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)dtTarih.Properties.CalendarTimeProperties).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridBiletler).BeginInit();
             ((System.ComponentModel.ISupportInitialize)gridView).BeginInit();
             SuspendLayout();
-            //
+            // 
             // pnlFiltre
-            //
+            // 
             pnlFiltre.Controls.Add(lblKalkis);
             pnlFiltre.Controls.Add(cboKalkis);
             pnlFiltre.Controls.Add(lblVaris);
@@ -57,133 +58,222 @@ namespace StajWinForms.Admin
             pnlFiltre.Controls.Add(btnAra);
             pnlFiltre.Controls.Add(btnTemizle);
             pnlFiltre.Dock = DockStyle.Top;
+            pnlFiltre.Location = new Point(0, 0);
+            pnlFiltre.Margin = new Padding(4, 3, 4, 3);
             pnlFiltre.Name = "pnlFiltre";
-            pnlFiltre.Size = new Size(900, 55);
+            pnlFiltre.Size = new Size(931, 63);
             pnlFiltre.TabIndex = 0;
-            //
+            // 
             // lblKalkis
-            //
-            lblKalkis.Location = new Point(8, 18); lblKalkis.Name = "lblKalkis"; lblKalkis.Text = "Kalkış:";
-            //
+            // 
+            lblKalkis.Location = new Point(9, 21);
+            lblKalkis.Margin = new Padding(4, 3, 4, 3);
+            lblKalkis.Name = "lblKalkis";
+            lblKalkis.Size = new Size(30, 13);
+            lblKalkis.TabIndex = 0;
+            lblKalkis.Text = "Kalkış:";
+            // 
             // cboKalkis
-            //
-            cboKalkis.Location = new Point(55, 14); cboKalkis.Name = "cboKalkis";
-            cboKalkis.Size = new Size(150, 20); cboKalkis.TabIndex = 0;
-            //
+            // 
+            cboKalkis.Location = new Point(64, 16);
+            cboKalkis.Margin = new Padding(4, 3, 4, 3);
+            cboKalkis.Name = "cboKalkis";
+            cboKalkis.Size = new Size(175, 20);
+            cboKalkis.TabIndex = 0;
+            // 
             // lblVaris
-            //
-            lblVaris.Location = new Point(215, 18); lblVaris.Name = "lblVaris"; lblVaris.Text = "Varış:";
-            //
+            // 
+            lblVaris.Location = new Point(251, 21);
+            lblVaris.Margin = new Padding(4, 3, 4, 3);
+            lblVaris.Name = "lblVaris";
+            lblVaris.Size = new Size(27, 13);
+            lblVaris.TabIndex = 1;
+            lblVaris.Text = "Varış:";
+            // 
             // cboVaris
-            //
-            cboVaris.Location = new Point(250, 14); cboVaris.Name = "cboVaris";
-            cboVaris.Size = new Size(150, 20); cboVaris.TabIndex = 1;
-            //
+            // 
+            cboVaris.Location = new Point(292, 16);
+            cboVaris.Margin = new Padding(4, 3, 4, 3);
+            cboVaris.Name = "cboVaris";
+            cboVaris.Size = new Size(175, 20);
+            cboVaris.TabIndex = 1;
+            // 
             // lblTarih
-            //
-            lblTarih.Location = new Point(410, 18); lblTarih.Name = "lblTarih"; lblTarih.Text = "Tarih:";
-            //
+            // 
+            lblTarih.Location = new Point(478, 21);
+            lblTarih.Margin = new Padding(4, 3, 4, 3);
+            lblTarih.Name = "lblTarih";
+            lblTarih.Size = new Size(28, 13);
+            lblTarih.TabIndex = 2;
+            lblTarih.Text = "Tarih:";
+            // 
             // dtTarih
-            //
+            // 
             dtTarih.EditValue = null;
-            dtTarih.Location = new Point(445, 14); dtTarih.Name = "dtTarih";
+            dtTarih.Location = new Point(519, 16);
+            dtTarih.Margin = new Padding(4, 3, 4, 3);
+            dtTarih.Name = "dtTarih";
+            dtTarih.Properties.CalendarTimeProperties.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] { new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo) });
             dtTarih.Properties.DisplayFormat.FormatString = "dd.MM.yyyy";
             dtTarih.Properties.DisplayFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
             dtTarih.Properties.EditFormat.FormatString = "dd.MM.yyyy";
             dtTarih.Properties.EditFormat.FormatType = DevExpress.Utils.FormatType.DateTime;
-            dtTarih.Properties.Mask.MaskType = DevExpress.XtraEditors.Mask.MaskType.DateTime;
             dtTarih.Properties.Mask.EditMask = "dd.MM.yyyy";
-            dtTarih.Size = new Size(120, 20); dtTarih.TabIndex = 2;
-            //
+            dtTarih.Size = new Size(140, 20);
+            dtTarih.TabIndex = 2;
+            // 
             // btnAra
-            //
-            btnAra.Location = new Point(580, 12); btnAra.Name = "btnAra";
-            btnAra.Size = new Size(90, 26); btnAra.TabIndex = 3;
-            btnAra.Text = "Ara"; btnAra.Click += btnAra_Click;
-            //
+            // 
+            btnAra.Location = new Point(677, 14);
+            btnAra.Margin = new Padding(4, 3, 4, 3);
+            btnAra.Name = "btnAra";
+            btnAra.Size = new Size(105, 30);
+            btnAra.TabIndex = 3;
+            btnAra.Text = "Ara";
+            btnAra.Click += btnAra_Click;
+            // 
             // btnTemizle
-            //
-            btnTemizle.Location = new Point(680, 12); btnTemizle.Name = "btnTemizle";
-            btnTemizle.Size = new Size(90, 26); btnTemizle.TabIndex = 4;
-            btnTemizle.Text = "Temizle"; btnTemizle.Click += btnTemizle_Click;
-            //
+            // 
+            btnTemizle.Location = new Point(793, 14);
+            btnTemizle.Margin = new Padding(4, 3, 4, 3);
+            btnTemizle.Name = "btnTemizle";
+            btnTemizle.Size = new Size(105, 30);
+            btnTemizle.TabIndex = 4;
+            btnTemizle.Text = "Temizle";
+            btnTemizle.Click += btnTemizle_Click;
+            // 
             // gridBiletler
-            //
+            // 
             gridBiletler.Dock = DockStyle.Fill;
+            gridBiletler.EmbeddedNavigator.Margin = new Padding(4, 3, 4, 3);
+            gridBiletler.Location = new Point(0, 63);
             gridBiletler.MainView = gridView;
-            gridBiletler.Name = "gridBiletler"; gridBiletler.TabIndex = 1;
+            gridBiletler.Margin = new Padding(4, 3, 4, 3);
+            gridBiletler.Name = "gridBiletler";
+            gridBiletler.Size = new Size(931, 439);
+            gridBiletler.TabIndex = 1;
             gridBiletler.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
-            //
+            // 
             // gridView
-            //
+            // 
             gridView.Columns.AddRange(new DevExpress.XtraGrid.Columns.GridColumn[] { colBiletId, colMusteri, colTc, colKoltuk, colFirma, colKalkis, colVaris, colZaman, colFiyat });
+            gridView.DetailHeight = 404;
             gridView.GridControl = gridBiletler;
             gridView.Name = "gridView";
             gridView.OptionsBehavior.Editable = false;
-            gridView.OptionsView.ShowGroupPanel = false;
             gridView.OptionsDetail.EnableMasterViewMode = false;
+            gridView.OptionsEditForm.PopupEditFormWidth = 933;
+            gridView.OptionsView.ShowGroupPanel = false;
             gridView.OptionsView.ShowIndicator = false;
-            //
+            // 
             // colBiletId
-            //
-            colBiletId.Caption = "Bilet No"; colBiletId.FieldName = "BiletId"; colBiletId.Name = "colBiletId";
-            colBiletId.Visible = true; colBiletId.VisibleIndex = 0; colBiletId.Width = 60;
-            //
+            // 
+            colBiletId.Caption = "Bilet No";
+            colBiletId.FieldName = "BiletId";
+            colBiletId.MinWidth = 23;
+            colBiletId.Name = "colBiletId";
+            colBiletId.Visible = true;
+            colBiletId.VisibleIndex = 0;
+            colBiletId.Width = 70;
+            // 
             // colMusteri
-            //
-            colMusteri.Caption = "Ad Soyad"; colMusteri.FieldName = "MusteriAdSoyad"; colMusteri.Name = "colMusteri";
-            colMusteri.Visible = true; colMusteri.VisibleIndex = 1; colMusteri.Width = 130;
-            //
+            // 
+            colMusteri.Caption = "Ad Soyad";
+            colMusteri.FieldName = "MusteriAdSoyad";
+            colMusteri.MinWidth = 23;
+            colMusteri.Name = "colMusteri";
+            colMusteri.Visible = true;
+            colMusteri.VisibleIndex = 1;
+            colMusteri.Width = 152;
+            // 
             // colTc
-            //
-            colTc.Caption = "TC"; colTc.FieldName = "MusteriTc"; colTc.Name = "colTc";
-            colTc.Visible = true; colTc.VisibleIndex = 2; colTc.Width = 100;
-            //
+            // 
+            colTc.Caption = "TC";
+            colTc.FieldName = "MusteriTc";
+            colTc.MinWidth = 23;
+            colTc.Name = "colTc";
+            colTc.Visible = true;
+            colTc.VisibleIndex = 2;
+            colTc.Width = 117;
+            // 
             // colKoltuk
-            //
-            colKoltuk.Caption = "Koltuk"; colKoltuk.FieldName = "KoltukNo"; colKoltuk.Name = "colKoltuk";
-            colKoltuk.Visible = true; colKoltuk.VisibleIndex = 3; colKoltuk.Width = 55;
-            //
+            // 
+            colKoltuk.Caption = "Koltuk";
+            colKoltuk.FieldName = "KoltukNo";
+            colKoltuk.MinWidth = 23;
+            colKoltuk.Name = "colKoltuk";
+            colKoltuk.Visible = true;
+            colKoltuk.VisibleIndex = 3;
+            colKoltuk.Width = 64;
+            // 
             // colFirma
-            //
-            colFirma.Caption = "Firma"; colFirma.FieldName = "FirmaAdi"; colFirma.Name = "colFirma";
-            colFirma.Visible = true; colFirma.VisibleIndex = 4; colFirma.Width = 100;
-            //
+            // 
+            colFirma.Caption = "Firma";
+            colFirma.FieldName = "FirmaAdi";
+            colFirma.MinWidth = 23;
+            colFirma.Name = "colFirma";
+            colFirma.Visible = true;
+            colFirma.VisibleIndex = 4;
+            colFirma.Width = 117;
+            // 
             // colKalkis
-            //
-            colKalkis.Caption = "Kalkış"; colKalkis.FieldName = "KalkisSehirAdi"; colKalkis.Name = "colKalkis";
-            colKalkis.Visible = true; colKalkis.VisibleIndex = 5; colKalkis.Width = 90;
-            //
+            // 
+            colKalkis.Caption = "Kalkış";
+            colKalkis.FieldName = "KalkisSehirAdi";
+            colKalkis.MinWidth = 23;
+            colKalkis.Name = "colKalkis";
+            colKalkis.Visible = true;
+            colKalkis.VisibleIndex = 5;
+            colKalkis.Width = 105;
+            // 
             // colVaris
-            //
-            colVaris.Caption = "Varış"; colVaris.FieldName = "VarisSehirAdi"; colVaris.Name = "colVaris";
-            colVaris.Visible = true; colVaris.VisibleIndex = 6; colVaris.Width = 90;
-            //
+            // 
+            colVaris.Caption = "Varış";
+            colVaris.FieldName = "VarisSehirAdi";
+            colVaris.MinWidth = 23;
+            colVaris.Name = "colVaris";
+            colVaris.Visible = true;
+            colVaris.VisibleIndex = 6;
+            colVaris.Width = 105;
+            // 
             // colZaman
-            //
-            colZaman.Caption = "Kalkış Zamanı"; colZaman.FieldName = "KalkisZamani"; colZaman.Name = "colZaman";
-            colZaman.Visible = true; colZaman.VisibleIndex = 7; colZaman.Width = 115;
-            //
+            // 
+            colZaman.Caption = "Kalkış Zamanı";
+            colZaman.FieldName = "KalkisZamani";
+            colZaman.MinWidth = 23;
+            colZaman.Name = "colZaman";
+            colZaman.Visible = true;
+            colZaman.VisibleIndex = 7;
+            colZaman.Width = 134;
+            // 
             // colFiyat
-            //
-            colFiyat.Caption = "Fiyat"; colFiyat.FieldName = "Fiyat";
+            // 
+            colFiyat.Caption = "Fiyat";
             colFiyat.DisplayFormat.FormatString = "₺{0:N2}";
             colFiyat.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Numeric;
-            colFiyat.Name = "colFiyat"; colFiyat.Visible = true; colFiyat.VisibleIndex = 8; colFiyat.Width = 75;
-            //
+            colFiyat.FieldName = "Fiyat";
+            colFiyat.MinWidth = 23;
+            colFiyat.Name = "colFiyat";
+            colFiyat.Visible = true;
+            colFiyat.VisibleIndex = 8;
+            colFiyat.Width = 87;
+            // 
             // BiletAramaControl
-            //
-            AutoScaleDimensions = new SizeF(6F, 13F);
+            // 
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             Controls.Add(gridBiletler);
             Controls.Add(pnlFiltre);
+            Margin = new Padding(4, 3, 4, 3);
             Name = "BiletAramaControl";
+            Size = new Size(931, 502);
             Load += BiletAramaControl_Load;
             ((System.ComponentModel.ISupportInitialize)pnlFiltre).EndInit();
             pnlFiltre.ResumeLayout(false);
             pnlFiltre.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)cboKalkis.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)cboVaris.Properties).EndInit();
+            ((System.ComponentModel.ISupportInitialize)dtTarih.Properties.CalendarTimeProperties).EndInit();
             ((System.ComponentModel.ISupportInitialize)dtTarih.Properties).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridBiletler).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();

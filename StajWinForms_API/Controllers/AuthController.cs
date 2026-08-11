@@ -26,6 +26,7 @@ public class AuthController : ControllerBase
 
         var kullanici = await _context.Kullanicilars
             .Include(k => k.KullaniciYetkileri)
+            .ThenInclude(ky => ky.Form)
             .FirstOrDefaultAsync(k => k.KullaniciAdi == dto.KullaniciAdi && k.SifreMd5 == sifreMd5);
 
         if (kullanici == null)
@@ -48,7 +49,7 @@ public class AuthController : ControllerBase
             Yetkiler = kullanici.KullaniciYetkileri
                 .Select(ky => new KullaniciYetkiDto
                 {
-                    FormAdi = ky.FormAdi,
+                    FormAdi = ky.Form!.FormAdi,
                     Ekle = ky.Ekle,
                     Sil = ky.Sil,
                     Degistir = ky.Degistir,

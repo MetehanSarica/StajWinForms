@@ -1,4 +1,4 @@
-using DevExpress.XtraEditors;
+﻿using DevExpress.XtraEditors;
 using StajWinForms.Dtos;
 using System.Net.Http.Json;
 using System.Text.Json;
@@ -9,34 +9,23 @@ namespace StajWinForms.Admin
     {
         private static readonly JsonSerializerOptions _jsonOpts = new() { PropertyNameCaseInsensitive = true };
         private List<KullaniciItem> _kullanicilar = new();
-        private static readonly Dictionary<string, string> _formAdlari = new()
-        {
-            ["btnFirmaBrowser"] = "Firma Yönetimi",
-            ["btnOtobusBrowser"] = "Otobüs Yönetimi",
-            ["btnFirmaOtobusEsle"] = "Firma-Otobüs Eşleme",
-            ["btnMusteriBrowser"] = "Müşteri Yönetimi",
-            ["btnOtogarBrowser"] = "Otogar Yönetimi",
-            ["btnPersonelBrowser"] = "Personel Yönetimi",
-            ["btnKaptanEsle"] = "Otobüs-Kaptan Eşleme",
-            ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
-            ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",
-            ["btnYetkiAtama"] = "Yetki Atama",
-            ["btnDashboard"] = "Dashboard",
-            ["btnSeferBrowser"] = "Sefer Yönetimi",
-            ["btnBiletArama"] = "Bilet Arama"
-        };
+        private readonly List<(string Name, string Text)> _formlar;
 
-        public YetkiAtamaControl()
+        public YetkiAtamaControl(IEnumerable<SimpleButton> butonlar)
         {
             InitializeComponent();
+            _formlar = butonlar
+                .Where(b => b.Name != "btnCikis")
+                .Select(b => (b.Name, b.Text))
+                .ToList();
         }
 
         private async void YetkiAtamaControl_Load(object sender, EventArgs e)
         {
             await KullanicilariYukle();
             dgvYetkiler.Rows.Clear();
-            foreach (var kv in _formAdlari)
-                dgvYetkiler.Rows.Add(kv.Value, false, false, false, false, false, false, false);
+            foreach (var f in _formlar)
+                dgvYetkiler.Rows.Add(f.Text, false, false, false, false, false, false, false);
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnYetkiAtama");
             if (y != null)
@@ -63,7 +52,7 @@ namespace StajWinForms.Admin
             {
                 var json = await AppConfig.Http.GetStringAsync($"api/kullanicilar/{k.KullaniciId}/yetkiler");
                 var mevcutYetkiler = JsonSerializer.Deserialize<List<KullaniciYetkiDto>>(json, _jsonOpts) ?? new();
-                var keys = _formAdlari.Keys.ToList();
+                var keys = _formlar.Select(f => f.Name).ToList();
                 for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
                 {
                     var dto = mevcutYetkiler.FirstOrDefault(y => y.FormAdi == keys[i]);
@@ -82,7 +71,7 @@ namespace StajWinForms.Admin
         private async void btnKaydet_Click(object sender, EventArgs e)
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem k) return;
-            var keys = _formAdlari.Keys.ToList();
+            var keys = _formlar.Select(f => f.Name).ToList();
             var yetkiler = new List<KullaniciYetkiDto>();
             for (int i = 0; i < dgvYetkiler.Rows.Count; i++)
             {
@@ -161,7 +150,7 @@ namespace StajWinForms.Admin
                 "Onay", MessageBoxButtons.YesNo, MessageBoxIcon.Warning);
             if (onay != DialogResult.Yes) return;
 
-            var keys = _formAdlari.Keys.ToList();
+            var keys = _formlar.Select(f => f.Name).ToList();
             var bosYetkiler = keys.Select(f => new KullaniciYetkiDto { FormAdi = f }).ToList();
             try
             {

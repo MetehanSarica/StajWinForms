@@ -43,6 +43,8 @@ public partial class DbStajContext : DbContext
 
     public virtual DbSet<Sehirler> Sehirlers { get; set; }
 
+    public virtual DbSet<Formlar> Formlar { get; set; }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.Entity<Biletler>(entity =>
@@ -268,11 +270,14 @@ public partial class DbStajContext : DbContext
 
         modelBuilder.Entity<KullaniciYetkileri>(entity =>
         {
-            entity.HasKey(e => new { e.FormAdi, e.KullaniciId });
-            entity.ToTable("KullaniciYetkileri");
+            entity.HasKey(e => new { e.FormId, e.KullaniciId });
+
+            entity.HasOne(d => d.Form).WithMany(f => f.KullaniciYetkileri)
+                .HasForeignKey(d => d.FormId)
+                .HasConstraintName("FK_KullaniciYetkileri_Formlar");
+
             entity.HasOne(d => d.Kullanici).WithMany(k => k.KullaniciYetkileri)
                 .HasForeignKey(d => d.KullaniciId)
-                .OnDelete(DeleteBehavior.Cascade)
                 .HasConstraintName("FK_KullaniciYetkileri_Kullanici");
         });
         
@@ -311,6 +316,13 @@ public partial class DbStajContext : DbContext
                 .HasForeignKey(d => d.PersonelId)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK_OtobusKaptan_Personel");
+        });
+
+        modelBuilder.Entity<Formlar>(entity =>
+        {
+            entity.HasKey(e => e.FormId);
+            entity.ToTable("Formlar");
+            entity.HasIndex(e => e.FormAdi).IsUnique();
         });
 
         OnModelCreatingPartial(modelBuilder);

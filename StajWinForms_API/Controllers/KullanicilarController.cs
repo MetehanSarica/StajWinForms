@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using StajWinForms_API.Dtos;
 using StajWinForms_API.Helpers;
@@ -52,7 +53,20 @@ public class KullanicilarController : ControllerBase
         _context.Kullanicilars.Add(kullanici);
         await _context.SaveChangesAsync();
 
-        var formAdlari = new[]             
+        var formlar = await _context.Formlar.ToListAsync();
+        foreach (var f in formlar)
+        {
+            _context.KullaniciYetkileri.Add(new KullaniciYetkileri
+            {
+                KullaniciId = kullanici.KullaniciId,
+                FormId = f.FormId
+            });
+        }
+
+        /* 
+         *      Eski FormAdlari
+         * 
+         * var formAdlari = new[]             
         {
         "btnFirmaBrowser", "btnOtobusBrowser", "btnFirmaOtobusEsle",
         "btnKaptanBrowser", "btnKaptanEsle", "btnSeferOtobusEsle",
@@ -66,7 +80,7 @@ public class KullanicilarController : ControllerBase
                 KullaniciId = kullanici.KullaniciId,
                 FormAdi = f
             });
-        }
+        } */
 
         await _context.SaveChangesAsync();
 
@@ -122,6 +136,7 @@ public class KullanicilarController : ControllerBase
     {
         var kullanici = await _context.Kullanicilars
             .Include(k => k.KullaniciYetkileri)
+            .ThenInclude(ky => ky.Form)
             .FirstOrDefaultAsync(k => k.KullaniciId == id);
 
         if (kullanici == null) return NotFound();
@@ -129,7 +144,7 @@ public class KullanicilarController : ControllerBase
         return Ok(kullanici.KullaniciYetkileri
             .Select(ky => new KullaniciYetkiDto
             {
-                FormAdi = ky.FormAdi,
+                FormAdi = ky.Form!.FormAdi,
                 Ekle = ky.Ekle,
                 Sil = ky.Sil,
                 Degistir = ky.Degistir,
@@ -151,15 +166,22 @@ public class KullanicilarController : ControllerBase
 
         foreach (var dto in yetkiler)
         {
+            var form = await _context.Formlar.FirstOrDefaultAsync(f => f.FormAdi == dto.FormAdi);
+            
+            if (form == null)
+            {
+                continue;
+            }
+            
             var satir = kullanici.KullaniciYetkileri
-                .FirstOrDefault(ky => ky.FormAdi == dto.FormAdi);
+                .FirstOrDefault(ky => ky.FormId == form!.FormId);
 
             if (satir == null)
             {
                 satir = new KullaniciYetkileri
                 {
                     KullaniciId = id,
-                    FormAdi = dto.FormAdi,
+                    FormId = form.FormId
                 };
                 _context.KullaniciYetkileri.Add(satir);
                 kullanici.KullaniciYetkileri.Add(satir);

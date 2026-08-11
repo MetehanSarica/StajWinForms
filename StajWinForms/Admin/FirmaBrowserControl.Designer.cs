@@ -43,7 +43,7 @@ namespace StajWinForms.Admin
             gridFirmalar.MainView = gridView;
             gridFirmalar.Margin = new Padding(4, 3, 4, 3);
             gridFirmalar.Name = "gridFirmalar";
-            gridFirmalar.Size = new Size(4, 156);
+            gridFirmalar.Size = new Size(724, 520);
             gridFirmalar.TabIndex = 0;
             gridFirmalar.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] { gridView });
             // 
@@ -124,7 +124,7 @@ namespace StajWinForms.Admin
             // lblDurum
             // 
             lblDurum.Dock = DockStyle.Bottom;
-            lblDurum.Location = new Point(0, 156);
+            lblDurum.Location = new Point(0, 520);
             lblDurum.Margin = new Padding(4, 3, 4, 3);
             lblDurum.Name = "lblDurum";
             lblDurum.Padding = new Padding(5, 2, 0, 2);
@@ -142,11 +142,11 @@ namespace StajWinForms.Admin
             flpButonlar.Controls.Add(btnYenile);
             flpButonlar.Dock = DockStyle.Right;
             flpButonlar.FlowDirection = FlowDirection.TopDown;
-            flpButonlar.Location = new Point(4, 0);
+            flpButonlar.Location = new Point(724, 0);
             flpButonlar.Margin = new Padding(4, 3, 4, 3);
             flpButonlar.Name = "flpButonlar";
             flpButonlar.Padding = new Padding(9);
-            flpButonlar.Size = new Size(171, 156);
+            flpButonlar.Size = new Size(171, 520);
             flpButonlar.TabIndex = 7;
             flpButonlar.WrapContents = false;
             // 
@@ -169,7 +169,7 @@ namespace StajWinForms.Admin
             Controls.Add(lblDurum);
             Margin = new Padding(4, 3, 4, 3);
             Name = "FirmaBrowserControl";
-            Size = new Size(175, 173);
+            Size = new Size(895, 537);
             Load += FirmaBrowserControl_Load;
             ((System.ComponentModel.ISupportInitialize)gridFirmalar).EndInit();
             ((System.ComponentModel.ISupportInitialize)gridView).EndInit();

@@ -2,6 +2,7 @@
 using DevExpress.XtraEditors;
 using DevExpress.XtraScheduler.Native;
 using StajWinForms.Admin;
+using System.Net.Http.Json;
 
 namespace StajWinForms
 {
@@ -88,7 +89,8 @@ namespace StajWinForms
         private void btnYetkiAtama_Click(object sender, EventArgs e)
         {
             pnlIcerik.Controls.Clear();
-            var uc = new Admin.YetkiAtamaControl();
+            var uc = new Admin.YetkiAtamaControl(
+                flpButonlar.Controls.OfType<SimpleButton>());
             uc.Dock = DockStyle.Fill;
             pnlIcerik.Controls.Add(uc);
         }
@@ -129,8 +131,14 @@ namespace StajWinForms
             Close();
         }
 
-        private void AdminPanelForm_Load(object sender, EventArgs e)
+        private async void AdminPanelForm_Load(object sender, EventArgs e)
         {
+            var formlar = flpButonlar.Controls.OfType<SimpleButton>()
+                .Where(b => b.Name != "btnCikis")
+                .Select(b => new { FormAdi = b.Name, FormAciklamasi = b.Text})
+                .ToList();
+            await AppConfig.Http.PostAsJsonAsync("api/formlar/sync", formlar);
+
             foreach (Control cntrl in flpButonlar.Controls)
             {
                 if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
