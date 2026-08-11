@@ -59,6 +59,19 @@ namespace StajWinForms.Admin
                 return;
             }
 
+            if (txtAd.Text.Trim().Length < 2 || txtSoyad.Text.Trim().Length < 2)
+            {
+                XtraMessageBox.Show("Ad ve soyad en az 2 karakter olmalıdır.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtEmail.Text) &&
+                !System.Text.RegularExpressions.Regex.IsMatch(txtEmail.Text.Trim(), @"^[^@\s]+@[^@\s]+\.[^@\s]+$"))
+            {
+                XtraMessageBox.Show("Geçerli bir e-posta adresi giriniz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             DateOnly? iseGiris = null;
             if (dtIseGiris.DateTime != DateTime.MinValue)
                 iseGiris = DateOnly.FromDateTime(dtIseGiris.DateTime);

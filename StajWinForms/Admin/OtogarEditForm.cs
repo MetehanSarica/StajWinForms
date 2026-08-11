@@ -54,6 +54,12 @@ namespace StajWinForms.Admin
                 return;
             }
 
+            if (txtAd.Text.Trim().Length < 2)
+            {
+                XtraMessageBox.Show("Otogar adı en az 2 karakter olmalıdır.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             var dto = new
             {
                 SehirId = sehir.SehirId,

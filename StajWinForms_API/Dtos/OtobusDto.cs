@@ -42,6 +42,7 @@ public class OtobusKaptanDto
 public class FirmaDto
 {
     public int FirmaId { get; set; }
+    [Required, StringLength(100, MinimumLength = 2)]
     public string FirmaAdi { get; set; } = "";
 }
 

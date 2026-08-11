@@ -49,6 +49,18 @@ namespace StajWinForms
                 return;
             }
 
+            if (txtKullaniciAdi.Text.Trim().Length < 3)
+            {
+                XtraMessageBox.Show("Kullanıcı adı en az 3 karakter olmalıdır.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            if (!string.IsNullOrWhiteSpace(txtSifre.Text) && txtSifre.Text.Length < 4)
+            {
+                XtraMessageBox.Show("Şifre en az 4 karakter olmalıdır.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
             if (_yeniKayit)
             {
                 Sonuc = new

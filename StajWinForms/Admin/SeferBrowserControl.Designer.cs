@@ -148,7 +148,7 @@ namespace StajWinForms.Admin
             flpButonlar.Location = new Point(581, 0);
             flpButonlar.Margin = new Padding(4, 3, 4, 3);
             flpButonlar.Name = "flpButonlar";
-            flpButonlar.Padding = new Padding(9, 9, 9, 9);
+            flpButonlar.Padding = new Padding(9);
             flpButonlar.Size = new Size(178, 498);
             flpButonlar.TabIndex = 1;
             flpButonlar.WrapContents = false;

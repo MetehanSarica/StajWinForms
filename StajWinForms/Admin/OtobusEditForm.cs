@@ -42,9 +42,9 @@ namespace StajWinForms
                 XtraMessageBox.Show("Plaka boş olamaz.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (txtPlaka.Text.Length < 7 || txtPlaka.Text.Length > 9)
+            if (!System.Text.RegularExpressions.Regex.IsMatch(txtPlaka.Text.Trim(), @"^\d{2}\s?[A-Z]{1,3}\s?\d{2,4}$")) 
             {
-                XtraMessageBox.Show("Geçersiz plaka.", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                XtraMessageBox.Show("Geçerli bir plaka giriniz (örn: 34 ABC 123).", "Uyarı", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (string.IsNullOrWhiteSpace(txtMarka.Text))

@@ -27,12 +27,12 @@ namespace StajWinForms_API.Dtos
 
     public class SeferCreateDto
     {
-        public int FirmaId { get; set; }
-        public int KalkisSehirId { get; set; }
-        public int VarisSehirId { get; set; }
+        [Range(1, int.MaxValue)] public int FirmaId { get; set; }
+        [Range(1, int.MaxValue)] public int KalkisSehirId { get; set; }
+        [Range(1, int.MaxValue)] public int VarisSehirId { get; set; }
         public DateTime KalkisZamani { get; set; }
-        public int SureDakika { get; set; }
-        public decimal Fiyat { get; set; }
-        public int KoltukKapasitesi { get; set; }
+        [Range(1, 1440)] public int SureDakika { get; set; }
+        [Range(0.01, 100000)] public decimal Fiyat { get; set; }
+        [Range(1, 60)] public int KoltukKapasitesi { get; set; }
     }
 }
