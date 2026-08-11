@@ -32,13 +32,13 @@ namespace StajWeb.Pages.Admin
             var form = Request.Form;
             var sefer = new SeferDto
             {
-                FirmaId = int.Parse(form["FirmaId"]),
-                KalkisSehirId = int.Parse(form["KalkisSehirId"]),
-                VarisSehirId = int.Parse(form["VarisSehirId"]),
-                KalkisZamani = DateTime.Parse(form["KalkisZamani"]),
-                SureDakika = int.Parse(form["SureDakika"]),
-                Fiyat = decimal.Parse(form["Fiyat"], System.Globalization.CultureInfo.InvariantCulture),
-                KoltukKapasitesi = int.Parse(form["KoltukKapasitesi"])
+                FirmaId = int.Parse(form["FirmaId"]!),
+                KalkisSehirId = int.Parse(form["KalkisSehirId"]!),
+                VarisSehirId = int.Parse(form["VarisSehirId"]!),
+                KalkisZamani = DateTime.Parse(form["KalkisZamani"]!),
+                SureDakika = int.Parse(form["SureDakika"]!),
+                Fiyat = decimal.Parse(form["Fiyat"]!, System.Globalization.CultureInfo.InvariantCulture),
+                KoltukKapasitesi = int.Parse(form["KoltukKapasitesi"]!)
             };
             var client = _clientFactory.CreateClient("API");
             var response = await client.PostAsJsonAsync("api/seferler", sefer);
@@ -58,14 +58,14 @@ namespace StajWeb.Pages.Admin
             var form = Request.Form;
             var sefer = new SeferDto
             {
-                SeferId = int.Parse(form["SeferId"]),
-                FirmaId = int.Parse(form["FirmaId"]),
-                KalkisSehirId = int.Parse(form["KalkisSehirId"]),
-                VarisSehirId = int.Parse(form["VarisSehirId"]),
-                KalkisZamani = DateTime.Parse(form["KalkisZamani"]),
-                SureDakika = int.Parse(form["SureDakika"]),
-                Fiyat = decimal.Parse(form["Fiyat"], System.Globalization.CultureInfo.InvariantCulture),
-                KoltukKapasitesi = int.Parse(form["KoltukKapasitesi"])
+                SeferId = int.Parse(form["SeferId"]!),
+                FirmaId = int.Parse(form["FirmaId"]!),
+                KalkisSehirId = int.Parse(form["KalkisSehirId"]!),
+                VarisSehirId = int.Parse(form["VarisSehirId"]!),
+                KalkisZamani = DateTime.Parse(form["KalkisZamani"]!),
+                SureDakika = int.Parse(form["SureDakika"]!),
+                Fiyat = decimal.Parse(form["Fiyat"]!, System.Globalization.CultureInfo.InvariantCulture),
+                KoltukKapasitesi = int.Parse(form["KoltukKapasitesi"]!)
             };
             var client = _clientFactory.CreateClient("API");
             var response = await client.PutAsJsonAsync($"api/seferler/{sefer.SeferId}", sefer);

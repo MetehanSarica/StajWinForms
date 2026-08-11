@@ -6,7 +6,7 @@ namespace StajWeb.Dtos
     public class LoginDto
     {
         public string KullaniciAdi { get; set; } = null!;
-        public string Sifre { get; set; }
+        public string? Sifre { get; set; }
     }
 
     public class LoginSonucDto

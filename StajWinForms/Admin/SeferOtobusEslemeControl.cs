@@ -37,6 +37,7 @@ namespace StajWinForms.Admin
                 var prev = cmbSefer.SelectedItem is SeferItem s ? s.SeferId : -1;
                 cmbSefer.SelectedIndexChanged -= cmbSefer_SelectedIndexChanged;
                 cmbSefer.Items.Clear();
+
                 foreach (var sefer in _seferler) cmbSefer.Items.Add(sefer);
                 cmbSefer.SelectedIndexChanged += cmbSefer_SelectedIndexChanged;
                 var idx = _seferler.FindIndex(s => s.SeferId == prev);
@@ -59,7 +60,7 @@ namespace StajWinForms.Admin
             catch (Exception ex) { XtraMessageBox.Show("Otobüsler yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
         }
 
-        private void cmbSefer_SelectedIndexChanged(object sender, EventArgs e) => GuncelleMevcutEtiket();
+        private void cmbSefer_SelectedIndexChanged(object? sender, EventArgs e) => GuncelleMevcutEtiket();
 
         private void GuncelleMevcutEtiket()
         {
