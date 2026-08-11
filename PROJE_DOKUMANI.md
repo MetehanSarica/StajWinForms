@@ -47,11 +47,16 @@ EF Core, C# sınıfları ile veritabanı tabloları arasında köprü kuran bir 
 |---|---|
 | `Sehirler` | Şehir adı + plaka kodu (unique) |
 | `Firmalar` | Otobüs firmaları |
+| `Otobusler` | Plaka, firma FK, koltuk kapasitesi |
 | `Seferler` | Kalkış/varış şehri, zaman, fiyat, koltuk kapasitesi |
 | `Musteri` | TC (unique), ad, soyad, iletişim, cinsiyet |
 | `Biletler` | Sefer + koltuk no + müşteri TC + biniş/iniş durak sırası |
 | `SeferDuraklar` | Seferin ara durakları (composite PK: SeferId + DurakSira) |
 | `Otogarlar` / `SeferDurakOtogar` | Durakların otogar detayları |
+| `Personel` | Ad, soyad, unvan, maaş, işe giriş tarihi |
+| `Kullanicilar` | Kullanıcı adı, SHA-256 şifre hash, ad soyad, aktif bayrak |
+| `KullaniciYetkileri` | FormId FK → Formlar, KullaniciId FK → Kullanicilar; Goruntule/Ekle/Duzenle/Sil boolean'ları |
+| `Formlar` | Yönetim paneli form adları (unique) + açıklaması; başlangıçta otomatik senkronize edilir |
 
 ---
 
@@ -90,8 +95,24 @@ Entity'ler (DB modelleri) doğrudan dışarı verilmez; API'nin dışarıya açt
 - `BiletDto` — bilet + müşteri ad soyad + sefer bilgileri (JOIN edilmiş düz veri)
 - `SatinAlDto` — müşteri bilgileri + koltuk + güzergah (satın alma isteği)
 - `CreateBiletDto` — mevcut müşteriye bilet kesme isteği
+- `FormSyncDto`, `PersonelDto`, `OtobusDto`, `OtogarDto`, `SeferCreateDto` — admin CRUD DTO'ları
 
 **Neden?** Entity'de navigation property'ler var; JSON'a çevrilirken döngüsel referans oluşur ve gereksiz/gizli veri sızar. DTO sadece gereken alanları taşır.
+
+### Kullanılan Kavram: DTO Validasyonu (Data Annotations)
+
+Admin endpoint'lerin aldığı DTO'lar `[ApiController]` sayesinde otomatik doğrulanır; geçersiz istek gelmeden controller'a ulaşmaz:
+
+```csharp
+public record PersonelCreateDto(
+    [Required, StringLength(50, MinimumLength = 2)] string Ad,
+    [Required, StringLength(50, MinimumLength = 2)] string Soyad,
+    [EmailAddress, StringLength(100)] string? Email,
+    [Range(0, 1_000_000)] decimal? Maas
+);
+```
+
+`[ApiController]` atar: model invalid ise `400 Bad Request + hata detayı` döner. Controller'da `if (!ModelState.IsValid)` yazmak gerekmez.
 
 ### Kullanılan Kavram: LINQ Projection (`Select`)
 
@@ -179,7 +200,10 @@ Scalar, Swagger benzeri interaktif API test/dokümantasyon sayfası sunar.
 |---|---|---|
 | GET | `/api/seferdetay` | Tüm seferler (detaylı) |
 | GET | `/api/seferdetay/{id}` | Tek sefer + durak listesi |
-| GET | `/api/seferler` | Ham sefer listesi (ID bazlı) |
+| GET | `/api/seferler` | Ham sefer listesi |
+| POST | `/api/seferler` | Sefer ekle |
+| PUT | `/api/seferler/{id}` | Sefer güncelle |
+| DELETE | `/api/seferler/{id}` | Sefer sil |
 | GET | `/api/sehirler` | Şehir listesi |
 | GET | `/api/seferduraklar/{seferId}` | Seferin durakları (sıralı) |
 | GET | `/api/biletler` | Tüm biletler |
@@ -188,6 +212,15 @@ Scalar, Swagger benzeri interaktif API test/dokümantasyon sayfası sunar.
 | POST | `/api/biletler` | Kayıtlı müşteriye bilet |
 | POST | `/api/biletler/satinal` | Müşteri kaydı + bilet (transaction) |
 | DELETE | `/api/biletler/{biletId}` | Bilet iptali |
+| GET/POST/PUT/DELETE | `/api/firmalar` | Firma CRUD |
+| GET/POST/PUT/DELETE | `/api/otobusler` | Otobüs CRUD |
+| GET/POST/PUT/DELETE | `/api/otogarlar` | Otogar CRUD |
+| GET/POST/PUT/DELETE | `/api/personel` | Personel CRUD |
+| GET/POST/PUT/DELETE | `/api/kullanicilar` | Kullanıcı CRUD |
+| GET | `/api/kullanicilar/{id}/yetkiler` | Kullanıcının yetkileri |
+| PUT | `/api/kullanicilar/{id}/yetkiler` | Yetki güncelle |
+| POST | `/api/auth/login` | Kullanıcı girişi (şifre doğrulama) |
+| POST | `/api/formlar/sync` | Panel butonlarını Formlar tablosuna senkronize et |
 
 ---
 
@@ -230,7 +263,58 @@ SeferSecimMenu (şehir + tarih seç)
                      └─► MusteriKaydiControl × N (UserControl)
    AnaMenu ├─► BiletSorgula (TC ile listeleme)
            └─► BiletIptal (TC ile listele + seçileni sil)
+
+[Komut satırı: StajWinForms.exe adminp]
+AdminPanelForm (tam ekran, yeniden boyutlandırılamaz)
+   └─► pnlIcerik (yönetim paneli içerik alanı)
+         ├─► FirmaYonetimControl
+         ├─► OtobusYonetimControl
+         ├─► SeferYonetimControl
+         ├─► OtogarYonetimControl
+         ├─► PersonelYonetimControl
+         ├─► KullaniciYonetimControl
+         ├─► YetkiAtamaControl
+         ├─► FirmaOtobusEslemeControl
+         ├─► BiletAramaControl
+         ├─► SeferBrowserControl
+         ├─► SeferEditControl
+         └─► SeferDurakControl
 ```
+
+### Kullanılan Kavram: Admin Panel — UserControl ile İçerik Paneli
+
+`AdminPanelForm` tam ekran ve yeniden boyutlandırılamaz açılır. Sol tarafta `FlowLayoutPanel` içinde butonlar, sağda bir `PanelControl (pnlIcerik)` bulunur. Her yönetim ekranı ayrı bir `UserControl`'dür; butona tıklanınca eski içerik silinip yeni kontrol eklenir:
+
+```csharp
+private void YukleControl(Control control)
+{
+    pnlIcerik.Controls.Clear();
+    control.Dock = DockStyle.Fill;
+    pnlIcerik.Controls.Add(control);
+}
+```
+
+Bu sayede her fonksiyonalite izole, bağımsız bir bileşende geliştirilir; `AdminPanelForm` sadece yönlendirici görevini üstlenir.
+
+### Kullanılan Kavram: Dinamik Yetki Sistemi
+
+`AdminPanelForm` açılırken iki şey yapar:
+
+1. **Formlar senkronizasyonu:** `flpButonlar` içindeki butonlar API'ye gönderilir (`POST /api/formlar/sync`); Formlar tablosu güncel tutulur. Böylece form eklenince veya adı değişince veritabanı otomatik güncellenir — hardcoded liste yok.
+
+2. **Görünürlük kontrolü:** Kullanıcının yetkileri API'den çekilir; izni olmayan butonlar `Visible = false` yapılır.
+
+`YetkiAtamaControl` izin ekranını da aynı buton listesinden türetir — form adı ile açıklama `AdminPanelForm.flpButonlar`'dan gelir, iki ayrı tanımlamaya gerek kalmaz.
+
+### Kullanılan Kavram: WinForms Girdi Doğrulama
+
+Admin edit formları (`PersonelEditForm`, `OtobusEditForm`, `KullaniciEditForm` vb.) kaydet butonuna basmadan önce kendi doğrulamalarını yapar:
+
+- Alan boşluk kontrolü (`IsNullOrWhiteSpace`)
+- Minimum karakter uzunluğu (kullanıcı adı ≥3, şifre ≥4, ad/soyad ≥2)
+- E-posta formatı (regex)
+- Plaka formatı (`^\d{2}\s?[A-Z]{1,3}\s?\d{2,4}$`)
+- Geçersiz girişte `XtraMessageBox` ile uyarı, `return` ile erken çıkış
 
 ### Kullanılan Kavram: UserControl ile Yeniden Kullanılabilir Form Parçası
 
@@ -493,9 +577,11 @@ Satın alma ve iptal işlemlerinden sonra `RedirectToPage(...)` çağrılır —
 |---|---|
 | **API Anahtarı** | Her iki istemci de `X-Api-Key: staj-2026-gizli-anahtar` header'ı gönderir; API middleware'de doğrular |
 | **Config dışsallaştırma** | URL ve anahtar kod içinde değil `appsettings.json`'da (WinForms tarafında) |
-| **Aynı validasyon iki yerde** | TC/telefon kuralları hem WinForms (`Dogrula`) hem web (`required`, `maxlength`) tarafında |
+| **Aynı validasyon iki yerde** | TC/telefon kuralları hem WinForms (`Dogrula`) hem web (`required`, `maxlength`) tarafında; admin formları da WinForms ve DTO düzeyinde çift doğrulama yapar |
 | **Conflict yönetimi** | API `409` döner; WinForms MessageBox gösterir, web sayfada kalır |
 | **Türkçe UI** | Tüm kullanıcı mesajları Türkçe |
+| **Yetki sistemi** | Admin kullanıcıları `Kullanicilar` tablosunda; her formun CRUD izinleri `KullaniciYetkileri` tablosunda `FormId` FK ile saklanır. Giriş: SHA-256 hash karşılaştırma |
+| **Formlar senkronizasyonu** | Uygulama başlangıcında buton listesi `POST /api/formlar/sync` ile Formlar tablosuna yazılır; hardcoded form ismi listesi yoktur |
 
 ---
 
@@ -523,9 +609,11 @@ Ek paket yok — yalnızca ASP.NET Core'un yerleşik özellikleri (Razor Pages, 
 
 ## 7. Çalıştırma
 
-1. **API:** `StajWinForms_API` projesini başlat → `http://localhost:8081`
+1. **API:** `StajWinForms_API` projesini başlat → `http://localhost:5000`
    (LocalDB'de `dbStaj` veritabanı hazır olmalı)
-2. **Masaüstü:** `StajWinForms` projesini başlat
-3. **Web:** `StajWeb` projesini başlat → tarayıcıda aç
+   VS dışında başlatmak için: `cd StajWinForms_API && dotnet run`
+2. **Masaüstü (gişe):** `StajWinForms` projesini başlat — `SeferSecimMenu` açılır
+3. **Masaüstü (admin):** Komut satırından `StajWinForms.exe adminp` ile çalıştır — `AdminPanelForm` açılır
+4. **Web:** `StajWeb` projesini başlat → tarayıcıda aç
 
 > Not: API anahtarı veya port değişirse `StajWinForms/appsettings.json` ve `StajWeb/Program.cs` güncellenmelidir.

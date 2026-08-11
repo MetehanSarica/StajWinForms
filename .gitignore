@@ -10,6 +10,10 @@ appsettings.json
 db/
 docs/
 
+# Analysis and planning documents
+MVP_IMPROVEMENT_PLAN.md
+WinForms_Mimari_Analiz_Raporu.md
+
 # Claude Code
 .claude/
 
