@@ -144,7 +144,7 @@ namespace StajWinForms
                 if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
                 {
                     var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == btn.Name);
-                    btn.Visible = y != null && (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet);
+                    btn.Visible = y != null && (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet || y.AktifPasif);
                 }
             }
         }

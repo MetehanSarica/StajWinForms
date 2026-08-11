@@ -23,6 +23,14 @@ namespace StajWinForms.Admin
         private async void SeferBrowserControl_Load(object sender, EventArgs e)
         {
             await SeferleriYukle();
+            var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnSeferBrowser");
+            if (y != null)
+            {
+                btnEkle.Visible = y.Ekle;
+                btnDuzenle.Visible = y.Degistir;
+                btnSil.Visible = y.Sil;
+                btnIptal.Visible = y.AktifPasif;
+            }
         }
 
         private async Task SeferleriYukle()

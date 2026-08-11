@@ -13,6 +13,7 @@ public partial class KullaniciYetkileri
     public bool Ata { get; set; }
     public bool Kaldir { get; set; }
     public bool Kaydet { get; set; }
+    public bool AktifPasif {  get; set; }
 
     [JsonIgnore]
     public virtual Formlar? Form { get; set; }

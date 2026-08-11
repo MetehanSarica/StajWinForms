@@ -70,20 +70,23 @@
                         </form>
                     }
                     <button class="btn btn-info btn-sm" onclick="yolcularAc(@s.SeferId, '@s.KalkisSehirAdi → @s.VarisSehirAdi')">Yolcular</button>
-                    @if (s.Aktif)
+                    @if (y?.AktifPasif == true)
                     {
-                        <form method="post" asp-page-handler="Iptal" style="display:inline"
-                              onsubmit="return confirm('@s.KalkisSehirAdi → @s.VarisSehirAdi seferini iptal etmek istiyor musunuz?')">
-                            <input type="hidden" name="seferId" value="@s.SeferId" />
-                            <button type="submit" class="btn btn-warning btn-sm">İptal Et</button>
-                        </form>
-                    }
-                    else
-                    {
-                        <form method="post" asp-page-handler="AktifEt" style="display:inline">
-                            <input type="hidden" name="seferId" value="@s.SeferId" />
-                            <button type="submit" class="btn btn-success btn-sm">Aktif Et</button>
-                        </form>
+                        @if (s.Aktif)
+                        {
+                            <form method="post" asp-page-handler="Iptal" style="display:inline"
+                                  onsubmit="return confirm('@s.KalkisSehirAdi → @s.VarisSehirAdi seferini iptal etmek istiyor musunuz?')">
+                                <input type="hidden" name="seferId" value="@s.SeferId" />
+                                <button type="submit" class="btn btn-warning btn-sm">İptal Et</button>
+                            </form>
+                        }
+                        else
+                        {
+                            <form method="post" asp-page-handler="AktifEt" style="display:inline">
+                                <input type="hidden" name="seferId" value="@s.SeferId" />
+                                <button type="submit" class="btn btn-success btn-sm">Aktif Et</button>
+                            </form>
+                        }
                     }
                 </td>
             </tr>

@@ -152,6 +152,7 @@ public class KullanicilarController : ControllerBase
                 Ata = ky.Ata,
                 Kaldir = ky.Kaldir,
                 Kaydet = ky.Kaydet,
+                AktifPasif = ky.AktifPasif,
             }).ToList());
     }
 
@@ -196,16 +197,18 @@ public class KullanicilarController : ControllerBase
                 satir.Ata = satir.Ata || dto.Ata;
                 satir.Kaldir = satir.Kaldir || dto.Kaldir;
                 satir.Kaydet = satir.Kaydet || dto.Kaydet;
+                satir.AktifPasif = satir.AktifPasif || dto.AktifPasif;
             }
             else
             {
                 satir.Ekle = dto.Ekle;
                 satir.Sil = dto.Sil;
-                satir.Degistir= dto.Degistir;
+                satir.Degistir = dto.Degistir;
                 satir.Incele = dto.Incele;
                 satir.Ata = dto.Ata;
-                satir.Kaldir= dto.Kaldir;
-                satir.Kaydet= dto.Kaydet;
+                satir.Kaldir = dto.Kaldir;
+                satir.Kaydet = dto.Kaydet;
+                satir.AktifPasif = dto.AktifPasif;
             }
         }
 

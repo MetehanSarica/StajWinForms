@@ -25,7 +25,7 @@ namespace StajWinForms.Admin
             await KullanicilariYukle();
             dgvYetkiler.Rows.Clear();
             foreach (var f in _formlar)
-                dgvYetkiler.Rows.Add(f.Text, false, false, false, false, false, false, false);
+                dgvYetkiler.Rows.Add(f.Text, false, false, false, false, false, false, false, false);
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnYetkiAtama");
             if (y != null)
@@ -63,6 +63,7 @@ namespace StajWinForms.Admin
                     dgvYetkiler.Rows[i].Cells["colAta"].Value = dto?.Ata ?? false;
                     dgvYetkiler.Rows[i].Cells["colKaldir"].Value = dto?.Kaldir ?? false;
                     dgvYetkiler.Rows[i].Cells["colKaydet"].Value = dto?.Kaydet ?? false;
+                    dgvYetkiler.Rows[i].Cells["colAktifPasif"].Value = dto?.AktifPasif ?? false;
                 }
             }
             catch (Exception ex) { XtraMessageBox.Show("Yetkiler yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
@@ -85,6 +86,7 @@ namespace StajWinForms.Admin
                     Ata = (bool)(dgvYetkiler.Rows[i].Cells["colAta"].Value ?? false),
                     Kaldir = (bool)(dgvYetkiler.Rows[i].Cells["colKaldir"].Value ?? false),
                     Kaydet = (bool)(dgvYetkiler.Rows[i].Cells["colKaydet"].Value ?? false),
+                    AktifPasif = (bool)(dgvYetkiler.Rows[i].Cells["colAktifPasif"].Value ?? false),
                 });
             }
             try
@@ -166,6 +168,7 @@ namespace StajWinForms.Admin
                     dgvYetkiler.Rows[i].Cells["colAta"].Value = false;
                     dgvYetkiler.Rows[i].Cells["colKaldir"].Value = false;
                     dgvYetkiler.Rows[i].Cells["colKaydet"].Value = false;
+                    dgvYetkiler.Rows[i].Cells["colAktifPasif"].Value = false;
                 }
                 XtraMessageBox.Show($"{k.KullaniciAdi} kullanıcısının yetkileri temizlendi.", "Başarılı", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }

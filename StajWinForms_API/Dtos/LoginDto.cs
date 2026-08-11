@@ -30,4 +30,5 @@ public class KullaniciYetkiDto
     public bool Ata {  get; set; }
     public  bool Kaldir { get; set; }
     public bool Kaydet { get; set; }
+    public bool AktifPasif { get; set; }
 }

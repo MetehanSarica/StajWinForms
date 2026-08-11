@@ -26,6 +26,7 @@ namespace StajWinForms.Admin
             colAta = new DataGridViewCheckBoxColumn();
             colKaldir = new DataGridViewCheckBoxColumn();
             colKaydet = new DataGridViewCheckBoxColumn();
+            colAktifPasif = new DataGridViewCheckBoxColumn();
             btnKaydet = new SimpleButton();
             btnKopyala = new SimpleButton();
             btnTemizle = new SimpleButton();
@@ -75,7 +76,7 @@ namespace StajWinForms.Admin
             dgvYetkiler.AllowUserToDeleteRows = false;
             dgvYetkiler.AllowUserToResizeColumns = false;
             dgvYetkiler.AllowUserToResizeRows = false;
-            dgvYetkiler.Columns.AddRange(new DataGridViewColumn[] { colFormAdi, colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet });
+            dgvYetkiler.Columns.AddRange(new DataGridViewColumn[] { colFormAdi, colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet, colAktifPasif });
             dgvYetkiler.Dock = DockStyle.Fill;
             dgvYetkiler.EditMode = DataGridViewEditMode.EditOnEnter;
             dgvYetkiler.Location = new Point(246, 30);
@@ -131,10 +132,16 @@ namespace StajWinForms.Admin
             colKaldir.Width = 60;
             // 
             // colKaydet
-            // 
+            //
             colKaydet.HeaderText = "Kaydet";
             colKaydet.Name = "colKaydet";
             colKaydet.Width = 65;
+            //
+            // colAktifPasif
+            //
+            colAktifPasif.HeaderText = "Aktif/Pasif";
+            colAktifPasif.Name = "colAktifPasif";
+            colAktifPasif.Width = 75;
             // 
             // btnKaydet
             // 
@@ -221,7 +228,7 @@ namespace StajWinForms.Admin
         private ListBoxControl lstKullanicilar;
         private DataGridView dgvYetkiler;
         private DataGridViewTextBoxColumn colFormAdi;
-        private DataGridViewCheckBoxColumn colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet;
+        private DataGridViewCheckBoxColumn colEkle, colSil, colDegistir, colIncele, colAta, colKaldir, colKaydet, colAktifPasif;
         private SimpleButton btnKaydet, btnKopyala, btnTemizle;
         private TableLayoutPanel tblMain;
         private Panel pnlAlt;

@@ -58,6 +58,7 @@ namespace StajWeb.Pages.Admin
                 Ata = Request.Form[$"ata_{f}"] == "on",
                 Kaldir = Request.Form[$"kaldir_{f}"] == "on",
                 Kaydet = Request.Form[$"kaydet_{f}"] == "on",
+                AktifPasif = Request.Form[$"aktifpasif_{f}"] == "on",
             }).ToList();
 
             var client = _clientFactory.CreateClient("API");
