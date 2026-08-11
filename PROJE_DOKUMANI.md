@@ -55,8 +55,9 @@ EF Core, C# sınıfları ile veritabanı tabloları arasında köprü kuran bir 
 | `Otogarlar` / `SeferDurakOtogar` | Durakların otogar detayları |
 | `Personel` | Ad, soyad, unvan, maaş, işe giriş tarihi |
 | `Kullanicilar` | Kullanıcı adı, SHA-256 şifre hash, ad soyad, aktif bayrak |
-| `KullaniciYetkileri` | FormId FK → Formlar, KullaniciId FK → Kullanicilar; Goruntule/Ekle/Duzenle/Sil boolean'ları |
-| `Formlar` | Yönetim paneli form adları (unique) + açıklaması; başlangıçta otomatik senkronize edilir |
+| `Seferler` | ... + `Aktif BIT` — iptal edilen seferler müşteri tarafında gizlenir |
+| `KullaniciYetkileri` | FormId FK → Formlar, KullaniciId FK → Kullanicilar; Ekle/Sil/Degistir/Incele/Ata/Kaldir/Kaydet/AktifPasif boolean'ları |
+| `Formlar` | Yönetim paneli form anahtarları (soyut isim, örn. `sefer_yonetimi`) + açıklaması; başlangıçta otomatik senkronize edilir |
 
 ---
 
@@ -203,6 +204,8 @@ Scalar, Swagger benzeri interaktif API test/dokümantasyon sayfası sunar.
 | GET | `/api/seferler` | Ham sefer listesi |
 | POST | `/api/seferler` | Sefer ekle |
 | PUT | `/api/seferler/{id}` | Sefer güncelle |
+| PUT | `/api/seferler/{id}/iptal` | Seferi pasife al (`Aktif = false`) |
+| PUT | `/api/seferler/{id}/aktifet` | Seferi aktife al (`Aktif = true`) |
 | DELETE | `/api/seferler/{id}` | Sefer sil |
 | GET | `/api/sehirler` | Şehir listesi |
 | GET | `/api/seferduraklar/{seferId}` | Seferin durakları (sıralı) |
@@ -219,6 +222,7 @@ Scalar, Swagger benzeri interaktif API test/dokümantasyon sayfası sunar.
 | GET/POST/PUT/DELETE | `/api/kullanicilar` | Kullanıcı CRUD |
 | GET | `/api/kullanicilar/{id}/yetkiler` | Kullanıcının yetkileri |
 | PUT | `/api/kullanicilar/{id}/yetkiler` | Yetki güncelle |
+| GET | `/api/seferler/{id}/yolcular` | Seferin yolcu listesi |
 | POST | `/api/auth/login` | Kullanıcı girişi (şifre doğrulama) |
 | POST | `/api/formlar/sync` | Panel butonlarını Formlar tablosuna senkronize et |
 
@@ -300,11 +304,15 @@ Bu sayede her fonksiyonalite izole, bağımsız bir bileşende geliştirilir; `A
 
 `AdminPanelForm` açılırken iki şey yapar:
 
-1. **Formlar senkronizasyonu:** `flpButonlar` içindeki butonlar API'ye gönderilir (`POST /api/formlar/sync`); Formlar tablosu güncel tutulur. Böylece form eklenince veya adı değişince veritabanı otomatik güncellenir — hardcoded liste yok.
+1. **Formlar senkronizasyonu:** `flpButonlar` içindeki butonlar `_btnKeyMap` dictionary'si üzerinden soyut anahtara çevrilerek API'ye gönderilir (`POST /api/formlar/sync`). Formlar tablosunda `sefer_yonetimi`, `firma_yonetimi` gibi UI'dan bağımsız anahtarlar saklanır — buton adı değişse bile DB kayıtları etkilenmez.
 
-2. **Görünürlük kontrolü:** Kullanıcının yetkileri API'den çekilir; izni olmayan butonlar `Visible = false` yapılır.
+2. **Görünürlük kontrolü:** Kullanıcının yetkileri API'den çekilir; izni olmayan butonlar `Visible = false` yapılır. Kontrol `Ekle || Sil || Degistir || Incele || Ata || Kaldir || Kaydet || AktifPasif` koşuluyla yapılır.
 
 `YetkiAtamaControl` izin ekranını da aynı buton listesinden türetir — form adı ile açıklama `AdminPanelForm.flpButonlar`'dan gelir, iki ayrı tanımlamaya gerek kalmaz.
+
+**Form Bazlı Yetki Matrisi:** Her formun hangi yetki kolonlarını desteklediği `_formYetkileri` dictionary'sinde statik olarak tanımlıdır. Örneğin eşleme formları sadece `Ata/Kaldir`, yetki atama ekranı sadece `Kaydet` destekler. Desteklenmeyen hücreler grid'de gri + readonly gösterilir — yanlışlıkla geçersiz yetki atanması önlenir.
+
+**AktifPasif Yetkisi:** Sefer iptal/aktif etme işlemi için özel bir yetki tipi. `KullaniciYetkileri` tablosunda ayrı kolon olarak tutulur; `Degistir` yetkisinden bağımsız kontrol edilir.
 
 ### Kullanılan Kavram: WinForms Girdi Doğrulama
 
@@ -580,8 +588,10 @@ Satın alma ve iptal işlemlerinden sonra `RedirectToPage(...)` çağrılır —
 | **Aynı validasyon iki yerde** | TC/telefon kuralları hem WinForms (`Dogrula`) hem web (`required`, `maxlength`) tarafında; admin formları da WinForms ve DTO düzeyinde çift doğrulama yapar |
 | **Conflict yönetimi** | API `409` döner; WinForms MessageBox gösterir, web sayfada kalır |
 | **Türkçe UI** | Tüm kullanıcı mesajları Türkçe |
-| **Yetki sistemi** | Admin kullanıcıları `Kullanicilar` tablosunda; her formun CRUD izinleri `KullaniciYetkileri` tablosunda `FormId` FK ile saklanır. Giriş: SHA-256 hash karşılaştırma |
-| **Formlar senkronizasyonu** | Uygulama başlangıcında buton listesi `POST /api/formlar/sync` ile Formlar tablosuna yazılır; hardcoded form ismi listesi yoktur |
+| **Yetki sistemi** | Admin kullanıcıları `Kullanicilar` tablosunda; her formun izinleri `KullaniciYetkileri` tablosunda `FormId` FK ile saklanır (Ekle/Sil/Degistir/Incele/Ata/Kaldir/Kaydet/AktifPasif). Giriş: SHA-256 hash karşılaştırma |
+| **Formlar senkronizasyonu** | Uygulama başlangıcında buton listesi soyut anahtara çevrilerek `POST /api/formlar/sync` ile Formlar tablosuna yazılır; buton adı değişse DB etkilenmez |
+| **Sefer iptal/aktif** | `Seferler.Aktif` bayrağı — pasif seferler müşteri tarafında (`/api/seferdetay`) filtrelenir, admin panelinde gri satır olarak gösterilir |
+| **Form bazlı yetki matrisi** | Her form hangi yetkileri desteklediğini statik dictionary ile tanımlar; desteklenmeyen hücreler WinForms'ta gri+readonly, web'de disabled gösterilir |
 
 ---
 
