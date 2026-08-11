@@ -29,6 +29,7 @@ namespace StajWinForms.Admin
                 btnEkle.Visible = y.Ekle;
                 btnDuzenle.Visible = y.Degistir;
                 btnSil.Visible = y.Sil;
+                btnYolcular.Visible = y.Incele;
                 btnIptal.Visible = y.AktifPasif;
             }
         }

@@ -7,6 +7,9 @@
 
     KullaniciYetkiDto GetYetki(string formAdi) =>
         Model.Yetkiler.FirstOrDefault(x => x.FormAdi == formAdi) ?? new();
+
+    bool Destekler(string formAdi, string yetki) =>
+        YetkiAtamaModel.FormYetkileri.TryGetValue(formAdi, out var f) && f.Yetkiler.Contains(yetki);
 }
 
 <h4>Yetki Atama</h4>
@@ -46,19 +49,19 @@
                 </tr>
             </thead>
             <tbody>
-            @foreach (var (formAdi, baslik) in YetkiAtamaModel.FormAdlari)
+            @foreach (var (formAdi, form) in YetkiAtamaModel.FormYetkileri)
             {
                 var yetki = GetYetki(formAdi);
                 <tr>
-                    <td>@baslik</td>
-                    <td class="text-center"><input type="checkbox" name="ekle_@formAdi" @(yetki.Ekle ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="sil_@formAdi" @(yetki.Sil ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="degistir_@formAdi" @(yetki.Degistir ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="incele_@formAdi" @(yetki.Incele ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="ata_@formAdi" @(yetki.Ata ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="kaldir_@formAdi" @(yetki.Kaldir ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="kaydet_@formAdi" @(yetki.Kaydet ? "checked" : "") /></td>
-                    <td class="text-center"><input type="checkbox" name="aktifpasif_@formAdi" @(yetki.AktifPasif ? "checked" : "") /></td>
+                    <td>@form.Baslik</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Ekle")) { <input type="checkbox" name="ekle_@formAdi" @(yetki.Ekle ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Sil")) { <input type="checkbox" name="sil_@formAdi" @(yetki.Sil ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Degistir")) { <input type="checkbox" name="degistir_@formAdi" @(yetki.Degistir ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Incele")) { <input type="checkbox" name="incele_@formAdi" @(yetki.Incele ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Ata")) { <input type="checkbox" name="ata_@formAdi" @(yetki.Ata ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Kaldir")) { <input type="checkbox" name="kaldir_@formAdi" @(yetki.Kaldir ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "Kaydet")) { <input type="checkbox" name="kaydet_@formAdi" @(yetki.Kaydet ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
+                    <td class="text-center">@if (Destekler(formAdi, "AktifPasif")) { <input type="checkbox" name="aktifpasif_@formAdi" @(yetki.AktifPasif ? "checked" : "") /> } else { <input type="checkbox" disabled style="opacity:0.3" /> }</td>
                 </tr>
             }
             </tbody>

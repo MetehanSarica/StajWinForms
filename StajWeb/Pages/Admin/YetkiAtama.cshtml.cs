@@ -10,21 +10,21 @@ namespace StajWeb.Pages.Admin
         private readonly IHttpClientFactory _clientFactory;
         public YetkiAtamaModel(IHttpClientFactory clientFactory) => _clientFactory = clientFactory;
 
-        public static readonly Dictionary<string, string> FormAdlari = new()
+        public static readonly Dictionary<string, (string Baslik, HashSet<string> Yetkiler)> FormYetkileri = new()
         {
-            ["btnFirmaBrowser"] = "Firma Yönetimi",
-            ["btnOtobusBrowser"] = "Otobüs Yönetimi",
-            ["btnFirmaOtobusEsle"] = "Firma-Otobüs Eşleme",
-            ["btnKaptanEsle"] = "Otobüs-Kaptan Eşleme",
-            ["btnSeferOtobusEsle"] = "Sefer-Otobüs Eşleme",
-            ["btnKullaniciYonetim"] = "Kullanıcı Yönetimi",
-            ["btnYetkiAtama"] = "Yetki Atama",
-            ["btnSeferBrowser"] = "Sefer Yönetimi",
-            ["btnBiletArama"] = "Bilet Arama",
-            ["btnDashboard"] = "Dashboard",
-            ["btnOtogarBrowser"] = "Otogar Yönetimi",
-            ["btnMusteriBrowser"] = "Müşteriler",
-            ["btnPersonelBrowser"] = "Personel Yönetimi"
+            ["btnDashboard"]        = ("Dashboard",             new() { "Incele" }),
+            ["btnSeferBrowser"]     = ("Sefer Yönetimi",        new() { "Ekle", "Degistir", "Sil", "Incele", "AktifPasif" }),
+            ["btnBiletArama"]       = ("Bilet Arama",           new() { "Incele" }),
+            ["btnFirmaBrowser"]     = ("Firma Yönetimi",        new() { "Ekle", "Degistir", "Sil", "Incele" }),
+            ["btnOtobusBrowser"]    = ("Otobüs Yönetimi",       new() { "Ekle", "Degistir", "Sil", "Incele" }),
+            ["btnMusteriBrowser"]   = ("Müşteri Yönetimi",      new() { "Ekle", "Degistir", "Sil", "Incele" }),
+            ["btnOtogarBrowser"]    = ("Otogar Yönetimi",       new() { "Ekle", "Degistir", "Sil" }),
+            ["btnPersonelBrowser"]  = ("Personel Yönetimi",     new() { "Ekle", "Degistir", "Sil" }),
+            ["btnFirmaOtobusEsle"]  = ("Firma-Otobüs Eşleme",  new() { "Ata", "Kaldir" }),
+            ["btnKaptanEsle"]       = ("Otobüs-Kaptan Eşleme", new() { "Ata", "Kaldir" }),
+            ["btnSeferOtobusEsle"]  = ("Sefer-Otobüs Eşleme",  new() { "Ata", "Kaldir" }),
+            ["btnKullaniciYonetim"] = ("Kullanıcı Yönetimi",   new() { "Ekle", "Degistir", "Sil", "Incele" }),
+            ["btnYetkiAtama"]       = ("Yetki Atama",           new() { "Kaydet" }),
         };
 
         public List<KullaniciDto> Kullanicilar { get; set; } = new();
@@ -48,7 +48,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostKaydetAsync(int kullaniciId)
         {
-            var yetkiler = FormAdlari.Keys.Select(f => new KullaniciYetkiDto
+            var yetkiler = FormYetkileri.Keys.Select(f => new KullaniciYetkiDto
             {
                 FormAdi = f,
                 Ekle = Request.Form[$"ekle_{f}"] == "on",
@@ -70,7 +70,7 @@ namespace StajWeb.Pages.Admin
         {
             var client = _clientFactory.CreateClient("API");
 
-            var bosYetkiler = FormAdlari.Keys
+            var bosYetkiler = FormYetkileri.Keys
                 .Select(f => new KullaniciYetkiDto { FormAdi = f })
                 .ToList();
             await client.PutAsJsonAsync($"api/kullanicilar/{kullaniciId}/yetkiler", bosYetkiler);

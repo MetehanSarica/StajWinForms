@@ -11,6 +11,43 @@ namespace StajWinForms.Admin
         private List<KullaniciItem> _kullanicilar = new();
         private readonly List<(string Name, string Text)> _formlar;
 
+        private static readonly Dictionary<string, HashSet<string>> _formYetkileri = new()
+        {
+            ["btnDashboard"] = new() { "Incele" },
+            ["btnSeferBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele", "AktifPasif" },
+            ["btnBiletArama"] = new() { "Incele" },
+            ["btnFirmaBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["btnOtobusBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["btnMusteriBrowser"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["btnOtogarBrowser"] = new() { "Ekle", "Degistir", "Sil" },
+            ["btnPersonelBrowser"] = new() { "Ekle", "Degistir", "Sil" },
+            ["btnFirmaOtobusEsle"] = new() { "Ata", "Kaldir" },
+            ["btnKaptanEsle"] = new() { "Ata", "Kaldir" },
+            ["btnSeferOtobusEsle"] = new() { "Ata", "Kaldir" },
+            ["btnKullaniciYonetim"] = new() { "Ekle", "Degistir", "Sil", "Incele" },
+            ["btnYetkiAtama"] = new() { "Kaydet" },
+        };
+
+        private static readonly (string Col, string Key)[] _sutunlar =
+        {
+            ("colEkle","Ekle"), ("colSil","Sil"), ("colDegistir", "Degistir"),
+            ("colIncele", "Incele"), ("colAta", "Ata"), ("colKaldir","Kaldir"),
+            ("colKaydet","Kaydet"), ("colAktifPasif","AktifPasif")
+        };
+
+        private void HucreStilUygula(int rowIndex, string formKey)
+        {
+            if (!_formYetkileri.TryGetValue(formKey, out var dest)) return;
+            foreach (var (col, key) in _sutunlar)
+            {
+                var cell = dgvYetkiler.Rows[rowIndex].Cells[col];
+                bool gecerli = dest.Contains(key);
+                cell.ReadOnly = !gecerli;
+                cell.Style.BackColor = gecerli ? Color.White : Color.LightGray;
+                if (!gecerli) cell.Value = false;
+            }
+        }
+
         public YetkiAtamaControl(IEnumerable<SimpleButton> butonlar)
         {
             InitializeComponent();
@@ -24,8 +61,12 @@ namespace StajWinForms.Admin
         {
             await KullanicilariYukle();
             dgvYetkiler.Rows.Clear();
-            foreach (var f in _formlar)
-                dgvYetkiler.Rows.Add(f.Text, false, false, false, false, false, false, false, false);
+
+            for (int i = 0; i < _formlar.Count; i++)
+            {
+                dgvYetkiler.Rows.Add(_formlar[i].Text, false, false, false, false, false, false, false, false);
+                HucreStilUygula(i, _formlar[i].Name);
+            }
 
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "btnYetkiAtama");
             if (y != null)
@@ -64,6 +105,7 @@ namespace StajWinForms.Admin
                     dgvYetkiler.Rows[i].Cells["colKaldir"].Value = dto?.Kaldir ?? false;
                     dgvYetkiler.Rows[i].Cells["colKaydet"].Value = dto?.Kaydet ?? false;
                     dgvYetkiler.Rows[i].Cells["colAktifPasif"].Value = dto?.AktifPasif ?? false;
+                    HucreStilUygula(i, keys[i]);
                 }
             }
             catch (Exception ex) { XtraMessageBox.Show("Yetkiler yüklenemedi: " + ex.Message, "Hata", MessageBoxButtons.OK, MessageBoxIcon.Error); }
