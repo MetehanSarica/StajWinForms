@@ -89,8 +89,10 @@ namespace StajWinForms
         private void btnYetkiAtama_Click(object sender, EventArgs e)
         {
             pnlIcerik.Controls.Clear();
-            var uc = new Admin.YetkiAtamaControl(
-                flpButonlar.Controls.OfType<SimpleButton>());
+            var formlar = flpButonlar.Controls.OfType<SimpleButton>()
+                .Where(b => b.Name != "btnCikis")
+                .Select(b => (Key: _btnKeyMap.TryGetValue(b.Name, out var k) ? k : b.Name, Text: b.Text));
+            var uc = new Admin.YetkiAtamaControl(formlar);
             uc.Dock = DockStyle.Fill;
             pnlIcerik.Controls.Add(uc);
         }
@@ -164,7 +166,7 @@ namespace StajWinForms
                 if (cntrl is SimpleButton btn && btn.Name != "btnCikis")
                 {
                     var key = _btnKeyMap.TryGetValue(btn.Name, out var k) ? k : btn.Name;
-                    var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == btn.Name);
+                    var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == key);
                     btn.Visible = y != null && (y.Ekle || y.Sil || y.Degistir || y.Incele || y.Ata || y.Kaldir || y.Kaydet || y.AktifPasif);
                 }
             }

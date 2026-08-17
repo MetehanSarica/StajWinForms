@@ -20,22 +20,41 @@ public class FormlarController : ControllerBase
     [HttpPost("sync")]
     public async Task<IActionResult> Sync([FromBody] List<FormSyncDto> formlar)
     {
+        var yeniFormlar = new List<Formlar>();
+
         foreach (var dto in formlar)
         {
             var mevcut = await _context.Formlar
                 .FirstOrDefaultAsync(f => f.FormAdi == dto.FormAdi);
 
             if (mevcut == null)
-                _context.Formlar.Add(new Formlar
-                {
-                    FormAdi = dto.FormAdi,
-                    FormAciklamasi = dto.FormAciklamasi
-                });
+            {
+                var yeni = new Formlar { FormAdi = dto.FormAdi, FormAciklamasi = dto.FormAciklamasi };
+                _context.Formlar.Add(yeni);
+                yeniFormlar.Add(yeni);
+            }
             else
                 mevcut.FormAciklamasi = dto.FormAciklamasi;
         }
 
         await _context.SaveChangesAsync();
+
+        if (yeniFormlar.Count > 0)
+        {
+            var kullaniciIdleri = await _context.Kullanicilars
+                .Select(k => k.KullaniciId).ToListAsync();
+
+            foreach (var form in yeniFormlar)
+                foreach (var kullaniciId in kullaniciIdleri)
+                    _context.KullaniciYetkileri.Add(new KullaniciYetkileri
+                    {
+                        KullaniciId = kullaniciId,
+                        FormId = form.FormId
+                    });
+
+            await _context.SaveChangesAsync();
+        }
+
         return NoContent();
     }
 }

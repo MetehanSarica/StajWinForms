@@ -57,6 +57,7 @@ public class AuthController : ControllerBase
                     Ata = ky.Ata,
                     Kaldir = ky.Kaldir,
                     Kaydet = ky.Kaydet,
+                    AktifPasif = ky.AktifPasif,
                 })
                 .ToList()
         };

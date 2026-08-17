@@ -44,17 +44,13 @@ namespace StajWinForms.Admin
                 bool gecerli = dest.Contains(key);
                 cell.ReadOnly = !gecerli;
                 cell.Style.BackColor = gecerli ? Color.White : Color.LightGray;
-                if (!gecerli) cell.Value = false;
             }
         }
 
-        public YetkiAtamaControl(IEnumerable<SimpleButton> butonlar)
+        public YetkiAtamaControl(IEnumerable<(string Key, string Text)> formlar)
         {
             InitializeComponent();
-            _formlar = butonlar
-                .Where(b => b.Name != "btnCikis")
-                .Select(b => (b.Name, b.Text))
-                .ToList();
+            _formlar = formlar.Select(f => (Name: f.Key, Text: f.Text)).ToList();
         }
 
         private async void YetkiAtamaControl_Load(object sender, EventArgs e)
