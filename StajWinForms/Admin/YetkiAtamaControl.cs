@@ -64,6 +64,11 @@ namespace StajWinForms.Admin
                 HucreStilUygula(i, _formlar[i].Name);
             }
 
+            if (lstKullanicilar.SelectedItem != null)
+            {
+                await YetkiYukle((KullaniciItem)lstKullanicilar.SelectedItem);
+            }
+
             var y = Oturum.Yetkiler.FirstOrDefault(x => x.FormAdi == "yetki_atama");
             if (y != null)
                 btnKaydet.Visible = y.Kaydet;
@@ -84,6 +89,11 @@ namespace StajWinForms.Admin
         private async void lstKullanicilar_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (lstKullanicilar.SelectedItem is not KullaniciItem k) return;
+            await YetkiYukle(k);
+        }
+
+        private async Task YetkiYukle(KullaniciItem k)
+        {
             lblSeciliKullanici.Text = $"Seçili: {k.KullaniciAdi}";
             try
             {

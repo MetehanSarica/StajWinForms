@@ -23,13 +23,17 @@ namespace StajWeb.Pages
             _clientFactory = clientFactory;
         }
 
-        public async Task OnGet() {
-            
+        private void KoltuklariCozumle()
+        {
             if (!string.IsNullOrEmpty(Koltuklar))
-            {
-                KoltukList = Koltuklar.Split(',').Select(int.Parse).ToList();
-            }
+                KoltukList = Koltuklar.Split(',')
+                    .Where(s => int.TryParse(s.Trim(), out _))
+                    .Select(s => int.Parse(s.Trim()))
+                    .ToList();
+        }
 
+        public async Task OnGet() {
+            KoltuklariCozumle();
             var client = _clientFactory.CreateClient("API");
             SehirListesi = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler")
                 is { } list ? list.Select(s => s.SehirAdi).ToList() : new();
@@ -37,8 +41,7 @@ namespace StajWeb.Pages
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (!string.IsNullOrEmpty(Koltuklar)) 
-                KoltukList = Koltuklar.Split(',').Select(int.Parse).ToList();
+            KoltuklariCozumle();
 
             var client = _clientFactory.CreateClient("API");
             SehirListesi = await client.GetFromJsonAsync<List<Sehirler>>("/api/sehirler")

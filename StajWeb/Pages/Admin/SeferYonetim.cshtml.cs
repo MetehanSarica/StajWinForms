@@ -29,6 +29,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostEkleAsync()
         {
+            if (HttpContext.Session.GetYetki("sefer_yonetimi")?.Ekle != true) return Forbid();
             var form = Request.Form;
             var sefer = new SeferDto
             {
@@ -55,6 +56,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDuzenleAsync()
         {
+            if (HttpContext.Session.GetYetki("sefer_yonetimi")?.Degistir != true) return Forbid();
             var form = Request.Form;
             var sefer = new SeferDto
             {
@@ -89,6 +91,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostIptalAsync(int seferId)
         {
+            if (HttpContext.Session.GetYetki("sefer_yonetimi")?.AktifPasif != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsync($"api/seferler/{seferId}/iptal", null);
             return RedirectToPage();
@@ -96,6 +99,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostAktifEtAsync(int seferId)
         {
+            if (HttpContext.Session.GetYetki("sefer_yonetimi")?.AktifPasif != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsync($"api/seferler/{seferId}/aktifet", null);
             return RedirectToPage();
@@ -103,6 +107,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int seferId)
         {
+            if (HttpContext.Session.GetYetki("sefer_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             var response = await client.DeleteAsync($"api/seferler/{seferId}");
             if (response.IsSuccessStatusCode)

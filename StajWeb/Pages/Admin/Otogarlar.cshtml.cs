@@ -26,6 +26,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostEkleAsync(int sehirId, string otogarAdi, string? adres, string? telefon)
         {
+            if (HttpContext.Session.GetYetki("otogar_yonetimi")?.Ekle != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PostAsJsonAsync("api/otogarlar", new { SehirId = sehirId, OtogarAdi = otogarAdi, Adres = adres, Telefon = telefon });
             return RedirectToPage();
@@ -33,6 +34,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDuzenleAsync(int otogarId, int sehirId, string otogarAdi, string? adres, string? telefon)
         {
+            if (HttpContext.Session.GetYetki("otogar_yonetimi")?.Degistir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/otogarlar/{otogarId}", new { SehirId = sehirId, OtogarAdi = otogarAdi, Adres = adres, Telefon = telefon });
             return RedirectToPage();
@@ -40,6 +42,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int otogarId)
         {
+            if (HttpContext.Session.GetYetki("otogar_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/otogarlar/{otogarId}");
             return RedirectToPage();

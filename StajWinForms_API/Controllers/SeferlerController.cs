@@ -81,6 +81,10 @@ public class SeferlerController : ControllerBase
         var sefer = await _context.Seferlers.FindAsync(id);
         if (sefer == null) return NotFound();
 
+        var biletSayisi = await _context.Biletlers.CountAsync(b => b.SeferId == id);
+        if (dto.KoltukKapasitesi < biletSayisi)
+            return BadRequest($"Kapasite {biletSayisi} adet satılmış biletin altına düşürülemez.");
+
         sefer.FirmaId = dto.FirmaId;
         sefer.KalkisSehirId = dto.KalkisSehirId;
         sefer.VarisSehirId = dto.VarisSehirId;
@@ -88,6 +92,7 @@ public class SeferlerController : ControllerBase
         sefer.SureDakika = dto.SureDakika;
         sefer.Fiyat = dto.Fiyat;
         sefer.KoltukKapasitesi = dto.KoltukKapasitesi;
+        sefer.BosKoltuk = dto.KoltukKapasitesi - biletSayisi;
 
         await _context.SaveChangesAsync();
         return NoContent();

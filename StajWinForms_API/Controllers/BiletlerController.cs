@@ -26,7 +26,7 @@ public class BiletlerController : ControllerBase
             {
                 BiletId = b.BiletId,
                 KoltukNo = b.KoltukNo,
-                MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+                MusteriAdSoyad = (b.MusteriTcNavigation.Ad ?? "") + " " + (b.MusteriTcNavigation.Soyad ?? ""),
                 MusteriTc = b.MusteriTc,
                 SeferId = b.SeferId,
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
@@ -52,7 +52,7 @@ public class BiletlerController : ControllerBase
             {
                 BiletId = b.BiletId,
                 KoltukNo = b.KoltukNo,
-                MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+                MusteriAdSoyad = (b.MusteriTcNavigation.Ad ?? "") + " " + (b.MusteriTcNavigation.Soyad ?? ""),
                 MusteriTc = b.MusteriTc,
                 SeferId = b.SeferId,
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
@@ -77,7 +77,7 @@ public class BiletlerController : ControllerBase
             {
                 BiletId = b.BiletId,
                 KoltukNo = b.KoltukNo,
-                MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+                MusteriAdSoyad = (b.MusteriTcNavigation.Ad ?? "") + " " + (b.MusteriTcNavigation.Soyad ?? ""),
                 MusteriTc = b.MusteriTc,
                 SeferId = b.SeferId,
                 KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,
@@ -144,7 +144,7 @@ public class BiletlerController : ControllerBase
         {
             BiletId = b.BiletId,
             KoltukNo = b.KoltukNo,
-            MusteriAdSoyad = b.MusteriTcNavigation.Ad + " " + b.MusteriTcNavigation.Soyad,
+            MusteriAdSoyad = (b.MusteriTcNavigation.Ad ?? "") + " " + (b.MusteriTcNavigation.Soyad ?? ""),
             MusteriTc = b.MusteriTc,
             SeferId = b.SeferId,
             KalkisSehirAdi = b.Sefer.KalkisSehir.SehirAdi,

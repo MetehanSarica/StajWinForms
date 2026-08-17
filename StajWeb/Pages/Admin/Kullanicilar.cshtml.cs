@@ -22,6 +22,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostEkleAsync(string kullaniciAdi, string sifre, string? adSoyad, bool aktif)
         {
+            if (HttpContext.Session.GetYetki("kullanici_yonetimi")?.Ekle != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PostAsJsonAsync("api/kullanicilar", new
             {
@@ -36,6 +37,7 @@ namespace StajWeb.Pages.Admin
         public async Task<IActionResult> OnPostGuncelleAsync(int kullaniciId, string kullaniciAdi,
             string? yeniSifre, string? adSoyad, bool aktif)
         {
+            if (HttpContext.Session.GetYetki("kullanici_yonetimi")?.Degistir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/kullanicilar/{kullaniciId}", new
             {
@@ -49,6 +51,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int kullaniciId)
         {
+            if (HttpContext.Session.GetYetki("kullanici_yonetimi")?.Sil != true) return Forbid();
             var oturum = HttpContext.Session.GetOturum();
             if (oturum?.KullaniciId == kullaniciId)
                 return RedirectToPage();

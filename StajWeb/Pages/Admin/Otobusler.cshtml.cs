@@ -25,6 +25,7 @@ namespace StajWeb.Pages.Admin
         public async Task<IActionResult> OnPostEkleAsync(string plaka, string marka, string model,
             int koltukKapasitesi, int? firmaId)
         {
+            if (HttpContext.Session.GetYetki("otobus_yonetimi")?.Ekle != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PostAsJsonAsync("api/otobusler", new
             {
@@ -40,6 +41,7 @@ namespace StajWeb.Pages.Admin
         public async Task<IActionResult> OnPostGuncelleAsync(int otobusId, string plaka, string marka,
             string model, int koltukKapasitesi, int? firmaId)
         {
+            if (HttpContext.Session.GetYetki("otobus_yonetimi")?.Degistir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/otobusler/{otobusId}", new
             {
@@ -54,6 +56,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int otobusId)
         {
+            if (HttpContext.Session.GetYetki("otobus_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/otobusler/{otobusId}");
             return RedirectToPage();

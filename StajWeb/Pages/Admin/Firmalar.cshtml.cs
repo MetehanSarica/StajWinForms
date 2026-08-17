@@ -23,6 +23,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostEkleAsync(string firmaAdi)
         {
+            if (HttpContext.Session.GetYetki("firma_yonetimi")?.Ekle != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PostAsJsonAsync("api/firmalar", new { FirmaAdi = firmaAdi });
             return RedirectToPage();
@@ -30,12 +31,14 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostGuncelleAsync(int firmaId, string firmaAdi)
         {
+            if (HttpContext.Session.GetYetki("firma_yonetimi")?.Degistir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/firmalar/{firmaId}", new { FirmaAdi = firmaAdi });
             return RedirectToPage();
         }
         public async Task<IActionResult> OnPostSilAsync(int firmaId)
         {
+            if (HttpContext.Session.GetYetki("firma_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/firmalar/{firmaId}");
             return RedirectToPage();

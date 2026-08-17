@@ -28,6 +28,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int id)
         {
+            if (HttpContext.Session.GetYetki("musteri_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/musteri/{id}");
             return RedirectToPage();

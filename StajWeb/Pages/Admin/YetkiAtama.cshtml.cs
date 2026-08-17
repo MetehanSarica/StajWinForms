@@ -48,6 +48,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostKaydetAsync(int kullaniciId)
         {
+            if (HttpContext.Session.GetYetki("yetki_atama")?.Kaydet != true) return Forbid();
             var yetkiler = FormYetkileri.Keys.Select(f => new KullaniciYetkiDto
             {
                 FormAdi = f,
@@ -68,6 +69,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostTemizleAsync(int kullaniciId)
         {
+            if (HttpContext.Session.GetYetki("yetki_atama")?.Kaydet != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
 
             var bosYetkiler = FormYetkileri.Keys
@@ -78,6 +80,7 @@ namespace StajWeb.Pages.Admin
         }
         public async Task<IActionResult> OnPostKopyalaAsync(int kaynakId, List<int> hedefler)
         {
+            if (HttpContext.Session.GetYetki("yetki_atama")?.Kaydet != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             var yetkiler = await client.GetFromJsonAsync<List<KullaniciYetkiDto>>(
                 $"api/kullanicilar/{kaynakId}/yetkiler") ?? new();

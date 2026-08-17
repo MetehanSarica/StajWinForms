@@ -24,6 +24,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostEkleAsync(string ad, string soyad, string? email, string? unvan, decimal? maas, DateOnly? iseGirisTarihi)
         {
+            if (HttpContext.Session.GetYetki("personel_yonetimi")?.Ekle != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PostAsJsonAsync("api/personel", new { Ad = ad, Soyad = soyad, Email = email, Unvan = unvan, Maas = maas, IseGirisTarihi = iseGirisTarihi });
             return RedirectToPage();
@@ -31,6 +32,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostDuzenleAsync(int id, string ad, string soyad, string? email, string? unvan, decimal? maas, DateOnly? iseGirisTarihi)
         {
+            if (HttpContext.Session.GetYetki("personel_yonetimi")?.Degistir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/personel/{id}", new { Ad = ad, Soyad = soyad, Email = email, Unvan = unvan, Maas = maas, IseGirisTarihi = iseGirisTarihi });
             return RedirectToPage();
@@ -38,6 +40,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostSilAsync(int id)
         {
+            if (HttpContext.Session.GetYetki("personel_yonetimi")?.Sil != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/personel/{id}");
             return RedirectToPage();

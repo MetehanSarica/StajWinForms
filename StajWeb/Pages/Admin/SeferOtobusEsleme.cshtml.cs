@@ -25,6 +25,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostAtaAsync(int seferId, int otobusId)
         {
+            if (HttpContext.Session.GetYetki("sefer_otobus_esleme")?.Ata != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.PutAsJsonAsync($"api/seferler/{seferId}/otobus", new { OtobusId = otobusId });
             return RedirectToPage();
@@ -32,6 +33,7 @@ namespace StajWeb.Pages.Admin
 
         public async Task<IActionResult> OnPostKaldirAsync(int seferId)
         {
+            if (HttpContext.Session.GetYetki("sefer_otobus_esleme")?.Kaldir != true) return Forbid();
             var client = _clientFactory.CreateClient("API");
             await client.DeleteAsync($"api/seferler/{seferId}/otobus");
             return RedirectToPage();

@@ -32,6 +32,12 @@ namespace StajWeb.Pages
                 return Page();
             }
 
+            if (MusteriTc.Length != 11 || MusteriTc[0] == '0' || !MusteriTc.All(char.IsDigit))
+            {
+                ModelState.AddModelError("MusteriTc", "Geçerli bir TC kimlik numarası giriniz (11 haneli, 0 ile başlamayan).");
+                return Page();
+            }
+
             var client = _clientFactory.CreateClient("API");
             var response = await client.GetAsync($"/api/biletler/musteri/{MusteriTc}");
 
