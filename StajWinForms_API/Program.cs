@@ -4,6 +4,7 @@ using Scalar.AspNetCore;
 using System.Security.Cryptography;
 
 var builder = WebApplication.CreateBuilder(args);
+builder.Host.UseWindowsService();
 
 // Add services to the container.
 
@@ -23,11 +24,8 @@ builder.Services.AddDbContext<DbStajContext>(options =>
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.MapOpenApi();
-    app.MapScalarApiReference();
-}
+app.MapOpenApi();
+app.MapScalarApiReference();
 
 app.UseHttpsRedirection();
 app.UseCors("Default");
@@ -64,3 +62,5 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
+public partial class Program { }
